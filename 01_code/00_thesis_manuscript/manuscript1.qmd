@@ -45,8 +45,9 @@ keywords:
   - mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
+csl: _extensions/quarto-journals/elsevier/elsarticle.cls
 format:
-  pdf: default
+  # pdf: default
   elsevier-pdf:
     keep-tex: true
     journal:
@@ -54,6 +55,8 @@ format:
       formatting: preprint
       model: 3p
       cite-style: super
+editor_options: 
+  chunk_output_type: console
 ---
 
 Please make sure that your manuscript follows the guidelines in the 
