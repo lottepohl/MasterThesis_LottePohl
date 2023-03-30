@@ -1,0 +1,582 @@
+---
+main_topsize: 0 #percent coverage of the poster
+main_bottomsize: 0
+title: 'Sex bias in habitat use of *Mustelus asterias* in the Scheldt Estuary and the BPNS'
+author:
+  - name: '**Lotte Pohl**'
+    affil: 1
+    main: true
+    # orcid: '0000-0002-7607-7018'
+    twitter: lottepohl
+    email: lotte.pohl@vliz.be
+  - name: Niels Brevé
+    affil: 2
+  - name: Carlota Muñiz
+    affil: 1
+  - name: Jan Reubens
+    affil: 1
+affiliation:
+  - num: 1
+    address: Marine Observation Center, Flemish Marine Institute (VLIZ)
+  - num: 2
+    address: Marine Animal Ecology group, Wageningen University & Research
+main_findings:
+  - "Do starry smooth-hound sharks pup in the Western Scheldt?"
+# logoleft_name: https&#58;//raw.githubusercontent.com/lottepohl/ADST_Mustelus_asterias/vertical_data_exploration/presentations/VLIZ_logo.png
+# logoright_name: https&#58;//raw.githubusercontent.com/lottepohl/ADST_Mustelus_asterias/vertical_data_exploration/presentations/ETN_logo.png
+# logocenter_name: https&#58;//raw.githubusercontent.com/lottepohl/ADST_Mustelus_asterias/vertical_data_exploration/presentations/Mustelusasterias.png
+output: 
+  posterdown::posterdown_betterport:
+    self_contained: false
+    pandoc_args: --mathjax
+    number_sections: false
+bibliography: packages.bib
+csl: taylor-and-francis-apa.csl
+link-citations: true
+knit: pagedown::chrome_print
+main_fontfamily: "Yrsa"
+main_textcol: "#FFFFFF"
+main_textsize: "150px"
+# logoleft_name: [./presentations/ETN_logo.png](./presentations/ETN_logo.png)
+title_textsize: "60pt"
+author_textsize: "1.3em"
+authorextra_textsize: "45px"
+primary_colour: "#31B7BC" #"#31B7BC"
+secondary_colour: "#31B7BC" #"#354D9B"
+accent_colour: "#BC3C29"
+body_fontfamily: "Yrsa"
+affiliation_textcol: "#00000090"
+affiliation_textsize: "40px"
+reference_textsize: "40px"
+caption_textsize: "40px"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      tidy = FALSE,
+                      message = FALSE,
+                      fig.align = 'center',
+                      out.width = "100%")
+options(knitr.table.format = "html") 
+```
+
+
+```{r, include=FALSE}
+knitr::write_bib(c('griffiths_2020', 'mccullyphillips_2015', 'brownscombe_2022'), 'packages.bib')
+```
+
+
+```{r libraries, include=FALSE}
+library(tidyverse)
+library(lubridate)
+library(leaflet)
+library(tibble)
+library(stringr)
+library(ggsci)
+library(pander)
+library(mregions2)
+library(fuzzyjoin)
+library(sf)
+library(oce)
+library(plotly)
+library(stringr)
+library("FactoMineR")
+library("factoextra")
+library(car)
+library(marmap)
+library(ggmap)
+library(ggplot2)
+library(ggrepel)
+
+```
+
+
+```{r knityes_no, include=FALSE}
+knitting <- T
+
+# if the document is not knitting right now, the prefix for path is set to ".", otherwise (for knitting) it's set to ".."
+pre <- ifelse(knitting %>% isFALSE(), ".", "..")
+```
+
+```{r load_functions, include=FALSE}
+source(paste0(pre, "/functions/functions_DST_presstemplogs.R"))
+source(paste0(pre, "/functions.R"))
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r geo_info, include=FALSE}
+BPNS <- mregions2::gaz_search(3293) %>% mregions2::gaz_geometry()
+# sandbanks <- mregions2::gaz_search(c(2419, 4675, 2421, 2420)) %>% mregions2::gaz_geometry()
+
+# for now, as long as mregions2 does not load in rstudio server
+
+# bpns_boundaries <- st_read('./spatial_data/bpns_boundaries/bpns_boundaries.shp', layer = 'bpns_boundaries')
+sandbanks <- st_read(paste0(pre, '/spatial_data/sea_floor_geomorphology/sea_floor_geomorphology.shp'), layer = 'sea_floor_geomorphology')
+OWFs <- st_read(paste0(pre, "/spatial_data/OWFs_shapefiles/RD20140320_art8_1_20140328.shp"))
+```
+
+```{r map_base, include=FALSE}
+map_base <- leaflet(options = leafletOptions(zoomControl = FALSE,
+                                 minZoom = 9, maxZoom = 9,
+                                 dragging = FALSE)) %>%
+  addProviderTiles("Esri.WorldStreetMap") %>%
+  setView(3.5, 51.5, zoom = 10) %>% #setView(-3, 52.5, zoom = 9) %>%
+  addScaleBar(position = "topleft", options = scaleBarOptions(maxWidth = 250, imperial = F)) %>%
+  # # add sandbanks
+  # addPolygons(data=sandbanks,
+  #             fillColor = "#FFF2B3",
+  #             weight = 0,
+  #             fillOpacity = 0.5,
+  #             group = "Sandbanks") %>%
+  #label = ~preferredGazetteerName, labelOptions = labelOptions(noHide = F, textOnly = F, direction = "center", textsize = "12px", sticky = FALSE)
+  # add OWFs
+  addPolygons(data=OWFs,
+              color = "#E1A2A1",
+              opacity = 0.5,
+              fillColor = "#E1A2A1",
+              weight = 1,
+              fillOpacity = 0.2,
+              group = "OWFs") %>%
+  # add BPNS boundary
+  addPolygons(data = BPNS, color = "grey",
+              weight = 1,
+              opacity = 1.0,
+              fillOpacity = 0,
+              label = ~preferredGazetteerName,
+              labelOptions = labelOptions(noHide = F, textOnly = F, direction = "center", textsize = "12px", sticky = FALSE),
+              group = "Regions") #%>%
+  # leafem::addMouseCoordinates()
+
+# map_base
+# base_map %>% save_leaflet(path = "./visualisation_ADST/maps_plots", filename = "basic_map_test", filetype = "pdf") #do with other map
+
+```
+
+```{r general_info, include=FALSE}
+project_code <- "ADST-Shark"
+scientific_name <- "Mustelus asterias"
+masterias_recaptured_serials <- c("1293295", "1293304", "1293310", "1293312", "1293319", "1293308", "1293321", "1293322")
+# bounding box
+min_lon <- 0.8
+max_lon <- 5
+max_lat <- 53
+min_lat <- 50
+```
+
+```{r load_RData, include=FALSE}
+masterias_info <- read_csv(paste0(pre, "/RData/masterias_info.csv"), show_col_types = FALSE)
+masterias_info <- masterias_info %>% remove_double_cols()
+# masterias_ind_per_station <- read_csv(paste0(pre, "/RData/masterias_ind_per_station.csv"), show_col_types = FALSE)
+masterias_detections <- read_csv(paste0(pre, "/RData/masterias_detections.csv"), show_col_types = FALSE)
+# masterias_deployments <- read_csv(paste0(pre, "/RData/masterias_deployments.csv"), show_col_types = FALSE)
+# detections_per_station <- read_csv(paste0(pre, "/RData/detections_per_station.csv"), show_col_types = FALSE)
+# detections_per_deployment <- read_csv(paste0(pre, "/RData/detections_per_deployment.csv"), show_col_types = FALSE)
+# close_stations <- read_csv(paste0(pre, "/RData/close_stations.csv"), show_col_types = FALSE)
+deployments <- read_csv(paste0(pre, "/RData/deployments.csv"), show_col_types = FALSE)
+
+```
+
+```{r clean_animal_data, include=FALSE}
+
+masterias_info <- clean_animal_info(masterias_info, masterias_detections)
+
+# make dateyear and time column in masterias_detections
+masterias_detections <- masterias_detections %>% mutate(tag_serial_number = tag_serial_number %>% as.character(),
+                                                        time = date_time %>% as.Date("%H:%M", tz = "UTC"),
+                                                        month = date_time %>% lubridate::month(),
+                                                        month_name = month.abb[month] %>% factor(levels = c("Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct")),)
+#
+# masterias_detections$time <- masterias_detections$date_time %>% as.Date("%H:%M", tz = "UTC")
+# # masterias_detections$season <- ifelse(month(masterias_detections$date_time) >=4 & month(masterias_detections$date_time) < 11, "summer", "winter") # only summer detections anyway
+# # include months
+# masterias_detections$month <- masterias_detections$date_time %>% lubridate::month()
+# masterias_detections$month_name <-
+#
+# # input sex and release_date_time into detections dataframe
+# masterias_detections$tag_serial_number <- masterias_detections$tag_serial_number %>% as.character()
+
+masterias_detections <- masterias_detections %>% left_join(masterias_info %>% select(tag_serial_number, sex, release_dateyear), by = "tag_serial_number")
+
+# remove tags with only 1 detection
+detection_summary <- masterias_detections %>% mutate(count = 1) %>% group_by(tag_serial_number) %>% summarise(n_detect = sum(count))
+# input into masterias_info
+masterias_info <- masterias_info %>% left_join(detection_summary, by = "tag_serial_number")
+
+tag_serial_number_omit <- detection_summary %>% filter(n_detect == 1) %>% select(tag_serial_number)
+masterias_detections_clean <- masterias_detections %>% filter(!tag_serial_number %in% tag_serial_number_omit$tag_serial_number)
+
+# remove deployments outside of detection time frame
+deployments <- deployments %>% filter(recover_date_time <= masterias_detections_clean$date_time %>% max()) %>% filter(deploy_date_time > masterias_detections_clean$date_time %>% min())
+
+summary_masterias_length <- masterias_info %>% group_by(sex) %>% summarise(mean_length = length1 %>% mean(), sd_length = length1 %>% sd())
+
+rm(masterias_detections)
+```
+
+```{r near_stations, include=FALSE}
+open_stations <- deployments %>%
+  distinct(station_name, deploy_latitude, deploy_longitude)
+# BPNS-cpower reefballs is not in the open deployments, beither is BPNSlottobuoy
+  
+close_stations <- open_stations %>% 
+  filter(between(deploy_latitude, min_lat, max_lat)) %>% 
+  filter(between(deploy_longitude, min_lon, max_lon))
+
+rm(open_stations)
+```
+
+```{r areas, include=FALSE}
+# make overview of stations where M. asterias was detected and assign area to is (WS1, WS2, BPNS)
+WS1_lon_threshold <- 3.38
+WS2_lon_threshold <- 3.6
+
+masterias_stations <-masterias_detections_clean %>% group_by(station_name) %>% summarise(deploy_latitude = mean(deploy_latitude), deploy_longitude = mean(deploy_longitude)) %>% mutate(area = ifelse(deploy_longitude < WS1_lon_threshold, "BPNS", ifelse(deploy_longitude < WS2_lon_threshold, "WS1", "WS2")))
+
+# include areas in masterias_detections as well
+masterias_detections_clean <- masterias_detections_clean %>% left_join(masterias_stations %>% select(station_name, area), by = "station_name")
+
+# # areas work
+# col_fun_rd <- ggsci::pal_ucscgb()(3)
+# pal_rd <- leaflet::colorFactor(col_fun_rd, domain = masterias_stations$area)
+# 
+# map_base %>% addCircleMarkers(data = masterias_stations,
+#                               lat = ~deploy_latitude,
+#                               lng = ~deploy_longitude,
+#                               label = ~station_name, 
+#                               color = ~pal_rd(area))
+rm(WS1_lon_threshold, WS2_lon_threshold)
+```
+
+```{r info_per_station_month_sex, include=FALSE}
+
+# maybe less resolution: spring (april - may), early summer (jun - jul), late summer (aug - sept), autumn (october)
+
+detections_station_season_sex <- 
+  masterias_detections_clean %>%
+  group_by(station_name, month, sex) %>%
+  count() %>%
+  rename(detections_count = n) %>%
+  arrange(desc(detections_count))
+# detections_station_season_sex %>% View()
+
+masterias_ind_per_station_season_sex <- 
+  masterias_detections_clean %>%
+  distinct(station_name, tag_serial_number, month, sex)%>%
+  group_by(station_name, month, sex) %>%
+  count() %>%
+  rename(individuals_count = n) %>%
+  arrange(desc(individuals_count))
+# masterias_ind_per_station_season_sex %>% View()
+
+masterias_station_month_sex <- masterias_ind_per_station_season_sex %>% left_join(detections_station_season_sex, by = c("station_name", "sex", "month"), multiple = "all") %>% left_join(masterias_detections_clean %>% group_by(station_name) %>% select(station_name, deploy_latitude, deploy_longitude), by = "station_name", multiple = "all")
+
+masterias_station_month_sex <- masterias_ind_per_station_season_sex %>% left_join(detections_station_season_sex, by = c("station_name", "sex", "month"), multiple = "all") %>% left_join(masterias_stations, by = "station_name", multiple = "all")
+# masterias_station_month_sex %>% View()
+
+masterias_station_month_sex <- masterias_station_month_sex %>% mutate(month_name = month.abb[month])
+masterias_station_month_sex$month_name <- masterias_station_month_sex$month_name %>% factor(levels = c("Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"))
+
+# summarise detections per sex
+abs_detections <- masterias_station_month_sex %>% group_by(sex) %>% summarise(abs_detect = sum(detections_count))
+abs_individuals <- masterias_detections_clean %>% group_by(sex) %>% summarise(abs_ind = tag_serial_number %>% unique() %>% length())
+abs_detect_ind <- abs_detections %>% left_join(abs_individuals, by = "sex")
+# rm(abs_detections, abs_individuals)
+
+# find individuals per area per month
+ind_area_month <- masterias_detections_clean %>% group_by(sex, area, month) %>% summarise(individuals_count = tag_serial_number %>% unique() %>% length())
+ind_area_month <- ind_area_month %>% mutate(month_name = month.abb[month])
+ind_area_month$month_name <- ind_area_month$month_name %>% factor(levels = c("Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"))
+
+rm(masterias_ind_per_station_season_sex, detections_station_season_sex)
+```
+
+
+```{r RI_calc, include=FALSE}
+# overall residency index, detected days / days of liberty
+masterias_RI_all <- masterias_detections_clean %>% group_by(tag_serial_number, sex) %>% summarise(
+  release = release_dateyear %>% unique(),
+  min_detect = min(detection_dateyear), 
+  max_detect = max(detection_dateyear), 
+  days_at_liberty = (max_detect - release) %>% as.numeric(), 
+  days_detected = detection_dateyear %>% unique() %>% length(),
+  RI_all = days_detected / days_at_liberty) 
+masterias_RI_all %>% View()
+
+# get days that an individual was detected in a certain area
+masterias_RI_all <- masterias_RI_all %>% left_join(
+  masterias_detections_clean  %>% mutate(count = 1) %>% group_by(tag_serial_number) %>% summarise(days_BPNS = sum(count[area == "BPNS"]), days_WS1 = sum(count[area == "WS1"]), days_WS2 = sum(count[area == "WS2"])),
+  by = "tag_serial_number")
+
+# # merge that with masterias_detections_clean
+# masterias_detections_clean <- masterias_detections_clean %>% left_join(masterias_RI_all %>% select(tag_serial_number, RI_all), by = "tag_serial_number")
+
+# monthly RI per station
+masterias_RI_month <- masterias_detections_clean %>% group_by(tag_serial_number, month_name, sex) %>%
+  summarise(days_detected = detection_dateyear %>% unique() %>% length(),
+            month_days = month %>% lubridate::days_in_month() %>% as.numeric() %>% unique(),
+            RI_month = days_detected / month_days) 
+masterias_RI_month %>% View()
+
+masterias_RI_month_summary <- masterias_RI_month %>% group_by(month_name, sex) %>% summarise(mean_RI_month = mean(RI_month), sd_RI_month = sd(RI_month))
+
+masterias_RI_area <- masterias_detections_clean %>% group_by(tag_serial_number, month_name, area, sex) %>%
+    summarise(days_detected = detection_dateyear %>% unique() %>% length(),
+            month_days = month %>% lubridate::days_in_month() %>% as.numeric() %>% unique(),
+            RI_month = days_detected / month_days) 
+masterias_RI_area %>% View()
+
+```
+
+# Introduction
+
+<!-- make it more a "the species", "what we know", "acoustic telemetry" type thing rahter than messy bullet points -->
+## The Species
+
+*Mustelus asterias* is a viviparious demersal-pelagic shark (Triakidae) widely distributed in the Northeast Atlantic [@griffiths_2020; @mccullyphillips_2015].
+
+## Knowledge Gap
+
+* Population: currently stable but landings have increased [@breve_2016].
+
+* Pupping grounds: Coastal areas around the Southern North Sea and the English Channel [@breve_2016].
+
+* Pupping grounds in the Scheldt estuary (especially the Western Scheldt):  Not yet fully understood.
+
+* Potential winter migration into offshore waters of the Northeast Atlantic [@breve_2020].
+
+## Acoustic Telemetry
+
+1. Animal-borne tags which can be detected by an acoustic receiver (when the tag is within the receiver's range). 
+
+2. Allows to quantify animal movement & has high potential to improve the management of aquatic species [@brownscombe_2022].
+
+<!-- * The population is currently stable but landings have massively increased in the past decade. Research about this species only started about 10 years ago [@breve_2016]. -->
+
+<!-- * It is known that *M. asterias* females pup in summers coastal areas around the Southern North Sea and the English Channel but pupping grounds in the Scheldt estuary, especially in the Western Scheldt, are not yet fully understood. Migration into offshore waters occurs in winter and potentially is sex-specific, too [@breve_2016; @breve_2020].  -->
+
+<!-- * Acoustic telemetry implies equipping an animal with a tag which can be detected by an acoustic receiver when the tag is within a certain range. It allows to quantify animal movement and has high potential to improve the management of aquatic species [@brownscombe_2022] -->
+
+
+### Objective
+
+Gain insights about the local habitat use of *M. asterias* in the Scheldt Estuary and the Belgian Part of the North Sea (BPNS) using acoustic telemetry.
+
+<!-- 1.  Pick a template layout. -->
+<!-- 2.  Write/ create your poster content distraction free. -->
+<!-- 3.  Let posterdown do its thing! -->
+
+# Methods
+
+* 30 *M. asterias* individuals were equipped with acoustic tags (Vemco ADST- V13TP) in 2018 and 2019: `r masterias_info %>% filter(sex == "f") %>% nrow()` females (mean TL: `r summary_masterias_length %>% filter(sex == "f") %>% select(mean_length) %>% round(digits = 2) %>% pull()` $\pm$ `r summary_masterias_length %>% filter(sex == "f") %>% select(sd_length) %>% round(digits = 2) %>% pull()` cm) and `r masterias_info %>% filter(sex == "m") %>% nrow()` males (mean TL: `r summary_masterias_length %>% filter(sex == "m") %>% select(mean_length) %>% round(digits = 2) %>% pull()` $\pm$ `r summary_masterias_length %>% filter(sex == "m") %>% select(sd_length) %>% round(digits = 2) %>% pull()` cm).
+
+<!-- * Exploratory analysis of the dataset of acoustic detections, including the calculation of Residency Indices (RI), using R [@R]. The RI is calculated per individual, through: -->
+
+* Exploratory analysis, including the calculation of Residency Indices through: 
+
+<!-- (days of detections div) by dividing the days of detections of a tag by the days of estimated battery life time (here: 518 days for all tags), after Goossens, 2016. -->
+
+$$
+Residency \, \,Index = \frac{days\,\,of\,\,detections}{estimated\,\,battery\,\,life\,\,time}
+$$
+, after @goossens_2016. The estimated battery life time is 518 days for all individuals.
+
+<!-- = \\ \hspace{3cm} \frac{Days\,\,of\,\,detections}{Date\,\,of\,\,last\,\,detection\,\,-\,\,Date\,\,of\,\,release} -->
+<!-- The RI can also be calculated in monthly intervals, dividing the detections in a month by the number of days of that month. -->
+
+```{r color_scales, include=FALSE}
+
+col_scale_barplot_area <- c("#EFC000", "#213B70", "#009FE3")
+
+```
+
+## Study Area
+
+```{r, overviewmap, fig.cap='Overview map of the study area. Colors denote the area subdivisions (BPNS, WS1 and WS2), the Offshore Wind Farm, acoustic receiver stations and stations detecting a starry smooth-hound shark.', out.width="100%"}
+# map_base %>% addProviderTiles("Stamen.TonerLite")
+leaflet(options = leafletOptions(zoomControl = FALSE,
+                                 minZoom = 9, maxZoom = 9,
+                                 dragging = FALSE)) %>%
+  # addProviderTiles("Stamen.TerrainBackground") %>%
+  # addProviderTiles("Stamen.TonerBackground") %>%
+  
+  setView(3.4, 51.48, zoom = 9) %>%
+  addScaleBar(position = "topleft", options = scaleBarOptions(maxWidth = 250, imperial = F)) %>%
+  # # add sandbanks
+  # addPolygons(data=sandbanks,
+  #             fillColor = "#FFF2B3",
+  #             weight = 0,
+  #             fillOpacity = 0.5,
+  #             group = "Sandbanks") %>%
+  #label = ~preferredGazetteerName, labelOptions = labelOptions(noHide = F, textOnly = F, direction = "center", textsize = "12px", sticky = FALSE)
+  # add BPNS boundary
+  addPolygons(data = BPNS, color = col_scale_barplot_area[1],
+              opacity = 1,
+              # fillColor = col_scale_barplot_area[1],
+              weight = 3,
+              fillOpacity = 0,
+              label = ~preferredGazetteerName,
+              labelOptions = labelOptions(noHide = F, textOnly = F, direction = "center", textsize = "12px", sticky = FALSE),
+              group = "Regions") %>%
+  # add WS1 boundary
+  addCircleMarkers(lng = 3.47531, lat = 51.44293,
+                   radius = 35,
+                   # color = "white",
+                   weight = 3,
+                   opacity = 1,
+                   color = col_scale_barplot_area[2],
+                   fillOpacity = 0) %>%
+  # add WS2 boundary
+  addCircleMarkers(lng = 3.75244, lat = 51.38469,
+                   radius = 35,
+                   # color = "white",
+                   weight = 3,
+                   opacity = 1,
+                   color = col_scale_barplot_area[3],
+                   fillOpacity = 0) %>%
+    # add OWFs
+  addPolygons(data=OWFs,
+              # color = "white",
+              opacity = 1,
+              color = "#BC3C29",
+              weight = 3,
+              fillOpacity = 0,
+              group = "OWFs") %>%
+  # Add acoustic stations
+  addCircleMarkers(data = close_stations,
+                   lat = ~deploy_latitude,
+                   lng = ~deploy_longitude,
+                   weight = 0,
+                   fillOpacity = 1,
+                   fillColor = "black",
+                   radius = 3) %>%
+  # addCircleMarkers(data = masterias_stations) %>% # to color code the areas
+  addCircleMarkers(data = masterias_detections_clean,
+                   lat = ~deploy_latitude,
+                   lng = ~deploy_longitude,
+                   weight = 0,
+                   fillColor = "white",
+                   fillOpacity = 1,
+                   radius = 3) %>%
+  addLegend(position = "bottomright", 
+            colors = c("#BC3C29",col_scale_barplot_area[1],col_scale_barplot_area[2], col_scale_barplot_area[3], "white", "black"), 
+            labels = c("Offshore Wind Farm     ", "BPNS                   ", "Western Scheldt 1 (WS1)", "Western Scheldt 2 (WS2)", "Acoustic detections    ", "Acoustic Receiver Stations"),
+            opacity = 1)
+```
+
+
+# Results
+
+* `r masterias_detections_clean %>% nrow()` detections of `r masterias_detections_clean %>% select(tag_serial_number) %>% unique() %>% nrow()` individuals (n_female = `r masterias_detections_clean %>% filter(sex == "f") %>% select(tag_serial_number) %>% unique() %>% nrow()` and n_male = `r masterias_detections_clean %>% filter(sex == "m") %>% select(tag_serial_number) %>% unique() %>% nrow()`) at `r masterias_detections_clean %>% select(station_name) %>% unique() %>% nrow()` acoustic receiver stations from July, 2018 to July, 2020.
+
+
+<!-- Here you may have some figures to show off, bellow I have made a scatterplot with the infamous Iris dataset and I can even reference to the figure automatically like this, `Figure \@ref(fig:irisfigure)`, Figure \@ref(fig:irisfigure). -->
+
+
+```{r, boxplotnotuse, include=FALSE, fig.cap='Detections of *M. asterias*, by month, area (BPNS, WS1, WS2) and sex (f, m).', out.width="80%"}
+ggplot(masterias_info) +
+  geom_boxplot(aes(x = sex, y = length1, fill = sex)) +
+  # facet_wrap(~sex) +
+  ggsci::scale_fill_nejm() +
+  geom_text(aes(x = 1, y = 67, label = "n = 19")) +
+  geom_text(aes(x = 2, y = 67, label = "n = 11")) +
+  labs(y = "Total Length in cm", x  = "Sex", fill = "Sex") +
+  theme_minimal()
+```
+
+### Detections
+
+```{r, abacus, fig.cap=' Detections of each tag per date, sex and area.', out.width="100%"}
+# {r, plot_abacus, echo=TRUE, fig.cap= "Abacus plot showing the detections of each tag by date. The color denotes the area of detection (Belgian Part of the North Sea, Westerschelde 1 and Westerschelde 2). ", out.width="80%"}
+ggplot(masterias_detections_clean) +
+  geom_point(mapping = aes(x = date_time, y = tag_serial_number %>% str_trunc(3, "left", ellipsis = ""), color = area, pch = sex),size = 5) +
+  scale_color_manual(values = col_scale_barplot_area) +
+  labs(x = "Date", y = "Tag serial number", color = "Area", pch = "Sex") +
+  theme_minimal(base_size = 22)
+```
+
+```{r, barplotdet, fig.cap='Detections of *M. asterias*, by month, area (BPNS, WS1, WS2) and sex (f, m).', out.width="100%"}
+
+ggplot(masterias_station_month_sex, aes(x = month_name, y = detections_count, fill = area)) +
+  geom_bar(position = "stack", stat = "identity") +
+  facet_grid(sex ~ ., scales = "free_y", space = "free_y") +
+  # theme(text=element_text(size=18)) +
+  theme_minimal(base_size = 22, base_family = "") +
+  scale_y_continuous(n.breaks = 3) +
+  # ggsci::scale_fill_jco() +
+  scale_fill_manual(values = col_scale_barplot_area) +
+  labs(x = "Month", y = "Detections", fill = "Area")
+```
+
+### Individuals
+
+```{r, barplotind, fig.cap='Detected individuals of *M. asterias*, by month, area (BPNS, WS1, WS2) and sex (f, m).', out.width="100%"}
+ggplot(ind_area_month, aes(x = month_name, y = individuals_count, fill = area)) +
+  geom_bar(position = "stack", stat = "identity") +
+  facet_grid(sex ~ ., scales = "free_y", space = "free_y") +
+  theme_minimal(base_size = 22, base_family = "") +
+  # scale_y_discrete() +
+  scale_y_continuous(n.breaks= 2) +
+  # ggsci::scale_fill_jco() +
+  scale_fill_manual(values = col_scale_barplot_area) +
+  labs(x = "Month", y = "Individuals", fill = "Area")
+
+```
+
+
+<!-- ```{r, barplotind, fig.cap='Detected individuals of *M. asterias*, by month, area (BPNS, WS1, WS2) and sex (f, m).', fig.width=12, fig.height=8, out.width="100%"} -->
+<!-- ggplot(ind_area_month, aes(x = month_name, y = individuals_count, fill = area)) + -->
+<!--   geom_bar(position = "stack", stat = "identity") + -->
+<!--   facet_grid(sex ~ ., scales = "free_y", space = "free_y") + -->
+<!--   theme_minimal(base_size = 22) + -->
+<!--   # scale_y_discrete() + -->
+<!--   scale_y_continuous(n.breaks= 2) + -->
+<!--   # ggsci::scale_fill_jco() + -->
+<!--   scale_fill_manual(values = col_scale_barplot_area) + -->
+<!--   labs(x = "Month", y = "Individuals", fill = "Area") -->
+
+<!-- ``` -->
+
+### Overall Residency Index
+
+
+```{r, RIall, fig.cap='Residency Index for all detected tags. Color denotes sex. The RI significantly differs between males and females (Welch Two Sample t-test, p = 0.02253).', out.width="100%"}
+ggplot() +
+  geom_col(data = masterias_RI_all, aes(y = RI_all, x = tag_serial_number %>% str_trunc(3, "left", ellipsis = ""), fill = sex)) +
+  # scale_color_continuous(c("red", "blue")) +
+  theme_minimal(base_size = 22) +
+  ggsci::scale_fill_nejm() +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+  labs(y = "overall Residency index", x = "Tag Serial Number", fill = "Sex")
+```
+
+<!-- How about a neat table of data? See, Table \@ref(tab:iristable): -->
+
+<!-- ```{r, iristable} -->
+<!-- knitr::kable( -->
+<!--   iris[1:15,1:5], format = "html", -->
+<!--   caption = "A table made with the **knitr::kable** function.", -->
+<!--   align = "c", col.names = c("Sepal <br> Length", -->
+<!--                              "Sepal <br> Width", -->
+<!--                              "Petal <br> Length", -->
+<!--                              "Petal <br> Width", -->
+<!--                              "Species"), -->
+<!--   escape = FALSE) -->
+<!-- ``` -->
+
+# Discussion
+
+<!-- * Females were overall larger than males, albeit not significantly (t-test). -->
+
+* Only `r ((4/11) * 100) %>% round()`% of tagged males were acoustically detected, compared to `r ((14/19) * 100) %>% round()`% females. This could point towards higher site fidelity by females because they use the Scheldt Estuary as a pupping ground [@breve_2020].
+
+* There are no detections in winter at all (see Figure \@ref(fig:abacus)). Previous studies suggest that *M. asterias* migrates into offshore waters in the winter [@breve_2016; @griffiths_2020].
+
+# References
+
+<!-- TO do: lifewatch (belgium) and IMBRSea Logo -->
