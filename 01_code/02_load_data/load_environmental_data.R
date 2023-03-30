@@ -1,0 +1,10 @@
+# Script to load environmental data
+
+# From the Scheldemonitor: https://www.scheldemonitor.org/dataproducts/en/download/periodic/explore# ####
+
+source(paste0(dir_path, "/functions.R"))
+
+
+# SM_salinity <- load_data(filestring = "SM_salinity", folder = path_envdata)
+SM_salinity_summary <- load_data(filestring = "SM_salinity_summary", folder = path_envdata)
+SM_salinity_summary_month <- load_data(filestring = "SM_salinity_summary_month", folder = path_envdata)
