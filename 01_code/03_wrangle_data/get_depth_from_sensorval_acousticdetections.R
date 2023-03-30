@@ -16,16 +16,16 @@ library(suncalc)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 # plot_path <- paste0(dir_path, "/04_analysis_results/dst_pca_kmeans/")
-# source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_detections.R"))
+# source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
 
-tag_info_vemco <- read_xls(paste0(dir_path, "/03_data/acoustic_detections/TagSheet_25226_20180427.xls"), sheet = "Tag Summary") %>%
+tag_info_vemco <- read_xls(paste0(dir_path, "/00_data/acoustic_detections/TagSheet_25226_20180427.xls"), sheet = "Tag Summary") %>%
   rename(acoustic_tag_id = `VUE Tag ID`, sensor_intercept = Intercept, sensor_slope = Slope)
 
-detection_sensor_info <- masterias_detections_clean %>% 
-  dplyr::select(!c(sensor_unit, sensor2_value, sensor2_unit, signal_to_noise_ratio, qc_flag)) %>%
+detection_sensor_info <- masterias_detections_clean %>%
+  dplyr::select(!c(sensor_unit, sensor2_value, sensor2_unit, signal_to_noise_ratio, qc_flag, sensor_intercept, sensor_slope, sensor_type)) %>%
   # dplyr::select(detection_id, receiver_id, date_time, tag_serial_number, area, month, acoustic_tag_id, station_name, deploy_latitude, deploy_longitude, sensor_value, sex) %>%
   left_join(tag_info_vemco %>%
               dplyr::select(acoustic_tag_id, sensor_intercept, sensor_slope),
@@ -45,9 +45,11 @@ time_bins <- suncalc::getSunlightTimes(data = detection_sensor_info %>%
                                          # tibble::add_row(date = "2019-11-16" %>% as.Date(), lat = 52.59358, lon = 2.391523, tag_serial_number = "1293321"),
 )
 
+rm(detections_tempdepth_daynight)
+
 detections_tempdepth_daynight <- detection_sensor_info %>% 
   mutate(date = date_time %>% as.Date()) %>%
-  left_join(time_bins, by = join_by(date, deploy_latitude == lat, deploy_longitude == lon)) %>%
+  left_join(time_bins, by = join_by(date, deploy_latitude == lat, deploy_longitude == lon, sunrise, sunset)) %>%
   mutate(day = ifelse(date_time %>% between(sunrise, sunset), 1, 0),
          day = day %>% as.factor()) %>%
   dplyr::select(!c(dusk, dawn))
@@ -62,4 +64,4 @@ detections_tempdepth_daynight <- detection_sensor_info %>%
 
 # save data ####
 
-save_data(data = detections_tempdepth_daynight, folder = paste0(dir_path, "/03_data/acoustic_detections/"))
+save_data(data = detections_tempdepth_daynight, folder = paste0(dir_path, "/00_data/acoustic_detections/"))

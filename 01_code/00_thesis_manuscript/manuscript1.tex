@@ -4,8 +4,8 @@
 \PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
-  super,
-  preprint,
+  authoryear,
+  review,
   3p]{elsarticle}
 
 \usepackage{amsmath,amssymb}
@@ -176,7 +176,7 @@
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
-\bibliographystyle{elsarticle-num}
+\bibliographystyle{elsarticle-harv}
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
@@ -202,33 +202,31 @@ asterias},
 \corref{cor1}%
 \fnref{fn1}}
  \ead{lotte.pohl@imbrsea.eu} 
-\author[2]{Niels Brevé%
+\author[2,3]{Niels Brevé%
 %
 \fnref{fn2}}
- \ead{cat@example.com} 
-\author[2]{Carlota Muñiz%
+ \ead{breve@sportvisserijnederland.nl} 
+\author[1]{Carlota Muñiz%
 %
 \fnref{fn3}}
- \ead{bob@example.com} 
+ \ead{carlota.muniz@vliz.be} 
 \author[1]{Jan Reubens%
 %
 \fnref{fn4}}
- \ead{Jan.Reubens@vliz.be} 
+ \ead{jan.reubens@vliz.be} 
 
 \affiliation[1]{organization={Flemish Marine Institute, Marine
 Observation Centre},addressline={Slipwaykaai
 2},city={Ostend},postcode={8400},postcodesep={}}
-\affiliation[2]{organization={Another University, Department
-Name},addressline={Street Address},city={City},postcode={Postal
-Code},postcodesep={}}
+\affiliation[2]{organization={Wageningen University and Research, Marine
+Ecology Group},,postcodesep={}}
+\affiliation[3]{organization={Sportvisserij Nederlands},,postcodesep={}}
 
 \cortext[cor1]{Corresponding author}
-\fntext[fn1]{What should go in an author's footnote?}
-\fntext[fn2]{Yet another author footnote.}
-\fntext[fn3]{Another author footnote, this is a very long footnote and
-it should be a really long footnote. But this footnote is not yet
-sufficiently long enough to make two lines of footnote text.}
-\fntext[fn4]{Yet another author footnote.}
+\fntext[fn1]{Msc Student}
+\fntext[fn2]{Second Promotor}
+\fntext[fn3]{Supervisor}
+\fntext[fn4]{Promotor}
         
 \begin{abstract}
 This is the abstract. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -251,8 +249,14 @@ tempus elit.
     mustelus asterias
 \end{keyword}
 \end{frontmatter}
-    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, interior hidden, enhanced, frame hidden, sharp corners, boxrule=0pt, breakable]}{\end{tcolorbox}}\fi
+    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, interior hidden, frame hidden, boxrule=0pt, breakable, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
 Please make sure that your manuscript follows the guidelines in the
 Guide for Authors of the relevant journal. It is not necessary to
 typeset your manuscript in exactly the same way as an article, unless
@@ -264,8 +268,8 @@ For detailed instructions regarding the elsevier article class, see
 \hypertarget{bibliography-styles}{%
 \section{Bibliography styles}\label{bibliography-styles}}
 
-Here are two sample references: \citet{Feynman1963118}
-\citet{Dirac1953888}.
+Let's see how we can cite differently: \citet{nathan_2008} or
+\citet{dodge_2013}.
 
 By default, natbib will be used with the \texttt{authoryear} style, set
 in \texttt{classoption} variable in YAML. You can sets extra options

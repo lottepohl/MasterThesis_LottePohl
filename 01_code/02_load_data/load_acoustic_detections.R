@@ -2,10 +2,11 @@
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-data_path <- paste0(dir_path, "/03_data/acoustic_detections/")
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+data_path <- paste0(dir_path, "/00_data/acoustic_detections/")
 
-source(paste0(dir_path, "/functions.R"))
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
 # source(paste0(dir_path, "/02_scripts/03_wrangle_data/wrangle_acoustic_data.R"))
 # source(paste0(dir_path, "/02_scripts/03_wrangle_data/get_depth_from_sensorval_acousticdetections.R"))
 

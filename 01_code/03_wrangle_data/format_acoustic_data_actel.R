@@ -2,12 +2,14 @@
 
 library(tidyverse)
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+rm(list = ls())
+
+dir_path <- getwd() # "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
 # source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_data.R"))
-source(paste0(dir_path, "/02_scripts/03_wrangle_data/wrangle_acoustic_data.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_human_activities.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/03_wrangle_data/wrangle_acoustic_data.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_human_activities.R"))
 rm(wrecks)
 
                                  

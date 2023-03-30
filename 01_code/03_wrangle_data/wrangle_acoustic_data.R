@@ -8,11 +8,13 @@ library(readxl)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-data_path <- paste0(dir_path, "/03_data/acoustic_detections/")
-source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/01_save_data/load_acoustic_data_make_from_ETN.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_marine_boundaries.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+data_path <- paste0(dir_path, "/00_data/acoustic_detections/")
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+# source(paste0(dir_path, "/01_code/01_save_data/load_acoustic_data_make_from_ETN.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_marine_boundaries.R"))
 
 # 1. INFO AND DETECTIONS ####
 
@@ -164,7 +166,7 @@ ind_area_month$month_name <- ind_area_month$month_name %>% factor(levels = c("Ap
 
 # 4. calc depth and temp from sensor val ####
 
-tag_info_vemco <- readxl::read_xls(paste0(dir_path, "/03_data/acoustic_detections/TagSheet_25226_20180427.xls"), sheet = "Tag Summary") %>%
+tag_info_vemco <- readxl::read_xls(paste0(dir_path, "/00_data/acoustic_detections/TagSheet_25226_20180427.xls"), sheet = "Tag Summary") %>%
   rename(acoustic_tag_id = `VUE Tag ID`, sensor_intercept = Intercept, sensor_slope = Slope)
 
 detection_sensor_info <- masterias_detections_clean %>% 

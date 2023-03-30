@@ -1,9 +1,11 @@
 # Script to calculate the fft and PSD
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path <- paste0(dir_path, "/04_analysis_results/spectral_analysis/fft/")
+# rm(list = ls())
 
-source(paste0(dir_path, "/02_scripts/02_load_data/load_depth_temp_logs.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path <- paste0(dir_path, "/02_results/spectral_analysis/fft/")
+
+source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
 
 # Function to calc fft and psd ####
 calc_fft <- function(depth_log, sample_freq){

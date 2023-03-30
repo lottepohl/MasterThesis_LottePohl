@@ -1,15 +1,15 @@
 # Script to explore the behaviour of M. asterias females that were acoustically detected in the Westerschelde
 # Author: Lotte Pohl
 
-rm(list = ls())
+# rm(list = ls())
 
 library(tidyverse)
 library(lubridate)
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
-source(paste0(dir_path, "/02_scripts/03_wrangle_data/wrangle_acoustic_data.R"))
-source(paste0(dir_path, "/02_scripts/05_plots_maps/base_map.R"))
+source(paste0(dir_path, "/01_code/03_wrangle_data/wrangle_acoustic_data.R"))
+source(paste0(dir_path, "/01_code/05_plots_maps/base_map.R"))
 
 # Functions ####
 make_detection_details <- function(tag_serial_num_chr, years){

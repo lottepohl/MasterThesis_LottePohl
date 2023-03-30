@@ -10,17 +10,18 @@ library(actel)
 # library(RGtk2)
 
 # 2. PREPARE WORKSPACE ####
-rm(list = ls())
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-source(paste0(dir_path, "/02_scripts/01_save_data/save_actel_files.R"))
-source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_actel_files.R"))
+# rm(list = ls())
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+source(paste0(dir_path, "/01_code/01_save_data/save_actel_files.R"))
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+source(paste0(dir_path, "/01_code/02_load_data/load_actel_files.R"))
 
 # dot <- 
 #   "offshore -- coast -- WS1 -- WS2
 # WS1 -- offshore"
 
-# setwd(paste0(dir_path, "/03_data/actel_files"))
+# setwd(paste0(dir_path, "/00_data/actel_files"))
 
 # actel::explore(tz = "Europe/Brussels", GUI = "never")
 
@@ -34,6 +35,6 @@ results_explore <- explore(datapack = x, report = TRUE)
 results_migration <- migration(datapack = x, report = TRUE)
 results_residency <- residency(datapack = x, report = TRUE)
 
-save_data(data = results_residency, folder = paste0(dir_path, "/04_analysis_results/actel/residency/"))
+save_data(data = results_residency, folder = paste0(dir_path, "/02_results/actel/residency/"))
   
 # load("actel_explore_results.RData")

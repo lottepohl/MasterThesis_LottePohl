@@ -11,10 +11,10 @@ library(stringr)
 # webshot::install_phantomjs(force = TRUE)
 
 # 1. general info ####
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-path_envdata <- paste0(dir_path, "/03_data/environmental_layers/")
-path_boundaries <- paste0(dir_path, "/03_data/marine_boundaries/")
-path_actel <- paste0(dir_path, "/03_data/actel_files/")
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+path_envdata <- paste0(dir_path, "/00_data/environmental_layers/")
+path_boundaries <- paste0(dir_path, "/00_data/marine_boundaries/")
+path_actel <- paste0(dir_path, "/00_data/actel_files/")
 project_code <- "ADST-Shark"
 scientific_name <- "Mustelus asterias"
 masterias_recaptured_serials <- c("1293295", "1293304", "1293310", "1293312", "1293319", "1293308", "1293321", "1293322")

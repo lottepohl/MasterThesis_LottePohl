@@ -6,9 +6,9 @@ library(tidyverse)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
 
 masterias_info2 <- masterias_info %>% 
   dplyr::select(tag_serial_number, capture_date_time, capture_location, release_date_time, length1, sex, surgery_date_time, n_detect) %>%

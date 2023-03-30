@@ -6,8 +6,8 @@ library(tidyverse)
 library(raster)
 library(marmap)
 
-rm(list =ls())
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+# rm(list =ls())
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 # source
 
 bathy <- marmap::getNOAA.bathy(1.9, 4.7, 50.9, 52.4, resolution = 0.25,

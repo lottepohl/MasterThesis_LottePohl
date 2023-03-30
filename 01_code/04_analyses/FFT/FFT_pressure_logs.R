@@ -6,15 +6,15 @@ library(pracma)
 library(psdr)
 library(ggplot2)
 
-rm(list = ls())
+# rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path <- paste0(dir_path, "/04_analysis_results/spectral_analysis/fft/")
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path <- paste0(dir_path, "/02_results/spectral_analysis/fft/")
 
-# source(paste0(dir_path, "/02_scripts/02_load_data/load_depth_temp_logs.R"))
-source(paste0(dir_path, "/02_scripts/04_analyses/FFT/calculate_fft_psd.R"))
-source(paste0(dir_path, "/02_scripts/05_plots_maps/plot_fft_periodogram.R"))
-source(paste0(dir_path, "/02_scripts/05_plots_maps/plot_dst_pressure_temp.R"))
+# source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
+source(paste0(dir_path, "/01_code/04_analyses/FFT/calculate_fft_psd.R"))
+source(paste0(dir_path, "/01_code/05_plots_maps/plot_fft_periodogram.R"))
+source(paste0(dir_path, "/01_code/05_plots_maps/plot_dst_pressure_temp.R"))
 
 # todo: load 2 scripts (fft calc and periodogram plot) and do ggplotly() and maybe superpose them?
 

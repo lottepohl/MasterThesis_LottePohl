@@ -1,10 +1,12 @@
 # Script to load and wrangle the DST geolocation model output
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
-source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_dectections.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_geolocation_output.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+# source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+source(paste0(dir_path, "/01_code/06_functions/functions_DST_presstemplogs.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_dectections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_geolocation_output.R"))
 
 # READ DST ####
 
@@ -93,7 +95,7 @@ masterias_dst_geolocation_output <- mpts_all %>% left_join(masterias_info %>% dp
 # mpts_short <- mpts_all %>% filter(!tag_serial_number %in% c("1293308", "1293321"))
 
 # Save file
-save_data(masterias_dst_geolocation_output, folder = paste0(dir_path, "/03_data/dst_rawdata/"))
+save_data(masterias_dst_geolocation_output, folder = paste0(dir_path, "/00_data/dst_rawdata/"))
 
 # remove single files
 # rm(mpt_1293295_Det1, mpt_1293304_Det0, mpt_1293308_Det1, mpt_1293310_Det0, mpt_1293312_Det0, mpt_1293319_Det1, mpt_1293321_Det1, mpt_1293322_Det1)

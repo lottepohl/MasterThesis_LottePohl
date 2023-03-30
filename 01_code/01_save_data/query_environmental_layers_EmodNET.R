@@ -14,8 +14,8 @@ library(sf)
 # knitting <- T
 # pre <- ifelse(knitting %>% isFALSE(), ".", "..") 
 
-path_envdata <- paste0(dir_path, "/03_data/environmental_layers/")
-path_boundaries <- paste0(dir_path, "/03_data/marine_boundaries/")
+path_envdata <- paste0(getwd(), "/00_data/environmental_layers/")
+path_boundaries <- paste0(getwd(), "/00_data/marine_boundaries/")
 
 ## 1. view available webservices ####
 View(emodnet_wfs())

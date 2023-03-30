@@ -1,7 +1,8 @@
 # Script to calculate the Residency Index from acoustic detection data
 
-source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_data.R"))
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_data.R"))
 
 # overall residency index, detected days / days of liberty
 batterytime <- 518 #days, as stated on the ETN website (acoustic-archival > tags > eg. "1293296" > Field: TAG_ESTIMATED_LIFETIME)

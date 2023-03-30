@@ -14,29 +14,26 @@ author:
           postal-code: 8400
     attributes:
         corresponding: true
-    note: What should go in an author's footnote?
+    note: Msc Student
   - name: Niels Brevé
-    email: cat@example.com
+    email: breve@sportvisserijnederland.nl
     affiliations:
-        - ref: another-u
-    note: Yet another author footnote.
+      - id: WUR
+        name: Wageningen University and Research
+        department: Marine Ecology Group
+      - id: Sportvisserij
+        name: Sportvisserij Nederlands
+    note: Second Promotor
   - name: Carlota Muñiz
-    email: bob@example.com
-    affiliations:
-        - id: another-u
-          name: Another University
-          department: Department Name
-          address: Street Address
-          city: City
-          state: State
-          postal-code: Postal Code
-    note: |
-      Another author footnote, this is a very long footnote and it should be a really long footnote. But this footnote is not yet sufficiently long enough to make two lines of footnote text.
-  - name: Jan Reubens
-    email: Jan.Reubens@vliz.be
+    email: carlota.muniz@vliz.be
     affiliations:
         - ref: VLIZ
-    note: Yet another author footnote.
+    note: Supervisor
+  - name: Jan Reubens
+    email: jan.reubens@vliz.be
+    affiliations:
+        - ref: VLIZ
+    note: Promotor
 abstract: |
   This is the abstract. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum augue turpis, dictum non malesuada a, volutpat eget velit. Nam placerat turpis purus, eu tristique ex tincidunt et. Mauris sed augue eget turpis ultrices tincidunt. Sed et mi in leo porta egestas. Aliquam non laoreet velit. Nunc quis ex vitae eros aliquet auctor nec ac libero. Duis laoreet sapien eu mi luctus, in bibendum leo molestie. Sed hendrerit diam diam, ac dapibus nisl volutpat vitae. Aliquam bibendum varius libero, eu efficitur justo rutrum at. Sed at tempus elit.
 keywords: 
@@ -45,16 +42,21 @@ keywords:
   - mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
-csl: _extensions/quarto-journals/elsevier/elsarticle.cls
+# biblio-style: model5-names.bst
 format:
   # pdf: default
+  # pdf: # bmc template
+  #   template: bmc_template/bmc_article.tex
+  #   template-partials:
+  #     - title.tex
   elsevier-pdf:
     keep-tex: true
+    toc: true
     journal:
       name: Journal of Animal Biotelemetry
-      formatting: preprint
+      formatting: review # or preprint, or doubleblind
       model: 3p
-      cite-style: super
+      cite-style: authoryear
 editor_options: 
   chunk_output_type: console
 ---
@@ -68,7 +70,8 @@ For detailed instructions regarding the elsevier article class, see   <https://w
 
 # Bibliography styles
 
-Here are two sample references:  @Feynman1963118 @Dirac1953888.
+
+Let's see how we can cite differently: @nathan_2008 or  @dodge_2013.
 
 By default, natbib will be used with the `authoryear` style, set in `classoption` variable in YAML. 
 You can sets extra options with `natbiboptions` variable in YAML header. Example 

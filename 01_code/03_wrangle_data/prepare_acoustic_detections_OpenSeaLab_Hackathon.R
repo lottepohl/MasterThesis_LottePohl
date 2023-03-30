@@ -12,15 +12,15 @@ library(readr)
 # library(StreamMetabolism)
 # library(suncalc)
 
-rm(list = ls())
+# rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 data_path_acoustic <- "C:/Users/lotte.pohl/Documents/github_repos/OpenSeaLabHackathon_SmoothSharks/00_data/01_acoustic_detections/"
 data_path_dst <- "C:/Users/lotte.pohl/Documents/github_repos/OpenSeaLabHackathon_SmoothSharks/00_data/02_shark308_datastoragetag/"
-# source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_detections.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_depth_temp_logs.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_geolocation_output.R"))
+# source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_geolocation_output.R"))
 
 # 1. prepare data ####
 

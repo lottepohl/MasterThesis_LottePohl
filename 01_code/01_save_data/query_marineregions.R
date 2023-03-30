@@ -1,10 +1,10 @@
 # Script to query Marine Boundary Data through the `mregions2` R package
 #  Author: Lotte Pohl
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
-source(paste0(dir_path, "/functions.R"))
-
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
 
 
 BPNS <- mregions2::gaz_search(3293) %>% mregions2::gaz_geometry()

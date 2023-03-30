@@ -2,7 +2,10 @@
 
 # From the Scheldemonitor: https://www.scheldemonitor.org/dataproducts/en/download/periodic/explore# ####
 
-source(paste0(dir_path, "/functions.R"))
+# rm(list = ls())
+
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
 
 
 # SM_salinity <- load_data(filestring = "SM_salinity", folder = path_envdata)

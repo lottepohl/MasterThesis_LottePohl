@@ -1,10 +1,10 @@
 # Script to save the actel files
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
-source(paste0(dir_path, "/02_scripts/03_wrangle_data/format_acoustic_data_actel.R"))
+source(paste0(dir_path, "/01_code/03_wrangle_data/format_acoustic_data_actel.R"))
 
-folder <- paste0(dir_path, "/03_data/actel_files/")
+folder <- paste0(dir_path, "/00_data/actel_files/")
 
 save_data(Biometrics, folder)
 write_csv(Biometrics, paste0(folder, "Biometrics.csv"))
@@ -19,6 +19,6 @@ save_data(dot, folder)
 
 writeLines(dot, con = paste0(folder, "dot.txt"))
 
-rm(list = ls())
+# rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+# dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
