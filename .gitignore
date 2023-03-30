@@ -38,3 +38,4 @@ vignettes/*.pdf
 # Other custom files to ignore
 00_data/
 02_results/
+/.quarto/
