@@ -15,11 +15,11 @@ library(forcats)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path <- paste0(dir_path, "/04_analysis_results/dst_summary/")
-# source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_summarystatistics.R"))
-source(paste0(dir_path, "/02_scripts/ggplot_geom_split_violin.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path <- paste0(dir_path, "/02_results/dst_summary/")
+# source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
+source(paste0(dir_path, "/01_code/06_functions/ggplot_geom_split_violin.R"))
 
 ## prepare datasets ####
 

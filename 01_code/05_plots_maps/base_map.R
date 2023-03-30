@@ -5,16 +5,17 @@ library(leafem)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-path_envdata <- paste0(dir_path, "/03_data/environmental_layers/")
-path_boundaries <- paste0(dir_path, "/03_data/marine_boundaries/")
-source(paste0(dir_path, "/functions.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+path_envdata <- paste0(dir_path, "/00_data/environmental_layers/")
+path_boundaries <- paste0(dir_path, "/00_data/marine_boundaries/")
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
 # source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_environmental_data.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_human_activities.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_marine_boundaries.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_detections.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_bathy.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_environmental_data.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_human_activities.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_marine_boundaries.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_bathy.R"))
 # crop bathy belgium to 3.455, 3.532,51.383, 51.485
 bathy_belgium <- bathy_belgium %>% filter(dplyr::between(latitude, 51.343, 51.485) & dplyr::between(longitude, 3.455, 3.77))
 

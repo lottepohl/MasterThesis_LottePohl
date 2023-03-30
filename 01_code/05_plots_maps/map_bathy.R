@@ -7,11 +7,13 @@ library(raster)
 library(marmap)
 library(sf)
 
-rm(list =ls())
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-source(paste0(dir_path, "/functions.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_marine_boundaries.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_bathy.R"))
+# rm(list =ls())
+
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+# source(paste0(dir_path, "/functions.R"))
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+source(paste0(dir_path, "/01_code/02_load_data/load_marine_boundaries.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_bathy.R"))
 
 rm(bathy_belgium_coarse, bathy_belgium_coarse_raster, bathy_northsea, bathy_northsea_raster)
 

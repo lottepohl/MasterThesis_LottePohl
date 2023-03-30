@@ -5,12 +5,12 @@ library(plotly)
 library(pracma)
 library(psdr)
 
-rm(list = ls())
+# rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path <- paste0(dir_path, "/04_analysis_results/spectral_analysis/fft/")
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path <- paste0(dir_path, "/02_results/spectral_analysis/fft/")
 
-source(paste0(dir_path, "/02_scripts/04_analyses/FFT/calculate_fft_psd.R"))
+source(paste0(dir_path, "/01_code/04_analyses/FFT/calculate_fft_psd.R"))
 
 plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05, path = plot_path){
   # todo: get local rule or set values for period upper and lower lim

@@ -14,12 +14,12 @@ library(plotly)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path <- paste0(dir_path, "/04_analysis_results/dst_pca_kmeans/")
-# source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_summarystatistics.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_pca_clustering_results.R"))
-source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_pca_clustering.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path <- paste0(dir_path, "/02_results/dst_pca_kmeans/")
+# source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_pca_clustering_results.R"))
+source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_pca_clustering.R"))
 
 long_dst_daynight <- long_dst_daynight %>%
   mutate(month = date %>% lubridate::month(),

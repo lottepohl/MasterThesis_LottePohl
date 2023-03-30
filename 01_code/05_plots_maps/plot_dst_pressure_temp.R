@@ -2,11 +2,12 @@
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-plot_path_dst <- paste0(dir_path, "/04_analysis_results/dst_overview/depth/")
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+plot_path_dst <- paste0(dir_path, "/02_results/dst_overview/depth/")
 
-  # source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_depth_temp_logs.R"))
+  
+# source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
 
 # ideas: time vector in the background with colors. 
 # todo: make ggplot style uniform i.e. make own theme - at a later stage

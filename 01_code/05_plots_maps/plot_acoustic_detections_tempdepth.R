@@ -17,9 +17,9 @@ library(suncalc)
 
 # rm(list = ls())
 
-dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
-source(paste0(dir_path, "/02_scripts/02_load_data/load_acoustic_detections.R"))
-source(paste0(dir_path, "/02_scripts/02_load_data/load_dst_summarystatistics.R"))
+dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
 
 # test <- masterias_detections_clean %>% dplyr::select(!sensor_unit) %>% left_join(masterias_detections_clean %>% dplyr::select(!c(date_time, tag_serial_number, acoustic_tag_id, station_name, deploy_latitude, deploy_longitude, sensor_value, sex)), 
 #                                                  by = join_by(detection_id))
