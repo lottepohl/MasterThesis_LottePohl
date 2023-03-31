@@ -5,6 +5,8 @@
 dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 plot_path_dst <- paste0(dir_path, "/02_results/dst_overview/depth/")
 
+source(paste0(getwd(), "/01_code/06_functions/functions.R"))
+
   
 # source(paste0(dir_path, "/functions/functions_DST_presstemplogs.R"))
 source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
@@ -28,33 +30,40 @@ make_dst_plot <- function(data, time_vector, tag_serial_number_short){
 plot_dst_295 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293295"),
                               time_vector = "date_time",
                               tag_serial_number_short = "295")
+save_data(data = plot_dst_295, folder = plot_path_dst)
 
 plot_dst_304 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293304" & t < 300),
                               time_vector = "date_time",
                               tag_serial_number_short = "304")
+save_data(data = plot_dst_304, folder = plot_path_dst)
 
 plot_dst_308 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308"),
                               time_vector = "date_time",
                               tag_serial_number_short = "308")
+save_data(data = plot_dst_308, folder = plot_path_dst)
 
 plot_dst_310 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293310"),
                               time_vector = "date_time",
                               tag_serial_number_short = "310")
+save_data(data = plot_dst_310, folder = plot_path_dst)
 
 plot_dst_312 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293312"),
                               time_vector = "date_time",
                               tag_serial_number_short = "312")
+save_data(data = plot_dst_312, folder = plot_path_dst)
 
 plot_dst_319 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293319"),
                               time_vector = "date_time",
                               tag_serial_number_short = "319")
+save_data(data = plot_dst_319, folder = plot_path_dst)
 
 plot_dst_321 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293321"),
                               time_vector = "date_time",
                               tag_serial_number_short = "321")
+save_data(data = plot_dst_321, folder = plot_path_dst)
+
 
 plot_dst_322 <- make_dst_plot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293322"),
                               time_vector = "date_time",
                               tag_serial_number_short = "322")
-
-ggplot(data = masterias_depth_temp %>% filter(tag_serial_number== "1293308")) + geom_point(aes(x = t, y = -depth_m))
+save_data(data = plot_dst_322, folder = plot_path_dst)
