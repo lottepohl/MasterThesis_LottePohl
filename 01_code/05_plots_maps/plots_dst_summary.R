@@ -139,9 +139,12 @@ p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
   # settings
   theme_minimal() + 
-  labs(title = 'Tag 308 (female)', x = "date", y = "depth in m") + 
-  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue")) #+
-  # scale_x_continuous(n.breaks = 5)
+  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue")) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %y") +
+  scale_x_continuous(breaks = unique(long_dst_date$date %>% lubridate::week()), minor_breaks = NULL) +
+  theme_classic() +
+  theme(panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_line(linewidth = 0.2, linetype = "dotted"))
 # scale_fill_manual(name = "", values = c("daily range" = "red"))
 
 p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
@@ -354,9 +357,9 @@ p_tag321_DVM_weekly <- ggplot(data = masterias_DVM_sum_week %>% filter(tag_seria
   geom_bar(position = "fill", width = 1, stat = "identity") + 
   labs(fill = "vertical movement behaviour", y = "percentage", x = "week", title = "tag 321") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
-  scale_x_discrete(labels = masterias_DVM_sum_week$monthyear)
-# p_tag321_DVM_weekly
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) #+
+  # scale_x_discrete(labels = masterias_DVM_sum_week$monthyear)
+p_tag321_DVM_weekly
 
 
 # ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293295")) + geom_point(aes(x = date, y = -depth_m, pch = day)) + theme_minimal()

@@ -403,6 +403,7 @@ long_dst_date <- masterias_depth_date %>%
   group_by(tag_serial_number) %>%
   mutate(depth_range_change = depth_range - dplyr::lead(depth_range),
          depth_median_change = depth_median - dplyr::lead(depth_median),
+         depth_median_change2 = depth_median_change - dplyr::lead(depth_median_change),
          depth_min_change = depth_min - dplyr::lead(depth_min),
          depth_max_change = depth_max - dplyr::lead(depth_max),
          depth_median_roll3 = zoo::rollmean(depth_median, k = 3, fill = NA),
@@ -414,6 +415,7 @@ long_dst_date <- masterias_depth_date %>%
          depth_range_change_roll3 = zoo::rollmean(depth_range_change, k = 3, fill = NA),
          depth_range_change_roll7 = zoo::rollmean(depth_range_change, k = 7, fill = NA),
          depth_median_change_roll3 = zoo::rollmean(depth_median_change, k = 3, fill = NA),
+         depth_median_change2_roll3 = zoo::rollmean(depth_median_change2, k = 3, fill = NA),
          depth_median_change_roll7 = zoo::rollmean(depth_median_change, k = 7, fill = NA),
          # depth_median_change_roll7 = depth_median_roll7 - dplyr::lead(depth_median_roll7),
          depth_min_change_roll3 = zoo::rollmean(depth_min_change, k = 3, fill = NA),
@@ -432,16 +434,16 @@ long_dst_daynight <- masterias_depth_daynight %>%
   tidyr::drop_na()
 # save data ####
 
-save_data(data = masterias_depth_temp_summary, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_depth_daynight, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_depth_date, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_depth_week, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_depth_month, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = long_dst_date, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = long_dst_daynight, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_DVM_sum_day, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_DVM_sum_week, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
-save_data(data = masterias_DVM_sum_month, folder = paste0(dir_path, "/04_analysis_results/dst_summary/"))
+save_data(data = masterias_depth_temp_summary, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_depth_daynight, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_depth_date, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_depth_week, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_depth_month, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = long_dst_date, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = long_dst_daynight, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_DVM_sum_day, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_DVM_sum_week, folder = paste0(dir_path, "/02_results/dst_summary/"))
+save_data(data = masterias_DVM_sum_month, folder = paste0(dir_path, "/02_results/dst_summary/"))
 rm(sum_wilcox, depth_wilcox)
 
 

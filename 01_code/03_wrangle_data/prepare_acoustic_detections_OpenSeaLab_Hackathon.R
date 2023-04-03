@@ -34,9 +34,10 @@ sharks_info <- masterias_info %>%
                 surgery_date_time, tagging_methodology, sedative, comments, n_detect
                 )
 
-sharks_detections <- masterias_detections_clean %>%
+sharks_detections <- detections_tempdepth_daynight %>%
   filter(tag_serial_number %in% sharks_info$tag_serial_number,
-         date_time %>% lubridate::year() == "2019") %>%
+         date_time %>% lubridate::year() == "2019"
+         ) %>%
   dplyr::select(detection_id, date_time, tag_serial_number, receiver_id, station_name, 
                 deploy_latitude, deploy_longitude, acoustic_tag_id, sensor_type, parameter, sensor_unit, day, sunrise, sunset
                 )

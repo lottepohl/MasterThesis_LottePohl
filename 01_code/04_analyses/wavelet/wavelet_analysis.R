@@ -180,25 +180,25 @@ dev.off() # Close device
 # 
 # ## reproducing example of bias at lower periods ####
 # par(mfrow = c(1,1))
-# t1 <- sin(seq(from = 0, to = 2 * 5 * pi, length = 1000))
-# t2 <- sin(seq(from = 0, to = 2 * 15 * pi, length = 1000))
-# t3 <- sin(seq(from = 0, to = 2 * 40 * pi, length = 1000))
-# timeseries <- t1 + t2 + t3
-# 
+t1 <- sin(seq(from = 0, to = 2 * 5 * pi, length = 1000))
+t2 <- sin(seq(from = 0, to = 2 * 15 * pi, length = 1000))
+t3 <- sin(seq(from = 0, to = 2 * 40 * pi, length = 1000))
+timeseries <- t1 + t2 + t3
+
 # # my example
 # t1 <- sin(seq(from = 0, to = 2 * 10 * pi, length = 1000))
 # t2 <- sin(seq(from = 0, to = 2 * 5 * pi, length = 1000))
 # t2[0:500] <- 0
 # timeseries <- t1 + t2
-# data <- cbind(1:1000, timeseries) %>% as_tibble()
+data <- cbind(1:1000, timeseries) %>% as_tibble()
 # 
 # ggplot(data = data) +
 #   geom_line(aes(x = V1, y = timeseries)) +
 #   theme_minimal()
 # 
-# wt1 <- wt(data %>% as.matrix()) # `wt()` requires matrix!
-# # par(mfrow = c(1,2))
-# plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
+wt1 <- wt(data %>% as.matrix()) # `wt()` requires matrix!
+par(mfrow = c(1,1))
+plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
 # plot(wt1, type = "power.norm", main = "Biased wavelet power")
 # 
 # 
@@ -216,13 +216,13 @@ dev.off() # Close device
 # plot(wt.t1, plot.cb = TRUE, plot.phase = FALSE)
 # 
 # # Sample time-series
-# noise1 <- cbind(1:100, rnorm(100))
-# noise2 <- cbind(1:100, rnorm(100))
+noise1 <- cbind(1:100, rnorm(100))
+noise2 <- cbind(1:100, rnorm(100))
 # 
 # # Cross-wavelet
-# xwt_noise12 <- xwt(noise1, noise2)
+xwt_noise12 <- xwt(noise1, noise2)
 # 
 # # Make room to the right for the color bar
-# par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
-# plot(xwt_noise12, plot.cb = TRUE, plot.phase = TRUE,
-#      main = "Cross wavelet power and phase difference (arrows)")
+par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+plot(xwt_noise12, plot.cb = TRUE, plot.phase = TRUE,
+     main = "Cross wavelet power and phase difference (arrows)")
