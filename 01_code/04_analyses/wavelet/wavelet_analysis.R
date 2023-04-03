@@ -53,7 +53,7 @@ data_319_wt_all <- depthlog %>% #, row_number() %% 5 == 0
          ) %>%
   drop_na()
 
-## 319 summary statistics ####
+## 321 summary statistics ####
 
 # sample_interval = 1 # day
 dt <- 1 #day, #round(sample_interval/60, digits = 10)
@@ -63,6 +63,20 @@ depthlog <- long_dst_date %>%
 t_max <- round(((depthlog %>% nrow()) * dt), digits = 0)
 
 data_321_summary_wt_all <- depthlog %>%
+  mutate(dt = dt,
+         t_day = seq(from = 1, to = depthlog %>% nrow())) %>%
+  drop_na()
+
+## 308 summary statistics ####
+
+# sample_interval = 1 # day
+dt <- 1 #day, #round(sample_interval/60, digits = 10)
+depthlog <- long_dst_date %>% 
+  ungroup() %>%
+  filter(tag_serial_number == "1293308")
+t_max <- round(((depthlog %>% nrow()) * dt), digits = 0)
+
+data_308_summary_wt_all <- depthlog %>%
   mutate(dt = dt,
          t_day = seq(from = 1, to = depthlog %>% nrow())) %>%
   drop_na()
@@ -150,28 +164,152 @@ dev.off() # Close device
 
 ## 321 summary statistics ####
 ### median depth ####
-#### t = day, s0 = 5 * dt, do.sig = T ####
+#### t = day, s0 = 1 * dt, do.sig = T
 jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
 par(mfcol = c(2,1))
 plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median) %>% as.matrix(),
                    dt = dt,
                    do.sig = T,
                    s0 = 1 * dt), 
-     type = "power.corr.norm", main = "t = day, depth = median per day, s0 = 5 * dt, do.sig = T")
+     type = "power.corr.norm", main = "t = day, depth = median depth per day, s0 = 1 * dt, do.sig = T")
 plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median, type = "l")
 dev.off() # Close device
 
-### median depth change ####
-#### t = day, s0 = 5 * dt, do.sig = T ####
-jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+### median depth roll3 ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_roll3_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
 par(mfcol = c(2,1))
-plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median) %>% as.matrix(),
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_roll3) %>% as.matrix(),
                    dt = dt,
                    do.sig = T,
                    s0 = 1 * dt), 
-     type = "power.corr.norm", main = "t = day, depth = median per day, s0 = 5 * dt, do.sig = T")
-plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median, type = "l")
+     type = "power.corr.norm", main = "t = day, depth = median depth per day (roll3), s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median_roll3, type = "l")
 dev.off() # Close device
+
+### median depth change ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepthchange_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_change) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth median change per day, s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = data_321_summary_wt_all$depth_median_change, type = "l")
+dev.off() # Close device
+
+#### rolling mean 3 days####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepthchange_roll3_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_change_roll3) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth median change per day (roll mean 3), s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = data_321_summary_wt_all$depth_median_change_roll3, type = "l")
+dev.off() # Close device
+
+### daily depth range ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_depthrange_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_range) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth range day, s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = data_321_summary_wt_all$depth_range, type = "l")
+dev.off() # Close device
+
+
+## 308 summary statistics ####
+### median depth ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_308_summary_mediandepth_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_median) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = median depth per day, s0 = 1 * dt, do.sig = T")
+plot(x = data_308_summary_wt_all$t_day, y = -data_308_summary_wt_all$depth_median, type = "l")
+dev.off() # Close device
+
+### median depth roll3 ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_308_summary_mediandepth_roll3_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_median_roll3) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = median depth per day (roll3), s0 = 1 * dt, do.sig = T")
+plot(x = data_308_summary_wt_all$t_day, y = -data_308_summary_wt_all$depth_median_roll3, type = "l")
+dev.off() # Close device
+
+### median depth change ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_308_summary_mediandepthchange_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_median_change) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth median change per day, s0 = 1 * dt, do.sig = T")
+plot(x = data_308_summary_wt_all$t_day, y = data_308_summary_wt_all$depth_median_change, type = "l")
+dev.off() # Close device
+
+#### rolling mean 3 days ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_308_summary_mediandepthchange_roll3_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_median_change_roll3) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth median change per day (roll mean 3), s0 = 1 * dt, do.sig = T")
+plot(x = data_308_summary_wt_all$t_day, y = data_308_summary_wt_all$depth_median_change_roll3, type = "l")
+dev.off() # Close device
+
+### daily depth range ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_308_summary_depthrange_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_range) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = depth range day, s0 = 1 * dt, do.sig = T")
+plot(x = data_308_summary_wt_all$t_day, y = data_308_summary_wt_all$depth_range, type = "l")
+dev.off() # Close device
+
+# tryout: cross wt with diel vertical signal ####
+# comment: needs raw depthlog for resolution >1 day
+
+par(mfrow = c(1,1))
+dvm_signal <- sin(seq(from = 0, to = 2 * 5 * pi, length = data_321_summary_wt_all %>% nrow()))
+# t2 <- sin(seq(from = 0, to = 2 * 15 * pi, length = 1000))
+# t3 <- sin(seq(from = 0, to = 2 * 40 * pi, length = 1000))
+# timeseries <- t1 + t2 + t3
+# timeseries <- t1
+
+# # my example
+# t1 <- sin(seq(from = 0, to = 2 * 10 * pi, length = 1000))
+# t2 <- sin(seq(from = 0, to = 2 * 5 * pi, length = 1000))
+# t2[0:500] <- 0
+# timeseries <- t1 + t2
+data <- cbind(seq(from = 1, to = data_321_summary_wt_all %>% nrow()), dvm_signal) %>% as_tibble()
+plot(x = data$V1, y = data$dvm_signal, type = "l")
+# 
+# ggplot(data = data) +
+#   geom_line(aes(x = V1, y = timeseries)) +
+#   theme_minimal()
+# 
+wt1 <- wt(data %>% as.matrix()) # `wt()` requires matrix!
+par(mfrow = c(1,1))
+plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
+# plot(wt1, type = "power.norm", main = "Biased wavelet power")
+
+# xwt_noise12 <- xwt(noise1, noise2)
+# # 
+# # # Make room to the right for the color bar
+# par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+# plot(xwt_noise12, plot.cb = TRUE, plot.phase = TRUE,
+#      main = "Cross wavelet power and phase difference (arrows)")
+
 
 # old ####
 # 
@@ -202,10 +340,10 @@ dev.off() # Close device
 # p_depth_304
 # 
 # ## 321 ####
-# wt1 <- wt(data_321_wt %>% as.matrix()) # `wt()` requires matrix!
-# # par(mfrow = c(1,2))
-# plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
-# plot(data_321_wt$depth_m)
+wt1 <- wt(data_321_wt %>% as.matrix()) # `wt()` requires matrix!
+par(mfrow = c(1,2))
+plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
+plot(data_321_wt$depth_m)
 # 
 # 
 # ## 321 ####
@@ -224,6 +362,7 @@ t1 <- sin(seq(from = 0, to = 2 * 5 * pi, length = 1000))
 t2 <- sin(seq(from = 0, to = 2 * 15 * pi, length = 1000))
 t3 <- sin(seq(from = 0, to = 2 * 40 * pi, length = 1000))
 timeseries <- t1 + t2 + t3
+timeseries <- t1
 
 # # my example
 # t1 <- sin(seq(from = 0, to = 2 * 10 * pi, length = 1000))
@@ -231,6 +370,7 @@ timeseries <- t1 + t2 + t3
 # t2[0:500] <- 0
 # timeseries <- t1 + t2
 data <- cbind(1:1000, timeseries) %>% as_tibble()
+plot(x = data$V1, y = data$timeseries, type = "l")
 # 
 # ggplot(data = data) +
 #   geom_line(aes(x = V1, y = timeseries)) +
@@ -255,14 +395,14 @@ plot(wt1, type = "power.corr.norm", main = "Bias-corrected wavelet power")
 # par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1) ## Make room to the right for the color bar
 # plot(wt.t1, plot.cb = TRUE, plot.phase = FALSE)
 # 
-# # Sample time-series
-noise1 <- cbind(1:100, rnorm(100))
-noise2 <- cbind(1:100, rnorm(100))
-# 
-# # Cross-wavelet
-xwt_noise12 <- xwt(noise1, noise2)
-# 
-# # Make room to the right for the color bar
-par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
-plot(xwt_noise12, plot.cb = TRUE, plot.phase = TRUE,
-     main = "Cross wavelet power and phase difference (arrows)")
+# # # Sample time-series
+# noise1 <- cbind(1:100, rnorm(100))
+# noise2 <- cbind(1:100, rnorm(100))
+# # 
+# # # Cross-wavelet
+# xwt_noise12 <- xwt(noise1, noise2)
+# # 
+# # # Make room to the right for the color bar
+# par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+# plot(xwt_noise12, plot.cb = TRUE, plot.phase = TRUE,
+#      main = "Cross wavelet power and phase difference (arrows)")
