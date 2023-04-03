@@ -128,26 +128,56 @@ p_321_depth_raw %>% ggplotly()
 ## ribbon: median depth, max and min ####
 
 p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293308")) +
-  geom_bar(data = masterias_DVM_sum_day %>%
-             filter(tag_serial_number == "1293308"#, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             ),
-           aes(x = date_24hcycle, fill = vertical_movement)) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "DVM"), #, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = date_24hcycle, fill = "DVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "rDVM"), #, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = date_24hcycle, fill = "rDVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "nVM"), #, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = date_24hcycle, fill = "nVM")) +
   geom_line(aes(x = date, y = -depth_median_roll3, colour = "daily median")) +
   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
   # changes
   # geom_line(aes(x = date, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
+  geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
   # settings
   theme_minimal() + 
-  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue")) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b %y") +
-  scale_x_continuous(breaks = unique(long_dst_date$date %>% lubridate::week()), minor_breaks = NULL) +
-  theme_classic() +
-  theme(panel.grid.minor.x = element_blank(),
-        panel.grid.major.x = element_line(linewidth = 0.2, linetype = "dotted"))
+  labs(title = 'Tag 308 (female)', x = "date", y = "depth in m") + 
+  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
+                                            "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) +
+  scale_fill_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                          "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+  
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
 # scale_fill_manual(name = "", values = c("daily range" = "red"))
 
 p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
+# p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293308")) +
+#   geom_bar(data = masterias_DVM_sum_day %>%
+#              filter(tag_serial_number == "1293308"#, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+#              ),
+#            aes(x = date_24hcycle, fill = vertical_movement)) +
+#   geom_line(aes(x = date, y = -depth_median_roll3, colour = "daily median")) +
+#   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
+#   # changes
+#   # geom_line(aes(x = date, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
+#   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
+#   # settings
+#   theme_minimal() + 
+#   scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue")) +
+#   scale_x_date(date_breaks = "1 month", date_labels = "%b %y") +
+#   scale_x_continuous(breaks = unique(long_dst_date$date %>% lubridate::week()), minor_breaks = NULL) +
+#   theme_classic() +
+#   theme(panel.grid.minor.x = element_blank(),
+#         panel.grid.major.x = element_line(linewidth = 0.2, linetype = "dotted"))
+# # scale_fill_manual(name = "", values = c("daily range" = "red"))
+# 
+# p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
 
 p_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293321")) +
   geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293321", vertical_movement == "DVM"), #, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
@@ -160,12 +190,17 @@ p_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
   # changes
   # geom_line(aes(x = date, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
+  geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
+  geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
   # settings
   theme_minimal() + 
   labs(title = 'Tag 321 (male)', x = "date", y = "depth in m") + 
   scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
-                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
+                                            "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) +
   scale_fill_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
   

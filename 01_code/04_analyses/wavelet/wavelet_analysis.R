@@ -9,6 +9,7 @@ library(zoo)
 rm(list = ls())
 
 paste0(getwd(), "/01_code/02_load_data/load_depth_temp_logs.R") %>% base::source()
+source(paste0(getwd(), "/01_code/02_load_data/load_dst_summarystatistics.R"))
 
 # inspect raw data ####
 
@@ -25,7 +26,7 @@ p_depth_319 %>% plotly::ggplotly()
 
 # preparing data input for wt ####
 
-## 319
+## 319 ####
 
 # compute_wavelet_transform <- function(tag_serial_number, cutoff_date)
 sample_interval = 2 # minutes
@@ -50,6 +51,20 @@ data_319_wt_all <- depthlog %>% #, row_number() %% 5 == 0
          depth_roll_30min = zoo::rollmean(depth_m, k = 30/sample_interval, fill = NA),
          depth_scaled = depth_m %>% base::scale()
          ) %>%
+  drop_na()
+
+## 319 summary statistics ####
+
+# sample_interval = 1 # day
+dt <- 1 #day, #round(sample_interval/60, digits = 10)
+depthlog <- long_dst_date %>% 
+  ungroup() %>%
+  filter(tag_serial_number == "1293321")
+t_max <- round(((depthlog %>% nrow()) * dt), digits = 0)
+
+data_321_summary_wt_all <- depthlog %>%
+  mutate(dt = dt,
+         t_day = seq(from = 1, to = depthlog %>% nrow())) %>%
   drop_na()
 
 # executing wt ####
@@ -132,6 +147,31 @@ dev.off() # Close device
 
 # plot(x = data_319_wt$t_new, y = data_319_wt$depth_m, type = "l")
 # ggplot(data = data_319_wt, aes(x = t_new, y = -depth_m))
+
+## 321 summary statistics ####
+### median depth ####
+#### t = day, s0 = 5 * dt, do.sig = T ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = median per day, s0 = 5 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median, type = "l")
+dev.off() # Close device
+
+### median depth change ####
+#### t = day, s0 = 5 * dt, do.sig = T ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt), 
+     type = "power.corr.norm", main = "t = day, depth = median per day, s0 = 5 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median, type = "l")
+dev.off() # Close device
 
 # old ####
 # 
