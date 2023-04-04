@@ -419,7 +419,8 @@ long_dst_date <- masterias_depth_date %>%
          depth_median_change_roll7 = zoo::rollmean(depth_median_change, k = 7, fill = NA),
          # depth_median_change_roll7 = depth_median_roll7 - dplyr::lead(depth_median_roll7),
          depth_min_change_roll3 = zoo::rollmean(depth_min_change, k = 3, fill = NA),
-         depth_max_change_roll3 = zoo::rollmean(depth_max_change, k = 3, fill = NA)) %>%
+         depth_max_change_roll3 = zoo::rollmean(depth_max_change, k = 3, fill = NA),
+         t_days = seq(from = 1, to = n())) %>%
   tidyr::drop_na()
 
 long_dst_daynight <- masterias_depth_daynight %>% 
