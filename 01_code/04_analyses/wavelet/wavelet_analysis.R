@@ -109,7 +109,7 @@ plot(biwavelet::wt(d = data_319_wt_all %>% dplyr::select(t_new, depth_m) %>% as.
                    dt = dt,
                    do.sig = T,
                    s0 = 5 * dt), 
-     type = "power.corr.norm", main = "t = hour, depth = raw,, s0 = 5 * dt, do.sig = T")
+     type = "power.corr.norm", main = "t = hour, depth = raw, s0 = 5 * dt, do.sig = T")
 plot(x = data_319_wt_all$t_new, y = -data_319_wt_all$depth_m, type = "l")
 dev.off() # Close device
 
@@ -176,12 +176,38 @@ plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_media
 dev.off() # Close device
 
 ### median depth roll3 ####
-jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_roll3_t_day.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+#### morlet mother wavelet ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_roll3_t_day_morlet.jpeg"), quality = 75, width = 860, height = 860, units = "px")
 par(mfcol = c(2,1))
 plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_roll3) %>% as.matrix(),
                    dt = dt,
                    do.sig = T,
-                   s0 = 1 * dt), 
+                   s0 = 1 * dt,
+                   mother = "morlet"), 
+     type = "power.corr.norm", main = "t = day, depth = median depth per day (roll3), s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median_roll3, type = "l")
+dev.off() # Close device
+
+#### paul mother wavelet ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_roll3_t_day_paul.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_roll3) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt,
+                   mother = "paul"), 
+     type = "power.corr.norm", main = "t = day, depth = median depth per day (roll3), s0 = 1 * dt, do.sig = T")
+plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median_roll3, type = "l")
+dev.off() # Close device
+
+#### dog mother wavelet ####
+jpeg(paste0(getwd(),"/02_results/dst_wavelet/wavelet_321_summary_mediandepth_roll3_t_day_dog.jpeg"), quality = 75, width = 860, height = 860, units = "px")
+par(mfcol = c(2,1))
+plot(biwavelet::wt(d = data_321_summary_wt_all %>% dplyr::select(t_day, depth_median_roll3) %>% as.matrix(),
+                   dt = dt,
+                   do.sig = T,
+                   s0 = 1 * dt,
+                   mother = "dog"), 
      type = "power.corr.norm", main = "t = day, depth = median depth per day (roll3), s0 = 1 * dt, do.sig = T")
 plot(x = data_321_summary_wt_all$t_day, y = -data_321_summary_wt_all$depth_median_roll3, type = "l")
 dev.off() # Close device
@@ -275,6 +301,8 @@ plot(biwavelet::wt(d = data_308_summary_wt_all %>% dplyr::select(t_day, depth_ra
      type = "power.corr.norm", main = "t = day, depth = depth range day, s0 = 1 * dt, do.sig = T")
 plot(x = data_308_summary_wt_all$t_day, y = data_308_summary_wt_all$depth_range, type = "l")
 dev.off() # Close device
+
+# accessing the wavelet analysis values ####
 
 # tryout: cross wt with diel vertical signal ####
 # comment: needs raw depthlog for resolution >1 day
