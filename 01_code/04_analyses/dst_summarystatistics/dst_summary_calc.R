@@ -421,7 +421,8 @@ long_dst_date <- masterias_depth_date %>%
          depth_min_change_roll3 = zoo::rollmean(depth_min_change, k = 3, fill = NA),
          depth_max_change_roll3 = zoo::rollmean(depth_max_change, k = 3, fill = NA),
          t_days = seq(from = 1, to = n())) %>%
-  tidyr::drop_na()
+  tidyr::drop_na() %>%
+  ungroup()
 
 long_dst_daynight <- masterias_depth_daynight %>% 
   ungroup() %>%
