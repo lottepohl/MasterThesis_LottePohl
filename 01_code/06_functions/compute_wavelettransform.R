@@ -48,8 +48,8 @@ wavelet_output_compare <- function(dates, wt_output){
     purrr::set_names(as.character(dates$date)) %>%
     cbind(period) %>%
     # mutate(period_log = log2(period))# %>%
-    # arrange(desc(period)) %>%
-    mutate(height = log2(period) - log2(dplyr::lead(period)),
+    arrange(desc(period)) %>%
+    mutate(height = period - dplyr::lead(period), #height = log2(period) - dplyr::lead(log2(period)
            height = height + 0.15) 
   wt_df$height[wt_df$height %>% is.na()] <- wt_df$period[nrow(wt_df) - 1] - wt_df$period[nrow(wt_df)] # fill the NA created by `dplyr::lead()`
   wt_df <- wt_df %>%
@@ -64,9 +64,143 @@ wavelet_output_compare <- function(dates, wt_output){
            period_log = log2(period)) %>%
     left_join(dates, by = "date", multiple = "all") %>%
     mutate(t = sprintf("%03d", t %>% as.numeric()),
-           sig = ifelse(significance >= 1, 1, 0))
-  
+           sig = ifelse(significance >= 1, 1, 0),
+           height2 = period - dplyr::lead(period), #height = log2(period) - dplyr::lead(log2(period)
+           height2 = height2 + 0.15)
+  wt_df$height2[wt_df$height2 %>% is.na()] <- wt_df$period[nrow(wt_df) - 1] - wt_df$period[nrow(wt_df)] # fill the NA created by `dplyr::lead()`
+
   return(wt_df)
+}
+
+plot_wavelet_gg <- function(wt_df, type = c("power", "significance", "power_log"),
+                            y_breaks = c(4, 8, 16, 32, 64, 128),
+                            x_breaks = c("000", "100", "200", "300", "400")){
+  
+  ifelse(type == "power_log",
+         plot <- ggplot(data = wt_df) +
+           geom_tile(aes(x = t, y = period, fill = power_log, height = height), #, colour = sig
+                     position = "identity"
+           ) +
+           # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, height = height + 0.15), #
+           #           fill = "black",
+           #           width = 3,
+           #           # height = ,
+           #           position = "identity") +
+           # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power_log, height = height),
+           #           position = "identity") +
+           
+           # geom_tile(data = wt_df %>% filter(significance >= 1), aes(x = t, y = period, height = height),
+           #           fill = "white",
+           #           alpha = 0.3) +
+         # geom_tile(aes(x = t, y = period, height = height, fill = sig),
+         #           alpha = 0) +
+         scale_y_continuous(trans = my_trans,
+                            breaks = y_breaks, 
+                            expand = c(0,0)) +
+           # scale_y_reverse(expand = c(0,0)) +
+           # scale_y_continuous(trans = "log2", expand = c(0,0)) +
+           scale_x_discrete(breaks = x_breaks,
+                            expand = c(0,0)) +
+           scale_fill_viridis_c(direction = 1, option = "turbo") +
+           labs(x = "Date", y = "log2(Period)", fill = "log2(Power)") + #
+           # theme_bw() +
+           theme(axis.text.x = element_text(angle = 60, hjust = 1))
+         , 
+         ifelse(type == "significance",
+                plot <- ggplot(data = wt_df) +
+                  geom_tile(aes(x = t, y = period, fill = significance, height = height), #, colour = sig
+                            position = "identity"
+                  ) +
+                  # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, height = height + 0.15), #
+                  #           fill = "black",
+                  #           width = 3,
+                  #           # height = ,
+                  #           position = "identity") +
+                  # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power_log, height = height),
+                  #           position = "identity") +
+                  
+                  # geom_tile(data = wt_df %>% filter(significance >= 1), aes(x = t, y = period, height = height),
+                  #           fill = "white",
+                  #           alpha = 0.3) +
+                # geom_tile(aes(x = t, y = period, height = height, fill = sig),
+                #           alpha = 0) +
+                scale_y_continuous(trans = my_trans,
+                                   breaks = y_breaks, 
+                                   expand = c(0,0)) +
+                  # scale_y_reverse(expand = c(0,0)) +
+                  # scale_y_continuous(trans = "log2", expand = c(0,0)) +
+                  scale_x_discrete(breaks = x_breaks,
+                                   expand = c(0,0)) +
+                  scale_fill_viridis_c(direction = 1, option = "turbo") +
+                  labs(x = "Date", y = "log2(Period)", fill = "Significance Level") + #
+                  # theme_bw() +
+                  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+                ,
+                plot <- ggplot(data = wt_df) +
+                  geom_tile(aes(x = t, y = period, fill = power, height = height), #, colour = sig
+                            position = "identity"
+                  ) +
+                  # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, height = height + 0.15), #
+                  #           fill = "black",
+                  #           width = 3,
+                  #           # height = ,
+                  #           position = "identity") +
+                  # geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power_log, height = height),
+                  #           position = "identity") +
+                  
+                  # geom_tile(data = wt_df %>% filter(significance >= 1), aes(x = t, y = period, height = height),
+                  #           fill = "white",
+                  #           alpha = 0.3) +
+                # geom_tile(aes(x = t, y = period, height = height, fill = sig),
+                #           alpha = 0) +
+                scale_y_continuous(trans = my_trans,
+                                   breaks = y_breaks, 
+                                   expand = c(0,0)) +
+                  # scale_y_reverse(expand = c(0,0)) +
+                  # scale_y_continuous(trans = "log2", expand = c(0,0)) +
+                  scale_x_discrete(breaks = x_breaks,
+                                   expand = c(0,0)) +
+                  scale_fill_viridis_c(direction = 1, option = "turbo") +
+                  labs(x = "Date", y = "log2(Period)", fill = "Power") + #
+                  # theme_bw() +
+                  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+         )
+  )
+  
+  # plot <- ggplot(data = wt_df #%>% filter(date %>% between(dates1$t[1], dates1$t[nrow(dates1) - 1]))
+  # ) +
+  #   geom_tile(aes(x = t, y = period, fill = ifelse(type == "power_log", power_log,
+  #                                                  ifelse(type == "significance", significance,
+  #                                                         power)), 
+  #                 height = height), #, colour = sig
+  #             position = "identity"
+  #   ) +
+  #   # geom_tile(data = wt_df4 %>% filter(sig == 1), aes(x = t, y = period, height = height + 0.15), #
+  #   #           fill = "black",
+  #   #           width = 3,
+  #   #           # height = ,
+  #   #           position = "identity") +
+  #   # geom_tile(data = wt_df4 %>% filter(sig == 1), aes(x = t, y = period, fill = power_log, height = height),
+  #   #           position = "identity") +
+  #   
+  #   # geom_tile(data = wt_df4 %>% filter(significance >= 1), aes(x = t, y = period, height = height),
+  #   #           fill = "white",
+  #   #           alpha = 0.3) +
+  # # geom_tile(aes(x = t, y = period, height = height, fill = sig),
+  # #           alpha = 0) +
+  # scale_y_continuous(trans = my_trans,
+  #                    breaks = y_breaks, 
+  #                    expand = c(0,0)) +
+  #   # scale_y_reverse(expand = c(0,0)) +
+  #   # scale_y_continuous(trans = "log2", expand = c(0,0)) +
+  #   scale_x_discrete(breaks = x_breaks,
+  #                    expand = c(0,0)) +
+  #   scale_fill_viridis_c(direction = 1, option = "turbo") +
+  #   labs(x = "Date", y = "log2(Period)", fill = ifelse(type == "power_log", "log2(Power)", type)) + #
+  #   # theme_bw() +
+  #   theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  
+  return(plot) #%>% plotly::ggplotly()
 }
 
 # wt_ggplot <- make_wavelet_result_ggplot_obj(wt_output = wt_output) %>%
