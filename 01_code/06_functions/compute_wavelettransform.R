@@ -47,12 +47,10 @@ wavelet_output_compare <- function(dates, wt_output){
   wt_df <- wt_output$power %>% as.data.frame() %>%
     purrr::set_names(as.character(dates$date)) %>%
     cbind(period) %>%
-    arrange(desc(period)) %>%
-    mutate(height = log2(period) - dplyr::lead(log2(period)),
-           height = height + 0.15 #,
-           # height = period_log - dplyr::lead(period_log),
-           # height = height + 0.15
-    ) 
+    # mutate(period_log = log2(period))# %>%
+    # arrange(desc(period)) %>%
+    mutate(height = log2(period) - log2(dplyr::lead(period)),
+           height = height + 0.15) 
   wt_df$height[wt_df$height %>% is.na()] <- wt_df$period[nrow(wt_df) - 1] - wt_df$period[nrow(wt_df)] # fill the NA created by `dplyr::lead()`
   wt_df <- wt_df %>%
     pivot_longer(cols = -c(last_col(offset = 1), last_col(offset = 0)), names_to = "date") %>% #don't pivot the two last columns
@@ -65,7 +63,8 @@ wavelet_output_compare <- function(dates, wt_output){
            power_log_scale = power_log %>% scale(),
            period_log = log2(period)) %>%
     left_join(dates, by = "date", multiple = "all") %>%
-    mutate(t = sprintf("%03d", t %>% as.numeric()))
+    mutate(t = sprintf("%03d", t %>% as.numeric()),
+           sig = ifelse(significance >= 1, 1, 0))
   
   return(wt_df)
 }

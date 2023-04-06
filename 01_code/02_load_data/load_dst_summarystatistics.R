@@ -17,8 +17,8 @@ masterias_depth_daynight <- load_data(filestring = "masterias_depth_daynight", f
 masterias_depth_date <- load_data(filestring = "masterias_depth_date", folder = paste0(dir_path, "/02_results/dst_summary/"))
 masterias_depth_week <- load_data(filestring = "masterias_depth_week", folder = paste0(dir_path, "/02_results/dst_summary/"))
 masterias_depth_month <- load_data(filestring = "masterias_depth_month", folder = paste0(dir_path, "/02_results/dst_summary/"))
-long_dst_date <- load_data(filestring = "long_dst_date", folder = paste0(dir_path, "/02_results/dst_summary/"))
-long_dst_daynight <- load_data(filestring = "long_dst_daynight", folder = paste0(dir_path, "/02_results/dst_summary/"))
+long_dst_date <- load_data(filestring = "long_dst_date", folder = paste0(dir_path, "/02_results/dst_summary/")) %>% ungroup()
+long_dst_daynight <- load_data(filestring = "long_dst_daynight", folder = paste0(dir_path, "/02_results/dst_summary/")) %>% ungroup()
 
 # vertical movement behaviour
 masterias_DVM_sum_day <- load_data(filestring = "masterias_DVM_sum_day", folder = paste0(dir_path, "/02_results/dst_summary/"))

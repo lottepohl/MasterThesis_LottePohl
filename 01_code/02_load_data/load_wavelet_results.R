@@ -19,3 +19,7 @@ wt_308_mediandepth <- load_data(filestring = "wt_308_mediandepth", folder = data
 wt_308_mediandepth_change_roll3 <- load_data(filestring = "wt_308_mediandepth_change_roll3", folder = data_path)
 wt_308_depthrange <- load_data(filestring = "wt_308_depthrange", folder = data_path)
 wt_308_depthrange_roll3 <- load_data(filestring = "wt_308_depthrange_roll3", folder = data_path)
+
+## dates ####
+long_dst_date <- load_data(filestring = "long_dst_date", folder = paste0(dir_path, "/02_results/dst_summary/")) %>% ungroup()
+long_dst_daynight <- load_data(filestring = "long_dst_daynight", folder = paste0(dir_path, "/02_results/dst_summary/")) %>% ungroup()

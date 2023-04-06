@@ -35,7 +35,7 @@ dst_longterm_periods <- tibble(tag_serial_number = c(rep("1293308", times = 6), 
                                             "summer_residency", "winter_migration", "winter_residency", "summer_migration", "summer_residency", "winter_migration", "winter_residency", "recording_end")) %>%
   mutate(year = start_date %>% lubridate::year(),
          end_date = start_date %>% lead() %>% replace_na("2019-11-16" %>% as.POSIXct(tz = "UTC")),
-         start_date = start_date - lubridate::days(1),
+         # start_date = start_date - lubridate::days(1), # wronnnng!
          start_week = start_date %>% lubridate::week(),
          start_month = start_date %>% lubridate::month(),
          start_week = sprintf("%02d", start_week %>% as.numeric()),
