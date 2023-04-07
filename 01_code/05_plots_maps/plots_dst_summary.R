@@ -15,26 +15,23 @@ library(forcats)
 
 # rm(list = ls())
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 plot_path <- paste0(dir_path, "/02_results/dst_summary/")
 # source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
 source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
 source(paste0(dir_path, "/01_code/06_functions/ggplot_geom_split_violin.R"))
 
-## prepare datasets ####
+# wrangle datasets ####
 
-# long_dst_date <- masterias_depth_date %>% 
-#   filter(tag_serial_number %in% c("1293321", "1293308"))
-# 
-# long_dst_daynight <- masterias_depth_daynight %>% 
-#   ungroup() %>%
-#   filter(tag_serial_number %in% c("1293321", "1293308"), dawn == 0 & dusk == 0) %>%
-#   dplyr::select(!c(dawn, dusk))
+masterias_DVM_sum_day <- masterias_DVM_sum_day %>%
+  group_by(tag_serial_number) %>% 
+  mutate(t_days = seq(from = 1, to = n()),
+         t_days = sprintf("%03d", t_days %>% as.numeric()),
+         t_days = t_days %>% as.numeric()) %>%
+  ungroup()
 
-## add period and full day summary #### 
-# dataframe with daily summary statistics and activity type
-
-# TOdo: add depth range difference between days
+long_dst_date <- long_dst_date %>%
+  mutate(t_days = t_days %>% as.numeric())
 
 # all dsts ####
 
@@ -106,24 +103,28 @@ p_hour_maxmindepth <- ggplot(data = summer_masterias_depth_daynight) +
 
 p_308_depth_raw <- ggplot(data = masterias_depth_temp_summary %>% 
                             filter(tag_serial_number == "1293308",
-                                   row_number() %% 30 == 0,
-                                   vertical_speed_m_min < 5)) +
-  geom_point(aes(x = date_time, y = -depth_m, colour = vertical_speed_m_min)) +
-  labs(tite = "depth log tag 308 (female)", x = "date", y = "depth in m")+
+                                   row_number() %% 30 == 0 #,vertical_speed_m_min < 5
+                                   )) +
+  geom_point(aes(x = date_time, y = -depth_m, colour = temp_c)) +
+  scale_colour_distiller(palette ="RdYlBu") +
+  scale_y_continuous(expand = c(0,0)) +
+  labs(tite = "depth log tag 308 (female)", x = "date", y = "depth in m", colour = "temperature in C")+
   theme_dark()
 
-p_308_depth_raw %>% ggplotly()
+ # p_308_depth_raw #%>% ggplotly()
 
 
 p_321_depth_raw <- ggplot(data = masterias_depth_temp_summary %>% 
                             filter(tag_serial_number == "1293321",
-                                   row_number() %% 30 == 0,
-                                   vertical_speed_m_min < 5)) +
-  geom_point(aes(x = date_time, y = -depth_m, colour = vertical_speed_m_min)) +
-  labs(tite = "depth log tag 321 (male)", x = "date", y = "depth in m")+
+                                   row_number() %% 30 == 0 #, vertical_speed_m_min < 5
+                                   )) +
+  scale_y_continuous(expand = c(0,0)) +
+  geom_point(aes(x = date_time, y = -depth_m, colour = temp_c)) +
+  scale_colour_distiller(palette ="RdYlBu") +
+  labs(tite = "depth log tag 321 (male)", x = "date", y = "depth in m", colour = "temperature in C")+
 theme_dark()
 
-p_321_depth_raw %>% ggplotly()
+# p_321_depth_raw # %>% ggplotly()
 
 ## ribbon: median depth, max and min ####
 
@@ -138,11 +139,11 @@ p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
   # changes
   # geom_line(aes(x = date, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
-  geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
+  # geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
   # settings
   theme_minimal() + 
   labs(title = 'Tag 308 (female)', x = "date", y = "depth in m") + 
@@ -156,7 +157,9 @@ p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
         legend.box = "horizontal")
 # scale_fill_manual(name = "", values = c("daily range" = "red"))
 
-p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
+# p_308_depth_median_range_change_ribbon #%>% plotly::ggplotly()
+
+
 # p_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293308")) +
 #   geom_bar(data = masterias_DVM_sum_day %>%
 #              filter(tag_serial_number == "1293308"#, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
@@ -179,6 +182,30 @@ p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
 # 
 # p_308_depth_median_range_change_ribbon %>% plotly::ggplotly()
 
+
+p_t_308_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% ungroup() %>% filter(tag_serial_number == "1293308")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "DVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "rDVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "nVM")) +
+  geom_line(aes(x = t_days, y = -depth_median_roll3, colour = "daily median")) +
+  geom_ribbon(aes(x = t_days, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
+  geom_line(aes(x = t_days, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
+  theme_minimal() + 
+  # theme(axis.text.x = element_text(angle = 60, hjust = 0.5)) +
+  labs(title = 'Tag 308 (female)', x = "t in days", y = "depth in m") + 
+  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
+                                            "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) +
+  scale_fill_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                          "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
+
+# p_t_308_depth_median_range_change_ribbon
+
 p_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293321")) +
   geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293321", vertical_movement == "DVM"), #, date_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
            aes(x = date_24hcycle, fill = "DVM")) +
@@ -190,11 +217,11 @@ p_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
   # changes
   # geom_line(aes(x = date, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
-  geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
   geom_line(aes(x = date, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
-  geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
+  # geom_line(aes(x = date, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
+  # geom_line(aes(x = date, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
   # settings
   theme_minimal() + 
   labs(title = 'Tag 321 (male)', x = "date", y = "depth in m") + 
@@ -208,7 +235,39 @@ p_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% filter
         legend.box = "horizontal")
   # scale_fill_manual(name = "", values = c("daily range" = "red"))
 
-p_321_depth_median_range_change_ribbon %>% plotly::ggplotly()
+# p_321_depth_median_range_change_ribbon #%>% plotly::ggplotly()
+
+p_t_321_depth_median_range_change_ribbon <- ggplot(data = long_dst_date %>% ungroup() %>% filter(tag_serial_number == "1293321")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293321", vertical_movement == "DVM"), #, t_days_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "DVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293321", vertical_movement == "rDVM"), #, t_days_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "rDVM")) +
+  geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293321", vertical_movement == "nVM"), #, t_days_24hcycle %>% between(tag_308_migration1_start, tag_308_migration1_end)
+           aes(x = t_days, fill = "nVM")) +
+  geom_line(aes(x = t_days, y = -depth_median_roll3, colour = "daily median")) +
+  geom_ribbon(aes(x = t_days, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
+  # changes
+  # geom_line(aes(x = t_days, y = depth_range_change_roll3 %>% abs(), colour = "change of daily range")) +
+  # geom_line(aes(x = t_days, y = (depth_median_change) + 10, colour = "change of daily median raw")) + # %>% abs()
+  geom_line(aes(x = t_days, y = (depth_median_change_roll3) + 10, colour = "change of daily median")) + # %>% abs()
+  # geom_line(aes(x = t_days, y = (depth_median_change2_roll3) + 25, colour = "change of change of daily median")) + # %>% abs()
+  # geom_line(aes(x = t_days, y = (depth_median_change2_roll3  %>% abs()) + 25, colour = "change of change of daily median abs")) + # %>% abs()
+  # geom_line(aes(x = t_days, y = (depth_median_change_roll3 %>% abs()) + 10, colour = "change of daily range abs")) +
+  # settings
+  theme_minimal() + 
+  # theme(axis.text.x = element_text(angle = 60, hjust = 0.5)) +
+  labs(title = 'Tag 321 (male)', x = "t in days", y = "depth in m") + 
+  scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
+                                            "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) +
+  scale_fill_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "darkblue",
+                                          "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+  
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
+
+# p_t_321_depth_median_range_change_ribbon
+
 # 
 # p_321_depth_rangechange <- ggplot(data = long_dst_date %>% filter(tag_serial_number == "1293321")) +
 #   # geom_line(aes(x = date, y = depth_range_roll3, colour = "daily depth range")) +
@@ -276,7 +335,7 @@ p_308_vertical_speed <- ggplot(data = masterias_depth_temp_summary %>% filter(ta
   theme(axis.text.x = element_text(angle=60, hjust=1)) +
   labs(title = "Tag 308 (female)", y = "vertical speed in m/min", x = "month")
 
-p_308_vertical_speed %>% ggplotly
+# p_308_vertical_speed %>% ggplotly
 
 # split violin plot
 p_308_vertical_speed_splitviolin <- ggplot(masterias_depth_temp_summary %>% filter(tag_serial_number %in% c("1293308"), vertical_speed_m_min <= 0.5), 
@@ -286,7 +345,7 @@ p_308_vertical_speed_splitviolin <- ggplot(masterias_depth_temp_summary %>% filt
   theme_minimal() +
   theme(axis.text.x = element_text(angle=60, hjust=1))
 
-p_308_vertical_speed_splitviolin
+# p_308_vertical_speed_splitviolin
 
 
 # violin plot
@@ -299,7 +358,7 @@ p_321_vertical_speed <- ggplot(data = masterias_depth_temp_summary %>% filter(ta
   theme(axis.text.x = element_text(angle=60, hjust=1)) +
   labs(title = "Tag 321 (male)", y = "vertical speed in m/min", x = "month")
 
-p_321_vertical_speed %>% ggplotly
+# p_321_vertical_speed %>% ggplotly
 
 # split violin plot
 p_321_vertical_speed_splitviolin <- ggplot(masterias_depth_temp_summary %>% filter(tag_serial_number %in% c("1293321"), vertical_speed_m_min <= 0.5) %>% drop_na(), 
@@ -310,7 +369,7 @@ p_321_vertical_speed_splitviolin <- ggplot(masterias_depth_temp_summary %>% filt
   theme_minimal() +
   theme(axis.text.x = element_text(angle=60, hjust=1))
 
-p_321_vertical_speed_splitviolin
+# p_321_vertical_speed_splitviolin
 
 # depth plot
 p_308_depth_month_splitviolin <- ggplot(data = masterias_depth_temp_summary %>% filter(tag_serial_number %in% c("1293308"), vertical_speed_m_min <= 0.5), 
@@ -320,7 +379,7 @@ p_308_depth_month_splitviolin <- ggplot(data = masterias_depth_temp_summary %>% 
   theme(axis.text.x = element_text(angle=60, hjust=1)) +
   labs(title = "Tag 308 (female)", y = "depth in m", x = "month")
 
-p_308_depth_month_splitviolin
+# p_308_depth_month_splitviolin
 
 p_321_depth_month_splitviolin <- ggplot(data = masterias_depth_temp_summary %>% filter(tag_serial_number %in% c("1293321"), vertical_speed_m_min <= 0.5) %>% drop_na(), 
                       aes(x = monthyear, y = -depth_m, fill = day,colour = day)) + #, "1293321" 
@@ -329,7 +388,7 @@ p_321_depth_month_splitviolin <- ggplot(data = masterias_depth_temp_summary %>% 
   theme(axis.text.x = element_text(angle=60, hjust=1)) +
   labs(title = "Tag 321 (male)", y = "depth in m", x = "month")
 
-p_321_depth_month_splitviolin
+# p_321_depth_month_splitviolin
 
 # todo: for september 2018 (also for 321): look at daily depth distribution (or weekly)
 
@@ -340,7 +399,7 @@ p_308_depth_monthly <- ggplot(data = masterias_depth_temp_summary %>% filter(tag
   theme(axis.text.x = element_text(angle=60, hjust=1)) +
   labs(title = "Tag 308 (female)", y = "depth in m", x = "month")
 
-p_308_depth_monthly %>% ggplotly
+# p_308_depth_monthly %>% ggplotly
 
 p_321_depth_monthly <- ggplot(data = masterias_depth_temp_summary %>% filter(tag_serial_number %in% c("1293321"), vertical_speed_m_min <= 5), aes(x = monthyear, y = -depth_m, fill = day)) + #, "1293321" 
   geom_violin(colour = "transparent") +
@@ -386,7 +445,7 @@ p_tag308_DVM_weekly <- ggplot(data = masterias_DVM_sum_week %>% filter(tag_seria
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 60, hjust = 1)) #+
   # scale_x_discrete(labels = masterias_DVM_sum_week$monthyear)
-p_tag308_DVM_weekly %>% ggplotly()
+# p_tag308_DVM_weekly %>% ggplotly()
 
 p_tag321_DVM_weekly <- ggplot(data = masterias_DVM_sum_week %>% filter(tag_serial_number == "1293321"), aes(x = weekyear, y = count, fill = vertical_movement)) +
   geom_bar(position = "fill", width = 1, stat = "identity") + 
@@ -394,7 +453,7 @@ p_tag321_DVM_weekly <- ggplot(data = masterias_DVM_sum_week %>% filter(tag_seria
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 60, hjust = 1)) #+
   # scale_x_discrete(labels = masterias_DVM_sum_week$monthyear)
-p_tag321_DVM_weekly
+# p_tag321_DVM_weekly
 
 
 # ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293295")) + geom_point(aes(x = date, y = -depth_m, pch = day)) + theme_minimal()
@@ -407,7 +466,7 @@ p_tag308_DVM_monthly <- ggplot(data = masterias_DVM_sum_month %>% filter(tag_ser
   labs(fill = "vertical movement behaviour", y = "percentage of days with behaviour", x = "month", title = "tag 308") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
-p_tag308_DVM_monthly %>% ggplotly()
+# p_tag308_DVM_monthly %>% ggplotly()
 
 # ggsave(filename = paste0(plot_path, "f_308_DVM_monthly.pdf"), plot = p_tag308_DVM_monthly, height = 12, width = 16, units = "cm")
 
@@ -442,7 +501,7 @@ p_308_mig1_depth_DVM <- ggplot(data = masterias_depth_temp_summary %>%
   labs(title = "Potential winter 2018 migration of tag 308", y = "depth in m", x = "date") +
   theme_minimal()
 
-p_308_mig1_depth_DVM %>% ggplotly()
+# p_308_mig1_depth_DVM %>% ggplotly()
 
 
 # p_tag308_mig_depth_perday <- ggplot(data = masterias_depth_temp_summary %>%
@@ -473,7 +532,7 @@ p_321_mig1_depth_DVM <- ggplot(data = masterias_depth_temp_summary %>%
   labs(title = "Potential winter 2018 migration of tag 321", y = "depth in m", x = "date") +
   theme_minimal()
 
-p_321_mig1_depth_DVM %>% ggplotly()
+# p_321_mig1_depth_DVM %>% ggplotly()
 
 ### migration 2 ####
 
@@ -492,7 +551,7 @@ p_321_mig2_depth_DVM <- ggplot(data = masterias_depth_temp_summary %>%
   labs(title = "Potential winter 2019 migration of tag 321", y = "depth in m", x = "date") +
   theme_minimal()
 
-p_321_mig2_depth_DVM %>% ggplotly()
+# p_321_mig2_depth_DVM %>% ggplotly()
 
 
 # p_tag308_mig_depth_perday <- ggplot(data = masterias_depth_temp_summary %>%
@@ -520,6 +579,7 @@ p_308_321_hordistance <- ggplot(data = masterias_DVM_sum_day, aes(x = date_24hcy
   theme_minimal() +
   labs(title = "Horizontal distance, all dst data", x = "date", y = "Daily horizontal distance in km")
 # p_308_321_hordistance %>% ggplotly()
+
 
 tag_308_totalhordistance <- masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308") %>% dplyr::select(horizontal_distance_m) %>% sum()
 tag_308_totalhordistance <- tag_308_totalhordistance / 1000

@@ -2,7 +2,7 @@
 
 # rm(list = ls())
 
-dir_path <- getwd() # "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" # "C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 data_path <- paste0(dir_path, "/02_results/dst_pca_kmeans/")
 # source(paste0(dir_path, "/functions.R"))
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()

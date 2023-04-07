@@ -1,7 +1,8 @@
 # script to load the results of the wavelet analyses
 
 # source(paste0(getwd(), "/01_code/04_analyses/wavelet/wavelet_analysis.R")) # load analysis script
-data_path <- paste0(getwd(), "/02_results/dst_wavelet/")
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
+data_path <- paste0(dir_path, "/02_results/dst_wavelet/")
 
 
 # load data ####

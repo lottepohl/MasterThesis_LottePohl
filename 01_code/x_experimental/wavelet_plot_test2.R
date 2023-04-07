@@ -100,6 +100,7 @@ t3 <- long_dst_date %>% filter(tag_serial_number == "1293321") %>% dplyr::select
 wt_output3 <- t3 %>% as.matrix() %>% wt()
 dates3 <- t3 %>% select(t) %>% `colnames<-`("t") %>%
   mutate(t = sprintf("%03d", t %>% as.numeric()))
+dates3 <- long_dst_date %>% filter(tag_serial_number == "1293321") %>% dplyr::select(date)
 
 # test data ####
 t4 <- cbind(1:nrow(t3), rnorm(nrow(t3))) %>% as.data.frame()
@@ -155,7 +156,7 @@ plot3 #%>% plotly::ggplotly()
 
 plot5 <- ggplot(data = wt_df3 #%>% filter(date %>% between(dates1$t[1], dates1$t[nrow(dates1) - 1]))
 ) +
-  geom_tile(aes(x = t, y = period, fill = power_log, height = height), #, colour = sig
+  geom_tile(aes(x = date, y = period, fill = power_log, height = height), #, colour = sig
             position = "identity"
   ) +
   # geom_tile(data = wt_df4 %>% filter(sig == 1), aes(x = t, y = period, height = height + 0.15), #
@@ -177,12 +178,12 @@ plot5 <- ggplot(data = wt_df3 #%>% filter(date %>% between(dates1$t[1], dates1$t
                      expand = c(0,0)) +
   # scale_y_reverse(expand = c(0,0)) +
   # scale_y_continuous(trans = "log2", expand = c(0,0)) +
-  scale_x_discrete(breaks = c("000", "100", "200", "300", "400"),
+  scale_x_discrete(breaks = c(wt_df3$date[1], wt_df3$date[100], wt_df3$date[200], wt_df3$date[300], wt_df3$date[400]),
                    expand = c(0,0)) +
   scale_fill_viridis_c(direction = 1, option = "turbo") +
   labs(x = "Date", y = "log2(Period)", fill = "log2(Power)") + #
   # theme_bw() +
-  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
 
 plot5 #%>% plotly::ggplotly()
 
@@ -320,7 +321,7 @@ plot_wavelet_gg <- function(wt_df, type = c("power", "significance", "power_log"
 }
 
 # # example ####
-# plot_wavelet_gg(wt_df = wt_df4, type = "significance")
+# plot_wavelet_gg(wt_df = wt_df3, type = "power_log", x_breaks = c(wt_df3$date[1], wt_df3$date[100], wt_df3$date[200], wt_df3$date[300], wt_df3$date[400]))
 
 # old ####
 # plot2 <- ggplot(data = wt_df2 #%>% filter(date %>% between(dates2$t[2], dates2$t[nrow(dates2) - 2]))

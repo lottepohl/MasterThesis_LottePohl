@@ -13,10 +13,11 @@ library(zoo)
 
 ## data ####
 # paste0(getwd(), "/01_code/02_load_data/load_depth_temp_logs.R") %>% base::source()
-source(paste0(getwd(), "/01_code/06_functions/compute_wavelettransform.R"))
-source(paste0(getwd(), "/01_code/02_load_data/load_dst_summarystatistics.R"))
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
+source(paste0(dir_path, "/01_code/06_functions/compute_wavelettransform.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
 
-data_path <- paste0(getwd(), "/02_results/dst_wavelet/")
+data_path <- paste0(dir_path, "/02_results/dst_wavelet/")
 
 # compute wavelets ####
 

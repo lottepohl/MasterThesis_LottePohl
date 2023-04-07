@@ -3,10 +3,10 @@
 
 # rm(list = ls())
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 # source(paste0(dir_path, "/functions.R"))
-paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
-# source(paste0(dir_path, "/02_scripts/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
+paste0(dir_path, "/01_code/06_functions/functions.R") %>% source()
+# source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
 
 # general
 masterias_depth_temp_summary <- load_data(filestring = "masterias_depth_temp_summary", folder = paste0(dir_path, "/02_results/dst_summary/"))

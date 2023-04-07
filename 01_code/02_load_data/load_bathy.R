@@ -6,9 +6,9 @@ library(tidyverse)
 library(raster)
 library(marmap)
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 # source(paste0(dir_path, "/functions.R"))
-paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+paste0("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/06_functions/functions.R") %>% source()
 # source(paste0(dir_path, "/01_code/03_wrangle_data/wrangle_acoustic_data.R"))
 
 

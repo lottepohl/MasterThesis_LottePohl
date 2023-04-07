@@ -13,7 +13,7 @@ library(car)
 
 # rm(list = ls())
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 # source(paste0(dir_path, "/01_code/04_analyses/dst_summarystatistics/dst_summary_calc.R"))
 source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
 

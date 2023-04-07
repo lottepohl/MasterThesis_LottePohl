@@ -14,7 +14,7 @@ library(zoo)
 
 # rm(list = ls())
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 
 source(paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R"))
 
@@ -420,7 +420,8 @@ long_dst_date <- masterias_depth_date %>%
          # depth_median_change_roll7 = depth_median_roll7 - dplyr::lead(depth_median_roll7),
          depth_min_change_roll3 = zoo::rollmean(depth_min_change, k = 3, fill = NA),
          depth_max_change_roll3 = zoo::rollmean(depth_max_change, k = 3, fill = NA),
-         t_days = seq(from = 1, to = n())) %>%
+         t_days = seq(from = 1, to = n()),
+         t_days = sprintf("%03d", t_days %>% as.numeric())) %>%
   tidyr::drop_na() %>%
   ungroup()
 

@@ -11,7 +11,7 @@ library(stringr)
 # webshot::install_phantomjs(force = TRUE)
 
 # 1. general info ####
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl" #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
 path_envdata <- paste0(dir_path, "/00_data/environmental_layers/")
 path_boundaries <- paste0(dir_path, "/00_data/marine_boundaries/")
 path_actel <- paste0(dir_path, "/00_data/actel_files/")

@@ -2,7 +2,7 @@
 # Author: Lotte Pohl
 
 # source(paste0(dir_path, "/functions.R"))
-paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
+paste0("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/06_functions/functions.R") %>% source()
 
 BPNS <- load_data(filestring = "BPNS", folder = path_boundaries)
 coastline <- st_read(paste0(path_boundaries, "ne_10m_coastline.shp"))
