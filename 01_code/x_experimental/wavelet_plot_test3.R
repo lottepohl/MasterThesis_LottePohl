@@ -18,7 +18,7 @@ dates_308 <- long_dst_date %>% filter(tag_serial_number == "1293308") %>% dplyr:
 wt_df_308_depthrange <- wavelet_output_compare(dates = dates_308, wt_output = wt_308_depthrange) #wt_308_depthrange$xaxis %>% as.data.frame()
 
 p_wave_308_depthchange <- plot_wavelet_gg2(wt_df = wt_df_308_depthrange, type = "power_log", date = T)
-p_wave_308_depthchange
+p_wave_308_depthchange #%>% ggplotly()
 
 # my_function <- function(dataframe, x_value) {
 #   ggplot(data = dataframe, aes_string(x = x_value, y = "y")) +
@@ -48,7 +48,7 @@ my_function <- function(dataframe, x_value) {
 test_df <- data.frame(values = c(0, 64, 128, 192, 256))
 
 # find the closest power of 2 to the maximum value in the values column
-closest_power_of_2 <- 2^floor(log2(wt_df_308_depthrange$period))
+closest_power_of_2 <- 2^floor(log2(wt_df_308_depthrange$period)) %>% unique()
 # closest_power_of_2 <- 2^floor(log2(max(test_df$values)))
 closest_power_of_2 %>% unique()
 
