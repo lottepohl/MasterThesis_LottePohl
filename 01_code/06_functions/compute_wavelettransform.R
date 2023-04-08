@@ -107,8 +107,8 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                      expand = c(0,0)) +
                   scale_x_discrete(breaks = x_breaks) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "dates", y = "period", fill = "log2(power)") +
-                  theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                  labs(x = "dates", y = "period in hours", fill = "log2(power)") #+
+                  # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                 ,
                 
                 ifelse(type == "significance",
@@ -124,8 +124,8 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                             expand = c(0,0)) +
                          scale_x_discrete(breaks = x_breaks) +
                          scale_fill_viridis_c(direction = 1, option = "turbo") +
-                         labs(x = "dates", y = "period", fill = "significance") +
-                         theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                         labs(x = "dates", y = "period in hours", fill = "significance") #+
+                         # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                        ,
                        
                        plot <- ggplot(data = wt_df) +
@@ -139,8 +139,8 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                             expand = c(0,0)) +
                          scale_x_discrete(breaks = x_breaks) +
                          scale_fill_viridis_c(direction = 1, option = "turbo") +
-                         labs(x = "dates", y = "period", fill = "power") +
-                         theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                         labs(x = "dates", y = "period in hours", fill = "power") #+
+                         # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                        
                        )
                 )
@@ -159,7 +159,7 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                      expand = c(0,0)) +
                   scale_x_discrete(breaks = x_breaks) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "time in days", y = "period", fill = "log2(power)")# +
+                  labs(x = "time in days", y = "period in hours", fill = "log2(power)")# +
                   # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                 ,
                 
@@ -176,7 +176,7 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                             expand = c(0,0)) +
                          scale_x_discrete(breaks = x_breaks) +
                          scale_fill_viridis_c(direction = 1, option = "turbo") +
-                         labs(x = "time in days", y = "period", fill = "significance")# +
+                         labs(x = "time in days", y = "period in hours", fill = "significance")# +
                          # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                        ,
                        
@@ -191,7 +191,7 @@ plot_wavelet_gg2 <- function(wt_df, type = c("power", "significance", "power_log
                                             expand = c(0,0)) +
                          scale_x_discrete(breaks = x_breaks) +
                          scale_fill_viridis_c(direction = 1, option = "turbo") +
-                         labs(x = "time in days", y = "period", fill = "power") #+
+                         labs(x = "time in days", y = "period in hours", fill = "power") #+
                          # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                        )
                 )
@@ -235,7 +235,7 @@ plot_wavelet_gg <- function(wt_df, type = c("power", "significance", "power_log"
            scale_x_discrete(breaks = x_breaks,
                             expand = c(0,0)) +
            scale_fill_viridis_c(direction = 1, option = "turbo") +
-           labs(x = "Date", y = "Period", fill = "log2(Power)") + #
+           labs(x = "Date", y = "period in hours", fill = "log2(Power)") + #
            # theme_bw() +
            theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
          , 
@@ -265,7 +265,7 @@ plot_wavelet_gg <- function(wt_df, type = c("power", "significance", "power_log"
                   scale_x_discrete(breaks = x_breaks,
                                    expand = c(0,0)) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "Date", y = "Period", fill = "Significance Level") + #
+                  labs(x = "Date", y = "period in hours", fill = "Significance Level") + #
                   # theme_bw() +
                   theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                 ,
@@ -370,7 +370,7 @@ plot_wavelet_gg <- function(wt_df, type = c("power", "significance", "power_log"
 #   # scale_y_reverse(expand =c(0,0)) +
 #   # scale_x_continuous(expand =c(0,0)) +
 #   # scale_fill_viridis_c() +
-#   # labs(x = "Date", y = "Period", fill = "Significance") +
+#   # labs(x = "Date", y = "period in hours", fill = "Significance") +
 #   theme_bw() #+
 #   # theme(axis.text.x = element_text(angle = 60, hjust = 1))
 # test_plot #%>% ggplotly()
@@ -436,7 +436,7 @@ make_wavelet_result_ggplot_obj <- function(wt_output){
 #   scale_y_reverse(expand =c(0,0)) +
 #   # scale_x_continuous(expand =c(0,0)) +
 #   scale_fill_viridis_c() +
-#   labs(x = "Date", y = "Period", fill = "Frequency") +
+#   labs(x = "Date", y = "period in hours", fill = "Frequency") +
 #   theme_bw() +
 #   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 # test_plot #%>% ggplotly()

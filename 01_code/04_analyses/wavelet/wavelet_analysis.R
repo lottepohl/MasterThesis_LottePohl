@@ -34,11 +34,47 @@ wt_321_mediandepth <- compute_wavelet(parameter = long_dst_date %>%
                                             dt = 1,
                                             factor_smallest_scale = 2)
 
-wt_321_mediandepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+wt_321_meandepth <- compute_wavelet(parameter = long_dst_date %>% 
                                         filter(tag_serial_number == "1293321") %>%
-                                        dplyr::select(depth_median_change_roll3),
+                                        dplyr::select(depth_mean),
                                       dt = 1,
                                       factor_smallest_scale = 2)
+
+wt_321_mindepth <- compute_wavelet(parameter = long_dst_date %>% 
+                                      filter(tag_serial_number == "1293321") %>%
+                                      dplyr::select(depth_min),
+                                    dt = 1,
+                                    factor_smallest_scale = 2)
+
+wt_321_mindepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293321") %>%
+                                     dplyr::select(depth_min_roll3),
+                                   dt = 1,
+                                   factor_smallest_scale = 2) #wt error
+
+wt_321_maxdepth <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293321") %>%
+                                     dplyr::select(depth_max),
+                                   dt = 1,
+                                   factor_smallest_scale = 2)
+
+wt_321_maxdepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293321") %>%
+                                     dplyr::select(depth_max_roll3),
+                                   dt = 1,
+                                   factor_smallest_scale = 2)
+
+wt_321_depthsd <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293321") %>%
+                                     dplyr::select(depth_sd),
+                                   dt = 1,
+                                   factor_smallest_scale = 2)
+
+wt_321_vertspeedmax <- compute_wavelet(parameter = long_dst_date %>% 
+                                    filter(tag_serial_number == "1293321") %>%
+                                    dplyr::select(vertical_speed_max),
+                                  dt = 1,
+                                  factor_smallest_scale = 2)
 
 wt_321_depthrange <- compute_wavelet(parameter = long_dst_date %>% 
                                                      filter(tag_serial_number == "1293321") %>%
@@ -51,6 +87,48 @@ wt_321_depthrange_roll3 <- compute_wavelet(parameter = long_dst_date %>%
                                        dplyr::select(depth_range_roll3),
                                      dt = 1,
                                      factor_smallest_scale = 2)
+
+wt_321_mediandepth_change <- compute_wavelet(parameter = long_dst_date %>% 
+                                                     filter(tag_serial_number == "1293321") %>%
+                                                     dplyr::select(depth_median_change),
+                                                   dt = 1,
+                                                   factor_smallest_scale = 2)
+
+wt_321_mediandepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                     filter(tag_serial_number == "1293321") %>%
+                                                     dplyr::select(depth_median_change_roll3),
+                                                   dt = 1,
+                                                   factor_smallest_scale = 2)
+
+wt_321_mediandepth_change2 <- compute_wavelet(parameter = long_dst_date %>% 
+                                               filter(tag_serial_number == "1293321") %>%
+                                               dplyr::select(depth_median_change2),
+                                             dt = 1,
+                                             factor_smallest_scale = 2)
+
+wt_321_mediandepth_change2_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                filter(tag_serial_number == "1293321") %>%
+                                                dplyr::select(depth_median_change2_roll3),
+                                              dt = 1,
+                                              factor_smallest_scale = 2)
+
+wt_321_depthrange_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                               filter(tag_serial_number == "1293321") %>%
+                                               dplyr::select(depth_range_change_roll3),
+                                             dt = 1,
+                                             factor_smallest_scale = 2)
+
+wt_321_mindepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                    filter(tag_serial_number == "1293321") %>%
+                                                    dplyr::select(depth_min_change_roll3),
+                                                  dt = 1,
+                                                  factor_smallest_scale = 2)
+
+wt_321_maxdepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                    filter(tag_serial_number == "1293321") %>%
+                                                    dplyr::select(depth_max_change_roll3),
+                                                  dt = 1,
+                                                  factor_smallest_scale = 2)
 
 ## tag 308 ####
 wt_308_mediandepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
@@ -65,11 +143,47 @@ wt_308_mediandepth <- compute_wavelet(parameter = long_dst_date %>%
                                       dt = 1,
                                       factor_smallest_scale = 2)
 
-wt_308_mediandepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
-                                                     filter(tag_serial_number == "1293308") %>%
-                                                     dplyr::select(depth_median_change_roll3),
-                                                   dt = 1,
-                                                   factor_smallest_scale = 2)
+wt_308_meandepth <- compute_wavelet(parameter = long_dst_date %>% 
+                                      filter(tag_serial_number == "1293308") %>%
+                                      dplyr::select(depth_mean),
+                                    dt = 1,
+                                    factor_smallest_scale = 2)
+
+wt_308_mindepth <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293308") %>%
+                                     dplyr::select(depth_min),
+                                   dt = 1,
+                                   factor_smallest_scale = 2)
+
+wt_308_mindepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                           filter(tag_serial_number == "1293308") %>%
+                                           dplyr::select(depth_min_roll3),
+                                         dt = 1,
+                                         factor_smallest_scale = 2)
+
+wt_308_maxdepth <- compute_wavelet(parameter = long_dst_date %>% 
+                                     filter(tag_serial_number == "1293308") %>%
+                                     dplyr::select(depth_max),
+                                   dt = 1,
+                                   factor_smallest_scale = 2)
+
+wt_308_maxdepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                           filter(tag_serial_number == "1293308") %>%
+                                           dplyr::select(depth_max_roll3),
+                                         dt = 1,
+                                         factor_smallest_scale = 2)
+
+wt_308_depthsd <- compute_wavelet(parameter = long_dst_date %>% 
+                                    filter(tag_serial_number == "1293308") %>%
+                                    dplyr::select(depth_sd),
+                                  dt = 1,
+                                  factor_smallest_scale = 2)
+
+wt_308_vertspeedmax <- compute_wavelet(parameter = long_dst_date %>% 
+                                         filter(tag_serial_number == "1293308") %>%
+                                         dplyr::select(vertical_speed_max),
+                                       dt = 1,
+                                       factor_smallest_scale = 2)
 
 wt_308_depthrange <- compute_wavelet(parameter = long_dst_date %>% 
                                        filter(tag_serial_number == "1293308") %>%
@@ -83,6 +197,79 @@ wt_308_depthrange_roll3 <- compute_wavelet(parameter = long_dst_date %>%
                                            dt = 1,
                                            factor_smallest_scale = 2)
 
+wt_308_mediandepth_change <- compute_wavelet(parameter = long_dst_date %>% 
+                                               filter(tag_serial_number == "1293308") %>%
+                                               dplyr::select(depth_median_change),
+                                             dt = 1,
+                                             factor_smallest_scale = 2)
+
+wt_308_mediandepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                     filter(tag_serial_number == "1293308") %>%
+                                                     dplyr::select(depth_median_change_roll3),
+                                                   dt = 1,
+                                                   factor_smallest_scale = 2)
+
+wt_308_mediandepth_change2 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                filter(tag_serial_number == "1293308") %>%
+                                                dplyr::select(depth_median_change2),
+                                              dt = 1,
+                                              factor_smallest_scale = 2)
+
+wt_308_mediandepth_change2_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                      filter(tag_serial_number == "1293308") %>%
+                                                      dplyr::select(depth_median_change2_roll3),
+                                                    dt = 1,
+                                                    factor_smallest_scale = 2)
+
+wt_308_depthrange_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                    filter(tag_serial_number == "1293308") %>%
+                                                    dplyr::select(depth_range_change_roll3),
+                                                  dt = 1,
+                                                  factor_smallest_scale = 2)
+
+wt_308_mindepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                  filter(tag_serial_number == "1293308") %>%
+                                                  dplyr::select(depth_min_change_roll3),
+                                                dt = 1,
+                                                factor_smallest_scale = 2)
+
+wt_308_maxdepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+                                                  filter(tag_serial_number == "1293308") %>%
+                                                  dplyr::select(depth_max_change_roll3),
+                                                dt = 1,
+                                                factor_smallest_scale = 2)
+
+# ## tag 308
+# wt_308_mediandepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+#                                               filter(tag_serial_number == "1293308") %>%
+#                                               dplyr::select(depth_median_roll3),
+#                                             dt = 1,
+#                                             factor_smallest_scale = 2)
+# 
+# wt_308_mediandepth <- compute_wavelet(parameter = long_dst_date %>% 
+#                                         filter(tag_serial_number == "1293308") %>%
+#                                         dplyr::select(depth_median),
+#                                       dt = 1,
+#                                       factor_smallest_scale = 2)
+# 
+# wt_308_mediandepth_change_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+#                                                      filter(tag_serial_number == "1293308") %>%
+#                                                      dplyr::select(depth_median_change_roll3),
+#                                                    dt = 1,
+#                                                    factor_smallest_scale = 2)
+# 
+# wt_308_depthrange <- compute_wavelet(parameter = long_dst_date %>% 
+#                                        filter(tag_serial_number == "1293308") %>%
+#                                        dplyr::select(depth_range),
+#                                      dt = 1,
+#                                      factor_smallest_scale = 2)
+# 
+# wt_308_depthrange_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
+#                                              filter(tag_serial_number == "1293308") %>%
+#                                              dplyr::select(depth_range_roll3),
+#                                            dt = 1,
+#                                            factor_smallest_scale = 2)
+
 # save data ####
 
 ## tag 321 ####
@@ -91,6 +278,20 @@ save_data(data = wt_321_mediandepth, folder = data_path)
 save_data(data = wt_321_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_321_depthrange, folder = data_path)
 save_data(data = wt_321_depthrange_roll3, folder = data_path)
+save_data(data = wt_321_maxdepth_change_roll3, folder = data_path)
+save_data(data = wt_321_mindepth_change_roll3, folder = data_path)
+save_data(data = wt_321_depthrange_change_roll3, folder = data_path)
+save_data(data = wt_321_mediandepth_change2_roll3, folder = data_path)
+save_data(data = wt_321_mediandepth_change2, folder = data_path)
+save_data(data = wt_321_mediandepth_change, folder = data_path)
+save_data(data = wt_321_vertspeedmax, folder = data_path)
+save_data(data = wt_321_depthsd, folder = data_path)
+save_data(data = wt_321_maxdepth_roll3, folder = data_path)
+save_data(data = wt_321_maxdepth, folder = data_path)
+save_data(data = wt_321_mindepth_roll3, folder = data_path)
+save_data(data = wt_321_mindepth, folder = data_path)
+save_data(data = wt_321_meandepth, folder = data_path)
+
 
 ## tag 308 ####
 save_data(data = wt_308_mediandepth_roll3, folder = data_path)
@@ -98,6 +299,26 @@ save_data(data = wt_308_mediandepth, folder = data_path)
 save_data(data = wt_308_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_308_depthrange, folder = data_path)
 save_data(data = wt_308_depthrange_roll3, folder = data_path)
+save_data(data = wt_308_maxdepth_change_roll3, folder = data_path)
+save_data(data = wt_308_mindepth_change_roll3, folder = data_path)
+save_data(data = wt_308_depthrange_change_roll3, folder = data_path)
+save_data(data = wt_308_mediandepth_change2_roll3, folder = data_path)
+save_data(data = wt_308_mediandepth_change2, folder = data_path)
+save_data(data = wt_308_mediandepth_change, folder = data_path)
+save_data(data = wt_308_vertspeedmax, folder = data_path)
+save_data(data = wt_308_depthsd, folder = data_path)
+save_data(data = wt_308_maxdepth_roll3, folder = data_path)
+save_data(data = wt_308_maxdepth, folder = data_path)
+save_data(data = wt_308_mindepth_roll3, folder = data_path)
+save_data(data = wt_308_mindepth, folder = data_path)
+save_data(data = wt_308_meandepth, folder = data_path)
+
+# ## tag 308
+# save_data(data = wt_308_mediandepth_roll3, folder = data_path)
+# save_data(data = wt_308_mediandepth, folder = data_path)
+# save_data(data = wt_308_mediandepth_change_roll3, folder = data_path)
+# save_data(data = wt_308_depthrange, folder = data_path)
+# save_data(data = wt_308_depthrange_roll3, folder = data_path)
 
 # old ####
 
