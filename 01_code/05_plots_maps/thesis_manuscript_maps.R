@@ -1,4 +1,4 @@
-# Script to make a base map with leaflet in the BPNS and scheldt
+# Script to make maps for the thesis manuscript
 
 library(leaflet.extras)
 library(leafem)
@@ -122,11 +122,22 @@ leafem::addMouseCoordinates() %>%
                    baseGroups = c("EMODnet bathymetry", "satellite", "bathymetry", "OpenStreetMap"),
                    overlayGroups = c("<span style=color:grey>released tags</span>", "stations", "wrecks, OWFs, cables"),
                    options = layersControlOptions(collapsed = FALSE)) #%>%
-  # addLegend(position = "bottomright",
-  #           opacity = 0.6,
-  #           colors = col_scale_areas,
-  #           labels = c("BPNS", "WS1", "WS2"),
-  #           title = "Areas",
-  #           group = "areas")
+# addLegend(position = "bottomright",
+#           opacity = 0.6,
+#           colors = col_scale_areas,
+#           labels = c("BPNS", "WS1", "WS2"),
+#           title = "Areas",
+#           group = "areas")
 
 base_map
+
+base_map %>% 
+  # addGraticule(interval = 0.5, style = list(color = "grey", weight = 1)) %>%
+  addSimpleGraticule(interval = 0.5) %>%
+  addMiniMap(position = "topright",
+             width = 100,
+             height = 100,
+             zoomLevelOffset = -3,
+             zoomLevelFixed = T,
+             tiles = "https://tiles.emodnet-bathymetry.eu/2020/baselayer/web_mercator/{z}/{x}/{y}.png"#providers$Esri.WorldStreetMap)
+  )

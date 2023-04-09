@@ -132,6 +132,11 @@ wt_df_321_depthsd <- wavelet_output_compare(dates = dates_321, wt_output = wt_32
 p_wave_321_depthsd <- plot_wavelet_gg2(wt_df = wt_df_321_depthsd, type = "power_log", date = T)
 p_wave_321_depthsd %>% ggsave(filename = paste0(data_path,deparse(substitute(.)), ".png"), height = 12, width = 16, units = "cm")#%>% ggplotly()
 
+## depthvar ####
+wt_df_321_depthvar <- wavelet_output_compare(dates = dates_321, wt_output = wt_321_depthvar) #wt_321_depthvar$xaxis %>% as.data.frame()
+p_wave_321_depthvar <- plot_wavelet_gg2(wt_df = wt_df_321_depthvar, type = "power_log", date = T)
+p_wave_321_depthvar %>% ggsave(filename = paste0(data_path,deparse(substitute(.)), ".png"), height = 12, width = 16, units = "cm")#%>% ggplotly()
+
 ## maxdepth ####
 wt_df_321_maxdepth <- wavelet_output_compare(dates = dates_321, wt_output = wt_321_maxdepth) #wt_321_maxdepth$xaxis %>% as.data.frame()
 p_wave_321_maxdepth <- plot_wavelet_gg2(wt_df = wt_df_321_maxdepth, type = "power_log", date = T)

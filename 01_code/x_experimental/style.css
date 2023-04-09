@@ -1,0 +1,7 @@
+.leaflet-control legend {
+  font-family: serif!important;
+}
+
+.leaflet-control legend span {
+  font-weight: bold!important;
+}

@@ -176,6 +176,7 @@ masterias_depth_daynight <- masterias_depth_temp_summary %>% group_by(date, tag_
 masterias_depth_date <- masterias_depth_temp_summary %>% group_by(date, tag_serial_number) %>%
   summarise(depth_mean = mean(depth_m, na.rm = T), 
             depth_sd = sd(depth_m, na.rm = T),
+            depth_var = var(depth_m, na.rm = T),
             depth_median = median(depth_m),
             depth_min = min(depth_m, na.rm = T),
             depth_max = max(depth_m, na.rm = T),

@@ -70,6 +70,12 @@ wt_321_depthsd <- compute_wavelet(parameter = long_dst_date %>%
                                    dt = 1,
                                    factor_smallest_scale = 2)
 
+wt_321_depthvar <- compute_wavelet(parameter = long_dst_date %>% 
+                                    filter(tag_serial_number == "1293321") %>%
+                                    dplyr::select(depth_var),
+                                  dt = 1,
+                                  factor_smallest_scale = 2)
+
 wt_321_vertspeedmax <- compute_wavelet(parameter = long_dst_date %>% 
                                     filter(tag_serial_number == "1293321") %>%
                                     dplyr::select(vertical_speed_max),
@@ -286,6 +292,7 @@ save_data(data = wt_321_mediandepth_change2, folder = data_path)
 save_data(data = wt_321_mediandepth_change, folder = data_path)
 save_data(data = wt_321_vertspeedmax, folder = data_path)
 save_data(data = wt_321_depthsd, folder = data_path)
+save_data(data = wt_321_depthvar, folder = data_path)
 save_data(data = wt_321_maxdepth_roll3, folder = data_path)
 save_data(data = wt_321_maxdepth, folder = data_path)
 save_data(data = wt_321_mindepth_roll3, folder = data_path)
