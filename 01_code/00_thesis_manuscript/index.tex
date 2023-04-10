@@ -131,10 +131,6 @@
 \makeatletter
 \makeatother
 \makeatletter
-\@ifpackageloaded{sidenotes}{}{\usepackage{sidenotes}}
-\@ifpackageloaded{marginnote}{}{\usepackage{marginnote}}
-\makeatother
-\makeatletter
 \makeatother
 \journal{Journal of Animal Biotelemetry}
 \ifLuaTeX
@@ -212,7 +208,7 @@ Still to be written.
     mustelus asterias
 \end{keyword}
 \end{frontmatter}
-    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, breakable, enhanced, borderline west={3pt}{0pt}{shadecolor}, interior hidden, sharp corners, boxrule=0pt]}{\end{tcolorbox}}\fi
+    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, interior hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -220,22 +216,27 @@ Still to be written.
 \setcounter{tocdepth}{3}
 \tableofcontents
 }
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\hypertarget{sec-intro}{%
+\section{Introduction}\label{sec-intro}}
 
 Here is some normal text, and then we'll use the
 \mycommand{custom command} to make this text bold. Also, this is a
 reference test \citet{dodge_2013}. And to combine references, we can use
 this \citep{nathan_2008, dodge_2013}
 
-\hypertarget{materials-and-methods}{%
-\section{Materials and Methods}\label{materials-and-methods}}
+\begin{itemize}
+\tightlist
+\item
+\end{itemize}
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\hypertarget{sec-mm}{%
+\section{Materials and Methods}\label{sec-mm}}
 
-\hypertarget{data-storage-tags}{%
-\subsection{Data Storage Tags}\label{data-storage-tags}}
+\hypertarget{sec-results}{%
+\section{Results}\label{sec-results}}
+
+\hypertarget{sec-results-dst}{%
+\subsection{Data Storage Tags}\label{sec-results-dst}}
 
 The depth log of tag 304 is shown below (see Figure~\ref{fig-dst304}).
 
@@ -249,15 +250,16 @@ The depth log of tag 304 is shown below (see Figure~\ref{fig-dst304}).
 
 \end{figure}
 
-\hypertarget{summary-statistics}{%
-\subsubsection{Summary statistics}\label{summary-statistics}}
+\hypertarget{sec-results-dst-summary}{%
+\subsubsection{Summary statistics}\label{sec-results-dst-summary}}
 
 Below the summary statistics for dst tag 308 are displayed
-(Figure~\ref{fig-dstsummary308}).
+(Figure~\ref{fig-dstsummary308}). Lat's check if the cross referencing
+of sections works, see Section~\ref{sec-intro}.
 
 \begin{figure}
 
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.40\linewidth}
 
 {\centering 
 
@@ -273,7 +275,17 @@ Below the summary statistics for dst tag 308 are displayed
 range of tag 308.}
 \end{minipage}%
 %
-\begin{minipage}[t]{0.50\linewidth}
+\begin{minipage}[t]{0.20\linewidth}
+
+{\centering 
+
+~
+
+}
+
+\end{minipage}%
+%
+\begin{minipage}[t]{0.40\linewidth}
 
 {\centering 
 
@@ -287,6 +299,21 @@ range of tag 308.}
 
 \subcaption{\label{fig-dstsummary308-2}Autocorrelation of the daily
 median depth.}
+\end{minipage}%
+\newline
+\begin{minipage}[t]{\linewidth}
+
+{\centering 
+
+\raisebox{-\height}{
+
+\includegraphics{index_files/figure-pdf/fig-dstsummary308-3.pdf}
+
+}
+
+}
+
+\subcaption{\label{fig-dstsummary308-3}Wavelet transform result.}
 \end{minipage}%
 
 \caption{\label{fig-dstsummary308}Summary statistics for tag 308.}

@@ -39,3 +39,5 @@ vignettes/*.pdf
 00_data/
 02_results/
 /.quarto/
+01_code_00_thesis_manuscript/manuscript_versions/
+01_code_00_thesis_manuscript/index_files/

@@ -1,0 +1,4 @@
+.q-figure-caption:before {
+  content: "Figure ";
+  font-weight: bold;
+}

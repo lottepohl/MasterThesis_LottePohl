@@ -65,8 +65,9 @@ knitr:
   opts_knit:
     root.dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/"
     verbose: TRUE
-# output:
-#   pdf_document:
+output:
+  pdf_document:
+    css: custom.css
 #     output_dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/test"
 #     base_url: "http://localhost:3478/01_code/00_thesis_manuscript/test"
 format:
@@ -84,6 +85,7 @@ format:
       #   - Highlight 3
       name: Journal of Animal Biotelemetry
       formatting: review # or preprint, or doubleblind
+      linestretch: 2
       model: 3p
       cite-style: authoryear
       # graphical-abstract: "![](abstract.png)"
@@ -96,10 +98,10 @@ header-includes:
 #   fig-title: '**Figure**'
 #   fig-labels: arabic
 #   title-delim: "**.**"
-quarto:
-  figure:
-    caption:
-      format: "<b>Figure %s.</b> %s"
+# quarto:
+#   figure:
+#     caption:
+#       format: "<b>Figure %s.</b> %s"
 ---
 
 ```{r packages}
@@ -107,6 +109,7 @@ library(dplyr)
 library(tidyverse)
 library(magrittr)
 library(usethis)
+library(biwavelet)
 rm(list = ls())
 ```
 
@@ -117,12 +120,18 @@ paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base
 
 paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
+paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
+
+
 ```
 
 
 # Introduction {#sec-intro}
 
 Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013]
+
+
+* 
 
 # Materials and Methods {#sec-mm}
 
@@ -146,8 +155,8 @@ Below the summary statistics for dst tag 308 are displayed (@fig-dstsummary308).
 Lat's check if the cross referencing of sections works, see @sec-intro.
 
 ```{r}
-#| include: true
-#| label: fig-dstsummary308
+#| include: false
+#| label: fig-dstsummary308_2
 #| fig-cap: "Summary statistics for tag 308."
 #| fig-subcap:
 #|   - "Daily median depth and depth range of tag 308."
@@ -159,6 +168,30 @@ Lat's check if the cross referencing of sections works, see @sec-intro.
 p_308_depth_median_range_change_ribbon
 
 p_acf_308
+```
+
+```{r}
+#| layout: [[40,-20,40], [100]]
+#| include: true
+#| label: fig-dstsummary308
+#| fig-cap: "Summary statistics for tag 308."
+#| fig-subcap:
+#|   - "Daily median depth and depth range of tag 308."
+#|   - "Autocorrelation of the daily median depth."
+#|   - "Wavelet transform result."
+## | column: body-outset
+## | out-width: 50%
+#| fig.align: "center"
+
+p_308_depth_median_range_change_ribbon
+
+p_acf_308
+
+par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+# the general plots you cannot save, I would have to call the function in the thesis manuscript
+biwavelet::plot.biwavelet(wt_308_depthrange,
+     type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T)
+
 ```
 
 
