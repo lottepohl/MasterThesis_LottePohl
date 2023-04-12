@@ -114,9 +114,15 @@ rm(list = ls())
 ```
 
 ```{r workspace}
+# load dst overview figures
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
 
+# load maps
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+
 paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
+
+paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
 paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
@@ -125,6 +131,26 @@ paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::
 
 ```
 
+Guidelines:
+IMBRSea thesis guidelines
+- indicate in the back cover of your thesis which journal guidelines you have followed in addition to the thesis guidelines. You should indicate the journals' name followed by its ISSN number.
+
+Structure: 
+- executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion)
+- abstract (200 words) is conform with the summary but without detailed information about Methods and Results
+- Intro & Aims
+- Materials & Methods
+- Results
+- Discussion
+- Conclusion
+- Acknowledgements
+- References
+
+Journal of Animal Biotelemetry
+- Use double line spacing
+- Include line and page numbering
+- Use SI units: Please ensure that all special characters used are embedded in the text, otherwise they will be lost during conversion to PDF
+- Do not use page breaks in your manuscript
 
 # Introduction {#sec-intro}
 

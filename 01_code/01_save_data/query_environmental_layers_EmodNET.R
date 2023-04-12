@@ -11,14 +11,15 @@ library(readr)
 library(leafem)
 library(sf)
 
-# knitting <- T
-# pre <- ifelse(knitting %>% isFALSE(), ".", "..") 
+# rm(list = ls())
 
 path_envdata <- paste0(getwd(), "/00_data/environmental_layers/")
 path_boundaries <- paste0(getwd(), "/00_data/marine_boundaries/")
+("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/06_functions/functions.R") %>% source()
+
 
 ## 1. view available webservices ####
-View(emodnet_wfs())
+# View(emodnet_wfs())
 
 ## 2. initiate clients ####
 wfs_bio <- emodnet_init_wfs_client(service = "biology")
@@ -101,7 +102,7 @@ wrecks_BE <- wrecks_BE %>%
 
 ## 5. crop geometries to bbox ####
 
-bbox_geom <- c(xmin = -3, ymin = 49.5, xmax = 6, ymax = 54)
+bbox_geom <- c(xmin = -5.7, ymin = 48.5, xmax = 6, ymax = 54)
 
 wrecks <- crop_geom(wrecks, bbox_geom)
 # windfarms_polygons <- crop_geom(windfarms_polygons, bbox_geom)
