@@ -87,6 +87,8 @@ format:
       formatting: review # or preprint, or doubleblind
       linestretch: 2
       model: 3p
+      # fig-width: 6.7
+      # fig-height: 4.5
       cite-style: authoryear
       # graphical-abstract: "![](abstract.png)"
       # highlights:
@@ -131,14 +133,20 @@ paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::
 
 ```
 
-Guidelines:
-IMBRSea thesis guidelines
+# Guidelines {-}
+## IMBRSea thesis guidelines {-}
 - indicate in the back cover of your thesis which journal guidelines you have followed in addition to the thesis guidelines. You should indicate the journals' name followed by its ISSN number.
+- Each thesis should contain the following phrase on the inside of the front page: ‘No data can be taken out of this work without prior approval of the thesis promoter / supervisor ( this has to be discussed beforehand by the promoter/co-promoter and the thesis supervisor)’
+- defense:  oral presentation (15 minutes) followed by a defense before a Jury and a debate including the public present (15 minutes).
+- submission details: By June 6, 2023, at 4pm CET (first session exam period - the exact date may change yearly) students submit the thesis manuscript (PDF-file) and the raw data (preferably as ZIP-file) in electronic format on the thesis platform (https://matix.imbrsea.eu). Raw data (or at least the
+metadata) must also be included in the thesis manuscript as an annex. Thesis manuscripts up to 50 MB can be uploaded, while the maximum size for the raw data is 10 GB. In case of confidential raw data, students must provide at least the metadata and indicate how to retrieve the data in case this would be necessary. Upon submission, students receive an email of confirmation.
 
-Structure: 
-- executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion)
+
+### Structure {-}
+- executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion), discuss/mention hypotheses
 - abstract (200 words) is conform with the summary but without detailed information about Methods and Results
-- Intro & Aims
+- Intro: state of the art, if applicable: project context
+  - Aims: + working hypotheses
 - Materials & Methods
 - Results
 - Discussion
@@ -146,24 +154,285 @@ Structure:
 - Acknowledgements
 - References
 
-Journal of Animal Biotelemetry
+## Journal of Animal Biotelemetry {-}
 - Use double line spacing
 - Include line and page numbering
 - Use SI units: Please ensure that all special characters used are embedded in the text, otherwise they will be lost during conversion to PDF
 - Do not use page breaks in your manuscript
-
-# Introduction {#sec-intro}
-
+- Figure titles (max 15 words) and legends (max 300 words) 
+- width of 85 mm for half page width figure, width of 170 mm for full page width figure, maximum height of 225 mm for figure and legend_ Formatting the 'Availability of data and materials' section of your manuscript
+- The following format for the 'Availability of data and materials section of your manuscript should be used ; "The dataset(s) supporting the conclusions of this article is(are) available in the [repository name] repository, [unique persistent identifier and hyperlink to dataset(s) in http:// format]." The following format is required when data are included as additional files: "The dataset(s) supporting the conclusions of this article is(are) included within the article (and its additional file(s))."
+- unpublished data and personal communication shall not be cited but included as footnotes.
+- reference style: https://paperpile.com/s/animal-biotelemetry-citation-style/
+  1. Meyer E. Physics. Controlling friction atom by atom. Science. 2015;348:1089.
+  
+## Markdown syntax {-}
 Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013]
 
 
-* 
+{{< pagebreak >}}
+
+# Introduction {#sec-intro}
+
+##	History of fish tagging/biologging
+
+- Different telemetry methods
+
+##	Acoustic telemetry
+
+##	Acoustic data storage tags
+
+###	Geolocation modelling
+
+- Method: HMM with observation and behavioural model
+- Different techniques for behavioural states
+- Spectral method by Heerah 2017
+- Tidal method by Pedersen 2008
+- Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement
+
+##	The starry smooth-hound shark
+
+*put knowledge about the species into context of related species*
+
+###	Morphology
+
+<!-- IMAGE: starry smooth-hound -->
+
+- Ventral snout: perfect for feeding on animals on seafloor
+- All time spent swimming above seafloor
+
+###	Ecology
+
+####	Life history
+
+- Feeding: crustaceans, swimming shorewards at night
+
+####	Migration
+
+- Sex bias: Males into Northern North Sea, females into Bay of Biscay
+
+- Daily horizontal distance: up to 70km
+
+####	Reproduction
+
+- Aplacentary viviparous, unlike M. mustelus but e.g. like M. antarcticus
+- Different life stages of young
+- Multiple paternity, sperm storage up to a year
+
+###	Research gaps
+
+#### Migration
+sex bias known, but no exact locations, timing also unknown
+
+-	Horizontal and vertical behaviour during migration
+-	Until now, many capture/recapture studies, but no in-depth tracking studies (to our knowledge)
+
+####	Reproduction
+reproductive habitats already studied to some extent, but e.g. parturition site Western Scheldt unconfirmed
+
+  -	General details about parturition: all pups released at once, batches?
+  
+###	Abundance
+
+- only species in NE Atlantic
+
+##	Communication of fish movement ecology studies
+
+###	Problem
+the data is complex and difficult to understand for non-experts, yet it is imperative to communicate the scientific results to transform them into action/change
+
+###	The quadruple helix
+
+- 	Communication from (fish) scientists to politicians to inform political and fishery management decisions
+-	Creating awareness within the general public
+-	Information of industry stakeholders, e.g. wind farm companies
+
+##	Aims of the work
+
+### 	Characterizing the vertical behaviour (i.e. the depthlogs) of the migrating sharks
+
+-	Motivation: provide additional input for geolocation models(Behavioural switches)
+-	Implement unsupervised learning aka k means clustering to infer behavioural states/switches = test a new way of inferring behavioural states
+
+####	Working hypothesis
+
+Using k-means on summary statistics and their wavelet analysis results successfully identifies putative migration periods, as identified by visual analysis of the raw depthlog
+
+###	Exploratory and descriptive analysis of the female sharks’ vertical behaviour
+
+in the Western Scheldt using the acoustic detections data
+
+-	Sub-dataset of July 2019 since this has the highest density of acoustic detections (~6000 out of ~10000 total detections)
+
+####	Working hypothesis
+
+Sharks predominantly use the seafloor section of the space around a receiver (predominantly = xx%, or result of chi2?)
+
+####	Working hypotheses about the acoustic dataset in general
+
+the seasonal presence of M. asterias is reflected in the acoustic detection dataset
+
+-	H0 = the mean # detections per month in summer months, here: March – September significantly differs from that in winter months (t-test or Levene test)
+
+<!-- PLOT (maybe: boxplot, winter vs summer months, detections grouped into months) -->
+
+the sex bias, i.e. that females are predominantly present in the WS, is reflected in the acoustic detections
+-	H0 = number of females detected per month significantly differs from the number of males (t test)
+
+###	Converting the first results
+into a format that transmit relevant messages to one/several groups of non-scientists
+
+-	No working hypothesis, bc only concept and first draft version, but outlook: further development and then study with people about how well they understood the information provided
+
+<!-- State that most of the analyses are descriptive/exploratory bc not much is known about the species yet and the dataset Is a bit too small to perform real statistical tests on -->
+
 
 # Materials and Methods {#sec-mm}
 
+<!-- contains the design of the research: e.g. experimental design, area description, sampling methods, analysis methods, statistical design and methods -->
+
+## Study Area {#sec-mm_studyarea}
+
+###	The BPNS
+
+####	Human activities
+
+-	Windfarms
+-	Shipwrecks
+-	Submarine power and telecommunication cables
+
+<!-- MAP: BPNS with cables, windfarms and shipwrecks -->
+<!-- Maybe 2 maps next to each other, one with acoustic receivers (+ sub areas/receiver arrays, and 2 tagging locations) and one with the human activities (bc 1 map will be too full?) -->
+<!-- Mention that for the windfarms and cables, the years are filtered to be <= 2020 -->
+
+```{r map1overview}
+#| include: true
+#| label: fig-map1overview
+##| out-width: 100%
+#| fig-cap: "Map of the study area."
+#| fig-width: 6.7
+#| fig-height: 4.5
+map1_overview
+```
+
+###	The Scheldt Estuary
+
+####	The Westerschelde
+
+<!-- MAP: Schelde with bathymetry raster or contour lines -->
+
+-	Acoustic receiver arrays in WS
+-	Mixing
+-	Salinity
+-	Food abundance for the sharks
+-	Biodiversity and most prominent species
+
+###	The English channel
+-	Bathymetry
+-	Maybe map with bathy contour lines?
+-	Food abundance?
+-	Temperature seasonality
+
+##	The Permanent Belgian Receiver Network (PBARN)
+
+The acoustic receivers of the Permanent Belgian Receiver Network (PBARN) were used in this study. The PBARN is part of the European Tracking Network, which was established in 2017 as a pan-european aquatic telemetry network [@reubens_2019].
+
+As of 2019, the PBARN consisted of 177 permanently installed and monitored acoustic receivers within the BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse River [@reubens_2018].
+
+A detection probability of >50% was estimated for a radius of 500-700m around the receiver [@goossens_2022], and >70% for 200m radius [@reubens_2018].
+
+*Find out: how many receivers were in the BPNS and the Scheldt?*
+
+### Data Management (change title)
+
+The database of the European Tracking Network (https://lifewatch.be/etn) stores the acoustic detections, and metadata connected to the animal individuals and the tags used.
+
+<!-- make etn link into citation -->
+
+The data storage log files and the outputs of the geolocation models were accessed and management via the Marine Data Archive (MDA).
+
+- *Question: TABLE with lat lon & names of receiver stations?*
+
+## Acoustic Tags 
+
+The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags, measuring 46mm in length and weighing 13g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensors with logging intervals of 120s and 240s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (temperature:pressure). Further details in the Supporting Information og @goossens_2023.
+<!-- reference to innovasea product manual -->
+The pressure sensors recorded with a resolution of 0.3m and an accuracy of $/pm$3.4m until the depth of 68m, according to the manufacturer.
+
+## Tagging Procedure
+
+```{r sum-tagging}
+tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate::date(),                        release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "outside WS")) %>% group_by(date) %>% reframe(n = n(), release_loc = release_loc %>% unique()) %>% mutate(date2 = date %>% format(format = "%B %d"))
+
+# tagging_info %>% View()
+```
+
+
+Tagging of the 30 *M. asterias* individuals occured in July and August, 2018 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and 12, n = `r tagging_info$n[4]` for both dates).
+
+Tagged animals were released in two locations, just before *Neeltje Jans* (all sharks tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018)
+
+Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and a 2-3 cm surgical incision at the midventral line was made using a scalpel. The Acoustic Data Storage Tag was inserted into the abdominal cavity using surgical pliers, and the incision was closed with 2-3 stitches using non-absorbable mono-filament [@goossens_2023].
+
+<!-- Photo of tagging?? PJV? -->
+
+## Ethics statement
+
+The care and use of the 30 *M. asterias* individuals complied with the Belgian Animal Welfare Act,
+guidelines and policies as approved by the *Ethische Commissie Dierproeven* (project
+reference EC2017-080). All animal treatments were undertaken in 2018 and 2019, and all tagging procedures were carried out by competent and trained personal license holders.
+
+##	Data Analysis
+
+###	Acoustic Detections
+
+####	Descriptive analysis
+
+-	Omitted tags
+-	Summary statistics
+  -	# Individuals and # detections per station/array
+####	Depth use analysis
+
+-	Bathymetry dataset
+-	Method: radius of 200m (=detection range)
+
+###	Data Storage Tags
+
+####	Summary statistics
+- Mean/median depth, depth range, max and min depth, vert. speed
+-	Daily, weekly, monthly
+####	Migration Patterns/Long term DST/Migration Analysis
+-	Wavelet on daily summary statistics
+-	Identified putative migration weeks: Wavelet on raw depth values (? Does that make sense? To assess diel vertical behavior during migration)
+  -	Method: extract week of likely migration and do wavelet analysis on raw (maybe scaled?) depth data for that time: no daily summaries!
+-	FFT on depth values for putative migration periods
+
+
+
 # Results {#sec-results}
 
+## Tagged animals
+<!--	TABLE with info on each individuals -->
+
+## Acoustic detections 
+<!-- i.	PLOT: Abacus plot -->
+<!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
+
+###	Vertical space use analysis
+
+<!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins -->
+<!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? -->
+
+<!-- iii.	PLOT: # detected individuals, # detections (2 plots next to each other with circles) -->
+
 ## Data Storage Tags {#sec-results-dst}
+
+
+-	How many tags got recovered
+<!-- - TABLE: Summary stats on dst data -->
+
+### Raw depthlogs
+<!-- iv.	PLOT: Raw depth and temp dataiv.	PLOT: Raw depth and temp data -->
 
 The depth log of tag 304 is shown below (see @fig-dst304).
 
@@ -175,7 +444,14 @@ The depth log of tag 304 is shown below (see @fig-dst304).
 plot_dst_304
 ```
 
+### Geolocation model outputs (include?)
+
+*Question: I didn't do this: include y/n?*
+<!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) -->
+
 ### Summary statistics {#sec-results-dst-summary}
+
+<!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
 
 Below the summary statistics for dst tag 308 are displayed (@fig-dstsummary308).
 Lat's check if the cross referencing of sections works, see @sec-intro.
@@ -195,6 +471,8 @@ p_308_depth_median_range_change_ribbon
 
 p_acf_308
 ```
+
+### Wavelet analysis 
 
 ```{r}
 #| layout: [[40,-20,40], [100]]
@@ -220,15 +498,111 @@ biwavelet::plot.biwavelet(wt_308_depthrange,
 
 ```
 
+### Unsupervised learning
+
+
+<!-- ix.	wavelet plot and frequency spectrum of putative migration period raw depthlogs -->
 
 # Discussion
 
-<!-- # Figures and tables -->
+<!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
 
-<!-- @fig-dst_308 is generated using an R chunk. -->
+##	Seasonality of starry smooth-hound presence 
+in/around westerschelde, according to ac. detections
 
-<!-- # Tables coming from R -->
+-	Highly seasonal (only in summer)
+-	Sex-biased (mostly females)
+-	Possible pupping area, but this dataset not sufficient to confirm
 
-<!-- Tables can also be generated using R chunks, as shown in @tbl-simple example. -->
+##	Tag recoveries
+
+###	Possible death reasons of short term dst’s
+
+-	Tagging consequences
+-	High sensitivity (verhelst, pers. Comm.)
+-	Not likely: death bc of seals (no temp increase)
+-	Laying dead on seafloor (tidal signal)
+
+##	Ecological inferences from migration dataset analysis
+
+###	Vertical patterns during migration
+
+-	Yes, but eventually swimming inshore
+-	How strong are diel patterns in putative migration weeks? Check wavelet median depth
+
+##	Limits of biologging/ fish tagging
+
+-	Geolocation modelling already leads to impressive results for comparatively well-studied species (e.g. cod (?), sea bass), but still limited in accuracy for not wellknown species
+
+###	Limits of geolocation modelling
+
+-	Resolution of bathymetry dataset
+  -	Possible that shark was in certain area but bc bathymetry grid = summary (e.g. mean), geolocation model rules this location out (cf Woillez 2016)
+-	Behaviour incorrectly/not inferred
+  -	E.g. active vs inactive behaviour: 
+  
+### current state of fish tagging
+
+-	It’s kind of the best we can do today, but non-satellite tagging methodologies have huge drawbacks still
+-	Acoustic telemetry: high resolution on regional scale (i.e. where the receivers are placed) but outside of receiver networks: no knowledge at all
+
+##	Limits of the chosen analysis methods
+
+-	Wavelet analysis: no super fine scale analysis possible bc of limited res in both time and freq domain
+
+##	Limits of the acoustic detection dataset
+
+-	There are ~10 000 detections within ~2 yrs but compared to other studies (ref to other studies!) this is not that much.
+-	the horiz resolution of receivers, esp in/around the WS is not good bc rather receiver gate than array to monitor species swimming into/out of the Scheldt river (= different use case scenario: receiver array needed to resolve locations of sharks better, and to e.g. enable triangulation)
+
+##	Limits of the data storage tag dataset
+
+-	Female shark: deeper than tag depth limit (68m): geolocation model inaccurate, shark putatively went into the Hurd deep (MRGID: 3321) in English channel
+-	Only one individual per sex: not reliable, no statistics possible
+
+# Conclusion
+
+*brief summary of the main findings (original data, lesson learned,…)*
+
+-	Possible improvements of tagging procedure (correct place here?)
+
+# Outlook
+
+*Alle kapitel aus der Einleitung wieder aufnehmen*
+
+##	Acoustic detections additional analyses
+-	Vertical space use: resolve individuals to see if there are differences between ind. Sharks
+##	Improvements of geolocation model for M. asterias
+-	Boundary condition: max depth of fish per day == max depth of bathy for that day
+-	Behavioural switch: migration/non-migration or migration/winter resident/summer resident
+##	Information tool
+- make into interactive application (RShiny) and do tests with some of the target groups to understand how well the information is taken in
+
+# Acknowledgements
+
+*funding agencies, field workers
+
+Question: Who provided the money for the tags? What project was that under?*
+
+# Availability of Data and Materials {-}
+
+<!-- datasets that are accessible externally -->
+The dataset(s) supporting the conclusions of this article is(are) available in the [repository name] repository, [unique persistent identifier and hyperlink to dataset(s) in http:// format].
+
+<!-- additional materials -->
+The dataset(s) supporting the conclusions of this article is(are) included within the article (and its additional file(s)).
 
 # References {-}
+
+# Annex
+
+*All the raw data have to be added in annex*
+
+##	Acoustic detections
+
+##	DST datasets
+
+###	FFT plots for all tags
+
+###	Wavelet plots for all (in the k means clustering included) summary statistics
+
