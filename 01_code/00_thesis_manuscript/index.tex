@@ -208,7 +208,7 @@ Still to be written.
     mustelus asterias
 \end{keyword}
 \end{frontmatter}
-    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, interior hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
+    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, borderline west={3pt}{0pt}{shadecolor}, breakable, frame hidden, interior hidden, sharp corners, boxrule=0pt]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -216,27 +216,540 @@ Still to be written.
 \setcounter{tocdepth}{3}
 \tableofcontents
 }
-\hypertarget{sec-intro}{%
-\section{Introduction}\label{sec-intro}}
+\hypertarget{guidelines}{%
+\section*{Guidelines}\label{guidelines}}
+\addcontentsline{toc}{section}{Guidelines}
+
+\hypertarget{imbrsea-thesis-guidelines}{%
+\subsection*{IMBRSea thesis
+guidelines}\label{imbrsea-thesis-guidelines}}
+\addcontentsline{toc}{subsection}{IMBRSea thesis guidelines}
+
+\begin{itemize}
+\tightlist
+\item
+  indicate in the back cover of your thesis which journal guidelines you
+  have followed in addition to the thesis guidelines. You should
+  indicate the journals' name followed by its ISSN number.
+\item
+  Each thesis should contain the following phrase on the inside of the
+  front page: `No data can be taken out of this work without prior
+  approval of the thesis promoter / supervisor ( this has to be
+  discussed beforehand by the promoter/co-promoter and the thesis
+  supervisor)'
+\item
+  defense: oral presentation (15 minutes) followed by a defense before a
+  Jury and a debate including the public present (15 minutes).
+\item
+  submission details: By June 6, 2023, at 4pm CET (first session exam
+  period - the exact date may change yearly) students submit the thesis
+  manuscript (PDF-file) and the raw data (preferably as ZIP-file) in
+  electronic format on the thesis platform (https://matix.imbrsea.eu).
+  Raw data (or at least the metadata) must also be included in the
+  thesis manuscript as an annex. Thesis manuscripts up to 50 MB can be
+  uploaded, while the maximum size for the raw data is 10 GB. In case of
+  confidential raw data, students must provide at least the metadata and
+  indicate how to retrieve the data in case this would be necessary.
+  Upon submission, students receive an email of confirmation.
+\end{itemize}
+
+\hypertarget{structure}{%
+\subsubsection*{Structure}\label{structure}}
+\addcontentsline{toc}{subsubsection}{Structure}
+
+\begin{itemize}
+\tightlist
+\item
+  executive summary (400 words): contains a summary of all relevant
+  information documented in the thesis (Introduction, M\&M, Results,
+  Conclusion), discuss/mention hypotheses
+\item
+  abstract (200 words) is conform with the summary but without detailed
+  information about Methods and Results
+\item
+  Intro: state of the art, if applicable: project context
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Aims: + working hypotheses
+  \end{itemize}
+\item
+  Materials \& Methods
+\item
+  Results
+\item
+  Discussion
+\item
+  Conclusion
+\item
+  Acknowledgements
+\item
+  References
+\end{itemize}
+
+\hypertarget{journal-of-animal-biotelemetry}{%
+\subsection*{Journal of Animal
+Biotelemetry}\label{journal-of-animal-biotelemetry}}
+\addcontentsline{toc}{subsection}{Journal of Animal Biotelemetry}
+
+\begin{itemize}
+\tightlist
+\item
+  Use double line spacing
+\item
+  Include line and page numbering
+\item
+  Use SI units: Please ensure that all special characters used are
+  embedded in the text, otherwise they will be lost during conversion to
+  PDF
+\item
+  Do not use page breaks in your manuscript
+\item
+  Figure titles (max 15 words) and legends (max 300 words)
+\item
+  width of 85 mm for half page width figure, width of 170 mm for full
+  page width figure, maximum height of 225 mm for figure and legend\_
+  Formatting the `Availability of data and materials' section of your
+  manuscript
+\item
+  The following format for the 'Availability of data and materials
+  section of your manuscript should be used ; ``The dataset(s)
+  supporting the conclusions of this article is(are) available in the
+  {[}repository name{]} repository, {[}unique persistent identifier and
+  hyperlink to dataset(s) in http:// format{]}.'' The following format
+  is required when data are included as additional files: ``The
+  dataset(s) supporting the conclusions of this article is(are) included
+  within the article (and its additional file(s)).''
+\item
+  unpublished data and personal communication shall not be cited but
+  included as footnotes.
+\item
+  reference style:
+  https://paperpile.com/s/animal-biotelemetry-citation-style/
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Meyer E. Physics. Controlling friction atom by atom. Science.
+    2015;348:1089.
+  \end{enumerate}
+\end{itemize}
+
+\hypertarget{markdown-syntax}{%
+\subsection*{Markdown syntax}\label{markdown-syntax}}
+\addcontentsline{toc}{subsection}{Markdown syntax}
 
 Here is some normal text, and then we'll use the
 \mycommand{custom command} to make this text bold. Also, this is a
 reference test \citet{dodge_2013}. And to combine references, we can use
 this \citep{nathan_2008, dodge_2013}
 
+\newpage{}
+
+\hypertarget{sec-intro}{%
+\section{Introduction}\label{sec-intro}}
+
+\hypertarget{history-of-fish-taggingbiologging}{%
+\subsection{History of fish
+tagging/biologging}\label{history-of-fish-taggingbiologging}}
+
 \begin{itemize}
 \tightlist
 \item
+  Different telemetry methods
+\end{itemize}
+
+\hypertarget{acoustic-telemetry}{%
+\subsection{Acoustic telemetry}\label{acoustic-telemetry}}
+
+\hypertarget{acoustic-data-storage-tags}{%
+\subsection{Acoustic data storage
+tags}\label{acoustic-data-storage-tags}}
+
+\hypertarget{geolocation-modelling}{%
+\subsubsection{Geolocation modelling}\label{geolocation-modelling}}
+
+\begin{itemize}
+\tightlist
+\item
+  Method: HMM with observation and behavioural model
+\item
+  Different techniques for behavioural states
+\item
+  Spectral method by Heerah 2017
+\item
+  Tidal method by Pedersen 2008
+\item
+  Drawbacks of the methods for species with limited knowledge, a benthic
+  lifestyle with a broad range of horizontal movement
+\end{itemize}
+
+\hypertarget{the-starry-smooth-hound-shark}{%
+\subsection{The starry smooth-hound
+shark}\label{the-starry-smooth-hound-shark}}
+
+\hypertarget{morphology}{%
+\subsubsection{Morphology}\label{morphology}}
+
+\begin{itemize}
+\tightlist
+\item
+  Ventral snout: perfect for feeding on animals on seafloor
+\item
+  All time spent swimming above seafloor
+\end{itemize}
+
+\hypertarget{ecology}{%
+\subsubsection{Ecology}\label{ecology}}
+
+\hypertarget{life-history}{%
+\paragraph{Life history}\label{life-history}}
+
+\begin{itemize}
+\tightlist
+\item
+  Feeding: crustaceans, swimming shorewards at night
+\end{itemize}
+
+\hypertarget{migration}{%
+\paragraph{Migration}\label{migration}}
+
+\begin{itemize}
+\item
+  Sex bias: Males into Northern North Sea, females into Bay of Biscay
+\item
+  Daily horizontal distance: up to 70km
+\end{itemize}
+
+\hypertarget{reproduction}{%
+\paragraph{Reproduction}\label{reproduction}}
+
+\begin{itemize}
+\tightlist
+\item
+  Aplacentary viviparous, unlike M. mustelus but e.g.~like M.
+  antarcticus
+\item
+  Different life stages of young
+\item
+  Multiple paternity, sperm storage up to a year
+\end{itemize}
+
+\hypertarget{research-gaps}{%
+\subsubsection{Research gaps}\label{research-gaps}}
+
+\hypertarget{migration-1}{%
+\paragraph{Migration}\label{migration-1}}
+
+sex bias known, but no exact locations, timing also unknown
+
+\begin{itemize}
+\tightlist
+\item
+  Horizontal and vertical behaviour during migration
+\item
+  Until now, many capture/recapture studies, but no in-depth tracking
+  studies (to our knowledge)
+\end{itemize}
+
+\hypertarget{reproduction-1}{%
+\paragraph{Reproduction}\label{reproduction-1}}
+
+reproductive habitats already studied to some extent, but
+e.g.~parturition site Western Scheldt unconfirmed
+
+\begin{itemize}
+\tightlist
+\item
+  General details about parturition: all pups released at once, batches?
+\end{itemize}
+
+\hypertarget{abundance}{%
+\subsubsection{Abundance}\label{abundance}}
+
+\begin{itemize}
+\tightlist
+\item
+  only species in NE Atlantic
+\end{itemize}
+
+\hypertarget{communication-of-fish-movement-ecology-studies}{%
+\subsection{Communication of fish movement ecology
+studies}\label{communication-of-fish-movement-ecology-studies}}
+
+\hypertarget{problem}{%
+\subsubsection{Problem}\label{problem}}
+
+the data is complex and difficult to understand for non-experts, yet it
+is imperative to communicate the scientific results to transform them
+into action/change
+
+\hypertarget{the-quadruple-helix}{%
+\subsubsection{The quadruple helix}\label{the-quadruple-helix}}
+
+\begin{itemize}
+\tightlist
+\item
+  Communication from (fish) scientists to politicians to inform
+  political and fishery management decisions
+\item
+  Creating awareness within the general public
+\item
+  Information of industry stakeholders, e.g.~wind farm companies
+\end{itemize}
+
+\hypertarget{aims-of-the-work}{%
+\subsection{Aims of the work}\label{aims-of-the-work}}
+
+\hypertarget{characterizing-the-vertical-behaviour-i.e.-the-depthlogs-of-the-migrating-sharks}{%
+\subsubsection{Characterizing the vertical behaviour (i.e.~the
+depthlogs) of the migrating
+sharks}\label{characterizing-the-vertical-behaviour-i.e.-the-depthlogs-of-the-migrating-sharks}}
+
+\begin{itemize}
+\tightlist
+\item
+  Motivation: provide additional input for geolocation
+  models(Behavioural switches)
+\item
+  Implement unsupervised learning aka k means clustering to infer
+  behavioural states/switches = test a new way of inferring behavioural
+  states
+\end{itemize}
+
+\hypertarget{working-hypothesis}{%
+\paragraph{Working hypothesis}\label{working-hypothesis}}
+
+Using k-means on summary statistics and their wavelet analysis results
+successfully identifies putative migration periods, as identified by
+visual analysis of the raw depthlog
+
+\hypertarget{exploratory-and-descriptive-analysis-of-the-female-sharks-vertical-behaviour}{%
+\subsubsection{Exploratory and descriptive analysis of the female
+sharks' vertical
+behaviour}\label{exploratory-and-descriptive-analysis-of-the-female-sharks-vertical-behaviour}}
+
+in the Western Scheldt using the acoustic detections data
+
+\begin{itemize}
+\tightlist
+\item
+  Sub-dataset of July 2019 since this has the highest density of
+  acoustic detections (\textasciitilde6000 out of \textasciitilde10000
+  total detections)
+\end{itemize}
+
+\hypertarget{working-hypothesis-1}{%
+\paragraph{Working hypothesis}\label{working-hypothesis-1}}
+
+Sharks predominantly use the seafloor section of the space around a
+receiver (predominantly = xx\%, or result of chi2?)
+
+\hypertarget{working-hypotheses-about-the-acoustic-dataset-in-general}{%
+\paragraph{Working hypotheses about the acoustic dataset in
+general}\label{working-hypotheses-about-the-acoustic-dataset-in-general}}
+
+the seasonal presence of M. asterias is reflected in the acoustic
+detection dataset
+
+\begin{itemize}
+\tightlist
+\item
+  H0 = the mean \# detections per month in summer months, here: March --
+  September significantly differs from that in winter months (t-test or
+  Levene test)
+\end{itemize}
+
+the sex bias, i.e.~that females are predominantly present in the WS, is
+reflected in the acoustic detections - H0 = number of females detected
+per month significantly differs from the number of males (t test)
+
+\hypertarget{converting-the-first-results}{%
+\subsubsection{Converting the first
+results}\label{converting-the-first-results}}
+
+into a format that transmit relevant messages to one/several groups of
+non-scientists
+
+\begin{itemize}
+\tightlist
+\item
+  No working hypothesis, bc only concept and first draft version, but
+  outlook: further development and then study with people about how well
+  they understood the information provided
 \end{itemize}
 
 \hypertarget{sec-mm}{%
 \section{Materials and Methods}\label{sec-mm}}
 
+\hypertarget{sec-mm_studyarea}{%
+\subsection{Study Area}\label{sec-mm_studyarea}}
+
+\hypertarget{the-bpns}{%
+\subsubsection{The BPNS}\label{the-bpns}}
+
+\hypertarget{human-activities}{%
+\paragraph{Human activities}\label{human-activities}}
+
+\begin{itemize}
+\tightlist
+\item
+  Windfarms
+\item
+  Shipwrecks
+\item
+  Submarine power and telecommunication cables
+\end{itemize}
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{index_files/figure-pdf/fig-map1overview-1.pdf}
+
+}
+
+\caption{\label{fig-map1overview}Map of the study area.}
+
+\end{figure}
+
+\hypertarget{the-scheldt-estuary}{%
+\subsubsection{The Scheldt Estuary}\label{the-scheldt-estuary}}
+
+\hypertarget{the-westerschelde}{%
+\paragraph{The Westerschelde}\label{the-westerschelde}}
+
+\begin{itemize}
+\tightlist
+\item
+  Acoustic receiver arrays in WS
+\item
+  Mixing
+\item
+  Salinity
+\item
+  Food abundance for the sharks
+\item
+  Biodiversity and most prominent species
+\end{itemize}
+
+\hypertarget{the-english-channel}{%
+\subsubsection{The English channel}\label{the-english-channel}}
+
+\begin{itemize}
+\tightlist
+\item
+  Bathymetry
+\item
+  Maybe map with bathy contour lines?
+\item
+  Food abundance?
+\item
+  Temperature seasonality
+\end{itemize}
+
+\hypertarget{acoustic-receiver-array}{%
+\subsection{Acoustic (receiver) Array}\label{acoustic-receiver-array}}
+
+\begin{itemize}
+\item
+  \emph{Find out: how many ac. Receivers in study area?}
+\item
+  \emph{Question: TABLE with lat lon \& names of receiver stations?}
+\item
+  Detection range
+\end{itemize}
+
+\hypertarget{tags-tagging-procedure}{%
+\subsection{Tags \& Tagging Procedure}\label{tags-tagging-procedure}}
+
+\begin{itemize}
+\tightlist
+\item
+  Dates of boat trips
+\item
+  tags technical details
+\item
+  tagging procedure
+\end{itemize}
+
+\hypertarget{data-analysis}{%
+\subsection{Data Analysis}\label{data-analysis}}
+
+\hypertarget{acoustic-detections}{%
+\subsubsection{Acoustic Detections}\label{acoustic-detections}}
+
+\hypertarget{descriptive-analysis}{%
+\paragraph{Descriptive analysis}\label{descriptive-analysis}}
+
+\begin{itemize}
+\item
+  Omitted tags
+\item
+  Summary statistics
+\item ~
+  \hypertarget{individuals-and-detections-per-stationarray}{%
+  \section{Individuals and \# detections per
+  station/array}\label{individuals-and-detections-per-stationarray}}
+
+  \hypertarget{depth-use-analysis}{%
+  \paragraph{Depth use analysis}\label{depth-use-analysis}}
+\item
+  Bathymetry dataset
+\item
+  Method: radius of 200m (=detection range)
+\end{itemize}
+
+\hypertarget{data-storage-tags}{%
+\subsubsection{Data Storage Tags}\label{data-storage-tags}}
+
+\hypertarget{summary-statistics}{%
+\paragraph{Summary statistics}\label{summary-statistics}}
+
+\begin{itemize}
+\tightlist
+\item
+  Mean/median depth, depth range, max and min depth, vert. speed
+\item
+  Daily, weekly, monthly \#\#\#\# Migration Patterns/Long term
+  DST/Migration Analysis
+\item
+  Wavelet on daily summary statistics
+\item
+  Identified putative migration weeks: Wavelet on raw depth values (?
+  Does that make sense? To assess diel vertical behavior during
+  migration)
+\item
+  Method: extract week of likely migration and do wavelet analysis on
+  raw (maybe scaled?) depth data for that time: no daily summaries!
+\item
+  FFT on depth values for putative migration periods
+\end{itemize}
+
 \hypertarget{sec-results}{%
 \section{Results}\label{sec-results}}
 
+\hypertarget{tagged-animals}{%
+\subsection{Tagged animals}\label{tagged-animals}}
+
+\hypertarget{acoustic-detections-1}{%
+\subsection{Acoustic detections}\label{acoustic-detections-1}}
+
+\hypertarget{vertical-space-use-analysis}{%
+\subsubsection{Vertical space use
+analysis}\label{vertical-space-use-analysis}}
+
 \hypertarget{sec-results-dst}{%
 \subsection{Data Storage Tags}\label{sec-results-dst}}
+
+\begin{itemize}
+\tightlist
+\item
+  How many tags got recovered
+\end{itemize}
+
+\hypertarget{raw-depthlogs}{%
+\subsubsection{Raw depthlogs}\label{raw-depthlogs}}
 
 The depth log of tag 304 is shown below (see Figure~\ref{fig-dst304}).
 
@@ -250,12 +763,21 @@ The depth log of tag 304 is shown below (see Figure~\ref{fig-dst304}).
 
 \end{figure}
 
+\hypertarget{geolocation-model-outputs-include}{%
+\subsubsection{Geolocation model outputs
+(include?)}\label{geolocation-model-outputs-include}}
+
+\emph{Question: I didn't do this: include y/n?}
+
 \hypertarget{sec-results-dst-summary}{%
 \subsubsection{Summary statistics}\label{sec-results-dst-summary}}
 
 Below the summary statistics for dst tag 308 are displayed
 (Figure~\ref{fig-dstsummary308}). Lat's check if the cross referencing
 of sections works, see Section~\ref{sec-intro}.
+
+\hypertarget{wavelet-analysis}{%
+\subsubsection{Wavelet analysis}\label{wavelet-analysis}}
 
 \begin{figure}
 
@@ -320,11 +842,222 @@ median depth.}
 
 \end{figure}
 
+\hypertarget{unsupervised-learning}{%
+\subsubsection{Unsupervised learning}\label{unsupervised-learning}}
+
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
+\hypertarget{seasonality-of-starry-smooth-hound-presence}{%
+\subsection{Seasonality of starry smooth-hound
+presence}\label{seasonality-of-starry-smooth-hound-presence}}
 
-\renewcommand\refname{References}
+in/around westerschelde, according to ac. detections
+
+\begin{itemize}
+\tightlist
+\item
+  Highly seasonal (only in summer)
+\item
+  Sex-biased (mostly females)
+\item
+  Possible pupping area, but this dataset not sufficient to confirm
+\end{itemize}
+
+\hypertarget{tag-recoveries}{%
+\subsection{Tag recoveries}\label{tag-recoveries}}
+
+\hypertarget{possible-death-reasons-of-short-term-dsts}{%
+\subsubsection{Possible death reasons of short term
+dst's}\label{possible-death-reasons-of-short-term-dsts}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tagging consequences
+\item
+  High sensitivity (verhelst, pers. Comm.)
+\item
+  Not likely: death bc of seals (no temp increase)
+\item
+  Laying dead on seafloor (tidal signal)
+\end{itemize}
+
+\hypertarget{ecological-inferences-from-migration-dataset-analysis}{%
+\subsection{Ecological inferences from migration dataset
+analysis}\label{ecological-inferences-from-migration-dataset-analysis}}
+
+\hypertarget{vertical-patterns-during-migration}{%
+\subsubsection{Vertical patterns during
+migration}\label{vertical-patterns-during-migration}}
+
+\begin{itemize}
+\tightlist
+\item
+  Yes, but eventually swimming inshore
+\item
+  How strong are diel patterns in putative migration weeks? Check
+  wavelet median depth
+\end{itemize}
+
+\hypertarget{limits-of-biologging-fish-tagging}{%
+\subsection{Limits of biologging/ fish
+tagging}\label{limits-of-biologging-fish-tagging}}
+
+\begin{itemize}
+\tightlist
+\item
+  Geolocation modelling already leads to impressive results for
+  comparatively well-studied species (e.g.~cod (?), sea bass), but still
+  limited in accuracy for not wellknown species
+\end{itemize}
+
+\hypertarget{limits-of-geolocation-modelling}{%
+\subsubsection{Limits of geolocation
+modelling}\label{limits-of-geolocation-modelling}}
+
+\begin{itemize}
+\tightlist
+\item
+  Resolution of bathymetry dataset
+\item
+  Possible that shark was in certain area but bc bathymetry grid =
+  summary (e.g.~mean), geolocation model rules this location out (cf
+  Woillez 2016)
+\item
+  Behaviour incorrectly/not inferred
+\item
+  E.g. active vs inactive behaviour:
+\end{itemize}
+
+\hypertarget{current-state-of-fish-tagging}{%
+\subsubsection{current state of fish
+tagging}\label{current-state-of-fish-tagging}}
+
+\begin{itemize}
+\tightlist
+\item
+  It's kind of the best we can do today, but non-satellite tagging
+  methodologies have huge drawbacks still
+\item
+  Acoustic telemetry: high resolution on regional scale (i.e.~where the
+  receivers are placed) but outside of receiver networks: no knowledge
+  at all
+\end{itemize}
+
+\hypertarget{limits-of-the-chosen-analysis-methods}{%
+\subsection{Limits of the chosen analysis
+methods}\label{limits-of-the-chosen-analysis-methods}}
+
+\begin{itemize}
+\tightlist
+\item
+  Wavelet analysis: no super fine scale analysis possible bc of limited
+  res in both time and freq domain
+\end{itemize}
+
+\hypertarget{limits-of-the-acoustic-detection-dataset}{%
+\subsection{Limits of the acoustic detection
+dataset}\label{limits-of-the-acoustic-detection-dataset}}
+
+\begin{itemize}
+\tightlist
+\item
+  There are \textasciitilde10 000 detections within \textasciitilde2 yrs
+  but compared to other studies (ref to other studies!) this is not that
+  much.
+\item
+  the horiz resolution of receivers, esp in/around the WS is not good bc
+  rather receiver gate than array to monitor species swimming into/out
+  of the Scheldt river (= different use case scenario: receiver array
+  needed to resolve locations of sharks better, and to e.g.~enable
+  triangulation)
+\end{itemize}
+
+\hypertarget{limits-of-the-data-storage-tag-dataset}{%
+\subsection{Limits of the data storage tag
+dataset}\label{limits-of-the-data-storage-tag-dataset}}
+
+\begin{itemize}
+\tightlist
+\item
+  Female shark: deeper than tag depth limit (68m): geolocation model
+  inaccurate, shark putatively went into the Hurd deep (MRGID: 3321) in
+  English channel
+\item
+  Only one individual per sex: not reliable, no statistics possible
+\end{itemize}
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+\emph{brief summary of the main findings (original data, lesson
+learned,\ldots)}
+
+\begin{itemize}
+\tightlist
+\item
+  Possible improvements of tagging procedure (correct place here?)
+\end{itemize}
+
+\hypertarget{outlook}{%
+\section{Outlook}\label{outlook}}
+
+\emph{Alle kapitel aus der Einleitung wieder aufnehmen}
+
+\hypertarget{acoustic-detections-additional-analyses}{%
+\subsection{Acoustic detections additional
+analyses}\label{acoustic-detections-additional-analyses}}
+
+\begin{itemize}
+\tightlist
+\item
+  Vertical space use: resolve individuals to see if there are
+  differences between ind. Sharks \#\# Improvements of geolocation model
+  for M. asterias
+\item
+  Boundary condition: max depth of fish per day == max depth of bathy
+  for that day
+\item
+  Behavioural switch: migration/non-migration or migration/winter
+  resident/summer resident \#\# Information tool
+\item
+  make into interactive application (RShiny) and do tests with some of
+  the target groups to understand how well the information is taken in
+\end{itemize}
+
+\hypertarget{acknowledgements}{%
+\section{Acknowledgements}\label{acknowledgements}}
+
+*funding agencies, field workers
+
+Question: Who provided the money for the tags? What project was that
+under?*
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\hypertarget{annex}{%
+\section{Annex}\label{annex}}
+
+\emph{All the raw data have to be added in annex}
+
+\hypertarget{acoustic-detections-2}{%
+\subsection{Acoustic detections}\label{acoustic-detections-2}}
+
+\hypertarget{dst-datasets}{%
+\subsection{DST datasets}\label{dst-datasets}}
+
+\hypertarget{fft-plots-for-all-tags}{%
+\subsubsection{FFT plots for all tags}\label{fft-plots-for-all-tags}}
+
+\hypertarget{wavelet-plots-for-all-in-the-k-means-clustering-included-summary-statistics}{%
+\subsubsection{Wavelet plots for all (in the k means clustering
+included) summary
+statistics}\label{wavelet-plots-for-all-in-the-k-means-clustering-included-summary-statistics}}
+
+
   \bibliography{bibliography.bib}
 
 
