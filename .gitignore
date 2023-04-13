@@ -35,6 +35,9 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
+# all PDF files
+*.pdf
+
 # Other custom files to ignore
 00_data/
 02_results/
