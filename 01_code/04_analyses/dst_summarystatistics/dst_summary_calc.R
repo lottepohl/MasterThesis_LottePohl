@@ -436,6 +436,23 @@ long_dst_daynight <- masterias_depth_daynight %>%
          depth_min_roll3 = zoo::rollmean(depth_min, k = 3, fill = NA),
          depth_range_roll3 = zoo::rollmean(depth_range, k = 3, fill = NA)) %>%
   tidyr::drop_na()
+
+# total summary for dst data ####
+
+dst_summary <- masterias_depth_date %>% 
+  # mutate(tag_serial_number = tag_serial_number %>% as.numeric()) %>%
+  dplyr::group_by(tag_serial_number) %>%
+  summarise(release_date = min(date) - lubridate::days(8),
+         death_date = date %>% max(),
+         time_at_liberty = base::difftime(release_date, death_date, units = "days")%>% abs() %>% as.numeric()) %>%
+  arrange(time_at_liberty) %>%
+  left_join(masterias_info %>%
+              dplyr::select(tag_serial_number, sex), 
+            by = "tag_serial_number") %>%
+  mutate(release_date = release_date %>% as.Date(),
+         death_date = death_date %>% as.Date())
+
+
 # save data ####
 
 save_data(data = masterias_depth_temp_summary, folder = paste0(dir_path, "/02_results/dst_summary/"))
@@ -448,6 +465,8 @@ save_data(data = long_dst_daynight, folder = paste0(dir_path, "/02_results/dst_s
 save_data(data = masterias_DVM_sum_day, folder = paste0(dir_path, "/02_results/dst_summary/"))
 save_data(data = masterias_DVM_sum_week, folder = paste0(dir_path, "/02_results/dst_summary/"))
 save_data(data = masterias_DVM_sum_month, folder = paste0(dir_path, "/02_results/dst_summary/"))
+
+save_data(data = dst_summary, folder = paste0(dir_path, "/02_results/dst_summary/"))
 rm(sum_wilcox, depth_wilcox)
 
 

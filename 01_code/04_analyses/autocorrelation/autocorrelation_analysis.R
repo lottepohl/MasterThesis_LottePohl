@@ -28,7 +28,7 @@ p_acf_321 <- ggplot(data = acf_321_df, mapping = aes(x = lag, y = acf)) +
   geom_segment(mapping = aes(xend = lag, yend = 0)) +
   theme_minimal() +
   labs(y = "autocorrelation", x = "lag in days", title = "tag 321 (male), daily median depth roll3")
-p_acf_321 %>% ggplotly()
+# p_acf_321 %>% ggplotly()
 
 ## tag 308 ####
 
@@ -42,13 +42,13 @@ p_acf_308 <- ggplot(data = acf_308_df, mapping = aes(x = lag, y = acf)) +
   geom_segment(mapping = aes(xend = lag, yend = 0)) +
   theme_minimal() +
   labs(y = "autocorrelation", x = "lag in days", title = "tag 308 (female), daily median depth roll 3")
-p_acf_308 %>% ggplotly()
+# p_acf_308 %>% ggplotly()
 
 # save data ####
 save_data(data = acf_321_df, folder = plot_path)
 save_data(data = acf_308_df, folder = plot_path)
-save_data(data = p_acf_321, folder = plot_path)
-save_data(data = p_acf_308, folder = plot_path)
+# save_data(data = p_acf_321, folder = plot_path)
+# save_data(data = p_acf_308, folder = plot_path)
 
 # load_data(filestring = "p_acf_308", folder = plot_path)
 

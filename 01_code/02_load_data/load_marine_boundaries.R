@@ -6,6 +6,7 @@ paste0("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_cod
 
 BPNS <- load_data(filestring = "BPNS", folder = path_boundaries)
 Schelde_boundaries <- load_data(filestring = "Schelde_boundaries", folder = path_boundaries)
+Belgium <- load_data(filestring = "Belgium", folder = path_boundaries)
 Netherlands <- load_data(filestring = "Netherlands", folder = path_boundaries)
 English_channel <- load_data(filestring = "English_channel", folder = path_boundaries)
 Hurd_deep <- load_data(filestring = "Hurd_deep", folder = path_boundaries)

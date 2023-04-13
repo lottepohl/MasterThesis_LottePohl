@@ -87,11 +87,17 @@ format:
       formatting: review # or preprint, or doubleblind
       linestretch: 2
       model: 3p
-      # fig-width: 6.7
-      # fig-height: 4.5
       cite-style: authoryear
       # graphical-abstract: "![](abstract.png)"
       # highlights:
+        
+      # fig-width: 6.7
+      # fig-height: 4.5
+      geometry:
+      - top=2 0mm
+      - left=20mm
+      - heightrounded
+      tbl-cap-location: top
 editor_options: 
   chunk_output_type: console
 header-includes:
@@ -112,14 +118,16 @@ library(tidyverse)
 library(magrittr)
 library(usethis)
 library(biwavelet)
-rm(list = ls())
+# rm(list = ls())
 ```
 
 ```{r workspace}
-# load dst overview figures
+# load functions 
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
+
+# load plots, data and maps
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
 
-# load maps
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
@@ -129,8 +137,7 @@ paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::so
 paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
 paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
-
-
+dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
 ```
 
 # Guidelines {-}
@@ -308,12 +315,23 @@ into a format that transmit relevant messages to one/several groups of non-scien
 ```{r map1overview}
 #| include: true
 #| label: fig-map1overview
-##| out-width: 100%
+#| out-width: 60%
 #| fig-cap: "Map of the study area."
-#| fig-width: 6.7
-#| fig-height: 4.5
+##| fig-width: 6.7
+##| fig-height: 4.5
 map1_overview
 ```
+
+```{r map2detail}
+#| include: true
+#| label: fig-map2detail
+#| out-width: 60%
+#| fig-cap: "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals."
+##| fig-width: 6.7
+##| fig-height: 4.5
+map2_detail
+```
+
 
 ###	The Scheldt Estuary
 
@@ -336,28 +354,23 @@ map1_overview
 ##	The Permanent Belgian Receiver Network (PBARN)
 
 The acoustic receivers of the Permanent Belgian Receiver Network (PBARN) were used in this study. The PBARN is part of the European Tracking Network, which was established in 2017 as a pan-european aquatic telemetry network [@reubens_2019].
-
 As of 2019, the PBARN consisted of 177 permanently installed and monitored acoustic receivers within the BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse River [@reubens_2018].
-
 A detection probability of >50% was estimated for a radius of 500-700m around the receiver [@goossens_2022], and >70% for 200m radius [@reubens_2018].
 
 *Find out: how many receivers were in the BPNS and the Scheldt?*
 
 ### Data Management (change title)
 
-The database of the European Tracking Network (https://lifewatch.be/etn) stores the acoustic detections, and metadata connected to the animal individuals and the tags used.
-
-<!-- make etn link into citation -->
-
+The database of the European Tracking Network (https://lifewatch.be/etn) stores the acoustic detections, and metadata connected to the animal individuals and the tags used. <!-- make etn link into citation -->
 The data storage log files and the outputs of the geolocation models were accessed and management via the Marine Data Archive (MDA).
 
-- *Question: TABLE with lat lon & names of receiver stations?*
+<!-- - *Question: TABLE with lat lon & names of receiver stations?* noooo right? --> 
 
 ## Acoustic Tags 
 
-The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags, measuring 46mm in length and weighing 13g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensors with logging intervals of 120s and 240s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (temperature:pressure). Further details in the Supporting Information og @goossens_2023.
+The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags, measuring 46mm in length and weighing 13g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensor with logging intervals of 120s and 240s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (pressure:temperature). Further details about the tags can be found in the Supporting Information of @goossens_2023.
 <!-- reference to innovasea product manual -->
-The pressure sensors recorded with a resolution of 0.3m and an accuracy of $/pm$3.4m until the depth of 68m, according to the manufacturer.
+The pressure sensors recorded with a resolution of 0.3m and an accuracy of \pm3.4m until the depth of 68m, according to the manufacturer (**ref**).
 
 ## Tagging Procedure
 
@@ -369,10 +382,9 @@ tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate
 
 
 Tagging of the 30 *M. asterias* individuals occured in July and August, 2018 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and 12, n = `r tagging_info$n[4]` for both dates).
+Tagged animals were both caught and released in two locations, just west of *Neeltje Jans* (all individuals tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018). The two locations are shown in @fig-map2detail.
 
-Tagged animals were released in two locations, just before *Neeltje Jans* (all sharks tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018)
-
-Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and a 2-3 cm surgical incision at the midventral line was made using a scalpel. The Acoustic Data Storage Tag was inserted into the abdominal cavity using surgical pliers, and the incision was closed with 2-3 stitches using non-absorbable mono-filament [@goossens_2023].
+Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and the midventral line was incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was inserted into the abdominal cavity with forceps, and the incision was closed with 2-3 stitches of non-absorbable mono-filament [@goossens_2023].
 
 <!-- Photo of tagging?? PJV? -->
 
@@ -382,31 +394,59 @@ The care and use of the 30 *M. asterias* individuals complied with the Belgian A
 guidelines and policies as approved by the *Ethische Commissie Dierproeven* (project
 reference EC2017-080). All animal treatments were undertaken in 2018 and 2019, and all tagging procedures were carried out by competent and trained personal license holders.
 
-##	Data Analysis
+##	Data Analysis and visualisation
+
+All data analyses were carried out using R [@R_2022], primarily using the packages *'dplyr'* and *'lubridate'*. All maps were created using the *'leaflet'*-package. Geospatial data, where not otherwise indicated, was queried from *marineregions.org* in the case of (marine) boundaries (with the *'mregions2'*-package), and *EMODnet* for human activities data (with the *'EMODnetWFS'*-package). All plots were generated using the *'ggplot2'*-package. Packages used for specific data analyses are indicated in the respective section.
+<!-- To Do: name all required packages for an analysis -->
 
 ###	Acoustic Detections
 
-####	Descriptive analysis
+Detections were accessed from the ETN database. Tags with only a single detection were omitted from all further analyses. 
+Summary statistics describing seasonal shark presence around the receivers in the Western Scheldt were calculated: The number of detections and individuals detected at each receiver, per month (*rephrase*).
 
--	Omitted tags
--	Summary statistics
-  -	# Individuals and # detections per station/array
-####	Depth use analysis
+*To compare shark presence around the receivers in the Western Scheldt between seasons, an ANOVA was executed. (**TO DO**)*.
 
--	Bathymetry dataset
--	Method: radius of 200m (=detection range)
+####	Vertical space use analysis
+
+To assess the vertical space use of sharks detected in the WS 1 array, the depths transmitted with the detections were compared to the bathymetry composition around each receiver. A bathymetry dataset from the Flemish government (publication date: November 18, 2019) was used. The dataset had a 1m x 1m resolution and contains the mean depth per grid cell. The seafloor depth within a radius of 200m around each receiver was extracted using the *'sf'*-package in R. The 200m refer to the probability of >70% of an acoustic detection [@reubens_2019].
+The following was done both for the bathymetry subsets and the acoustic detections for each receiver station in the WS1 array: Firstly, the maximum and minimum depth (of seafloor depth and acoustic detections) around each receiver were extracted, and the percentage of grid cells/detections that contained a depth value within a 10m depth bin (spanning from 0m to -50m) was computed.
+
+
+<!-- make reference to dataset: https://madame.vlaanderen.be/geonetwork/srv/eng/catalog.search#/metadata/718dc576-7ddc-43b5-b71e-3bd3617e1bd3 -->
+
 
 ###	Data Storage Tags
 
-####	Summary statistics
-- Mean/median depth, depth range, max and min depth, vert. speed
--	Daily, weekly, monthly
-####	Migration Patterns/Long term DST/Migration Analysis
--	Wavelet on daily summary statistics
--	Identified putative migration weeks: Wavelet on raw depth values (? Does that make sense? To assess diel vertical behavior during migration)
-  -	Method: extract week of likely migration and do wavelet analysis on raw (maybe scaled?) depth data for that time: no daily summaries!
--	FFT on depth values for putative migration periods
+Depth and temperature logs from the recovered tags were accessed via the Marine Data Archive (MDA).
+<!-- TODO: link URL -->
+The temperature log was not included in any analysis.
+The first week of depth values was excluded from all analyses, to remove potential bias resulting from the tagging procedure [cf. @flavio_2021]. The date of death, used to calculate the time at liberty, was visually extracted from plots of the raw depth series, and marks the date after which only a tidal signal remains in the depthlog, which is characterised by cyclically rising and falling depths within a rough 2m interval.
+<!-- Potentially automate this -->
 
+Only depthlogs that logged for >=365 (*code to make sign prettier*) days where included in the migration period analyses described below. Those will be referred to as *long term DST depthlogs* in the following.
+<!-- maybe rephrase: "excluded from all analyses" -->
+Summary statistics (mean, median, maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. **Prior to spectral analyses, the data was centred and normalised, resulting in a mean of 0 and a sd of 1.** 
+<!-- check: sollte ich das noch machen?? -->
+The animal's vertical speed (in *m/min*) was calculated following @griffiths_2020, dividing the depth difference between two consecutive measurements by the time interval (in min).
+<!-- ToDo: debate if the above should be included (is it suuper relevant? only if the vert speed is included in wavelet analyses) -->
+
+####	Migration Period Analysis
+
+Firstly, a Fast Fourier Transform (FFT) was performed on the raw longterm DST depthlogs, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries). 
+<!-- give fft source -->
+
+Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a \chi^2^ (*find code*) test. Only frequencies that significantly differed from white noise were incorporated into further analyses.
+<!-- give CWT source -->
+
+Thirdly, the daily summary statistics and the results from the wavelet analysis (i.e., significantly present periods per day), were used as input for k-means clustering, an unsupervised machine learning algorithm. Unsupervised (as opposed to supervised) learning was utilised in this case because it does not require a training dataset with known right answers (which in this case would be the days that the sharks are migrating).
+The algorithm was run n = 100 (**DO!**) times each for a number of clusters from 1 to 8. The optimal number of clusters was identified using the *elbow*-method (**reference**).
+
+Next, FFT was performed on each cluster separately, after the predominant cluster per week was assigned to all data points within that week. The last step was done to smooth the clustering result and reclassify potential outliers.
+In addition, CWT was performed on the hourly summary statistics for each cluster.
+
+##### Comparison to geolocation model output
+
+*does that make sense?*
 
 
 # Results {#sec-results}
@@ -415,6 +455,8 @@ reference EC2017-080). All animal treatments were undertaken in 2018 and 2019, a
 <!--	TABLE with info on each individuals -->
 
 ## Acoustic detections 
+
+Two tags only had a single detection (serial number `r tag_serial_number_omit[1,] %>% dplyr::pull()` and `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted from all further analyses.
 <!-- i.	PLOT: Abacus plot -->
 <!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
 
@@ -427,21 +469,30 @@ reference EC2017-080). All animal treatments were undertaken in 2018 and 2019, a
 
 ## Data Storage Tags {#sec-results-dst}
 
+Upon writing of this thesis, nine tags were recovered, one of which still is with at the manufacturer to extract the raw data. Information about the tags with available raw data is listed in @tbl-dstsum.
 
--	How many tags got recovered
-<!-- - TABLE: Summary stats on dst data -->
+```{r table-dstsummary}
+#| include: true
+#| label: tbl-dstsum
+#| out-width: 90%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
+
+ knitr::kable(dst_summary)
+```
+
 
 ### Raw depthlogs
 <!-- iv.	PLOT: Raw depth and temp dataiv.	PLOT: Raw depth and temp data -->
 
-The depth log of tag 304 is shown below (see @fig-dst304).
+The depth log of tag 304 is shown below (see @fig-dst295).
 
 ```{r}
 #| include: true
-#| label: fig-dst304
-#| out-width: 50%
-#| fig-cap: "Depth log from the recovered tag 304."
-plot_dst_304
+#| label: fig-dst295
+#| out-width: 75%
+#| fig-cap: "Depth log from the recovered tag 295."
+plot_dst_295
 ```
 
 ### Geolocation model outputs (include?)
@@ -453,50 +504,88 @@ plot_dst_304
 
 <!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
 
-Below the summary statistics for dst tag 308 are displayed (@fig-dstsummary308).
-Lat's check if the cross referencing of sections works, see @sec-intro.
+The summary statistics for dst tag 308 and 321 are displayed in @fig-dstsummary.
+<!-- Lat's check if the cross referencing of sections works, see @sec-intro. -->
 
-```{r}
-#| include: false
-#| label: fig-dstsummary308_2
-#| fig-cap: "Summary statistics for tag 308."
-#| fig-subcap:
-#|   - "Daily median depth and depth range of tag 308."
-#|   - "Autocorrelation of the daily median depth."
-#| layout-ncol: 2
-#| column: body-outset
-#| out-width: 50%
+**To Do: incorporate 2nd y axis for depth median change**
+
+```{r fig-dstsummary}
+#| include: true
+#| label: fig-dstsummary308
+#| fig-cap: "Daily summary statistics for tag 308. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The blue curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a $$\chi$$^2^ test that compares the depths at night to the depths during the day (depth (night) significantly shallower/deeper than depth (day): *Diel Vertical Migration (DVM)*/*reverse DVM (rDVM)*, no significant difference: *no DVM (nDVM)*). "
+## | column: body-outset
+#| out-width: 80%
 #| fig.align: "center"
+#| layout-ncol: 1
+
 p_308_depth_median_range_change_ribbon
 
-p_acf_308
+p_321_depth_median_range_change_ribbon
 ```
+
+The result of the autocorrelation analysis is shown in @fig-acf308.
+
+```{r fig-acf308}
+#| include: true
+#| label: fig-acf308
+#| fig-cap: "Autocorrelation plots of the daily median depth."
+#| fig-subcap:
+#|   - "Tag 308"
+#|   - "Tag 321"
+## | column: body-outset
+#| out-width: 80%
+#| fig.align: "center"
+#| layout-ncol: 2
+
+p_acf_308
+
+p_acf_321
+```
+
 
 ### Wavelet analysis 
 
-```{r}
-#| layout: [[40,-20,40], [100]]
+```{r fig-dstsummary308}
+##| layout: [[40,-20,40], [100]]
 #| include: true
 #| label: fig-dstsummary308
 #| fig-cap: "Summary statistics for tag 308."
 #| fig-subcap:
-#|   - "Daily median depth and depth range of tag 308."
-#|   - "Autocorrelation of the daily median depth."
-#|   - "Wavelet transform result."
+#|   - "Tag 308"
+#|   - "Tag 321"
 ## | column: body-outset
-## | out-width: 50%
+#| out-width: 80%
 #| fig.align: "center"
+#| layout-ncol: 1
 
-p_308_depth_median_range_change_ribbon
-
-p_acf_308
-
-par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
-# the general plots you cannot save, I would have to call the function in the thesis manuscript
-biwavelet::plot.biwavelet(wt_308_depthrange,
-     type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T)
+# wavelet plots of median depth - or other variable?
 
 ```
+
+
+<!-- ```{r fig-dstsummary308} -->
+<!-- #| layout: [[40,-20,40], [100]] -->
+<!-- #| include: true -->
+<!-- #| label: fig-dstsummary308 -->
+<!-- #| fig-cap: "Summary statistics for tag 308." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Daily median depth and depth range of tag 308." -->
+<!-- #|   - "Autocorrelation of the daily median depth." -->
+<!-- #|   - "Wavelet transform result." -->
+<!-- ## | column: body-outset -->
+<!-- ## | out-width: 50% -->
+<!-- #| fig.align: "center" -->
+
+<!-- p_308_depth_median_range_change_ribbon -->
+
+<!-- p_acf_308 -->
+
+<!-- par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1) -->
+<!-- # the general plots you cannot save, I would have to call the function in the thesis manuscript -->
+<!-- biwavelet::plot.biwavelet(wt_308_depthrange, -->
+<!--      type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T) -->
+
+<!-- ``` -->
 
 ### Unsupervised learning
 
@@ -513,6 +602,13 @@ in/around westerschelde, according to ac. detections
 -	Highly seasonal (only in summer)
 -	Sex-biased (mostly females)
 -	Possible pupping area, but this dataset not sufficient to confirm
+
+### Vertical space use analysis
+
+The results show deeper waters utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons: 
+1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely.
+2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper.
+3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths.
 
 ##	Tag recoveries
 
