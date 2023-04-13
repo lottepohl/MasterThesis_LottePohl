@@ -43,4 +43,8 @@ vignettes/*.pdf
 02_results/
 /.quarto/
 01_code/00_thesis_manuscript/manuscript_versions/
+01_code/00_thesis_manuscript/figures/
+01_code/00_thesis_manuscript/maps/
 01_code/00_thesis_manuscript/index_files/figure-pdf/
+
+#"C:\Users\lotte.pohl\Documents\github_repos\MasterThesis_LottePohl\01_code\00_thesis_manuscript\figures"

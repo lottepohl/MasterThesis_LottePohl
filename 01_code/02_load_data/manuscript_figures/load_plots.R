@@ -2,7 +2,7 @@
 
 # Workspace ####
 
-rm(list = ls())
+# rm(list = ls())
 
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")

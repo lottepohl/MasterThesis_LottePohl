@@ -471,6 +471,12 @@ Two tags only had a single detection (serial number `r tag_serial_number_omit[1,
 
 Upon writing of this thesis, nine tags were recovered, one of which still is with at the manufacturer to extract the raw data. Information about the tags with available raw data is listed in @tbl-dstsum.
 
+```{r prepare-dstsummary}
+
+dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial nr.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty)
+```
+
+
 ```{r table-dstsummary}
 #| include: true
 #| label: tbl-dstsum
@@ -478,12 +484,13 @@ Upon writing of this thesis, nine tags were recovered, one of which still is wit
 #| tbl-cap-location: top
 #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
 
- knitr::kable(dst_summary)
+knitr::kable(dst_summary)
 ```
 
 
 ### Raw depthlogs
-<!-- iv.	PLOT: Raw depth and temp dataiv.	PLOT: Raw depth and temp data -->
+
+<!-- todo: in die caption schreiben, in welchem Jahr das Tier getaggt wurde. -->
 
 The depth log of tag 304 is shown below (see @fig-dst295).
 

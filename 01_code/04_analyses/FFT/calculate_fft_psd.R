@@ -2,10 +2,12 @@
 
 # rm(list = ls())
 
-dir_path <- getwd() #"C:/Users/lotte.pohl/Documents/github_repos/ADST_Mustelus_asterias"
+dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 plot_path <- paste0(dir_path, "/02_results/spectral_analysis/fft/")
 
+paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
+
 
 # Function to calc fft and psd ####
 calc_fft <- function(depth_log, sample_freq){
@@ -71,3 +73,11 @@ fft_322 <- calc_fft(depth_log = masterias_depth_temp %>% filter(tag_serial_numbe
 
 
 # save data as .rds ####
+save_data(data = fft_295, folder = plot_path)
+save_data(data = fft_304, folder = plot_path)
+save_data(data = fft_308, folder = plot_path)
+save_data(data = fft_310, folder = plot_path)
+save_data(data = fft_312, folder = plot_path)
+save_data(data = fft_319, folder = plot_path)
+save_data(data = fft_321, folder = plot_path)
+save_data(data = fft_322, folder = plot_path)
