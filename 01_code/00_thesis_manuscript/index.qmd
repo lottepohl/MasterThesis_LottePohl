@@ -93,11 +93,11 @@ format:
         
       # fig-width: 6.7
       # fig-height: 4.5
-      geometry:
-      - top=2 0mm
-      - left=20mm
-      - heightrounded
-      tbl-cap-location: top
+      # geometry:
+      # - top=2 0mm
+      # - left=20mm
+      # - heightrounded
+      # tbl-cap-location: top
 editor_options: 
   chunk_output_type: console
 header-includes:
@@ -115,9 +115,11 @@ header-includes:
 ```{r packages}
 library(dplyr)
 library(tidyverse)
-library(magrittr)
+library(leaflet)
+library(ggplot2)
+# library(magrittr)
 library(usethis)
-library(biwavelet)
+# library(biwavelet)
 # rm(list = ls())
 ```
 
@@ -126,19 +128,41 @@ library(biwavelet)
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 # load plots, data and maps
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
+
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
-paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
 paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
-paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
+# paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
-paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
+# paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
 dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
 ```
+
+```{r setplottheme}
+thesis_theme <- ggplot2::theme(
+  plot.title = element_text(family = "serif", size = 12, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 12),
+  axis.title = element_text(family = "serif", size = 12),
+  axis.text = element_text(family = "serif", size = 10),
+  legend.title = element_text(family = "serif", size = 12),
+  legend.text = element_text(family = "serif", size = 10),
+  # plot.background = element_blank()#,
+  panel.background = element_blank(),
+  # panel.background = element_rect(fill = "transparent"),
+  panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+  panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+)
+
+# Set the theme as the default for all plots
+ggplot2::theme_set(thesis_theme)
+```
+
 
 # Guidelines {-}
 ## IMBRSea thesis guidelines {-}
@@ -174,7 +198,7 @@ metadata) must also be included in the thesis manuscript as an annex. Thesis man
   1. Meyer E. Physics. Controlling friction atom by atom. Science. 2015;348:1089.
   
 ## Markdown syntax {-}
-Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013]
+Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013].
 
 
 {{< pagebreak >}}
@@ -182,6 +206,8 @@ Here is some normal text, and then we'll use the \mycommand{custom command} to m
 # Introduction {#sec-intro}
 
 ##	History of fish tagging/biologging
+
+**Say sth about short term tagging mortality **
 
 - Different telemetry methods
 
@@ -315,20 +341,15 @@ into a format that transmit relevant messages to one/several groups of non-scien
 ```{r map1overview}
 #| include: true
 #| label: fig-map1overview
-#| out-width: 60%
 #| fig-cap: "Map of the study area."
-##| fig-width: 6.7
-##| fig-height: 4.5
 map1_overview
 ```
 
 ```{r map2detail}
 #| include: true
 #| label: fig-map2detail
-#| out-width: 60%
 #| fig-cap: "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals."
-##| fig-width: 6.7
-##| fig-height: 4.5
+
 map2_detail
 ```
 
@@ -346,6 +367,7 @@ map2_detail
 -	Biodiversity and most prominent species
 
 ###	The English channel
+
 -	Bathymetry
 -	Maybe map with bathy contour lines?
 -	Food abundance?
@@ -370,7 +392,7 @@ The data storage log files and the outputs of the geolocation models were access
 
 The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags, measuring 46mm in length and weighing 13g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensor with logging intervals of 120s and 240s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (pressure:temperature). Further details about the tags can be found in the Supporting Information of @goossens_2023.
 <!-- reference to innovasea product manual -->
-The pressure sensors recorded with a resolution of 0.3m and an accuracy of \pm3.4m until the depth of 68m, according to the manufacturer (**ref**).
+The pressure sensors recorded with a resolution of 0.3m and an accuracy of $\pm$ 3.4m until the depth of 68m, according to the manufacturer (**ref**).
 
 ## Tagging Procedure
 
@@ -425,7 +447,7 @@ The first week of depth values was excluded from all analyses, to remove potenti
 
 Only depthlogs that logged for >=365 (*code to make sign prettier*) days where included in the migration period analyses described below. Those will be referred to as *long term DST depthlogs* in the following.
 <!-- maybe rephrase: "excluded from all analyses" -->
-Summary statistics (mean, median, maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. **Prior to spectral analyses, the data was centred and normalised, resulting in a mean of 0 and a sd of 1.** 
+Summary statistics (mean, median, maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~). For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. **Prior to spectral analyses, the data was centred and normalised, resulting in a mean of 0 and a sd of 1.** 
 <!-- check: sollte ich das noch machen?? -->
 The animal's vertical speed (in *m/min*) was calculated following @griffiths_2020, dividing the depth difference between two consecutive measurements by the time interval (in min).
 <!-- ToDo: debate if the above should be included (is it suuper relevant? only if the vert speed is included in wavelet analyses) -->
@@ -435,7 +457,7 @@ The animal's vertical speed (in *m/min*) was calculated following @griffiths_202
 Firstly, a Fast Fourier Transform (FFT) was performed on the raw longterm DST depthlogs, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries). 
 <!-- give fft source -->
 
-Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a \chi^2^ (*find code*) test. Only frequencies that significantly differed from white noise were incorporated into further analyses.
+Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a chi square test. Only frequencies that significantly differed from white noise were incorporated into further analyses.
 <!-- give CWT source -->
 
 Thirdly, the daily summary statistics and the results from the wavelet analysis (i.e., significantly present periods per day), were used as input for k-means clustering, an unsupervised machine learning algorithm. Unsupervised (as opposed to supervised) learning was utilised in this case because it does not require a training dataset with known right answers (which in this case would be the days that the sharks are migrating).
@@ -484,7 +506,7 @@ dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% re
 #| tbl-cap-location: top
 #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
 
-knitr::kable(dst_summary)
+knitr::kable(dst_summary %>% arrange(`release date`))
 ```
 
 
@@ -492,15 +514,19 @@ knitr::kable(dst_summary)
 
 <!-- todo: in die caption schreiben, in welchem Jahr das Tier getaggt wurde. -->
 
-The depth log of tag 304 is shown below (see @fig-dst295).
+<!-- The depth log of tag 295 is shown in @fig-dst295. -->
 
-```{r}
+<!-- <!-- dst_summary %>% filter(`tag serial nr.` == "1293295") %>% dplyr::select(`release date`) %>% pull() %>% format("%B %d, %Y"). --> 
+
+```{r rawdepthlog-295}
 #| include: true
 #| label: fig-dst295
 #| out-width: 75%
-#| fig-cap: "Depth log from the recovered tag 295."
-plot_dst_295
+#| fig-cap: "Depth log from the recovered tag 295. This male was tagged on July 19, 2018. "
+p_dst_raw_295
 ```
+
+* Question: include raw depthlogs of 308 and 321?*
 
 ### Geolocation model outputs (include?)
 
@@ -511,86 +537,128 @@ plot_dst_295
 
 <!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
 
-The summary statistics for dst tag 308 and 321 are displayed in @fig-dstsummary.
-<!-- Lat's check if the cross referencing of sections works, see @sec-intro. -->
+The summary statistics of the depthlogs of tags 308 and 321 are displayed below.
+<!-- in @fig-dstsum. -->
+<!-- Let's check if the cross referencing of sections works, see @sec-intro. -->
 
 **To Do: incorporate 2nd y axis for depth median change**
 
-```{r fig-dstsummary}
+```{r testdstsum}
 #| include: true
-#| label: fig-dstsummary308
-#| fig-cap: "Daily summary statistics for tag 308. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The blue curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a $$\chi$$^2^ test that compares the depths at night to the depths during the day (depth (night) significantly shallower/deeper than depth (day): *Diel Vertical Migration (DVM)*/*reverse DVM (rDVM)*, no significant difference: *no DVM (nDVM)*). "
-## | column: body-outset
-#| out-width: 80%
-#| fig.align: "center"
+#| fig-cap: "Test caption."
+#| fig-subcap: 
+#| - "test1"
+#| - "test2"
 #| layout-ncol: 1
+#| fig-pos: h!
 
-p_308_depth_median_range_change_ribbon
+p_308_sum_stats
 
-p_321_depth_median_range_change_ribbon
+p_321_sum_stats
 ```
 
-The result of the autocorrelation analysis is shown in @fig-acf308.
 
-```{r fig-acf308}
-#| include: true
-#| label: fig-acf308
-#| fig-cap: "Autocorrelation plots of the daily median depth."
-#| fig-subcap:
-#|   - "Tag 308"
-#|   - "Tag 321"
-## | column: body-outset
-#| out-width: 80%
-#| fig.align: "center"
-#| layout-ncol: 2
+<!-- ```{r dstsummary} -->
+<!-- #| include: true -->
+<!-- #| label: fig-dstsum -->
+<!-- #| fig-cap: "test." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
-p_acf_308
+<!-- p_308_sum_stats -->
 
-p_acf_321
-```
+<!-- p_321_sum_stats -->
+<!-- ``` -->
+
+<!-- Daily summary statistics for tag 308 and tag 321. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).  -->
+
+<!-- The result of the autocorrelation analysis is shown in @fig-acf. -->
+
+<!-- ```{r acf} -->
+<!-- #| include: true -->
+<!-- #| label: fig-acf -->
+<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
+
+<!-- p_acf_308 -->
+
+<!-- p_acf_321 -->
+<!-- ``` -->
+
+<!-- The result of the Fast Fourier Transform performed on the raw depthlogs is shown in @fig-fft, for tag 295, 308 ad 321. -->
+
+<!-- ```{r fft} -->
+<!-- #| include: true -->
+<!-- #| label: fig-fft -->
+<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 295" -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 100% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
+
+<!-- p_fft_295 -->
+
+<!-- p_fft_308 -->
+
+<!-- p_fft_321 -->
+<!-- ``` -->
 
 
 ### Wavelet analysis 
 
-```{r fig-dstsummary308}
-##| layout: [[40,-20,40], [100]]
-#| include: true
-#| label: fig-dstsummary308
-#| fig-cap: "Summary statistics for tag 308."
-#| fig-subcap:
-#|   - "Tag 308"
-#|   - "Tag 321"
-## | column: body-outset
-#| out-width: 80%
-#| fig.align: "center"
-#| layout-ncol: 1
 
-# wavelet plots of median depth - or other variable?
-
-```
-
-
-<!-- ```{r fig-dstsummary308} -->
-<!-- #| layout: [[40,-20,40], [100]] -->
+<!-- ```{r wave_depthmedian_308} -->
+<!-- ##| layout: [[40,-20,40], [100]] -->
 <!-- #| include: true -->
-<!-- #| label: fig-dstsummary308 -->
-<!-- #| fig-cap: "Summary statistics for tag 308." -->
+<!-- #| label: fig-wave_depthmedian_308 -->
+<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 308). All depth values were smoothed with a rolling mean over 3 days." -->
 <!-- #| fig-subcap: -->
-<!-- #|   - "Daily median depth and depth range of tag 308." -->
-<!-- #|   - "Autocorrelation of the daily median depth." -->
-<!-- #|   - "Wavelet transform result." -->
+<!-- #|   - "daily median depth" -->
+<!-- #|   - "change of daily median depth." -->
 <!-- ## | column: body-outset -->
-<!-- ## | out-width: 50% -->
+<!-- #| out-width: 80% -->
 <!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
-<!-- p_308_depth_median_range_change_ribbon -->
+<!-- p_308_wavelet_depth_median_roll3 -->
 
-<!-- p_acf_308 -->
+<!-- p_308_wavelet_depth_median_change_roll3 -->
 
-<!-- par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1) -->
-<!-- # the general plots you cannot save, I would have to call the function in the thesis manuscript -->
-<!-- biwavelet::plot.biwavelet(wt_308_depthrange, -->
-<!--      type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T) -->
+<!-- ``` -->
+
+
+
+<!-- ```{r wave_depthmedian_321} -->
+<!-- ##| layout: [[40,-20,40], [100]] -->
+<!-- #| include: true -->
+<!-- #| label: fig-wave_depthmedian_321 -->
+<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 321). All depth values were smoothed with a rolling mean over 3 days." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "daily median depth" -->
+<!-- #|   - "change of daily median depth." -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
+
+<!-- p_321_wavelet_depth_median_roll3 -->
+
+<!-- p_321_wavelet_depth_median_change_roll3 -->
 
 <!-- ``` -->
 
@@ -709,3 +777,28 @@ The dataset(s) supporting the conclusions of this article is(are) included withi
 
 ###	Wavelet plots for all (in the k means clustering included) summary statistics
 
+
+<!-- Old -->
+<!-- ```{r fig-dstsummary308} -->
+<!-- #| layout: [[40,-20,40], [100]] -->
+<!-- #| include: true -->
+<!-- #| label: fig-dstsummary308 -->
+<!-- #| fig-cap: "Summary statistics for tag 308." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Daily median depth and depth range of tag 308." -->
+<!-- #|   - "Autocorrelation of the daily median depth." -->
+<!-- #|   - "Wavelet transform result." -->
+<!-- ## | column: body-outset -->
+<!-- ## | out-width: 50% -->
+<!-- #| fig.align: "center" -->
+
+<!-- p_308_depth_median_range_change_ribbon -->
+
+<!-- p_acf_308 -->
+
+<!-- par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1) -->
+<!-- # the general plots you cannot save, I would have to call the function in the thesis manuscript -->
+<!-- biwavelet::plot.biwavelet(wt_308_depthrange, -->
+<!--      type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T) -->
+
+<!-- ``` -->

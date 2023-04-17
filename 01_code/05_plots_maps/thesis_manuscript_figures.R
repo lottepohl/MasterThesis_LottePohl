@@ -91,20 +91,19 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
              aes(x = date_24hcycle, y = 3, fill = "rDVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
     geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
              aes(x = date_24hcycle, y = 3, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-    geom_line(aes(x = date, y = -depth_median_roll3, colour = "daily median")) +
-    geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
-    geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "change of daily median")) + # %>% abs()
+    geom_line(aes(x = date, y = -depth_median_roll3, colour = "median")) +
+    geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "range"), alpha = 0.2) +
+    geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "median change")) + # %>% abs()
     scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "date", y = "depth (change) in m") +  
-    scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "purple",
-                                              "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
-                                              "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) + #
-    scale_fill_manual(name = "", values = c("daily range" = "transparent", #"daily median" = "black", "change of daily range" = "black", "change of daily median" = "darkblue",
-                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) #+
-  # theme(legend.position = "bottom",
-  #       legend.box = "horizontal")
+    scale_colour_manual(name = "", values = c("median" = "black", "range" = "transparent", "change of range" = "black", "median change" = "purple",
+                                              "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #
+    scale_fill_manual(name = "", values = c("range" = "transparent", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
   
 }
 
@@ -119,15 +118,15 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
 #            aes(x = date_24hcycle, y = 5, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
 #   geom_line(aes(x = date, y = -depth_median_roll3, colour = "daily median")) +
 #   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
-#   geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "change of daily median")) + # %>% abs()
+#   geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "daily median change")) + # %>% abs()
 #   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
 #   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
 #   scale_y_continuous(expand = c(0,0)) +
 #   labs(x = "date", y = "depth (change) in m") + #title = 'Tag 308 (female)', 
-#   scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "change of daily median" = "purple",
-#                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of change of daily median" = "lightblue", "change of daily median raw" = "orange",
-#                                             "change of change of daily median abs" = "darkgreen", "change of daily range abs" = "purple")) + #
-#   scale_fill_manual(name = "", values = c("daily range" = "transparent", #"daily median" = "black", "change of daily range" = "black", "change of daily median" = "darkblue",
+#   scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "daily median change" = "purple",
+#                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of daily median change" = "lightblue", "daily median change raw" = "orange",
+#                                             "change of daily median change abs" = "darkgreen", "change of daily range abs" = "purple")) + #
+#   scale_fill_manual(name = "", values = c("daily range" = "transparent", #"daily median" = "black", "change of daily range" = "black", "daily median change" = "darkblue",
 #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) #+
 # # theme(legend.position = "bottom",
 # #       legend.box = "horizontal")
