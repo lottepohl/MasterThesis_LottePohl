@@ -71,17 +71,74 @@ p1 <- ggplot(data = mtcars, aes(x = wt, y = mpg)) + geom_point()
 p2 <- ggplot(data = mtcars, aes(x = wt, y = qsec)) + geom_point()
 grid.arrange(p1, p2, ncol = 1)
 
+
 # function to plot results of rulsif ####
-vars <- c("depth_range", "depth_median")
-all_data <- long_dst_date
-time_vector <- "date"
-df <- long_dst_date %>% dplyr::select(vars %>% all_of())
-dates <- all_data %>% dplyr::select(time_vector %>% all_of())
 
-df_rulsif <- data %>% as.matrix(nrow = data %>% ncol()) %>% t()
-result <- rulsif.ts::ts_detect(df_rulsif, thresh = 0.9, alpha = 0.01, step = 5, window_size = 5, make_plot = F)
+# vars <- c("depth_range", "depth_median")
+# all_data <- long_dst_date %>% dplyr::filter(tag_serial_number == "1293308")
+# time_vector <- "date"
 
-# p_scores <- ggplot(data = ) +
+compute_rulsif <- function(all_data, vars, time_vector = "date", thresh = 0.9, alpha = 0.05, step = 15, window_size = 5){
   
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  df_rulsif <- all_data %>% 
+    dplyr::select(vars %>% all_of()) %>% 
+    as.matrix(nrow = vars %>% length()) %>% 
+    t()
+  
+  result <- rulsif.ts::ts_detect(df_rulsif, thresh = thresh, alpha = alpha, step = step, window_size = window_size, make_plot = F)
+  
+  return(result)
+}
 
+plot_rulsif <- function(rulsif_result, all_data, time_vector = "date"){
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  row_diff <- ((nrow(dates) - length(result$scores)) / 2) %>% floor()
+  
+  # scores 
+  scores <- result$scores %>% 
+    as.data.frame() %>% 
+    `colnames<-`("score") %>%
+    mutate(r_num = seq(from = row_diff,
+                       to = row_diff + length(result$scores) - 1,
+                       by = 1))
+  
+  df_scores <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(scores, by = "r_num")
+  
+  # change_points
+  c_points <- result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date)
+  
+  
+  # plots 
+  p_scores <- ggplot(data = df_scores, aes(x = date, y = score)) +
+    geom_line(colour = "darkgrey") + 
+    labs(x = "", y = "rPE score") #+
+  # theme_minimal()
+  
+  # p_scores
+  
+  p_data <- ggplot() +
+    geom_line(data = all_data, aes(x = date, y = -depth_median)) +
+    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red") +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "depth in m")
+  
+  # p_data
+  
+  grid.arrange(p_data, p_scores, ncol = 1) 
+}
 
