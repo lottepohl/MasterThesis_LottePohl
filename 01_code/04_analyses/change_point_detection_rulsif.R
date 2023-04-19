@@ -34,19 +34,30 @@ compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "
   return(result)
 }
 
-# var_list_change <- c("depth_median","depth_median_change", "depth_min_change", "depth_max_change", "depth_range_change")
+# all_data prepare ####
+
+long_dst_date <- long_dst_date %>%
+  dplyr::mutate(depth_median_change_sgolay = depth_median_change %>% signal::sgolayfilt(p = 7, n = 9),
+                depth_range_change_sgolay = depth_range_change %>% signal::sgolayfilt(p = 7, n = 9),
+                depth_median_sgolay = depth_median %>% signal::sgolayfilt(p = 1, n = 5),
+                depth_range_sgolay = depth_range %>% signal::sgolayfilt(p = 5, n = 7),
+                depth_max_sgolay = depth_max %>% signal::sgolayfilt(p = 1, n = 5),
+                depth_min_sgolay = depth_min %>% signal::sgolayfilt(p = 1, n = 5))
 
 var_list <- c("depth_mean","depth_median_change", "depth_min_change", "depth_max_change", "depth_range_change","depth_median_change", "depth_var", "depth_median", "depth_min", "depth_max", "depth_range", "vertical_speed_max")
 var_list <- c("depth_median_change", "depth_min_change", "depth_max_change", "depth_range_change","depth_median_change", "depth_median", "depth_min", "depth_max", "depth_range")
-var_list <- c("depth_median_change", "depth_range_change","depth_median_change", "depth_median", "depth_range")
+var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median", "depth_range")
+var_list <- c("depth_range_change","depth_median_change", "depth_median", "depth_range")
+var_list <- c("depth_median", "depth_range")
 
+## tag 308 ####
 rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
                                  tag_serial_num_short = "308",
                                  vars = var_list,
-                                 thresh = 0.9,
-                                 window_size = 5,
-                                 step = 10,
-                                 alpha = 0.1)
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 5,
+                                 alpha = 0.05)
 
 p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
                                           all_data = long_dst_date,
@@ -59,15 +70,77 @@ p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
                                           tag_serial_num_short = "308")
 # p_308_data_rulsif %>% ggplotly()
 
-grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1) %>% ggplotly()
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
 
+var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median", "depth_range")
+var_list <- c("depth_range_change","depth_median_change", "depth_median", "depth_range")
+# var_list <- c("depth_median", "depth_range")
+var_list <- "depth_median_sgolay"
+var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median_sgolay", "depth_range_sgolay")
+var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
 
 
+## tag 321 ####
+
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 23,
+                                 alpha = 0.01)
+
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+# p_321_scores_rulsif
+
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      var = "depth_median_sgolay",
+                                      tag_serial_num_short = "321")
+
+p_321_data2_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      var = "depth_max_sgolay",
+                                      tag_serial_num_short = "321")
+
+p_321_data3_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_min_sgolay",
+                                       tag_serial_num_short = "321")
+# p_321_data_rulsif %>% ggplotly()
+
+grid.arrange(p_321_data_rulsif, p_321_data2_rulsif, p_321_data3_rulsif, p_321_scores_rulsif, ncol = 1)
+
+
+# other plots ####
+
+p_321 <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"),
+                aes(x = date)) +
+  geom_line(aes(y = -depth_min), colour = "grey") +
+  # geom_line(aes(y = -depth_min %>% signal::sgolayfilt(p = 5, n = 7)), colour = "blue") +
+  geom_line(aes(y = -depth_min %>% signal::sgolayfilt(p = 1, n = 5)), colour = "red")
+# theme_minimal()
+
+p_321 %>% ggplotly()
 
 p_308 <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293308"),
-                aes(x = date, y = depth_median_change)) +
-  geom_line() +
-  theme_minimal()
+                aes(x = date)) +
+  geom_line(aes(y = depth_median_change), colour = "grey") +
+  geom_line(aes(y = depth_median_change %>% signal::sgolayfilt(p = 7, n = 9)), colour = "blue") +
+  geom_line(aes(y = depth_median_change %>% signal::sgolayfilt(p = 1, n = 3)), colour = "red") 
+  # theme_minimal()
+
+p_308 %>% ggplotly()
+
+p_308 <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293308"),
+                aes(x = date)) +
+  geom_line(aes(y = depth_range_change), colour = "grey") +
+# geom_line(aes(y = depth_range_change %>% signal::sgolayfilt(p = 7, n = 9)), colour = "blue") +
+  geom_line(aes(y = depth_range_change %>% signal::sgolayfilt(p = 1, n = 3)), colour = "red")
+# # theme_minimal()
 
 p_308 %>% ggplotly()
