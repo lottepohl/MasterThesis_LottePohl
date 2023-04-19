@@ -14,6 +14,159 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base::source()
 
 
+# function to plot results of rulsif ####
+
+# vars <- c("depth_range", "depth_median")
+# all_data <- long_dst_date %>% dplyr::filter(tag_serial_number == "1293308")
+# time_vector <- "date"
+
+compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "date", thresh = 0.9, alpha = 0.05, step = 15, window_size = 5){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  df_rulsif <- all_data %>% 
+    dplyr::select(vars %>% all_of()) %>% 
+    as.matrix(nrow = vars %>% length()) %>% 
+    t()
+  
+  result <- rulsif.ts::ts_detect(df_rulsif, thresh = thresh, alpha = alpha, step = step, window_size = window_size, make_plot = F)
+  
+  return(result)
+}
+
+# plot rulsif scores ####
+
+plot_rulsif_scores <- function(rulsif_result, thresh = 0.9, all_data, tag_serial_num_short, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  row_diff <- ((nrow(dates) - length(result$scores)) / 2) %>% floor()
+  
+  # scores 
+  scores <- result$scores %>% 
+    as.data.frame() %>% 
+    `colnames<-`("score") %>%
+    mutate(r_num = seq(from = row_diff,
+                       to = row_diff + length(result$scores) - 1,
+                       by = 1))
+  
+  df_scores <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(scores, by = "r_num")
+  
+  # # change_points
+  # c_points <- result$change_points %>% 
+  #   as.data.frame() %>% 
+  #   `colnames<-`("r_num") %>%
+  #   mutate(c_point = TRUE)
+  # 
+  # df_c_points <- dates %>% 
+  #   mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+  #   left_join(c_points, by = "r_num") %>%
+  #   dplyr::filter(c_point == TRUE) %>%
+  #   dplyr::select(date)
+  # 
+  
+  # plots 
+  p_scores <- ggplot(data = df_scores, aes(x = date, y = score)) +
+    # geom_hline(aes(yintercept = (df_scores$score %>% max(na.rm = T)) * 0.9)) +
+    geom_ribbon(aes(ymin = (df_scores$score %>% max(na.rm = T)) * 0.9,
+                    ymax = df_scores$score %>% max(na.rm = T)),
+                fill = "red", alpha = 0.2) +
+    geom_line(colour = "darkgrey") + 
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "rPE score")
+  
+  # p_scores
+  
+  return(p_scores)
+}
+
+# plot rulsif data ####
+
+plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
+    `colnames<-`("var_name")#%>%
+    # mutate(var_name = ifelse(var == "depth_median", -var_name, var_name)) # 
+
+  # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
+  if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
+    var_df <- var_df %>% 
+      mutate(var_name = -var_name)
+  }
+
+  # change_points
+  c_points <- result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date)
+  
+  
+  # plots 
+  p_data <- ggplot() +
+    geom_line(aes(x = dates$date, y = var_df$var_name)) +
+    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red", alpha = 0.6) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "depth in m")
+  
+  # p_data
+  return(p_data)
+
+}
+
+# test functions ####
+
+var_list <- c("depth_median", "depth_range", "depth_max", "depth_range_change")
+
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"),
+                                 vars = var_list)
+
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date, tag_serial_num_short = "308",
+                                 vars = var_list)
+
+
+plot_all_rulsif_data <- function(rulsif_result, var_list, tag_serial_num_short, all_data){
+  plots <- list()
+  for(variable in var_list){
+    plot <- plot_rulsif_data(rulsif_result = rulsif_result, 
+                             all_data = all_data,
+                             tag_serial_num_short = tag_serial_num_short,
+                             var = variable)
+    plots[[variable]] <- plot
+    # assign(paste0("p_", variable, "_", tag_serial_num_short, "_rulsif"), plot)
+  }
+  return(plots)
+}
+
+
+plots_all_rulsif_308 <- plot_all_rulsif_data(rulsif_result = rulsif_308_res, 
+                          var_list = var_list, 
+                          all_data = long_dst_date,
+                          tag_serial_num_short = "308")
+
+plots_all_rulsif_321 <- plot_all_rulsif_data(rulsif_result = rulsif_321_res, 
+                                             var_list = var_list, 
+                                             all_data = long_dst_date,
+                                             tag_serial_num_short = "321")
+
+
+# old ####
+
 # tests ts_detect() #####
 
 ## test1 ####
@@ -72,25 +225,6 @@ p2 <- ggplot(data = mtcars, aes(x = wt, y = qsec)) + geom_point()
 grid.arrange(p1, p2, ncol = 1)
 
 
-# function to plot results of rulsif ####
-
-# vars <- c("depth_range", "depth_median")
-# all_data <- long_dst_date %>% dplyr::filter(tag_serial_number == "1293308")
-# time_vector <- "date"
-
-compute_rulsif <- function(all_data, vars, time_vector = "date", thresh = 0.9, alpha = 0.05, step = 15, window_size = 5){
-  
-  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
-  
-  df_rulsif <- all_data %>% 
-    dplyr::select(vars %>% all_of()) %>% 
-    as.matrix(nrow = vars %>% length()) %>% 
-    t()
-  
-  result <- rulsif.ts::ts_detect(df_rulsif, thresh = thresh, alpha = alpha, step = step, window_size = window_size, make_plot = F)
-  
-  return(result)
-}
 
 plot_rulsif <- function(rulsif_result, all_data, time_vector = "date"){
   
@@ -142,11 +276,6 @@ plot_rulsif <- function(rulsif_result, all_data, time_vector = "date"){
   return(plots_result)
   # grid.arrange(p_data, p_scores, ncol = 1) 
 }
-
-# test functions ####
-
-rulsif_321_res <- compute_rulsif(all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"),
-                                 vars = c("depth_median", "depth_range", "depth_max", "depth_range_change"))
 
 p_321_rulsif <- plot_rulsif(rulsif_result = result, all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"))
 

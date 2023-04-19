@@ -280,7 +280,109 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
   return(plot)
 }
 
+## 6. plot Depth Change Points ####
 
+plot_rulsif_scores <- function(rulsif_result, thresh = 0.9, all_data, tag_serial_num_short, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  row_diff <- ((nrow(dates) - length(rulsif_result$scores)) / 2) %>% floor()
+  
+  # scores 
+  scores <- rulsif_result$scores %>% 
+    as.data.frame() %>% 
+    `colnames<-`("score") %>%
+    mutate(r_num = seq(from = row_diff,
+                       to = row_diff + length(rulsif_result$scores) - 1,
+                       by = 1))
+  
+  df_scores <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(scores, by = "r_num")
+  
+  # # change_points
+  # c_points <- result$change_points %>% 
+  #   as.data.frame() %>% 
+  #   `colnames<-`("r_num") %>%
+  #   mutate(c_point = TRUE)
+  # 
+  # df_c_points <- dates %>% 
+  #   mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+  #   left_join(c_points, by = "r_num") %>%
+  #   dplyr::filter(c_point == TRUE) %>%
+  #   dplyr::select(date)
+  # 
+  
+  # plots 
+  p_scores <- ggplot(data = df_scores, aes(x = date, y = score)) +
+    # geom_hline(aes(yintercept = (df_scores$score %>% max(na.rm = T)) * 0.9)) +
+    geom_ribbon(aes(ymin = (score %>% max(na.rm = T)) * thresh,
+                    ymax = score %>% max(na.rm = T)),
+                fill = "red", alpha = 0.2) +
+    geom_line(colour = "darkgrey") + 
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "rPE score")
+  
+  # p_scores
+  
+  return(p_scores)
+}
+
+plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
+    `colnames<-`("var_name")#%>%
+  # mutate(var_name = ifelse(var == "depth_median", -var_name, var_name)) # 
+  
+  # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
+  if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
+    var_df <- var_df %>% 
+      mutate(var_name = -var_name)
+  }
+  
+  # change_points
+  c_points <- rulsif_result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date)
+  
+  
+  # plots 
+  p_data <- ggplot() +
+    geom_line(aes(x = dates$date, y = var_df$var_name)) +
+    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red", alpha = 0.6) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "depth in m")
+  
+  # p_data
+  return(p_data)
+  
+}
+
+plot_all_rulsif_data <- function(rulsif_result, var_list, tag_serial_num_short, all_data){
+  plots <- list()
+  for(variable in var_list){
+    plot <- plot_rulsif_data(rulsif_result = rulsif_result, 
+                             all_data = all_data,
+                             tag_serial_num_short = tag_serial_num_short,
+                             var = variable)
+    plots[[variable]] <- plot
+    # assign(paste0("p_", variable, "_", tag_serial_num_short, "_rulsif"), plot)
+  }
+  return(plots)
+}
 
 
 # plots ####
@@ -400,6 +502,11 @@ p_321_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_321_mindepth,
 
 # p_321_wavelet_depth_min
 save_data(data = p_321_wavelet_depth_min, folder = plot_path)
+
+
+## 6. Change Point Detections ####
+
+var_list <- c("depth_median", "depth_range", "depth_max", "depth_range_change")
 
 
 # save all plots ad .pdf and .png ####
