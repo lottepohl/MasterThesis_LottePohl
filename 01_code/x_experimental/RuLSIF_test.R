@@ -138,7 +138,17 @@ plot_rulsif <- function(rulsif_result, all_data, time_vector = "date"){
     labs(x = "", y = "depth in m")
   
   # p_data
-  
-  grid.arrange(p_data, p_scores, ncol = 1) 
+  plots_result <- c(p_data, p_scores)
+  return(plots_result)
+  # grid.arrange(p_data, p_scores, ncol = 1) 
 }
+
+# test functions ####
+
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"),
+                                 vars = c("depth_median", "depth_range", "depth_max", "depth_range_change"))
+
+p_321_rulsif <- plot_rulsif(rulsif_result = result, all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"))
+
+rulsif_321_res %>% plot_rulsif(all_data = long_dst_date %>% dplyr::filter(tag_serial_number == "1293321"))
 
