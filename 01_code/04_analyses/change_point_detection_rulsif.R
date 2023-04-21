@@ -17,20 +17,27 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 ## load data ####
 paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base::source()
 
+## function to pad data ####
+
+
 ## function to compute rulsif ####
-compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "date", thresh = 0.9, alpha = 0.05, step = 15, window_size = 5){
+compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "date", thresh = 0.95, alpha = 0.05, step_percent = 6, window_size = 7){
+  
+  seq(from = "2018-09-01" %>% as.POSIXct(), to = "2018-09-10" %>% as.POSIXct(), by = "day")
   
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
+  step <- ((all_data %>% nrow()) * (step_percent / 100)) %>% base::round()
+  
   df_rulsif <- all_data %>% 
     dplyr::select(vars %>% all_of()) %>% 
     as.matrix(nrow = vars %>% length()) %>% 
     t()
-  
+  .Random.seed <- NULL
   result <- rulsif.ts::ts_detect(df_rulsif, thresh = thresh, alpha = alpha, step = step, window_size = window_size, make_plot = F)
-  
+  .Random.seed <- NULL
   return(result)
 }
 
@@ -74,22 +81,78 @@ plot_rulsif_data <- function(rulsif_result = rulsif_308_res, var = "depth_median
     }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
   }
   
-  
-  df_c_points_week <- 
+  df_c_points_week <- df_c_points %>% 
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date),
+           end_date = max(date)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct()
 
+  # df_c_points <- df_c_points %>%
+  #   left_join
 
   # plots 
   p_data <- ggplot() +
+    geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
+                                           ymin = -Inf, ymax = Inf),
+              alpha = 0.3) +
+    geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
     geom_line(aes(x = dates$date, y = var_df$var_name)) +
-    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red", alpha = 0.6) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "depth in m")
+    labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
+    theme(legend.position = "bottom",
+          legend.box = "horizontal")
   
-  # p_data
+  p_data
   return(p_data)
   
 }
 
+
+
+## get change point periods ####
+
+get_change_point_periods <- function(rulsif_result = rulsif_308_res, var = "depth_median", tag_serial_num_short = "308", all_data = long_dst_date, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  # change_points
+  c_points <- rulsif_result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+  
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+  
+  df_c_points_week <- df_c_points %>% 
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date),
+                  end_date = max(date)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct()
+  
+  return(df_c_points_week)
+}
 
 # all_data and var list prepare ####
 
@@ -105,6 +168,23 @@ var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
 
 
 ## tag 308 ####
+
+### step percent = 6 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 step_percent = 6)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+
+
+### step = 20 ####
 rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
                                  tag_serial_num_short = "308",
                                  vars = var_list,
@@ -112,24 +192,235 @@ rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
                                  window_size = 7,
                                  step = 20,
                                  alpha = 0.05)
-
 p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
                                           all_data = long_dst_date,
                                           tag_serial_num_short = "308",
                                           thresh = 0.95)
-# p_308_scores_rulsif
-
 p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
                                           all_data = long_dst_date,
                                           tag_serial_num_short = "308")
-# p_308_data_rulsif %>% ggplotly()
-
 grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
+### step = 21 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 21,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
+### step = 22 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 22,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
+### step = 23 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 23,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+
+### step = 24 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 24,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+
+### step = 25 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 25,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+
+### step = 17 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 17,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+
+### step = 26 ####
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 26,
+                                 alpha = 0.05)
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "308")
+grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
 ## tag 321 ####
+
+### step percent = 6 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 step_percent = 5)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
+### step = 24 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 24,
+                                 alpha = 0.05)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
+### step = 25 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 25,
+                                 alpha = 0.05)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
+### step = 26 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 26,
+                                 alpha = 0.05)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
+### step = 27 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 27,
+                                 alpha = 0.05)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
+### step = 28 ####
+rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "321",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 28,
+                                 alpha = 0.05)
+p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "321",
+                                          thresh = 0.95)
+p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                      all_data = long_dst_date,
+                                      tag_serial_num_short = "321")
+grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+
 
 rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
                                  tag_serial_num_short = "321",
