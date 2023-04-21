@@ -34,7 +34,64 @@ compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "
   return(result)
 }
 
-# all_data prepare ####
+## plot rulsif data ####
+
+plot_rulsif_data <- function(rulsif_result = rulsif_308_res, var = "depth_median", tag_serial_num_short = "308", all_data = long_dst_date, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
+    `colnames<-`("var_name")#%>%
+  # mutate(var_name = ifelse(var == "depth_median", -var_name, var_name)) # 
+  
+  # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
+  if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
+    var_df <- var_df %>% 
+      mutate(var_name = -var_name)
+  }
+  
+  # change_points
+  c_points <- rulsif_result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+  
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+  
+  
+  df_c_points_week <- 
+
+
+  # plots 
+  p_data <- ggplot() +
+    geom_line(aes(x = dates$date, y = var_df$var_name)) +
+    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red", alpha = 0.6) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "depth in m")
+  
+  # p_data
+  return(p_data)
+  
+}
+
+
+# all_data and var list prepare ####
 
 long_dst_date <- long_dst_date %>%
   dplyr::mutate(depth_median_change_sgolay = depth_median_change %>% signal::sgolayfilt(p = 7, n = 9),
@@ -44,11 +101,8 @@ long_dst_date <- long_dst_date %>%
                 depth_max_sgolay = depth_max %>% signal::sgolayfilt(p = 1, n = 5),
                 depth_min_sgolay = depth_min %>% signal::sgolayfilt(p = 1, n = 5))
 
-var_list <- c("depth_mean","depth_median_change", "depth_min_change", "depth_max_change", "depth_range_change","depth_median_change", "depth_var", "depth_median", "depth_min", "depth_max", "depth_range", "vertical_speed_max")
-var_list <- c("depth_median_change", "depth_min_change", "depth_max_change", "depth_range_change","depth_median_change", "depth_median", "depth_min", "depth_max", "depth_range")
-var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median", "depth_range")
-var_list <- c("depth_range_change","depth_median_change", "depth_median", "depth_range")
-var_list <- c("depth_median", "depth_range")
+var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
+
 
 ## tag 308 ####
 rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
@@ -56,7 +110,7 @@ rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
                                  vars = var_list,
                                  thresh = 0.95,
                                  window_size = 7,
-                                 step = 5,
+                                 step = 20,
                                  alpha = 0.05)
 
 p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
@@ -73,12 +127,6 @@ p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
 grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
 
-var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median", "depth_range")
-var_list <- c("depth_range_change","depth_median_change", "depth_median", "depth_range")
-# var_list <- c("depth_median", "depth_range")
-var_list <- "depth_median_sgolay"
-var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median_sgolay", "depth_range_sgolay")
-var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
 
 
 ## tag 321 ####
@@ -179,3 +227,12 @@ p_308 <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == "129
 # # theme_minimal()
 
 p_308 %>% ggplotly()
+
+
+# old ####
+
+# var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median", "depth_range")
+# var_list <- c("depth_range_change","depth_median_change", "depth_median", "depth_range")
+# # var_list <- c("depth_median", "depth_range")
+# var_list <- "depth_median_sgolay"
+# var_list <- c("depth_range_change_sgolay","depth_median_change_sgolay", "depth_median_sgolay", "depth_range_sgolay")
