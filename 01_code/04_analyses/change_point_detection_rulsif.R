@@ -23,13 +23,22 @@ paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base:
 ## function to compute rulsif ####
 compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "date", thresh = 0.95, alpha = 0.05, step_percent = 6, window_size = 7){
   
-  seq(from = "2018-09-01" %>% as.POSIXct(), to = "2018-09-10" %>% as.POSIXct(), by = "day")
-  
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
-  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
-  
+  # define step length before data are padded
   step <- ((all_data %>% nrow()) * (step_percent / 100)) %>% base::round()
+  
+  # add 10 days of data from the last day
+  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(10), by = "day")) %>%
+    mutate(depth_median_sgolay = all_data$depth_median_sgolay[nrow(all_data)],
+           depth_max_sgolay = all_data$depth_max_sgolay[nrow(all_data)],
+           depth_min_sgolay = all_data$depth_min_sgolay[nrow(all_data)])
+
+  # pad data
+  all_data <- all_data %>%
+    full_join(pad_data_end, multiple = "all")
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
   df_rulsif <- all_data %>% 
     dplyr::select(vars %>% all_of()) %>% 
@@ -43,7 +52,7 @@ compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "
 
 ## plot rulsif data ####
 
-plot_rulsif_data <- function(rulsif_result = rulsif_308_res, var = "depth_median", tag_serial_num_short = "308", all_data = long_dst_date, time_vector = "date"){
+plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
   
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
@@ -169,19 +178,28 @@ var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
 
 ## tag 308 ####
 
-### step percent = 6 ####
+### step=5% !!! ####
 rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
                                  tag_serial_num_short = "308",
                                  vars = var_list,
-                                 step_percent = 6)
+                                 step_percent = 5)
 p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
                                           all_data = long_dst_date,
                                           tag_serial_num_short = "308",
                                           thresh = 0.95)
-p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+p_308_data1_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
                                       all_data = long_dst_date,
+                                      var = "depth_median_sgolay",
                                       tag_serial_num_short = "308")
-grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
+p_308_data2_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      var = "depth_max_sgolay",
+                                      tag_serial_num_short = "308")
+p_308_data3_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_min_sgolay",
+                                       tag_serial_num_short = "308")
+grid.arrange(p_308_data1_rulsif, p_308_data2_rulsif, p_308_data3_rulsif, p_308_scores_rulsif, ncol = 1)
 
 
 ### step = 20 ####
@@ -321,8 +339,7 @@ p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
 grid.arrange(p_308_data_rulsif, p_308_scores_rulsif, ncol = 1)
 
 ## tag 321 ####
-
-### step percent = 6 ####
+### step=5% !!! ####
 rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
                                  tag_serial_num_short = "321",
                                  vars = var_list,
@@ -331,10 +348,20 @@ p_321_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_321_res,
                                           all_data = long_dst_date,
                                           tag_serial_num_short = "321",
                                           thresh = 0.95)
-p_321_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
-                                      all_data = long_dst_date,
-                                      tag_serial_num_short = "321")
-grid.arrange(p_321_data_rulsif, p_321_scores_rulsif, ncol = 1)
+p_321_data1_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_median_sgolay",
+                                       tag_serial_num_short = "321")
+p_321_data2_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_max_sgolay",
+                                       tag_serial_num_short = "321")
+p_321_data3_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_min_sgolay",
+                                       tag_serial_num_short = "321")
+grid.arrange(p_321_data1_rulsif, p_321_data2_rulsif, p_321_data3_rulsif, p_321_scores_rulsif, ncol = 1)
+
 
 ### step = 24 ####
 rulsif_321_res <- compute_rulsif(all_data = long_dst_date,
