@@ -115,6 +115,41 @@ p_321_data3_rulsif <- plot_rulsif_data(rulsif_result = rulsif_321_res,
 
 grid.arrange(p_321_data_rulsif, p_321_data2_rulsif, p_321_data3_rulsif, p_321_scores_rulsif, ncol = 1)
 
+## tag 308 test with new hyperparams ####
+
+rulsif_308_res <- compute_rulsif(all_data = long_dst_date,
+                                 tag_serial_num_short = "308",
+                                 vars = var_list,
+                                 thresh = 0.95,
+                                 window_size = 7,
+                                 step = 25,
+                                 alpha = 0.01)
+
+p_308_scores_rulsif <- plot_rulsif_scores(rulsif_result = rulsif_308_res,
+                                          all_data = long_dst_date,
+                                          tag_serial_num_short = "308",
+                                          thresh = 0.95)
+# p_308_scores_rulsif
+
+p_308_data_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                      all_data = long_dst_date,
+                                      var = "depth_median_sgolay",
+                                      tag_serial_num_short = "308")
+
+p_308_data2_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_max_sgolay",
+                                       tag_serial_num_short = "308")
+
+p_308_data3_rulsif <- plot_rulsif_data(rulsif_result = rulsif_308_res,
+                                       all_data = long_dst_date,
+                                       var = "depth_min_sgolay",
+                                       tag_serial_num_short = "308")
+# p_308_data_rulsif %>% ggplotly()
+
+grid.arrange(p_308_data_rulsif, p_308_data2_rulsif, p_308_data3_rulsif, p_308_scores_rulsif, ncol = 1)
+
+
 
 # other plots ####
 
