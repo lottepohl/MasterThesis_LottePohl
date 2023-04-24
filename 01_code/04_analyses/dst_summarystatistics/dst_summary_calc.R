@@ -422,9 +422,16 @@ long_dst_date <- masterias_depth_date %>%
          depth_min_change_roll3 = zoo::rollmean(depth_min_change, k = 3, fill = NA),
          depth_max_change_roll3 = zoo::rollmean(depth_max_change, k = 3, fill = NA),
          t_days = seq(from = 1, to = n()),
-         t_days = sprintf("%03d", t_days %>% as.numeric())) %>%
+         t_days = sprintf("%03d", t_days %>% as.numeric()),
+         depth_median_change_sgolay = depth_median_change %>% signal::sgolayfilt(p = 7, n = 9),
+         depth_range_change_sgolay = depth_range_change %>% signal::sgolayfilt(p = 7, n = 9),
+         depth_median_sgolay = depth_median %>% signal::sgolayfilt(p = 1, n = 5),
+         depth_range_sgolay = depth_range %>% signal::sgolayfilt(p = 5, n = 7),
+         depth_max_sgolay = depth_max %>% signal::sgolayfilt(p = 1, n = 5),
+         depth_min_sgolay = depth_min %>% signal::sgolayfilt(p = 1, n = 5)) %>%
   tidyr::drop_na() %>%
   ungroup()
+
 
 long_dst_daynight <- masterias_depth_daynight %>% 
   ungroup() %>%
