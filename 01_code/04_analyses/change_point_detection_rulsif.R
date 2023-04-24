@@ -22,34 +22,50 @@ paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base:
 
 
 ## function to compute rulsif ####
-compute_rulsif <- function(all_data, tag_serial_num_short, vars, time_vector = "date", thresh = 0.95, alpha = 0.05, step_percent = 6, window_size = 7){
+compute_rulsif <- function(all_data = long_dst_date, tag_serial_num_short = "321", vars = var_list, time_vector = "date", thresh = 0.95, alpha = 0.05, step_percent = 5, window_size = 7){
   
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
   # define step length before data are padded
   step <- ((all_data %>% nrow()) * (step_percent / 100)) %>% base::round()
   
-  # # add 10 days of data from the last day
-  # pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(10), by = "day")) %>%
-  #   mutate(depth_median_sgolay = all_data$depth_median_sgolay[nrow(all_data)],
-  #          depth_max_sgolay = all_data$depth_max_sgolay[nrow(all_data)],
-  #          depth_min_sgolay = all_data$depth_min_sgolay[nrow(all_data)])
-  # 
-  # # pad data
-  # all_data <- all_data %>%
-  #   full_join(pad_data_end, multiple = "all")
-  # 
+  # add step length days of data from the last day
+  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(step), by = "day")) %>%
+    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  
+  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
+    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
+
+  # pad data
+  all_data <- all_data %>%
+    full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
+    full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
+    arrange(date)
+
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
   df_rulsif <- all_data %>% 
-    dplyr::select(vars %>% all_of()) %>% 
+    dplyr::select(vars %>% all_of()) #%>%
+  df_rulsif <- -df_rulsif
+  df_rulsif <- df_rulsif %>%
     as.matrix(nrow = vars %>% length()) %>% 
     t()
+  
   .Random.seed <- NULL
   result <- rulsif.ts::ts_detect(df_rulsif, thresh = thresh, alpha = alpha, step = step, window_size = window_size, make_plot = F)
   .Random.seed <- NULL
   return(result)
 }
+
+# # test ####
+# p <- ggplot(data = all_data) +
+#   geom_line(aes(x = date, y = -depth_median_sgolay))
+
+p %>% ggplotly()
 
 # functions `plot_rulsif_scores()` and `plot_rulsif_data()` in "./01_code/05_plots_maps/thesis_manuscript_figures.R"
 
@@ -418,7 +434,15 @@ rulsif_321_table_15percent <- get_change_point_periods(rulsif_result = rulsif_32
                                                        all_data = long_dst_date)
 
 # save data ####
+save_data(data = rulsif_308_res_2_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_table_2_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_res_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_table_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_res_10percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_table_10percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_res_15percent, folder = rulsif_data_path)
+save_data(data = rulsif_308_table_15percent, folder = rulsif_data_path)
+
 save_data(data = rulsif_321_res_5percent, folder = rulsif_data_path)
 
 # other plots 

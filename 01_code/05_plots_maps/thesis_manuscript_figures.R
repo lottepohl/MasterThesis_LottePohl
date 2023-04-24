@@ -282,11 +282,18 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
 
 ## 6. plot Depth Change Points ####
 
-plot_rulsif_scores <- function(rulsif_result, thresh = 0.9, all_data, tag_serial_num_short, time_vector = "date"){
+plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_serial_num_short, time_vector = "date"){
   
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  # pad dates with step length 
+  
+  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day"))
+  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day"))
+  
+  dates <- rbind(pad_data_start, dates, pad_data_end) %>% arrange(date)
   
   row_diff <- ((nrow(dates) - length(rulsif_result$scores)) / 2) %>% floor()
   
@@ -302,26 +309,14 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.9, all_data, tag_serial
     mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
     left_join(scores, by = "r_num")
   
-  # # change_points
-  # c_points <- result$change_points %>% 
-  #   as.data.frame() %>% 
-  #   `colnames<-`("r_num") %>%
-  #   mutate(c_point = TRUE)
-  # 
-  # df_c_points <- dates %>% 
-  #   mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
-  #   left_join(c_points, by = "r_num") %>%
-  #   dplyr::filter(c_point == TRUE) %>%
-  #   dplyr::select(date)
-  # 
-  
   # plots 
   p_scores <- ggplot(data = df_scores, aes(x = date, y = score)) +
     # geom_hline(aes(yintercept = (df_scores$score %>% max(na.rm = T)) * 0.9)) +
     geom_ribbon(aes(ymin = (score %>% max(na.rm = T)) * thresh,
                     ymax = score %>% max(na.rm = T)),
-                fill = "red", alpha = 0.2) +
-    geom_line(colour = "darkgrey") + 
+                # fill = "black", alpha = 0.2) +
+                fill = "yellow", alpha = 0.25) +
+    geom_line(colour = "black") + 
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "", y = "rPE score")
   
@@ -337,12 +332,11 @@ plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
   var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
-    `colnames<-`("var_name")#%>%
-  # mutate(var_name = ifelse(var == "depth_median", -var_name, var_name)) # 
+    `colnames<-`("var_name")
   
   # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
   if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
-    var_df <- var_df %>% 
+    var_df <- var_df %>%
       mutate(var_name = -var_name)
   }
   
@@ -356,22 +350,129 @@ plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num
     mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
     left_join(c_points, by = "r_num") %>%
     dplyr::filter(c_point == TRUE) %>%
-    dplyr::select(date)
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
   
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+  
+  df_c_points_week <- df_c_points %>% 
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date),
+                  end_date = max(date)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct()
+  
+  # df_c_points <- df_c_points %>%
+  #   left_join
   
   # plots 
   p_data <- ggplot() +
+    geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
+                                           ymin = -Inf, ymax = Inf),
+              alpha = 0.3) +
+    geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
     geom_line(aes(x = dates$date, y = var_df$var_name)) +
-    geom_vline(data = df_c_points, aes(xintercept = date), colour = "red", alpha = 0.6) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "depth in m")
+    labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
+    # theme(legend.position = "bottom",
+    #       legend.box = "horizontal")
+    theme(legend.position="bottom", legend.direction="horizontal", legend.box.margin = margin())
+  
+  p_data
+  return(p_data)
+  
+}
+
+plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_num_short, all_data, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  # add rulsif_result$step length days of data from the last day
+  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day")) %>%
+    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  
+  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
+    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+           depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  
+  # pad data
+  all_data <- all_data %>%
+    full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
+    full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
+    arrange(date)
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  var_df <- all_data %>% dplyr::select(var %>% all_of()) 
+  var_df <- -var_df
+  
+  # change_points
+  c_points <- rulsif_result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+  
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+  
+  df_c_points_week <- df_c_points %>% 
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date),
+                  end_date = max(date)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct()
+  
+  # plots 
+  p_data <- ggplot() +
+    geom_ribbon(aes(x = dates$date, 
+                    ymin = var_df %>% dplyr::select(contains("max")) %>% pull(),
+                    ymax = var_df %>% dplyr::select(contains("min")) %>% pull()),
+                alpha = 0.2) +
+    geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
+                                           ymin = -Inf, ymax = Inf),
+              alpha = 0.3) +
+    geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
+    geom_line(aes(x = dates$date, y = var_df %>% dplyr::select(contains("median")) %>% pull())) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
+    # theme(legend.position = "bottom",
+    #       legend.box = "horizontal")
+    theme(legend.position="bottom", legend.direction="horizontal")
   
   # p_data
   return(p_data)
   
 }
 
-plot_all_rulsif_data <- function(rulsif_result, var_list, tag_serial_num_short, all_data){
+
+# plot_all_rulsif_data <- function(rulsif_result, var_list, tag_serial_num_short, all_data){
   plots <- list()
   for(variable in var_list){
     plot <- plot_rulsif_data(rulsif_result = rulsif_result, 
