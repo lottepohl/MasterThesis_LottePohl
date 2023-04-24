@@ -50,3 +50,22 @@ p_321_wavelet_depth_min <- load_data(filestring = "p_321_wavelet_depth_min", fol
 p_308_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_308_wavelet_maxdepth_change_roll3", folder = plot_path)
 p_321_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_321_wavelet_maxdepth_change_roll3", folder = plot_path)
 
+## 6. change point detection results ####
+
+p_308_scores_rulsif_2_5percent <- load_data(filestring = "p_308_scores_rulsif_2_5percent", folder = plot_path)
+p_308_ribbon_rulsif_2_5percent <- load_data(filestring = "p_308_ribbon_rulsif_2_5percent", folder = plot_path)
+
+p_308_scores_rulsif_5percent <- load_data(filestring = "p_308_scores_rulsif_5percent", folder = plot_path)
+p_308_ribbon_rulsif_5percent <- load_data(filestring = "p_308_ribbon_rulsif_5percent", folder = plot_path)
+
+p_308_scores_rulsif_10percent <- load_data(filestring = "p_308_scores_rulsif_10percent", folder = plot_path)
+p_308_ribbon_rulsif_10percent <- load_data(filestring = "p_308_ribbon_rulsif_10percent", folder = plot_path)
+
+p_321_scores_rulsif_2_5percent <- load_data(filestring = "p_321_scores_rulsif_2_5percent", folder = plot_path)
+p_321_ribbon_rulsif_2_5percent <- load_data(filestring = "p_321_ribbon_rulsif_2_5percent", folder = plot_path)
+
+p_321_scores_rulsif_5percent <- load_data(filestring = "p_321_scores_rulsif_5percent", folder = plot_path)
+p_321_ribbon_rulsif_5percent <- load_data(filestring = "p_321_ribbon_rulsif_5percent", folder = plot_path)
+
+p_321_scores_rulsif_10percent <- load_data(filestring = "p_321_scores_rulsif_10percent", folder = plot_path)
+p_321_ribbon_rulsif_10percent <- load_data(filestring = "p_321_ribbon_rulsif_10percent", folder = plot_path)
