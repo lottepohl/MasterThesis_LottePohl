@@ -9,6 +9,7 @@
 library(ggplot2)
 library(dplyr)
 library(scales)
+library(gridExtra)
 
 ## plot path ####
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
@@ -21,6 +22,7 @@ paste0(dir_path, "/01_code/02_load_data/load_wavelet_results.R") %>% base::sourc
 paste0(dir_path, "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_fft_results.R") %>% base::source()
+paste0(dir_path, "/01_code/02_load_data/load_cpd_results.R") %>% base::source()
 
 ## set path were all figures are saved ####
 plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
@@ -288,14 +290,14 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
   
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
-  # pad dates with step length 
+  # # pad dates with step length 
+  # pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day"))
+  # pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day"))
+  # dates <- rbind(pad_data_start, dates, pad_data_end) %>% arrange(date)
   
-  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day"))
-  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day"))
-  
-  dates <- rbind(pad_data_start, dates, pad_data_end) %>% arrange(date)
-  
-  row_diff <- ((nrow(dates) - length(rulsif_result$scores)) / 2) %>% floor()
+  row_diff <- (((nrow(dates) - length(rulsif_result$scores)) / 2) %>% floor())
+  # row_diff <- rulsif_result$step
+  # row_diff <- 1
   
   # scores 
   scores <- rulsif_result$scores %>% 
@@ -325,28 +327,28 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
   return(p_scores)
 }
 
-plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
-  
+# plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
+
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
-  
+
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
-  
+
   var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
     `colnames<-`("var_name")
-  
+
   # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
   if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
     var_df <- var_df %>%
       mutate(var_name = -var_name)
   }
-  
+
   # change_points
-  c_points <- rulsif_result$change_points %>% 
-    as.data.frame() %>% 
+  c_points <- rulsif_result$change_points %>%
+    as.data.frame() %>%
     `colnames<-`("r_num") %>%
     mutate(c_point = TRUE)
-  
-  df_c_points <- dates %>% 
+
+  df_c_points <- dates %>%
     mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
     left_join(c_points, by = "r_num") %>%
     dplyr::filter(c_point == TRUE) %>%
@@ -355,14 +357,14 @@ plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num
                   year = date %>% lubridate::year(),
                   CP_period = 1) %>%
     mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
-  
+
   for(i in 2:nrow(df_c_points)){
     if(df_c_points$week_diff[i] <= 1){
       df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
     }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
   }
-  
-  df_c_points_week <- df_c_points %>% 
+
+  df_c_points_week <- df_c_points %>%
     # dplyr::ungroup() %>%
     dplyr::group_by(CP_period) %>%
     dplyr::mutate(start_date = min(date),
@@ -370,11 +372,11 @@ plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num
     dplyr::select(CP_period, start_date, end_date) %>%
     # mutate(CP_period = CP_period %>% as.factor()) %>%
     distinct()
-  
+
   # df_c_points <- df_c_points %>%
   #   left_join
-  
-  # plots 
+
+  # plots
   p_data <- ggplot() +
     geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
                                            ymin = -Inf, ymax = Inf),
@@ -386,32 +388,32 @@ plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num
     # theme(legend.position = "bottom",
     #       legend.box = "horizontal")
     theme(legend.position="bottom", legend.direction="horizontal", legend.box.margin = margin())
-  
+
   p_data
   return(p_data)
-  
+
 }
 
 plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_num_short, all_data, time_vector = "date"){
   
   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
   
-  # add rulsif_result$step length days of data from the last day
-  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day")) %>%
-    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
-  
-  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
-    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
-  
-  # pad data
-  all_data <- all_data %>%
-    full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
-    full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
-    arrange(date)
+  # # add rulsif_result$step length days of data from the last day
+  # pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # # pad data
+  # all_data <- all_data %>%
+  #   full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
+  #   full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
+  #   arrange(date)
   
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
@@ -607,8 +609,111 @@ save_data(data = p_321_wavelet_depth_min, folder = plot_path)
 
 ## 6. Change Point Detections ####
 
-var_list <- c("depth_median", "depth_range", "depth_max", "depth_range_change")
+var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
 
+### tag 308 ####
+# step = 2.5 %
+p_308_scores_rulsif_2_5percent <- plot_rulsif_scores(rulsif_result = rulsif_308_res_2_5percent,
+                                                     all_data = long_dst_date,
+                                                     tag_serial_num_short = "308",
+                                                     thresh = 0.95)
+save_data(data = p_308_scores_rulsif_2_5percent, folder = plot_path)
+p_308_ribbon_rulsif_2_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_308_res_2_5percent,
+                                                          all_data = long_dst_date,
+                                                          var = var_list,
+                                                          tag_serial_num_short = "308")
+save_data(data = p_308_ribbon_rulsif_2_5percent, folder = plot_path)
+# grid.arrange(p_308_ribbon_rulsif_2_5percent, p_308_scores_rulsif_2_5percent, ncol = 1)
+
+# step = 5 %
+p_308_scores_rulsif_5percent <- plot_rulsif_scores(rulsif_result = rulsif_308_res_5percent,
+                                                     all_data = long_dst_date,
+                                                     tag_serial_num_short = "308",
+                                                     thresh = 0.95)
+save_data(data = p_308_scores_rulsif_5percent, folder = plot_path)
+p_308_ribbon_rulsif_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_308_res_5percent,
+                                                          all_data = long_dst_date,
+                                                          var = var_list,
+                                                          tag_serial_num_short = "308")
+save_data(data = p_308_ribbon_rulsif_5percent, folder = plot_path)
+# grid.arrange(p_308_ribbon_rulsif_5percent, p_308_scores_rulsif_5percent, ncol = 1)
+
+
+# step = 10 %
+p_308_scores_rulsif_10percent <- plot_rulsif_scores(rulsif_result = rulsif_308_res_10percent,
+                                                   all_data = long_dst_date,
+                                                   tag_serial_num_short = "308",
+                                                   thresh = 0.95)
+save_data(data = p_308_scores_rulsif_10percent, folder = plot_path)
+p_308_ribbon_rulsif_10percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_308_res_10percent,
+                                                        all_data = long_dst_date,
+                                                        var = var_list,
+                                                        tag_serial_num_short = "308")
+save_data(data = p_308_ribbon_rulsif_10percent, folder = plot_path)
+# grid.arrange(p_308_ribbon_rulsif_10percent, p_308_scores_rulsif_10percent, ncol = 1)
+
+# step = 15 %
+# p_308_scores_rulsif_15percent <- plot_rulsif_scores(rulsif_result = rulsif_308_res_15percent,
+#                                                     all_data = long_dst_date,
+#                                                     tag_serial_num_short = "308",
+#                                                     thresh = 0.95)
+# p_308_ribbon_rulsif_15percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_308_res_15percent,
+#                                                          all_data = long_dst_date,
+#                                                          var = var_list,
+#                                                          tag_serial_num_short = "308")
+# grid.arrange(p_308_ribbon_rulsif_15percent, p_308_scores_rulsif_15percent, ncol = 1)
+
+
+### tag 321 ####
+# step = 2.5 %
+p_321_scores_rulsif_2_5percent <- plot_rulsif_scores(rulsif_result = rulsif_321_res_2_5percent,
+                                                     all_data = long_dst_date,
+                                                     tag_serial_num_short = "321",
+                                                     thresh = 0.95)
+save_data(data = p_321_scores_rulsif_2_5percent, folder = plot_path)
+p_321_ribbon_rulsif_2_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_321_res_2_5percent,
+                                                          all_data = long_dst_date,
+                                                          var = var_list,
+                                                          tag_serial_num_short = "321")
+save_data(data = p_321_ribbon_rulsif_2_5percent, folder = plot_path)
+# grid.arrange(p_321_ribbon_rulsif_2_5percent, p_321_scores_rulsif_2_5percent, ncol = 1)
+
+# step = 5 %
+p_321_scores_rulsif_5percent <- plot_rulsif_scores(rulsif_result = rulsif_321_res_5percent,
+                                                   all_data = long_dst_date,
+                                                   tag_serial_num_short = "321",
+                                                   thresh = 0.95)
+save_data(data = p_321_scores_rulsif_5percent, folder = plot_path)
+p_321_ribbon_rulsif_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_321_res_5percent,
+                                                        all_data = long_dst_date,
+                                                        var = var_list,
+                                                        tag_serial_num_short = "321")
+save_data(data = p_321_ribbon_rulsif_5percent, folder = plot_path)
+# grid.arrange(p_321_ribbon_rulsif_5percent, p_321_scores_rulsif_5percent, ncol = 1)
+
+
+# step = 10 %
+p_321_scores_rulsif_10percent <- plot_rulsif_scores(rulsif_result = rulsif_321_res_10percent,
+                                                    all_data = long_dst_date,
+                                                    tag_serial_num_short = "321",
+                                                    thresh = 0.95)
+save_data(data = p_321_scores_rulsif_10percent, folder = plot_path)
+p_321_ribbon_rulsif_10percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_321_res_10percent,
+                                                         all_data = long_dst_date,
+                                                         var = var_list,
+                                                         tag_serial_num_short = "321")
+save_data(data = p_321_ribbon_rulsif_10percent, folder = plot_path)
+# grid.arrange(p_321_ribbon_rulsif_10percent, p_321_scores_rulsif_10percent, ncol = 1)
+# step = 15 %
+# p_321_scores_rulsif_15percent <- plot_rulsif_scores(rulsif_result = rulsif_321_res_15percent,
+#                                                     all_data = long_dst_date,
+#                                                     tag_serial_num_short = "321",
+#                                                     thresh = 0.95)
+# p_321_ribbon_rulsif_15percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_321_res_15percent,
+#                                                          all_data = long_dst_date,
+#                                                          var = var_list,
+#                                                          tag_serial_num_short = "321")
+# grid.arrange(p_321_ribbon_rulsif_15percent, p_321_scores_rulsif_15percent, ncol = 1)
 
 # save all plots ad .pdf and .png ####
 #To Do

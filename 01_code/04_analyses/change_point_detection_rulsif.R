@@ -29,22 +29,22 @@ compute_rulsif <- function(all_data = long_dst_date, tag_serial_num_short = "321
   # define step length before data are padded
   step <- ((all_data %>% nrow()) * (step_percent / 100)) %>% base::round()
   
-  # add step length days of data from the last day
-  pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(step), by = "day")) %>%
-    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
-  
-  pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
-    mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
-           depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
-
-  # pad data
-  all_data <- all_data %>%
-    full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
-    full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
-    arrange(date)
+  # # add step length days of data from the last day
+  # pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(step), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # # pad data
+  # all_data <- all_data %>%
+  #   full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
+  #   full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
+  #   arrange(date)
 
   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
   
@@ -132,7 +132,7 @@ p_308_scores_rulsif_2_5percent <- plot_rulsif_scores(rulsif_result = rulsif_308_
 p_308_ribbon_rulsif_2_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif_308_res_2_5percent,
                                                          all_data = long_dst_date,
                                                          var = var_list,
-                                                         tag_serial_num_short = "308") 
+                                                         tag_serial_num_short = "308")
 
 # p_308_data1_rulsif_2_5percent <- plot_rulsif_data(rulsif_result = rulsif_308_res_2_5percent,
 #                                                  all_data = long_dst_date,
