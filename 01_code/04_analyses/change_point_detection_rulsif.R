@@ -64,8 +64,7 @@ compute_rulsif <- function(all_data = long_dst_date, tag_serial_num_short = "321
 # # test ####
 # p <- ggplot(data = all_data) +
 #   geom_line(aes(x = date, y = -depth_median_sgolay))
-
-p %>% ggplotly()
+# p %>% ggplotly()
 
 # functions `plot_rulsif_scores()` and `plot_rulsif_data()` in "./01_code/05_plots_maps/thesis_manuscript_figures.R"
 
@@ -443,7 +442,14 @@ save_data(data = rulsif_308_table_10percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_res_15percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_table_15percent, folder = rulsif_data_path)
 
+save_data(data = rulsif_321_res_2_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_table_2_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_321_res_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_table_5percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_res_10percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_table_10percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_res_15percent, folder = rulsif_data_path)
+save_data(data = rulsif_321_table_15percent, folder = rulsif_data_path)
 
 # other plots 
 
