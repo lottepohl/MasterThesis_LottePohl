@@ -416,9 +416,10 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 <!-- ::: {#fig-map layout-ncol=2} -->
 
-<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-map_overview} -->
+![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-map_overview}
 
-<!-- ![Map of the Scheldt Estuary.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-map_detail} -->
+![Map of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-map_detail}
+
 <!-- Maps of the study area. -->
 <!-- ::: -->
 
@@ -712,19 +713,36 @@ p_321_sum_stats
 
 ### Wavelet analysis
 
-```{r wavelet-308-test}
+```{r wavelet-median}
 #| include: true
-#| label: fig-wave308test
+#| label: fig-wave_depthmedian
 #| layout-ncol: 1
 #| column: body #page
 #| fig-width: 8
-#| fig-cap: "test"
+#| fig-cap: "Wavelet transform results from the daily median depth."
 #| fig-subcap: 
-#| - "This is a tripod: The metal frame, on top of it an orange float, and in the centre of the float the acoustic receiver."
-#| - "The float is attached to the tripod with a release system that can be activated from afar, making the float surface."
-p_308_wavelet_depth_median_change_roll3
+#| - "female shark (tag 308)"
+#| - "male shark (tag 321)"
+#| 
+p_308_wavelet_depth_median_roll3
 
-p_321_wavelet_depth_median_change_roll3
+p_321_wavelet_depth_median_roll3
+```
+
+
+```{r wavelet-min}
+#| include: true
+#| label: fig-wave_depthmin
+#| layout-ncol: 1
+#| column: body #page
+#| fig-width: 8
+#| fig-cap: "Wavelet transform results from the daily minimum depth."
+#| fig-subcap: 
+#| - "female shark (tag 308)"
+#| - "male shark (tag 321)"
+#| 
+p_308_wavelet_depth_min
+p_321_wavelet_depth_min
 ```
 
 
