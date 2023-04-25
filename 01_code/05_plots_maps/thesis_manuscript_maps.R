@@ -99,7 +99,7 @@ addPolygons(data = windfarms_polygons %>% filter(!status %in% c("Approved", "Pla
             fillOpacity = 0.3,
             label = ~paste0("status: ", status, ", country: ", country, ", year: ", year),
             group = "wrecks, OWFs, cables") %>%
-  addPolygons(data = BPNS, color = "#00000075",
+  addPolygons(data = BPNS, color = "darkgrey",
               weight = 2,
               opacity = 1.0,
               fillOpacity = 0) %>%
@@ -143,10 +143,10 @@ addPolygons(data = windfarms_polygons %>% filter(!status %in% c("Approved", "Pla
             # label = "North Sea",
             fillOpacity = 0,
             labelOptions = labelOptions(noHide = T, textOnly = F, offset = c(-170, 500), permanent = T)) %>% #
-  addPolygons(data = Schelde_boundaries, color = "#00000040",
+  addPolygons(data = Schelde_boundaries, color = "yellow",
               weight = 2,
               opacity = 1.0,
-              fillOpacity = 0.3) %>%
+              fillOpacity = 0) %>%
   addCircleMarkers(data = labels_latlng,
                    lat = ~lat,
                    lng = ~lng,
@@ -169,7 +169,7 @@ addPolygons(data = windfarms_polygons %>% filter(!status %in% c("Approved", "Pla
   #                  options = layersControlOptions(collapsed = FALSE)) #%>%
 addLegend(position = "bottomright",
           opacity = 1,
-          colors = c("#00000080", "#00000040", "red", "blue", "green"),
+          colors = c("darkgrey", "yellow", "red", "blue", "green"),
           labels = c("BPNS", "Scheldt estuary", "Windfarms", "Submarine cables", "Shipwrecks"),
           # title = "Legend",
           labFormat = labelFormat(textOnly = T)) %>%
@@ -177,7 +177,7 @@ addLegend(position = "bottomright",
 addScaleBar(position = "bottomright", options = scaleBarOptions(maxWidth = 150, imperial = F))
   
 
-# map1_overview
+map1_overview
 
 # 2. Detail Map ####
 
@@ -193,8 +193,8 @@ labels_latlng_detail <- tibble(name = c("North Sea", "BPNS", "Scheldt Estuary", 
                         lng = c(3.75, 2.55, -1.6, 4.22, 3.9))
 
 labels_release <- tibble(name = c("Neeltje Jans", "Western Scheldt"),
-                         lat = c(51.63, 51.45),
-                         lng = c(3.65, 3.4),
+                         lat = c(51.65, 51.47),
+                         lng = c(3.664, 3.39),
                          label = c("1", "2"))
 
 map2_detail <- leaflet::leaflet(
@@ -238,7 +238,7 @@ map2_detail <- leaflet::leaflet(
                    fillOpacity = 1,
                    radius = 1.25,
                    label = ~paste0("Object: ", obj_type, ", sink year: ", sink_yr),
-                   group = "wrecks, OWFs, cables") %>%
+                   group = "wrecks") %>%
   addCircleMarkers(data = wrecks_BE %>% filter(Staat != "Geborgen"),
                    lng = ~longitude,
                    lat = ~latitude,
@@ -247,7 +247,7 @@ map2_detail <- leaflet::leaflet(
                    fillOpacity = 1,
                    radius = 1.25,
                    label = ~paste0("Object: ", Type, ", sink date: ", sink_yr, ", status: ", Staat, ", material: ", Materiaal, ", name: ", Naam),
-                   group = "wrecks, OWFs, cables") %>%
+                   group = "wrecks") %>%
   # more bathy #
   # addCircleMarkers(data = bathy_belgium, lat = ~latitude, lng = ~longitude,
   #                  opacity = 0, fillOpacity = 0,
@@ -257,7 +257,7 @@ map2_detail <- leaflet::leaflet(
               color = "red",
               weight = 1,
               opacity = 1,
-              fillOpacity = 0.3,
+              fillOpacity = 0.15,
               label = ~paste0("status: ", status, ", country: ", country, ", year: ", year),
               group = "wrecks, OWFs, cables") %>%
   addPolygons(data = BPNS, color = "#00000075",
@@ -268,11 +268,11 @@ map2_detail <- leaflet::leaflet(
   addCircleMarkers(data=tagging_info,
                    lat = ~lat,
                    lng = ~lng,
-                   weight= 0,# increase if black circle wanted
-                   color = "purple",
+                   weight= 1,# increase if black circle wanted
+                   color = "violet",
                    fillOpacity = 1,
-                   radius = 3,
-                   fillColor = "purple",
+                   radius = 6,
+                   # fillColor = "violet",
                    # label = ~label,
                    labelOptions = labelOptions(noHide = T, textOnly = T, textsize = "12px", offset = c(0,-5))) %>%
 # ADD STATIONS #
@@ -281,8 +281,8 @@ addCircleMarkers(data = close_stations,
                  lng = ~deploy_longitude,
                  fillColor = "orange",
                  color = "black",
-                 weight = 0.5, #ifelse(close_stations$Array == "offshore", 1.5, 0),
-                 radius = 3,
+                 weight = 0.3, #ifelse(close_stations$Array == "offshore", 1.5, 0),
+                 radius = 4,
                  opacity = 1,
                  fillOpacity = 0.8,
                  label = ~station_name,
@@ -293,10 +293,11 @@ addSimpleGraticule(interval = 0.5) %>%
   addMiniMap(position = "bottomright",
              width = 100,
              height = 100,
-             zoomLevelOffset = -3,
+             zoomLevelOffset = -5,
              zoomLevelFixed = T,
-             tiles = "https://tiles.emodnet-bathymetry.eu/2020/baselayer/web_mercator/{z}/{x}/{y}.png"#providers$Esri.WorldStreetMap)
-  ) %>%
+             tiles = "https://tiles.emodnet-bathymetry.eu/2020/baselayer/web_mercator/{z}/{x}/{y}.png", #providers$Esri.WorldStreetMap)
+             aimingRectOptions = list(color = "darkgrey", weight = 1, clickable = FALSE),
+             ) %>%
   # OUTLINES BOUNDARIES #
   addPolygons(data = outlines %>% filter(preferredGazetteerName %in% c("Belgium", "Netherlands")), color = "black", 
               weight = 1,
@@ -304,10 +305,10 @@ addSimpleGraticule(interval = 0.5) %>%
               # label = "North Sea",
               fillOpacity = 0,
               labelOptions = labelOptions(noHide = T, textOnly = F, offset = c(-170, 500), permanent = T)) %>% #
-  addPolygons(data = Schelde_boundaries, color = "#00000040",
+  addPolygons(data = Schelde_boundaries, color = "yellow",
               weight = 2,
               opacity = 1.0,
-              fillOpacity = 0.3) %>%
+              fillOpacity = 0) %>%
   addCircleMarkers(data = labels_latlng_detail,
                    lat = ~lat,
                    lng = ~lng,
@@ -333,18 +334,20 @@ addSimpleGraticule(interval = 0.5) %>%
                                                             # "font-weight" = "bold",
                                                             "font-size" = "12px"))) %>%
   # ADD CONTROLS #
-  leafem::addMouseCoordinates() %>%
+  # leafem::addMouseCoordinates() %>%
   setView(3.5, 51.35, zoom = 8) %>%
+  # setView(3.5, 51.35, zoom = 9) %>%
   addLegend(position = "bottomleft",
             opacity = 1,
-            colors = c("orange", "purple", "red", "blue", "green"),
-            labels = c("Receiver stations", "Release stations", "Windfarms", "Submarine cables", "Shipwrecks"),
+            colors = c("orange", "violet", "red", "blue"), #, "green",
+            labels = c("Receiver stations", "Release stations", "Windfarms", "Submarine cables"), #, "Shipwrecks"
             # title = "Legend",
             labFormat = labelFormat(textOnly = T)) %>%
   # SCALEBAR #
-  addScaleBar(position = "topright", options = scaleBarOptions(maxWidth = 150, imperial = F))
+  addScaleBar(position = "bottomright", options = scaleBarOptions(maxWidth = 150, imperial = F)) %>%
+  hideGroup("wrecks")
 
-# map2_detail
+map2_detail
 
 # save data #####
 save_data(data = map1_overview, folder = path_maps)
