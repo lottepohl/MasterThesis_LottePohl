@@ -205,6 +205,9 @@ metadata) must also be included in the thesis manuscript as an annex. Thesis man
 ## Markdown syntax {-}
 Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013].
 
+## General Questions to Jan, Niels and Carlota
+
+- active or passive style of writing? I learned to write passively but I see a lot of active writing in literature (i.e. "we did this" instead of "this was done")
 
 {{< pagebreak >}}
 
@@ -218,18 +221,39 @@ Here is some normal text, and then we'll use the \mycommand{custom command} to m
 
 ##	Acoustic telemetry
 
+<!-- introduce abbreviations: DST and ADST -->
+
 ##	Acoustic data storage tags
+
+Acoustic data storage tags are a combination tag, combining acoustic and data storage tags. Thus, the tag emits unique acoustic signals that can be detected by an acoustic receiver within a certain range, and records water pressure in a predefined interval.
 
 ###	Geolocation modelling
 
 - Method: HMM with observation and behavioural model
+- behavioural switches improve geolocation models significantly
 
 ### Inferring behavioural states
 
-- Different techniques for behavioural states
-- Spectral method by Heerah 2017
-- Tidal method by Pedersen 2008
-- Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement
+<!-- - Different techniques for behavioural states -->
+<!-- - Spectral method by Heerah 2017 -->
+<!-- - Tidal method by Pedersen 2008 -->
+<!-- - Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement -->
+
+Several methods to identify behavioural states, which then can be used to improve the geolocation modelling output of DST data, have been proposed. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*. 
+
+The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed. The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) states (**reference HMM**). The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.
+Furthermore, the development of a robust HMM framework requires time and experience, and was beyond the scope of this study. 
+
+<!-- comparison between marine and terrestrial methods to infer behaviour -->
+For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**). Common methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data.
+
+#### Change Point Detection
+
+<!-- why I did CPD -->
+It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD). CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013].
+Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ. 
+CPD detection is an unsupervised learning technique that, in contrast to unsupervised clustering algorithms like k-means, compares subsequent samples, thus implementing the time aspect in the learning process.
+Details about the CPD algorithm chosen for the present study are explained in @sec-mm_migration.
 
 ##	The starry smooth-hound shark
 
@@ -392,9 +416,9 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 <!-- ::: {#fig-map layout-ncol=2} -->
 
-![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-map_overview}
+<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-map_overview} -->
 
-![Map of the Scheldt Estuary.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-map_detail}
+<!-- ![Map of the Scheldt Estuary.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-map_detail} -->
 <!-- Maps of the study area. -->
 <!-- ::: -->
 
@@ -449,7 +473,7 @@ tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate
 
 Tagging of the 30 *M. asterias* individuals occured in July and August, 2018 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and 12, n = `r tagging_info$n[4]` for both dates).
 Tagged animals were both caught and released in two locations, just west of *Neeltje Jans* (all individuals tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018). 
-The two locations are shown in @fig-map_detail.
+<!-- The two locations are shown in @fig-map_detail. -->
 
 Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and the midventral line was incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was inserted into the abdominal cavity with forceps, and the incision was closed with 2-3 stitches of non-absorbable mono-filament [@goossens_2023].
 
@@ -501,7 +525,7 @@ On the daily summaries a Savitzky-Golay smoothing filter (filter order *p = 1*, 
 <!-- The animal's vertical speed (in *m/min*) was calculated following @griffiths_2020, dividing the depth difference between two consecutive measurements by the time interval (in min). -->
 <!-- ToDo: debate if the above should be included (is it suuper relevant? only if the vert speed is included in wavelet analyses) -->
 
-####	Migration Period Analysis
+####	Migration Period Analysis {#sec-mm_migration}
 
 <!-- **To do: remove rolling mean but instead use sgolay filter for all, p = 1 and n = 5** -->
 
@@ -517,14 +541,15 @@ Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary 
 
 * step = 5 % of the length of the original dataset, better resolution than the default value (that was 10%) but it is advised to set the step smaller, albeit not too small
 
-* threshold == 0.95, meaning that if the dissimilarity measure between two consecutive values >0.95 then it is a change point. this determines the senstivity, and in this case the sensitivity was set quite high with 95%.
+* threshold == 0.95, meaning that if the dissimilarity measure between two consecutive values >0.95 then it is a change point. this determines the senstivity, and in this case the sensitivity was set quite low with 95%. in the function doc it says that lower tresh values mean high sensiticity, ie. its easier to classify a point as a change point.
 
-Thirdly, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration or a resting phase. *Change Point Detection* (CPD) algorithms are designed to detect such abrupt changes in signals, and they can also be employed on time series signals (ref )  [@liu_2013].
-Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ. 
+Thirdly, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *relative unconstrained least-squares importance fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
+RuLSIF is a density-ratio estimation method and, in brief, approximates the dissimilarity of two subsequent time intervals $\chi$ and $\chi'$, using an *alpha-relative Pearson Divergence* (rPE), with $0 < \alpha < 1$. By making the dissimilarity measure relative, the risk of infinite density ratios is circumvented [@liu_2013].
 
-<!-- Having been studied for decades, some pioneering works demonstratedgoodchange-pointdetectionperformancebycomparing the probability distributions of time-series samples over past and present intervals (Basseville & Nikiforov, 1993). As both theintervalsmoveforward,atypicalstrategyistoissueanalarm forachangepointwhenthetwodistributionsarebecomingsignificantly different. -->
+RuLSIF was employed with the *ts_detect()*-function from the *rulsif.ts*-package [@brubaker_2021].
+Several hyperparameters needed to be chosen: the relative parameter $\alpha$, the window size *w*, the number of samples before and after a data point to compare between (*step*), and the threshold of the relative PE score above which a time point is classified as a change point (*thresh*). Hyperparameters are non-learned settings of a machine learning algorithm that. Hyperparameters were either chosen based on already established settings (here, $\alpha$ was kept at the function's default of 0.05) of the RuLSIF algorithm, based on ecological properties of the dataset (*window size = 7*, because roughly one week long migrations were expected), or logical reasoning (*thresh = 0.95*, higher than the default 0.9, thus requiring the divergence measure (the rPE score) to be relatively high for a point to be classified as a change point). 
+The *step*-parameter is set to 10% of the input dataset length as default in *ts_detect()*, but it is advised to decrease the step if computational resources allow for it (because small steps increase computation time). In the present study, RuLSIF was performed for different values of *step*: 2.5%, 5% and 10% of the input dataset length.
 
-<!-- To overcome this difficulty, a new strategy was introduced recently,whichestimatesthe ratio ofprobabilitydensitiesdirectly without going through density estimation (Sugiyama, Suzuki, & Kanamori, 2012a). The rationale of this density-ratio estimation ideaisthatknowingthetwodensitiesimpliesknowingthedensity ratio, but not vice versa; knowing the ratio does not necessarily imply knowing the two densities because such decomposition is not unique (Fig. 1). Thus, direct density-ratio estimation is substantially easier than density estimation (Sugiyama et al., 2012a). -->
 
 <!-- Thirdly, the daily summary statistics and the results from the wavelet analysis (i.e., significantly present periods per day), were used as input for k-means clustering, an unsupervised machine learning algorithm. Unsupervised (as opposed to supervised) learning was utilised in this case because it does not require a training dataset with known right answers (which in this case would be the days that the sharks are migrating). -->
 <!-- The algorithm was run n = 100 (**DO!**) times each for a number of clusters from 1 to 8. The optimal number of clusters was identified using the *elbow*-method (**reference**). -->
@@ -537,311 +562,328 @@ Retrospective (i.e., not real-time) CPD algorithms compare the probability distr
 *does that make sense?*
 
 
-<!-- # Results {#sec-results} -->
+# Results {#sec-results}
 
-<!-- ## Tagged animals -->
-<!-- <!--	TABLE with info on each individuals --> -->
+## Tagged animals
+<!--	TABLE with info on each individuals -->
 
-<!-- ## Acoustic detections  -->
+## Acoustic detections
 
-<!-- Two tags only had a single detection (serial number `r tag_serial_number_omit[1,] %>% dplyr::pull()` and `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted from all further analyses. -->
-<!-- <!-- i.	PLOT: Abacus plot --> -->
-<!-- <!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? --> -->
+Two tags only had a single detection (serial number `r tag_serial_number_omit[1,] %>% dplyr::pull()` and `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted from all further analyses.
+<!-- i.	PLOT: Abacus plot -->
+<!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
 
-<!-- ###	Vertical space use analysis -->
+###	Vertical space use analysis
 
-<!-- <!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins --> -->
-<!-- <!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? --> -->
+<!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins -->
+<!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? -->
 
-<!-- <!-- iii.	PLOT: # detected individuals, # detections (2 plots next to each other with circles) --> -->
+<!-- iii.	PLOT: # detected individuals, # detections (2 plots next to each other with circles) -->
 
-<!-- ## Data Storage Tags {#sec-results-dst} -->
+## Data Storage Tags {#sec-results-dst}
 
-<!-- Upon writing of this thesis, nine tags were recovered, one of which still is with at the manufacturer to extract the raw data. Information about the tags with available raw data is listed in @tbl-dstsum. -->
+Upon writing of this thesis, nine tags were recovered, one of which still is with at the manufacturer to extract the raw data. Information about the tags with available raw data is listed in @tbl-dstsum.
 
-<!-- ```{r prepare-dstsummary} -->
+```{r prepare-dstsummary}
 
-<!-- dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial nr.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty) -->
-<!-- ``` -->
+dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial nr.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty)
+```
 
 
-<!-- ```{r table-dstsummary} -->
+```{r table-dstsummary}
+#| include: true
+#| label: tbl-dstsum
+#| out-width: 90%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
+
+knitr::kable(dst_summary %>% arrange(`release date`))
+```
+
+
+### Raw depthlogs
+
+<!-- todo: in die caption schreiben, in welchem Jahr das Tier getaggt wurde. -->
+
+<!-- The depth log of tag 295 is shown in @fig-dst295. -->
+
+<!-- <!-- dst_summary %>% filter(`tag serial nr.` == "1293295") %>% dplyr::select(`release date`) %>% pull() %>% format("%B %d, %Y"). -->
+
+```{r rawdepthlog-295}
+#| include: true
+#| label: fig-dst295
+#| out-width: 75%
+#| fig-cap: "Depth log from the recovered tag 295. This male was tagged on July 19, 2018. "
+p_dst_raw_295
+```
+
+* Question: include raw depthlogs of 308 and 321?*
+
+### Geolocation model outputs (include?)
+
+*Question: I didn't do this: include y/n?*
+<!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) -->
+
+### Summary statistics {#sec-results-dst-summary}
+
+<!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
+
+The summary statistics of the depthlogs of tags 308 and 321 are displayed below.
+<!-- in @fig-dstsum. -->
+<!-- Let's check if the cross referencing of sections works, see @sec-intro. -->
+
+**To Do: incorporate 2nd y axis for depth median change**
+
+```{r testdstsum}
+#| include: true
+#| fig-cap: "Test caption."
+#| fig-subcap:
+#| - "test1"
+#| - "test2"
+#| layout-ncol: 1
+#| fig-pos: h!
+
+p_308_sum_stats
+
+p_321_sum_stats
+```
+
+
+<!-- ```{r dstsummary} -->
 <!-- #| include: true -->
-<!-- #| label: tbl-dstsum -->
-<!-- #| out-width: 90% -->
-<!-- #| tbl-cap-location: top -->
-<!-- #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date." -->
-
-<!-- knitr::kable(dst_summary %>% arrange(`release date`)) -->
-<!-- ``` -->
-
-
-<!-- ### Raw depthlogs -->
-
-<!-- <!-- todo: in die caption schreiben, in welchem Jahr das Tier getaggt wurde. --> -->
-
-<!-- <!-- The depth log of tag 295 is shown in @fig-dst295. --> -->
-
-<!-- <!-- <!-- dst_summary %>% filter(`tag serial nr.` == "1293295") %>% dplyr::select(`release date`) %>% pull() %>% format("%B %d, %Y"). -->  -->
-
-<!-- ```{r rawdepthlog-295} -->
-<!-- #| include: true -->
-<!-- #| label: fig-dst295 -->
-<!-- #| out-width: 75% -->
-<!-- #| fig-cap: "Depth log from the recovered tag 295. This male was tagged on July 19, 2018. " -->
-<!-- p_dst_raw_295 -->
-<!-- ``` -->
-
-<!-- * Question: include raw depthlogs of 308 and 321?* -->
-
-<!-- ### Geolocation model outputs (include?) -->
-
-<!-- *Question: I didn't do this: include y/n?* -->
-<!-- <!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) --> -->
-
-<!-- ### Summary statistics {#sec-results-dst-summary} -->
-
-<!-- <!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde --> -->
-
-<!-- The summary statistics of the depthlogs of tags 308 and 321 are displayed below. -->
-<!-- <!-- in @fig-dstsum. --> -->
-<!-- <!-- Let's check if the cross referencing of sections works, see @sec-intro. --> -->
-
-<!-- **To Do: incorporate 2nd y axis for depth median change** -->
-
-<!-- ```{r testdstsum} -->
-<!-- #| include: true -->
-<!-- #| fig-cap: "Test caption." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "test1" -->
-<!-- #| - "test2" -->
+<!-- #| label: fig-dstsum -->
+<!-- #| fig-cap: "test." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
 <!-- #| layout-ncol: 1 -->
-<!-- #| fig-pos: h! -->
 
 <!-- p_308_sum_stats -->
 
 <!-- p_321_sum_stats -->
 <!-- ``` -->
 
+<!-- Daily summary statistics for tag 308 and tag 321. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).  -->
+
+<!-- The result of the autocorrelation analysis is shown in @fig-acf. -->
+
+<!-- ```{r acf} -->
+<!-- #| include: true -->
+<!-- #| label: fig-acf -->
+<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
-<!-- <!-- ```{r dstsummary} --> -->
-<!-- <!-- #| include: true --> -->
-<!-- <!-- #| label: fig-dstsum --> -->
-<!-- <!-- #| fig-cap: "test." --> -->
-<!-- <!-- #| fig-subcap: --> -->
-<!-- <!-- #|   - "Tag 308" --> -->
-<!-- <!-- #|   - "Tag 321" --> -->
-<!-- <!-- ## | column: body-outset --> -->
-<!-- <!-- #| out-width: 80% --> -->
-<!-- <!-- #| fig.align: "center" --> -->
-<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- p_acf_308 -->
 
-<!-- <!-- p_308_sum_stats --> -->
+<!-- p_acf_321 -->
+<!-- ``` -->
 
-<!-- <!-- p_321_sum_stats --> -->
-<!-- <!-- ``` --> -->
+<!-- The result of the Fast Fourier Transform performed on the raw depthlogs is shown in @fig-fft, for tag 295, 308 ad 321. -->
 
-<!-- <!-- Daily summary statistics for tag 308 and tag 321. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).  --> -->
+<!-- ```{r fft} -->
+<!-- #| include: true -->
+<!-- #| label: fig-fft -->
+<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "Tag 295" -->
+<!-- #|   - "Tag 308" -->
+<!-- #|   - "Tag 321" -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 100% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
-<!-- <!-- The result of the autocorrelation analysis is shown in @fig-acf. --> -->
+<!-- p_fft_295 -->
 
-<!-- <!-- ```{r acf} --> -->
-<!-- <!-- #| include: true --> -->
-<!-- <!-- #| label: fig-acf --> -->
-<!-- <!-- #| fig-cap: "Autocorrelation plots of the daily median depth." --> -->
-<!-- <!-- #| fig-subcap: --> -->
-<!-- <!-- #|   - "Tag 308" --> -->
-<!-- <!-- #|   - "Tag 321" --> -->
-<!-- <!-- ## | column: body-outset --> -->
-<!-- <!-- #| out-width: 80% --> -->
-<!-- <!-- #| fig.align: "center" --> -->
-<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- p_fft_308 -->
 
-<!-- <!-- p_acf_308 --> -->
+<!-- p_fft_321 -->
+<!-- ``` -->
 
-<!-- <!-- p_acf_321 --> -->
-<!-- <!-- ``` --> -->
 
-<!-- <!-- The result of the Fast Fourier Transform performed on the raw depthlogs is shown in @fig-fft, for tag 295, 308 ad 321. --> -->
+### Wavelet analysis
 
-<!-- <!-- ```{r fft} --> -->
-<!-- <!-- #| include: true --> -->
-<!-- <!-- #| label: fig-fft --> -->
-<!-- <!-- #| fig-cap: "Autocorrelation plots of the daily median depth." --> -->
-<!-- <!-- #| fig-subcap: --> -->
-<!-- <!-- #|   - "Tag 295" --> -->
-<!-- <!-- #|   - "Tag 308" --> -->
-<!-- <!-- #|   - "Tag 321" --> -->
-<!-- <!-- ## | column: body-outset --> -->
-<!-- <!-- #| out-width: 100% --> -->
-<!-- <!-- #| fig.align: "center" --> -->
-<!-- <!-- #| layout-ncol: 1 --> -->
+```{r wavelet-308-test}
+#| include: true
+#| label: fig-wave308test
+#| layout-ncol: 1
+#| column: body #page
+#| fig-width: 8
+#| fig-cap: "test"
+#| fig-subcap: 
+#| - "This is a tripod: The metal frame, on top of it an orange float, and in the centre of the float the acoustic receiver."
+#| - "The float is attached to the tripod with a release system that can be activated from afar, making the float surface."
+p_308_wavelet_depth_median_change_roll3
 
-<!-- <!-- p_fft_295 --> -->
+p_321_wavelet_depth_median_change_roll3
+```
 
-<!-- <!-- p_fft_308 --> -->
 
-<!-- <!-- p_fft_321 --> -->
-<!-- <!-- ``` --> -->
+<!-- ```{r wave_depthmedian_308} -->
+<!-- ##| layout: [[40,-20,40], [100]] -->
+<!-- #| include: true -->
+<!-- #| label: fig-wave_depthmedian_308 -->
+<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 308). All depth values were smoothed with a rolling mean over 3 days." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "daily median depth" -->
+<!-- #|   - "change of daily median depth." -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
+<!-- p_308_wavelet_depth_median_roll3 -->
 
-<!-- ### Wavelet analysis  -->
+<!-- p_308_wavelet_depth_median_change_roll3 -->
 
+<!-- ``` -->
 
-<!-- <!-- ```{r wave_depthmedian_308} --> -->
-<!-- <!-- ##| layout: [[40,-20,40], [100]] --> -->
-<!-- <!-- #| include: true --> -->
-<!-- <!-- #| label: fig-wave_depthmedian_308 --> -->
-<!-- <!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 308). All depth values were smoothed with a rolling mean over 3 days." --> -->
-<!-- <!-- #| fig-subcap: --> -->
-<!-- <!-- #|   - "daily median depth" --> -->
-<!-- <!-- #|   - "change of daily median depth." --> -->
-<!-- <!-- ## | column: body-outset --> -->
-<!-- <!-- #| out-width: 80% --> -->
-<!-- <!-- #| fig.align: "center" --> -->
-<!-- <!-- #| layout-ncol: 1 --> -->
 
-<!-- <!-- p_308_wavelet_depth_median_roll3 --> -->
 
-<!-- <!-- p_308_wavelet_depth_median_change_roll3 --> -->
+<!-- ```{r wave_depthmedian_321} -->
+<!-- ##| layout: [[40,-20,40], [100]] -->
+<!-- #| include: true -->
+<!-- #| label: fig-wave_depthmedian_321 -->
+<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 321). All depth values were smoothed with a rolling mean over 3 days." -->
+<!-- #| fig-subcap: -->
+<!-- #|   - "daily median depth" -->
+<!-- #|   - "change of daily median depth." -->
+<!-- ## | column: body-outset -->
+<!-- #| out-width: 80% -->
+<!-- #| fig.align: "center" -->
+<!-- #| layout-ncol: 1 -->
 
-<!-- <!-- ``` --> -->
+<!-- p_321_wavelet_depth_median_roll3 -->
 
+<!-- p_321_wavelet_depth_median_change_roll3 -->
 
+<!-- ``` -->
 
-<!-- <!-- ```{r wave_depthmedian_321} --> -->
-<!-- <!-- ##| layout: [[40,-20,40], [100]] --> -->
-<!-- <!-- #| include: true --> -->
-<!-- <!-- #| label: fig-wave_depthmedian_321 --> -->
-<!-- <!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 321). All depth values were smoothed with a rolling mean over 3 days." --> -->
-<!-- <!-- #| fig-subcap: --> -->
-<!-- <!-- #|   - "daily median depth" --> -->
-<!-- <!-- #|   - "change of daily median depth." --> -->
-<!-- <!-- ## | column: body-outset --> -->
-<!-- <!-- #| out-width: 80% --> -->
-<!-- <!-- #| fig.align: "center" --> -->
-<!-- <!-- #| layout-ncol: 1 --> -->
+### Change Point Detection
 
-<!-- <!-- p_321_wavelet_depth_median_roll3 --> -->
 
-<!-- <!-- p_321_wavelet_depth_median_change_roll3 --> -->
+<!-- ix.	wavelet plot and frequency spectrum of putative migration period raw depthlogs -->
 
-<!-- <!-- ``` --> -->
+# Discussion
 
-<!-- ### Unsupervised learning -->
+<!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
 
+##	Seasonality of starry smooth-hound presence
+in/around westerschelde, according to ac. detections
 
-<!-- <!-- ix.	wavelet plot and frequency spectrum of putative migration period raw depthlogs --> -->
+-	Highly seasonal (only in summer)
+-	Sex-biased (mostly females)
+-	Possible pupping area, but this dataset not sufficient to confirm
 
-<!-- # Discussion -->
+### Vertical space use analysis
 
-<!-- <!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature --> -->
+The results show deeper waters utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons:
+1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely.
+2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper.
+3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths.
 
-<!-- ##	Seasonality of starry smooth-hound presence  -->
-<!-- in/around westerschelde, according to ac. detections -->
+##	Tag recoveries
 
-<!-- -	Highly seasonal (only in summer) -->
-<!-- -	Sex-biased (mostly females) -->
-<!-- -	Possible pupping area, but this dataset not sufficient to confirm -->
+###	Possible death reasons of short term dst’s
 
-<!-- ### Vertical space use analysis -->
+-	Tagging consequences
+-	High sensitivity (verhelst, pers. Comm.)
+-	Not likely: death bc of seals (no temp increase)
+-	Laying dead on seafloor (tidal signal)
 
-<!-- The results show deeper waters utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons:  -->
-<!-- 1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely. -->
-<!-- 2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper. -->
-<!-- 3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths. -->
+##	Ecological inferences from migration dataset analysis
 
-<!-- ##	Tag recoveries -->
+###	Vertical patterns during migration
 
-<!-- ###	Possible death reasons of short term dst’s -->
+-	Yes, but eventually swimming inshore
+-	How strong are diel patterns in putative migration weeks? Check wavelet median depth
 
-<!-- -	Tagging consequences -->
-<!-- -	High sensitivity (verhelst, pers. Comm.) -->
-<!-- -	Not likely: death bc of seals (no temp increase) -->
-<!-- -	Laying dead on seafloor (tidal signal) -->
+##	Limits of biologging/ fish tagging
 
-<!-- ##	Ecological inferences from migration dataset analysis -->
+-	Geolocation modelling already leads to impressive results for comparatively well-studied species (e.g. cod (?), sea bass), but still limited in accuracy for not wellknown species
 
-<!-- ###	Vertical patterns during migration -->
+###	Limits of geolocation modelling
 
-<!-- -	Yes, but eventually swimming inshore -->
-<!-- -	How strong are diel patterns in putative migration weeks? Check wavelet median depth -->
+-	Resolution of bathymetry dataset
+  -	Possible that shark was in certain area but bc bathymetry grid = summary (e.g. mean), geolocation model rules this location out (cf Woillez 2016)
+-	Behaviour incorrectly/not inferred
+  -	E.g. active vs inactive behaviour:
 
-<!-- ##	Limits of biologging/ fish tagging -->
+### current state of fish tagging
 
-<!-- -	Geolocation modelling already leads to impressive results for comparatively well-studied species (e.g. cod (?), sea bass), but still limited in accuracy for not wellknown species -->
+-	It’s kind of the best we can do today, but non-satellite tagging methodologies have huge drawbacks still
+-	Acoustic telemetry: high resolution on regional scale (i.e. where the receivers are placed) but outside of receiver networks: no knowledge at all
 
-<!-- ###	Limits of geolocation modelling -->
+##	Limits of the chosen analysis methods
 
-<!-- -	Resolution of bathymetry dataset -->
-<!--   -	Possible that shark was in certain area but bc bathymetry grid = summary (e.g. mean), geolocation model rules this location out (cf Woillez 2016) -->
-<!-- -	Behaviour incorrectly/not inferred -->
-<!--   -	E.g. active vs inactive behaviour:  -->
+-	Wavelet analysis: no super fine scale analysis possible bc of limited res in both time and freq domain
 
-<!-- ### current state of fish tagging -->
+##	Limits of the acoustic detection dataset
 
-<!-- -	It’s kind of the best we can do today, but non-satellite tagging methodologies have huge drawbacks still -->
-<!-- -	Acoustic telemetry: high resolution on regional scale (i.e. where the receivers are placed) but outside of receiver networks: no knowledge at all -->
+-	There are ~10 000 detections within ~2 yrs but compared to other studies (ref to other studies!) this is not that much.
+-	the horiz resolution of receivers, esp in/around the WS is not good bc rather receiver gate than array to monitor species swimming into/out of the Scheldt river (= different use case scenario: receiver array needed to resolve locations of sharks better, and to e.g. enable triangulation)
 
-<!-- ##	Limits of the chosen analysis methods -->
+##	Limits of the data storage tag dataset
 
-<!-- -	Wavelet analysis: no super fine scale analysis possible bc of limited res in both time and freq domain -->
+-	Female shark: deeper than tag depth limit (68m): geolocation model inaccurate, shark putatively went into the Hurd deep (MRGID: 3321) in English channel
+-	Only one individual per sex: not reliable, no statistics possible
 
-<!-- ##	Limits of the acoustic detection dataset -->
+# Conclusion
 
-<!-- -	There are ~10 000 detections within ~2 yrs but compared to other studies (ref to other studies!) this is not that much. -->
-<!-- -	the horiz resolution of receivers, esp in/around the WS is not good bc rather receiver gate than array to monitor species swimming into/out of the Scheldt river (= different use case scenario: receiver array needed to resolve locations of sharks better, and to e.g. enable triangulation) -->
+*brief summary of the main findings (original data, lesson learned,…)*
 
-<!-- ##	Limits of the data storage tag dataset -->
+-	Possible improvements of tagging procedure (correct place here?)
 
-<!-- -	Female shark: deeper than tag depth limit (68m): geolocation model inaccurate, shark putatively went into the Hurd deep (MRGID: 3321) in English channel -->
-<!-- -	Only one individual per sex: not reliable, no statistics possible -->
+# Outlook
 
-<!-- # Conclusion -->
+*Alle kapitel aus der Einleitung wieder aufnehmen*
 
-<!-- *brief summary of the main findings (original data, lesson learned,…)* -->
+##	Acoustic detections additional analyses
+-	Vertical space use: resolve individuals to see if there are differences between ind. Sharks
+##	Improvements of geolocation model for M. asterias
+-	Boundary condition: max depth of fish per day == max depth of bathy for that day
+-	Behavioural switch: migration/non-migration or migration/winter resident/summer resident
+##	Information tool
+- make into interactive application (RShiny) and do tests with some of the target groups to understand how well the information is taken in
 
-<!-- -	Possible improvements of tagging procedure (correct place here?) -->
+- using the CWT outputs to segment the time series into different behaviours, like @soleymani_2017
 
-<!-- # Outlook -->
+# Acknowledgements
 
-<!-- *Alle kapitel aus der Einleitung wieder aufnehmen* -->
+*funding agencies, field workers
 
-<!-- ##	Acoustic detections additional analyses -->
-<!-- -	Vertical space use: resolve individuals to see if there are differences between ind. Sharks -->
-<!-- ##	Improvements of geolocation model for M. asterias -->
-<!-- -	Boundary condition: max depth of fish per day == max depth of bathy for that day -->
-<!-- -	Behavioural switch: migration/non-migration or migration/winter resident/summer resident -->
-<!-- ##	Information tool -->
-<!-- - make into interactive application (RShiny) and do tests with some of the target groups to understand how well the information is taken in -->
+Question: Who provided the money for the tags? What project was that under?*
 
-<!-- # Acknowledgements -->
+# Availability of Data and Materials {-}
 
-<!-- *funding agencies, field workers -->
+<!-- datasets that are accessible externally -->
+The dataset(s) supporting the conclusions of this article is(are) available in the [repository name] repository, [unique persistent identifier and hyperlink to dataset(s) in http:// format].
 
-<!-- Question: Who provided the money for the tags? What project was that under?* -->
+<!-- additional materials -->
+The dataset(s) supporting the conclusions of this article is(are) included within the article (and its additional file(s)).
 
-<!-- # Availability of Data and Materials {-} -->
+# References {-}
 
-<!-- <!-- datasets that are accessible externally --> -->
-<!-- The dataset(s) supporting the conclusions of this article is(are) available in the [repository name] repository, [unique persistent identifier and hyperlink to dataset(s) in http:// format]. -->
+# Annex
 
-<!-- <!-- additional materials --> -->
-<!-- The dataset(s) supporting the conclusions of this article is(are) included within the article (and its additional file(s)). -->
+*All the raw data have to be added in annex*
 
-<!-- # References {-} -->
+##	Acoustic detections
 
-<!-- # Annex -->
+##	DST datasets
 
-<!-- *All the raw data have to be added in annex* -->
+###	FFT plots for all tags
 
-<!-- ##	Acoustic detections -->
-
-<!-- ##	DST datasets -->
-
-<!-- ###	FFT plots for all tags -->
-
-<!-- ###	Wavelet plots for all (in the k means clustering included) summary statistics -->
+###	Wavelet plots for all (in the k means clustering included) summary statistics
 
 
 <!-- Old -->
