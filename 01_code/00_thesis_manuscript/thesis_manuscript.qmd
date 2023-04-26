@@ -54,7 +54,7 @@ abstract:
 keywords: 
   - acoustic telemetry
   - geolocation modelling
-  - mustelus asterias
+  - Mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
 execute:
@@ -116,8 +116,11 @@ library(dplyr)
 library(tidyverse)
 library(leaflet)
 library(ggplot2)
+library(tibble)
+library(knitr)
 # library(magrittr)
 library(usethis)
+library(kableExtra)
 # library(biwavelet)
 # rm(list = ls())
 ```
@@ -205,49 +208,119 @@ metadata) must also be included in the thesis manuscript as an annex. Thesis man
 ## Markdown syntax {-}
 Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013].
 
-## General Questions to Jan, Niels and Carlota
+## General Questions to Jan, Niels and Carlota {-}
 
 - active or passive style of writing? I learned to write passively but I see a lot of active writing in literature (i.e. "we did this" instead of "this was done")
 
 {{< pagebreak >}}
 
+No data can be taken out of this work without prior approval of the thesis promoter.     
+I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board. 
+
+Date:
+
+Signature:
+
+{{< pagebreak >}}
+
+# List of Abbreviations {-}
+
+```{r listofabbreviations}
+abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
+                         Explanation= c("Acoustic Data Storage Tag",
+                                        "Data Storage Tag",
+                                        "Diel Vertical Migration"))
+```
+
+
+```{r table-abbreviations}
+#| include: true
+##| echo: false
+#| label: tbl-abbreviations
+#| out-width: 90%
+#| tbl.align: "center"
+##| fig.align: "center"
+##| tbl-cap-location: top
+##| tbl-cap: ""
+
+knitr::kable(abbrev)
+
+# # Generate a table using kable
+# tbl <- knitr::kable(abbrev)
+# 
+# # Use kable_styling() to suppress the caption
+# tbl <- kable_styling(tbl, "striped", caption = "")
+# 
+# # Print the table
+# print(tbl)
+```
+
+{{< pagebreak >}}
+
 # Introduction {#sec-intro}
 
-##	History of fish tagging/biologging
+##	Acquatic telemetry
 
-**Say sth about short term tagging mortality **
+Telemetry refers to the remote monitoring of animals using electronic transmitters or tags,	and receivers [@whoriskey_2019], allowing for the  tracking of marine animal movement. A multitude of telemetry methods exists today, popular technologies to study acquatic animals include acoustic telemetry and archival telemetry [@thorstad_2013].
+<!-- satellite telemetry,  -->
+Telemetry allows for the quantification of animal migrations and (vertical and horizontal) habitat use [@hussey_2015], which informs species management and conservation spanning in marine, freshwater and terrestrial ecosystems [@beger_2010].
 
-- Different telemetry methods
+<!-- Satellite telemetry involves satellites that receive signals from a tag attached to animal, requiring the tag to breach the water surface for signal transmission (**ref**). -->
 
-##	Acoustic telemetry
+Acoustic telemetry refers to the use of acoustic receivers that are placed in the water column which can detect acoustic signals emitted from a tag within a certain range. Such networks exist primarily in shallow, coastal areas of countries with sufficient financial resources to maintain the receivers [@hussey_2015]. Examples include the Acoustic Tracking Array Platform (ATAP) in South Africa [@cowley_2017] and the Permanent Belgian Acoustic Receiver Network [PBARN, @reubens_2019]. 
 
-<!-- introduce abbreviations: DST and ADST -->
+<!-- maybe include: Recently,	 a	shift	 from	 mobile	 tracking	 towards	 using	 fixed	 receiving	stations	that	automatically	log	detections	has	led	to	a	large	number	 of	tagged	animals	and	extensive	receiver	coverage	crossing	geopolitical	boundaries	 (Donaldson	 et	al.,	2014). from whoriskey 2017 -->
 
-##	Acoustic data storage tags
+Archival telemetry uses tags or biologgers that locally store recorded data about water pressure, temperature and other environmental variables. Popup Satellite Archival Tags (PSAT) disattach from the animal and float to the surface, transmitting recorded data to satellites, while Data Storage Tags (DST) require the retrieval of the tag for downloading data [@thorstad_2013].
 
-Acoustic data storage tags are a combination tag, combining acoustic and data storage tags. Thus, the tag emits unique acoustic signals that can be detected by an acoustic receiver within a certain range, and records water pressure in a predefined interval.
+Acoustic data storage tags (ADST) are a combination tag, merging acoustic and data storage tags [@goossens_2023]. As such, the tag emits unique acoustic signals that can be detected by an acoustic receiver within a certain range, and additionally records water pressure in predefined intervals.
 
-###	Geolocation modelling
+Different telemetry methods result in different datasets. 
+In acoustic telemetry, recorded data contains the time that a specific tag was detected by a specific receiver (with a known location), resulting in an irregular time series (i.e., a time series with irregularly spaced observations). These datasets are in a horizontal dimension, i.e., with a latitude and longitude position.
 
-- Method: HMM with observation and behavioural model
-- behavioural switches improve geolocation models significantly
+Archival telemetry generates regular time series in pre-defined intervals, logging water depth (most importantly) and other environmental variables. These datasets are in a vertical dimension, spanning the depth range of the waters the animal moves in.
 
-### Inferring behavioural states
+ADST datasets contain timestamps of the tag's detection at a specific acoustic receiver, and, in case the tag was recovered, logs of water depth and other variables (temperature, for example).
+
+##	Geolocation modelling
+
+Geolocation models are a common method to infer the latitude and longitude (i.e., the horizontal dimension) of a DST log (which is in a vertical dimension).
+These models use the seafloor bathymetry in combination with other environmental variables such as temperature to estimate the most likely path that was taken by the animal. 
+
+@pedersen_2008 introduced a geolocation model using Hidden Markov Models (HMM), which was refined by @woillez_2016. The method by @woillez_2016 involves a HMM with an observation and a behavioural model.
+
+*go more in depth*
+
+<!-- - Method: HMM with observation and behavioural model -->
+<!-- - behavioural switches improve geolocation models significantly [@pedersen_2008]. -->
+<!-- *First talk about geolocation modelling in general, and then describe M. asterias behaviours in the chapter about m. asterias, in the aims state that possible improvements of the m. asterias geolocation model exceeding behavioural states will be discussed* -->
+
+<!-- **Where do I put the geolocation results of Jolien? In the introduction or in the discussion? I kind of need to put them in the intro because I am referring to them a lot...** -->
+
+## Inferring behavioural states
 
 <!-- - Different techniques for behavioural states -->
 <!-- - Spectral method by Heerah 2017 -->
 <!-- - Tidal method by Pedersen 2008 -->
 <!-- - Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement -->
 
-Several methods to identify behavioural states, which then can be used to improve the geolocation modelling output of DST data, have been proposed. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*. 
+In response to their environment and internal ecophysiological processes, animals exhibit different behaviours. The change from one behavioural 'state' to another is referred to as behavioural switching [@gurarie_2016].
 
-The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed. The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) states (**reference HMM**). The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.
+Detecting such switches and linking them to environmental factors, amongst others, is an important part of animal movement ecology and can inform species conservation and management [@hays_2016]. 
+<!-- drinlassen? -->
+
+For marine animals equipped with data storage tags, several methods to identify behavioural states have been proposed. These inferred states can be used as additional input for the geolocation model. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*. 
+
+The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed. The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) behavioural states [@schliehediecks_2012]. The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.
 Furthermore, the development of a robust HMM framework requires time and experience, and was beyond the scope of this study. 
 
 <!-- comparison between marine and terrestrial methods to infer behaviour -->
-For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**). Common methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data.
+The analysis and segmentation of behavioural states is much more explored for data in the horizontal dimension than in the vertical dimension (**ref**).
+Satellite-recorded movement of marine animals can be analysed with a hierarchical Switching State Space Model [SSSM, @francis_2019].
+<!-- For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**).  -->
+Other commonly emplyed methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data.
 
-#### Change Point Detection
+### Change Point Detection
 
 <!-- why I did CPD -->
 It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD). CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013].
@@ -270,13 +343,28 @@ Details about the CPD algorithm chosen for the present study are explained in @s
 
 ####	Life history
 
+*M. asterias* feeds on benthic and suprabenthic crustaceans, common prey includes (*insert species here*) [@mccullyphillips_2015; @mccullyphillips_2020]. 
+Potential predators of *M. asterias* are the grey seal (*Halichoerus grypus*) which occurs in the North Sea, the blue shark (*Prionace glauca*) and the common dolphin (*Delphinus delphis*), both of which occur in the Western English Channel [@griffiths_2020].
+
 - Feeding: crustaceans, swimming shorewards at night
 
 ####	Migration
 
 - Sex bias: Males into Northern North Sea, females into Bay of Biscay
 
-- Daily horizontal distance: up to 70km
+- Daily horizontal distance: up to 70km (**ref!**)
+
+#### Daily behaviour
+
+<!-- - daily vertical migration: present (find source), but also (most likely) horizontal movement associated with the vertical movement, i.e. the animal stays on the seafloor and swims shorewards during the night, feeding on crustaceans (?) -->
+
+*M. asterias* shows higher vertical activity during night than during the day, indicating prey searching and foraging behaviour at night, which is commonly oberved in elasmobranchs. During the day, it potentially avoids predation by exhibiting resting or sheltering behaviour [@griffiths_2020]. 
+
+##### Geolocation Model Results
+
+@goossens_2023 used a geolocation model approach with a two-state HMM following an approach by @woillez_2016.
+
+**put map with geolocation output by Jolien here?**
 
 ####	Reproduction
 
@@ -289,6 +377,10 @@ Details about the CPD algorithm chosen for the present study are explained in @s
 - only species in NE Atlantic
 
 ###	Research gaps
+
+#### Relevance of the Study
+@griffiths_2020 identified seabed association of *M. asterias* as a research gap.
+@breve_2020 advised to further research *M. asterias* with a combination of telemetry and genetic techniques.
 
 #### Migration
 sex bias known, but no exact locations, timing also unknown
@@ -314,14 +406,25 @@ the data is complex and difficult to understand for non-experts, yet it is imper
 
 ##	Aims of the work
 
+The aims of this work are threefold. The first two aims involve DST data, the third aim involves acoustic detections of *M. asterias*:
+
+<!-- Problem here: how do I describe my aims before explaining how many sharks were tagged and how many tags we got back? -->
+
+  1. An ecologcial descrition and characterisation of the Data Storage Tag depthlogs
+  2. The implementation of a simple method to detect behavioural switches in the depthlogs of migrating sharks (*rephrase*)
+  3. Assessing the depth use/vertical habitat use of female *M. asterias just outside of the Western Scheldt during summer.*
+
+Relevant research gaps on *M. asterias* involve the species' sex-biased migration routes and periods. Due to its benthic lifestyle, no satellite tags can be employed, requiring geolocation modelling of Data Storage Tags. Including behavioural states into a geolocation model increases its reliability. 
+@goossens_2023 modelled DST data from *M. asterias* without behaviorual switches. The present study implements a simple method to detect change points in a time series signal in order to infer behavioural states from depth time series *M. asterias* that span $\geq$ 365 days.
+
 ### 	Characterizing the vertical behaviour (i.e. the depthlogs) of the migrating sharks
 
 -	Motivation: provide additional input for geolocation models(Behavioural switches)
--	Implement unsupervised learning aka k means clustering to infer behavioural states/switches = test a new way of inferring behavioural states
+-	Implement unsupervised learning in the form of Change Point Detection to infer behavioural states/switches = test a new, simple way of inferring behavioural switches.
 
 ####	Working hypothesis
 
-Using k-means on summary statistics and their wavelet analysis results successfully identifies putative migration periods, as identified by visual analysis of the raw depthlog
+Using Change Point Detection on daily summary statistics successfully identifies putative migration periods, as identified by visual analysis of the raw depthlog.
 
 ###	Exploratory and descriptive analysis of the female sharks’ vertical behaviour
 
@@ -347,6 +450,8 @@ the sex bias, i.e. that females are predominantly present in the WS, is reflecte
 ###	Converting the first results
 into a format that transmit relevant messages to one/several groups of non-scientists
 
+**Do not make into aim, too little done in the thesis ** -> move to outlook?
+
 -	No working hypothesis, bc only concept and first draft version, but outlook: further development and then study with people about how well they understood the information provided
 
 <!-- State that most of the analyses are descriptive/exploratory bc not much is known about the species yet and the dataset Is a bit too small to perform real statistical tests on -->
@@ -358,13 +463,41 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 ## Study Area {#sec-mm_studyarea}
 
-###	The BPNS
+*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration?*
 
-####	Human activities
+###	The BPNS and Scheldt Estuary
 
--	Windfarms
--	Shipwrecks
--	Submarine power and telecommunication cables
+The Belgian Part of the North Sea (BPNS) is generally characterised by shallow water depths below 40 m [@thierry_2019], sandy or muddy sediment [@vasquez_2021] and multiple sandbanks and troughs. 
+Artificial structures resulting from human activities, such as shipwrecks and Offshore Wind Farms (OWF), provide hard substrate.
+Apart from seafaring and energy production, shipping, fishing (including trawling) or sand and gravel extraction take place in the BPNS [@chen_2005; @douvere_2007]. Furthermore, submarine cables to facilitate energy transport and telecommunication have been present in the North Sea for decades [@degroot_1979].
+The river Scheldt meets the North Sea north of the border between the Netherlands and Belgium, forming an estuary with a complex regime of sandflats and channels [@claessens_1988].
+Both the BPNS and the Scheldt Estuary are highly mixed due to strong currents and tides [@otto_1990], introducing saline waters well into the Scheldt estuary [@ouboter_1998].
+The Scheldt Estuary is characterised by medium to coarse sand and salinity between ranges 2 and 33.5 ppt [@baeyens_1998], peaking in summer [@maes_1998]. The seafloor depth averages around 11m with occasional troughs of up to 20 or 30m [@thierry_2019]. 
+The lower part of the Scheldt Estuary from Vlissingen (The Netherlands) 55-60 km upstream is referred to as Western Scheldt Estuary[@baeyens_1998; @ouboter_1998].
+Between Bergen op Zoom and the island Neeltje Jans (both Netherlands), the Estuary is referred to as the Eastern Scheldt Estuary.
+An overview map of the BPNS and the Scheldt Estuary is provided in @fig-mapdetail.
+Fish and crustacean species composition and abundance underlies strong seasonal patterns, peaking in summer [@maes_1998; @maes_2005]. Seasonally occuring species are marine fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus sprattus*) or Whiting (*Merlangius merlangus*), and abundant crustacean species include the common shrimp (*Crangon crangon*) and the Palaemonid shrimp [*Palaemon varians*, @maes_1998].
+
+<!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
+
+Test map cross reference @fig-map.
+
+
+::: {#fig-map}
+![](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png)
+Map of the study area.
+:::
+
+<!-- Test map cross reference @fig-map. -->
+
+
+<!-- ####	Human activities -->
+
+<!-- -	Windfarms -->
+<!-- -	Shipwrecks -->
+<!-- -	Submarine power and telecommunication cables -->
+
+
 
 <!-- MAP: BPNS with cables, windfarms and shipwrecks -->
 <!-- Maybe 2 maps next to each other, one with acoustic receivers (+ sub areas/receiver arrays, and 2 tagging locations) and one with the human activities (bc 1 map will be too full?) -->
@@ -416,31 +549,46 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 <!-- ::: {#fig-map layout-ncol=2} -->
 
-![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-map_overview}
+![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview}
+**make sure to include the locations where tag 321 went on the overview map**
 
-![Map of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-map_detail}
+**input all the places mentioned in the description of the north sea and the english channel**
+
+![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-mapdetail}
+To Do: 
+- put all receiver stations in map (also those further up the river)
+- include outlines of the Western and Eastern Scheldt
+- include outlines of the French and Dutch EEZ and make one colour for EEZ
 
 <!-- Maps of the study area. -->
 <!-- ::: -->
 
-###	The Scheldt Estuary
+<!-- ###	The Scheldt Estuary -->
 
-####	The Westerschelde
+<!-- ####	The Westerschelde -->
 
-<!-- MAP: Schelde with bathymetry raster or contour lines -->
+<!-- MAP: Schelde with bathymetry raster or contour lines --> 
 
--	Acoustic receiver arrays in WS
--	Mixing
--	Salinity
--	Food abundance for the sharks
--	Biodiversity and most prominent species
+<!-- -	Acoustic receiver arrays in WS -->
+<!-- -	Mixing -->
+<!-- -	Salinity -->
+<!-- -	Food abundance for the sharks -->
+<!-- -	Biodiversity and most prominent species -->
 
 ###	The English channel
 
--	Bathymetry
--	Maybe map with bathy contour lines?
--	Food abundance?
--	Temperature seasonality
+The English Channel (EC) extends from the Dover Strait to England's southwestern tip, spanning 77 000 km^2 [@dauvin_2012]. The mean seafloor depth increases from around 25m in the east to 75m in the west [@dauvin_2012], except for the 174m deep *Hurd deep*, a trench located close to the Channel Island Guernsey.
+Shipping, fishing and granulate extraction occurs all over the EC region [@dauvin_2015]. Strong tidal currents from west to east are present, which are higher on the French than on the English coast due to Coriolis force, reaching maximum values of 8 knots at the Cap de la Hague [@salomon_1993]. Tidal circulation influences the composition of superficial seafloor sediments with coarse sediments dominating in areas of strong tidal currents and fine and muddy sediments dominating in bays and estuaries with weaker tidal currents as well as on the English Coast [@larsonneur_1982].
+From the western end up to Guernsey and the Hurd Deep, stratification occurs in summer, which is broken down as water progresses towards the east, resulting no vertical temperature gradient to be present in the eastern EC [@holme_1966]. Seafloor temperatures vary less in the western EC (range: 9 $\circ$ C to 14 $\circ$ C) than in the eastern EC (8 $\circ$ C and 16 $\circ$ C).
+Species living on the seafloor include Crustacea like the edible crab (*Cancer pagurus *), the common spider crab (*Maja squinado *), the European lobster (*Homarus gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
+<!-- from dauvin 2015 -->
+
+<!-- in holme 1966 it says that temp in western channel drop below 10 degrees in winter...how does that fit together with the 13 deg temp limit of masterias? -->
+
+<!-- -	Bathymetry -->
+<!-- -	Maybe map with bathy contour lines? -->
+<!-- -	Food abundance? -->
+<!-- -	Temperature seasonality -->
 
 ##	The Permanent Belgian Receiver Network (PBARN)
 
@@ -478,7 +626,7 @@ Tagged animals were both caught and released in two locations, just west of *Nee
 
 Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and the midventral line was incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was inserted into the abdominal cavity with forceps, and the incision was closed with 2-3 stitches of non-absorbable mono-filament [@goossens_2023].
 
-<!-- <!-- Photo of tagging?? PJV? --> -->
+<!-- <!-- Photo of tagging?? PJV? --> 
 
 ## Ethics statement
 
@@ -498,7 +646,7 @@ Summary statistics describing seasonal shark presence around the receivers in th
 
 *To compare shark presence around the receivers in the Western Scheldt between seasons, an ANOVA was executed. (**TO DO**)*.
 
-####	Vertical space use analysis
+####	Vertical space use analysis {-}
 
 To assess the vertical space use of sharks detected in the WS 1 array, the depths transmitted with the detections were compared to the bathymetry composition around each receiver. A bathymetry dataset from the Flemish government (publication date: November 18, 2019) was used. The dataset had a 1m x 1m resolution and contains the mean depth per grid cell. The seafloor depth within a radius of 200m around each receiver was extracted using the *'sf'*-package in R. The 200m refer to the probability of >70% of an acoustic detection [@reubens_2019].
 The following was done both for the bathymetry subsets and the acoustic detections for each receiver station in the WS1 array: Firstly, the maximum and minimum depth (of seafloor depth and acoustic detections) around each receiver were extracted, and the percentage of grid cells/detections that contained a depth value within a 10m depth bin (spanning from 0m to -50m) was computed.
@@ -517,7 +665,7 @@ The temperature log was not included in any analysis.
 The first week of depth values was excluded from all analyses, to remove potential bias resulting from the tagging procedure [cf. @flavio_2021]. The date of death, used to calculate the time at liberty, was visually extracted from plots of the raw depth series, and marks the date after which only a tidal signal remains in the depthlog, which is characterised by cyclically rising and falling depths within a rough 2m interval.
 <!-- Potentially automate this -->
 
-Only depthlogs that logged for >=365 (*code to make sign prettier*) days where included in the migration period analyses described below. Those will be referred to as *long term DST depthlogs* in the following.
+Only depthlogs that logged for $\geq$ 365 days where included in the migration period analyses described below. Those will be referred to as *long term DST depthlogs* in the following.
 <!-- maybe rephrase: "excluded from all analyses" -->
 Summary statistics (mean, median, maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~). For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data.
 On the daily summaries a Savitzky-Golay smoothing filter (filter order *p = 1*, filter length *n = 5*) was applied using the *sgolayfilt()*-function from the *signal* package. This particular filter smoothes the data but retains spikes in the data better than other smoothing filters like butterworth or averaging filters (like rolling mean) (**ref**, example in `sgolayfilt()` documentation).
@@ -533,23 +681,17 @@ On the daily summaries a Savitzky-Golay smoothing filter (filter order *p = 1*, 
 Firstly, a Fast Fourier Transform (FFT) was performed on the raw longterm DST depthlogs, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries).
 <!-- give fft source -->
 
-Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a chi square test. Only frequencies that significantly differed from white noise were incorporated into further analyses.
-<!-- give CWT source -->
+Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a chi square test. Only frequencies that significantly differed from white noise were incorporated into further analyses (**CWT reference**).
 
-* change point detection with the RuLSIF algorithm by Liu 2013, using the rulsif.ts R package.
+Thirdly, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *Relative unconstrained Least-Squares Importance Fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
+RuLSIF is a density-ratio estimation method and, in brief, approximates the dissimilarity of two subsequent time intervals $\chi$ and $\chi'$, using an $\alpha$*-relative Pearson Divergence* (rPE), with $0 < \alpha < 1$. By making the dissimilarity measure relative, the risk of infinite density ratios is circumvented [@liu_2013].
 
-* window size 7 bc one week migrations expected, alpha = 0.05 (default)
+RuLSIF was employed with the *'ts_detect()'*-function from the *'rulsif.ts'*-package [@brubaker_2021]. The algorithm can take an n-dimensional time series as input, as such allowing for more than one calculated summary statistic to be used as input. In this case, the daily median depth, maximum and minimum were chosen. These three parameters describe the daily depth use in a basic but overseeable way, making the interpretation of results easier.
 
-* step = 5 % of the length of the original dataset, better resolution than the default value (that was 10%) but it is advised to set the step smaller, albeit not too small
-
-* threshold == 0.95, meaning that if the dissimilarity measure between two consecutive values >0.95 then it is a change point. this determines the senstivity, and in this case the sensitivity was set quite low with 95%. in the function doc it says that lower tresh values mean high sensiticity, ie. its easier to classify a point as a change point.
-
-Thirdly, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *relative unconstrained least-squares importance fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
-RuLSIF is a density-ratio estimation method and, in brief, approximates the dissimilarity of two subsequent time intervals $\chi$ and $\chi'$, using an *alpha-relative Pearson Divergence* (rPE), with $0 < \alpha < 1$. By making the dissimilarity measure relative, the risk of infinite density ratios is circumvented [@liu_2013].
-
-RuLSIF was employed with the *ts_detect()*-function from the *rulsif.ts*-package [@brubaker_2021].
-Several hyperparameters needed to be chosen: the relative parameter $\alpha$, the window size *w*, the number of samples before and after a data point to compare between (*step*), and the threshold of the relative PE score above which a time point is classified as a change point (*thresh*). Hyperparameters are non-learned settings of a machine learning algorithm that. Hyperparameters were either chosen based on already established settings (here, $\alpha$ was kept at the function's default of 0.05) of the RuLSIF algorithm, based on ecological properties of the dataset (*window size = 7*, because roughly one week long migrations were expected), or logical reasoning (*thresh = 0.95*, higher than the default 0.9, thus requiring the divergence measure (the rPE score) to be relatively high for a point to be classified as a change point). 
-The *step*-parameter is set to 10% of the input dataset length as default in *ts_detect()*, but it is advised to decrease the step if computational resources allow for it (because small steps increase computation time). In the present study, RuLSIF was performed for different values of *step*: 2.5%, 5% and 10% of the input dataset length.
+Several hyperparameters needed to be chosen: the relative parameter $\alpha$, the window size *w*, the number of samples before and after a data point to compare between (*step*), and the threshold of the relative PE score above which a time point is classified as a change point (*thresh*). Hyperparameters are non-learned settings of a machine learning algorithm that control the learning behaviour during the algorithm's training (**ref**).
+Hyperparameters were either chosen based on already established settings (here, $\alpha$ was kept at the function's default of 0.05) of the RuLSIF algorithm, based on ecological properties of the dataset (*w* = 7, because roughly one week long migrations were expected), or logical reasoning (*thresh = 0.95*, higher than the default 0.9, thus requiring the divergence measure (the rPE score) to be relatively high for a point to be classified as a change point). 
+As default in the *'rulsif.ts'*-package, *step* is set to 10% of the amount of time points in the dataset used, but it is advised to decrease the step if computational resources allow for it (because small steps increase computation time). In the present study, RuLSIF was performed for different values of *step*: 2.5%, 5% and 10% of the input dataset length. For example, the DST 321 logged for 471 days, and a *step* of 5% of the input dataset length would amount to s *step* of 24 (days, rounded to the nearest integer).
+To group detected change points into change periods, change points that were less than 7 days apart from each other were classified as the same change period.
 
 
 <!-- Thirdly, the daily summary statistics and the results from the wavelet analysis (i.e., significantly present periods per day), were used as input for k-means clustering, an unsupervised machine learning algorithm. Unsupervised (as opposed to supervised) learning was utilised in this case because it does not require a training dataset with known right answers (which in this case would be the days that the sharks are migrating). -->
@@ -558,9 +700,9 @@ The *step*-parameter is set to 10% of the input dataset length as default in *ts
 <!-- Next, FFT was performed on each cluster separately, after the predominant cluster per week was assigned to all data points within that week. The last step was done to smooth the clustering result and reclassify potential outliers. -->
 <!-- In addition, CWT was performed on the hourly summary statistics for each cluster. -->
 
-##### Comparison to geolocation model output
+<!-- ##### Comparison to geolocation model output -->
 
-*does that make sense?*
+<!-- *does that make sense?* -->
 
 
 # Results {#sec-results}
@@ -799,6 +941,7 @@ p_321_wavelet_depth_min
 in/around westerschelde, according to ac. detections
 
 -	Highly seasonal (only in summer)
+    Explanation: Abiotic water conditions (salinity and temperature) are often evoked as controls for seasonal patterns of species occurrence ( Thiel et al ., 1995 ), from @maes_1998
 -	Sex-biased (mostly females)
 -	Possible pupping area, but this dataset not sufficient to confirm
 
@@ -831,10 +974,20 @@ The results show deeper waters utilised by *M. asterias* around a receiver than 
 
 ###	Limits of geolocation modelling
 
+-	Boundary condition: max depth of fish per day == max depth of bathy for that day
+-	Behavioural switch: migration/non-migration or migration/winter resident/summer resident
+
 -	Resolution of bathymetry dataset
   -	Possible that shark was in certain area but bc bathymetry grid = summary (e.g. mean), geolocation model rules this location out (cf Woillez 2016)
 -	Behaviour incorrectly/not inferred
   -	E.g. active vs inactive behaviour:
+  
+- talk about the geolocation model of @goossens_2023 and its limits?
+  - there is one datapoint per day, masking daily location changes. 
+  - knowing that M. asterias spends all its life on the seafloor, the maximum depth in the depthlog should not be shallower than the depth of the location for this day, since the opposite would imply that the animal swam in the water column
+  - it most likely exhibits a somewhat residential behaviour with small horizontal movement during both summer and winter, and migratory behaviour for a short period
+  
+- argue how the geolocation model could overall be improved
 
 ### current state of fish tagging
 
@@ -868,8 +1021,7 @@ The results show deeper waters utilised by *M. asterias* around a receiver than 
 ##	Acoustic detections additional analyses
 -	Vertical space use: resolve individuals to see if there are differences between ind. Sharks
 ##	Improvements of geolocation model for M. asterias
--	Boundary condition: max depth of fish per day == max depth of bathy for that day
--	Behavioural switch: migration/non-migration or migration/winter resident/summer resident
+- redo geolocation model with suggested changes and behavioural states
 ##	Information tool
 - make into interactive application (RShiny) and do tests with some of the target groups to understand how well the information is taken in
 
