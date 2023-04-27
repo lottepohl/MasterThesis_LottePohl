@@ -329,70 +329,70 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
 
 # plot_rulsif_data <- function(rulsif_result, var = "depth_median", tag_serial_num_short, all_data, time_vector = "date"){
 
-  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
-
-  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
-
-  var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
-    `colnames<-`("var_name")
-
-  # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
-  if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
-    var_df <- var_df %>%
-      mutate(var_name = -var_name)
-  }
-
-  # change_points
-  c_points <- rulsif_result$change_points %>%
-    as.data.frame() %>%
-    `colnames<-`("r_num") %>%
-    mutate(c_point = TRUE)
-
-  df_c_points <- dates %>%
-    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
-    left_join(c_points, by = "r_num") %>%
-    dplyr::filter(c_point == TRUE) %>%
-    dplyr::select(date) %>%
-    dplyr::mutate(week = date %>% lubridate::week(),
-                  year = date %>% lubridate::year(),
-                  CP_period = 1) %>%
-    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
-
-  for(i in 2:nrow(df_c_points)){
-    if(df_c_points$week_diff[i] <= 1){
-      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
-    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
-  }
-
-  df_c_points_week <- df_c_points %>%
-    # dplyr::ungroup() %>%
-    dplyr::group_by(CP_period) %>%
-    dplyr::mutate(start_date = min(date),
-                  end_date = max(date)) %>%
-    dplyr::select(CP_period, start_date, end_date) %>%
-    # mutate(CP_period = CP_period %>% as.factor()) %>%
-    distinct()
-
-  # df_c_points <- df_c_points %>%
-  #   left_join
-
-  # plots
-  p_data <- ggplot() +
-    geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
-                                           ymin = -Inf, ymax = Inf),
-              alpha = 0.3) +
-    geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
-    geom_line(aes(x = dates$date, y = var_df$var_name)) +
-    scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
-    # theme(legend.position = "bottom",
-    #       legend.box = "horizontal")
-    theme(legend.position="bottom", legend.direction="horizontal", legend.box.margin = margin())
-
-  p_data
-  return(p_data)
-
-}
+#   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+# 
+#   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+# 
+#   var_df <- all_data %>% dplyr::select(var %>% all_of()) %>%
+#     `colnames<-`("var_name")
+# 
+#   # if var contains median, min, max or mean, then inverse it to have depths plotted negatively
+#   if( ( grep("(median|mean|max|min)", var) %>% length() ) > 0){
+#     var_df <- var_df %>%
+#       mutate(var_name = -var_name)
+#   }
+# 
+#   # change_points
+#   c_points <- rulsif_result$change_points %>%
+#     as.data.frame() %>%
+#     `colnames<-`("r_num") %>%
+#     mutate(c_point = TRUE)
+# 
+#   df_c_points <- dates %>%
+#     mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+#     left_join(c_points, by = "r_num") %>%
+#     dplyr::filter(c_point == TRUE) %>%
+#     dplyr::select(date) %>%
+#     dplyr::mutate(week = date %>% lubridate::week(),
+#                   year = date %>% lubridate::year(),
+#                   CP_period = 1) %>%
+#     mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+# 
+#   for(i in 2:nrow(df_c_points)){
+#     if(df_c_points$week_diff[i] <= 1){
+#       df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+#     }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+#   }
+# 
+#   df_c_points_week <- df_c_points %>%
+#     # dplyr::ungroup() %>%
+#     dplyr::group_by(CP_period) %>%
+#     dplyr::mutate(start_date = min(date),
+#                   end_date = max(date)) %>%
+#     dplyr::select(CP_period, start_date, end_date) %>%
+#     # mutate(CP_period = CP_period %>% as.factor()) %>%
+#     distinct()
+# 
+#   # df_c_points <- df_c_points %>%
+#   #   left_join
+# 
+#   # plots
+#   p_data <- ggplot() +
+#     geom_rect(data = df_c_points_week, aes(xmin = start_date, xmax = end_date, fill = CP_period %>% as.factor(),
+#                                            ymin = -Inf, ymax = Inf),
+#               alpha = 0.3) +
+#     geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
+#     geom_line(aes(x = dates$date, y = var_df$var_name)) +
+#     scale_y_continuous(expand = c(0,0)) +
+#     labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
+#     # theme(legend.position = "bottom",
+#     #       legend.box = "horizontal")
+#     theme(legend.position="bottom", legend.direction="horizontal", legend.box.margin = margin())
+# 
+#   p_data
+#   return(p_data)
+# 
+# }
 
 plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_num_short, all_data, time_vector = "date"){
   

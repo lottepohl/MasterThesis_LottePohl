@@ -238,32 +238,23 @@ abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
 ##| echo: false
 #| label: tbl-abbreviations
 #| out-width: 90%
-#| tbl.align: "center"
-##| fig.align: "center"
-##| tbl-cap-location: top
-##| tbl-cap: ""
 
-knitr::kable(abbrev)
+knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
+                                                   latex_options = "hold_position")
 
-# # Generate a table using kable
-# tbl <- knitr::kable(abbrev)
-# 
-# # Use kable_styling() to suppress the caption
-# tbl <- kable_styling(tbl, "striped", caption = "")
-# 
-# # Print the table
-# print(tbl)
 ```
 
 {{< pagebreak >}}
 
 # Introduction {#sec-intro}
 
+*problem statement: migratory fish, large migrations, management and conservation needed, sharks especially vulnerable, lead to M. asterias*.
+
 ##	Acquatic telemetry
 
 Telemetry refers to the remote monitoring of animals using electronic transmitters or tags,	and receivers [@whoriskey_2019], allowing for the  tracking of marine animal movement. A multitude of telemetry methods exists today, popular technologies to study acquatic animals include acoustic telemetry and archival telemetry [@thorstad_2013].
 <!-- satellite telemetry,  -->
-Telemetry allows for the quantification of animal migrations and (vertical and horizontal) habitat use [@hussey_2015], which informs species management and conservation spanning in marine, freshwater and terrestrial ecosystems [@beger_2010].
+Telemetry enables the quantification of animal migrations and (vertical and horizontal) habitat use [@hussey_2015], which informs species management and conservation spanning in marine, freshwater and terrestrial ecosystems [@beger_2010].
 
 <!-- Satellite telemetry involves satellites that receive signals from a tag attached to animal, requiring the tag to breach the water surface for signal transmission (**ref**). -->
 
@@ -323,58 +314,77 @@ Other commonly emplyed methods include Behaviural Change Point Analysis [BCPA, @
 ### Change Point Detection
 
 <!-- why I did CPD -->
-It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD). CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013].
+It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. A simpler version of BCPA, for instance, is Change Point Detection (CPD).
+<!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
+CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013].
 Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ. 
 CPD detection is an unsupervised learning technique that, in contrast to unsupervised clustering algorithms like k-means, compares subsequent samples, thus implementing the time aspect in the learning process.
 Details about the CPD algorithm chosen for the present study are explained in @sec-mm_migration.
 
 ##	The starry smooth-hound shark
 
-*put knowledge about the species into context of related species*
+<!-- *put knowledge about the species into context of related species* -->
 
-###	Morphology
+The starry smooth-hound shark (*Mustelus asterias*, Cloquet 1819) is a medium-sized triakid elasmobranch, measuring around 30 cm in total length (TL) at birth and 120 cm (females) and 100 cm (males) when reaching sexual maturity [@farrell_2010]. It can attain up to 140 cm TL [@mccullyphillips_2015].
+
+###	Abundance
+
+- only species in NE Atlantic
+- continue
+
+### Reproductive behaviour
+<!-- *M. asterias* has a complex reproduction behaviour. -->
+*M. asterias* is aplacentally viviparous (i.e. embryos are absorb nutrients from a yolk sack that is used up during gestation). It displays polyandry (i.e., one female mating with several males within one breeding season) and multiple paternity [i.e., pups within one litter originating from several males, @farrell_2014].
+Moreover, it has a biennally gestation cycle with a gestation period of about 12 months, followed by a 12-month resting period. *M. asterias* females can store sperm for up to 12 months [@farrell_2010a]. The same study found embryos from different developmental stages in gestating females (termed embryo asynchronism).
+@griffiths_2020 reported philopatric behaviour (i.e., females returning to the same area for parturition) for the first time. 
+Identified parturition grounds for *M. asterias* include the Eastern Scheldt and, more generally, the Bristol Channel, Southern North Sea and the English Channel [@dureuil_2013; @mccullyphillips_2015; @breve_2016]. Pupping possibly takes place in the months between april and september [@farrell_2010a; @mccullyphillips_2015].
+
+###	Feeding behaviour
 
 <!-- IMAGE: starry smooth-hound -->
 
-- Ventral snout: perfect for feeding on animals on seafloor
-- All time spent swimming above seafloor
+Its ventrally located snout enables it to feed on prey on the seafloor, indicating that it swims closely above the seafloor during foraging and preying (**ref**).
 
-###	Ecology
+<!-- - Ventral snout: perfect for feeding on animals on seafloor -->
+<!-- - All time spent swimming above seafloor -->
 
-####	Life history
-
-*M. asterias* feeds on benthic and suprabenthic crustaceans, common prey includes (*insert species here*) [@mccullyphillips_2015; @mccullyphillips_2020]. 
+*M. asterias* is a specialist feeder on benthic and suprabenthic crustaceans, common prey include the hermit crab (*Pagurus bernhardus*), the flying crab (*Liocarcinus holsatus*), the common shore crab (*Carcinus maenas*) and the edible crab (*Cancer pagurus*) [@mccullyphillips_2015; @mccullyphillips_2020]. 
 Potential predators of *M. asterias* are the grey seal (*Halichoerus grypus*) which occurs in the North Sea, the blue shark (*Prionace glauca*) and the common dolphin (*Delphinus delphis*), both of which occur in the Western English Channel [@griffiths_2020].
 
-- Feeding: crustaceans, swimming shorewards at night
+<!-- - Feeding: crustaceans, swimming shorewards at night -->
 
-####	Migration
+### Migration
 
-- Sex bias: Males into Northern North Sea, females into Bay of Biscay
+- 1 sentence about the potential of two populations in the greater north sea, and one population going into the Scheldt Estuary in summer [@breve_2016].
 
-- Daily horizontal distance: up to 70km (**ref!**)
+Annual migration is part of the life cycle of adult *M. asterias*, with females moving into the English Channel and the Bay of Biscay, and males moving into the Northern North Sea and into the English Channel [@breve_2020]. Potential reasons of this sex-specific migration are females avoiding mating, resource competition, or reduction of embryo mortality [@speed_2010].
 
-#### Daily behaviour
+
+##### Geolocation Model Results
+
+@goossens_2023 used a geolocation model approach with a two-state HMM following the geolocation approach by @woillez_2016. The inferred daily locations of two *M. asterias* individuals tagged in 2018 are shown in @fig-mapgeolocation.
+
+<!-- **map with geolocation output by Jolien here** -->
+
+**MAP**
+<!-- ::: {#fig-mapgeolocation} -->
+<!-- ![Placeholder for the geolocation output map(s)](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map_geolocation_output_placeholder.png) -->
+<!-- ::: -->
+
+
+<!-- also found in other sharks, eg the tope shark (Colloca 2019, from breve 2020) -->
+
+<!-- - Sex bias: Males into Northern North Sea, females into Bay of Biscay -->
+
+<!-- - Daily horizontal distance: up to 70km (**ref!**) -->
+
+### Daily behaviour
 
 <!-- - daily vertical migration: present (find source), but also (most likely) horizontal movement associated with the vertical movement, i.e. the animal stays on the seafloor and swims shorewards during the night, feeding on crustaceans (?) -->
 
 *M. asterias* shows higher vertical activity during night than during the day, indicating prey searching and foraging behaviour at night, which is commonly oberved in elasmobranchs. During the day, it potentially avoids predation by exhibiting resting or sheltering behaviour [@griffiths_2020]. 
 
-##### Geolocation Model Results
 
-@goossens_2023 used a geolocation model approach with a two-state HMM following an approach by @woillez_2016.
-
-**put map with geolocation output by Jolien here?**
-
-####	Reproduction
-
-- Aplacentary viviparous, unlike M. mustelus but e.g. like M. antarcticus
-- Different life stages of young
-- Multiple paternity, sperm storage up to a year
-
-###	Abundance
-
-- only species in NE Atlantic
 
 ###	Research gaps
 
@@ -395,16 +405,20 @@ reproductive habitats already studied to some extent, but e.g. parturition site 
 
 ##	Communication of fish movement ecology studies
 
-###	Problem
-the data is complex and difficult to understand for non-experts, yet it is imperative to communicate the scientific results to transform them into action/change
+*not sure if include at all or not*
 
-###	The quadruple helix
+<!-- ###	Problem -->
+<!-- the data is complex and difficult to understand for non-experts, yet it is imperative to communicate the scientific results to transform them into action/change -->
 
-- 	Communication from (fish) scientists to politicians to inform political and fishery management decisions
--	Creating awareness within the general public
--	Information of industry stakeholders, e.g. wind farm companies
+<!-- ###	The quadruple helix -->
+
+<!-- - 	Communication from (fish) scientists to politicians to inform political and fishery management decisions -->
+<!-- -	Creating awareness within the general public -->
+<!-- -	Information of industry stakeholders, e.g. wind farm companies -->
 
 ##	Aims of the work
+
+*rewrite*
 
 The aims of this work are threefold. The first two aims involve DST data, the third aim involves acoustic detections of *M. asterias*:
 
@@ -463,32 +477,45 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 ## Study Area {#sec-mm_studyarea}
 
-*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration?*
+*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration? --> solve*
 
 ###	The BPNS and Scheldt Estuary
 
 The Belgian Part of the North Sea (BPNS) is generally characterised by shallow water depths below 40 m [@thierry_2019], sandy or muddy sediment [@vasquez_2021] and multiple sandbanks and troughs. 
 Artificial structures resulting from human activities, such as shipwrecks and Offshore Wind Farms (OWF), provide hard substrate.
 Apart from seafaring and energy production, shipping, fishing (including trawling) or sand and gravel extraction take place in the BPNS [@chen_2005; @douvere_2007]. Furthermore, submarine cables to facilitate energy transport and telecommunication have been present in the North Sea for decades [@degroot_1979].
-The river Scheldt meets the North Sea north of the border between the Netherlands and Belgium, forming an estuary with a complex regime of sandflats and channels [@claessens_1988].
-Both the BPNS and the Scheldt Estuary are highly mixed due to strong currents and tides [@otto_1990], introducing saline waters well into the Scheldt estuary [@ouboter_1998].
+The river Scheldt meets the North Sea north of the border between the Netherlands and Belgium, forming an Estuary with a complex regime of sandflats and channels [@claessens_1988].
+Both the BPNS and the Scheldt Estuary are highly mixed due to strong currents and tides [@otto_1990], introducing saline waters well into the Scheldt Estuary [@ouboter_1998].
 The Scheldt Estuary is characterised by medium to coarse sand and salinity between ranges 2 and 33.5 ppt [@baeyens_1998], peaking in summer [@maes_1998]. The seafloor depth averages around 11m with occasional troughs of up to 20 or 30m [@thierry_2019]. 
 The lower part of the Scheldt Estuary from Vlissingen (The Netherlands) 55-60 km upstream is referred to as Western Scheldt Estuary[@baeyens_1998; @ouboter_1998].
 Between Bergen op Zoom and the island Neeltje Jans (both Netherlands), the Estuary is referred to as the Eastern Scheldt Estuary.
 An overview map of the BPNS and the Scheldt Estuary is provided in @fig-mapdetail.
-Fish and crustacean species composition and abundance underlies strong seasonal patterns, peaking in summer [@maes_1998; @maes_2005]. Seasonally occuring species are marine fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus sprattus*) or Whiting (*Merlangius merlangus*), and abundant crustacean species include the common shrimp (*Crangon crangon*) and the Palaemonid shrimp [*Palaemon varians*, @maes_1998].
+Fish and crustacean species composition and abundance underlies strong seasonal patterns, peaking in summer [@maes_1998; @maes_2005]. Seasonally occuring species are marine fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus sprattus*) or Whiting (*Merlangius merlangus*), and abundant crustacean species include the common shrimp (*Crangon crangon*) and the palaemonid shrimp [*Palaemon varians*, @maes_1998].
 
 <!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
 
 Test map cross reference @fig-map.
 
+```{r maptest}
+#| include: true
+#| echo: false
+#| label: "fig-map"
+#| fig-cap: "test map."
 
-::: {#fig-map}
-![](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png)
-Map of the study area.
-:::
 
-<!-- Test map cross reference @fig-map. -->
+knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
+
+```
+
+Test map cross reference @fig-map.
+<!-- #| out-width: 80% -->
+<!-- ##| layout-ncol: 1 -->
+<!-- ##| column: body #page -->
+<!-- ##| fig-width: 6 -->
+
+<!-- ::: {#fig-map} -->
+<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
+<!-- ::: -->
 
 
 <!-- ####	Human activities -->
@@ -546,19 +573,18 @@ Map of the study area.
 <!-- knitr::include_graphics("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/map1_overview_manual.png", auto_pdf = FALSE) -->
 <!-- ``` -->
 
+<!-- **MAP** -->
+
+<!-- ::: {#fig-map} -->
+<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
+<!-- ::: -->
 
 <!-- ::: {#fig-map layout-ncol=2} -->
 
-![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview}
+<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview} -->
 **make sure to include the locations where tag 321 went on the overview map**
 
 **input all the places mentioned in the description of the north sea and the english channel**
-
-![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-mapdetail}
-To Do: 
-- put all receiver stations in map (also those further up the river)
-- include outlines of the Western and Eastern Scheldt
-- include outlines of the French and Dutch EEZ and make one colour for EEZ
 
 <!-- Maps of the study area. -->
 <!-- ::: -->
@@ -577,7 +603,7 @@ To Do:
 
 ###	The English channel
 
-The English Channel (EC) extends from the Dover Strait to England's southwestern tip, spanning 77 000 km^2 [@dauvin_2012]. The mean seafloor depth increases from around 25m in the east to 75m in the west [@dauvin_2012], except for the 174m deep *Hurd deep*, a trench located close to the Channel Island Guernsey.
+The English Channel (EC) extends from the Dover Strait to England's southwestern tip, spanning 77 000 km^2 [@dauvin_2012]. The mean seafloor depth increases from around 25 m in the east to 75m in the west [@dauvin_2012], except for the 174 m deep *Hurd deep*, a trench located close to the Channel Island Guernsey.
 Shipping, fishing and granulate extraction occurs all over the EC region [@dauvin_2015]. Strong tidal currents from west to east are present, which are higher on the French than on the English coast due to Coriolis force, reaching maximum values of 8 knots at the Cap de la Hague [@salomon_1993]. Tidal circulation influences the composition of superficial seafloor sediments with coarse sediments dominating in areas of strong tidal currents and fine and muddy sediments dominating in bays and estuaries with weaker tidal currents as well as on the English Coast [@larsonneur_1982].
 From the western end up to Guernsey and the Hurd Deep, stratification occurs in summer, which is broken down as water progresses towards the east, resulting no vertical temperature gradient to be present in the eastern EC [@holme_1966]. Seafloor temperatures vary less in the western EC (range: 9 $\circ$ C to 14 $\circ$ C) than in the eastern EC (8 $\circ$ C and 16 $\circ$ C).
 Species living on the seafloor include Crustacea like the edible crab (*Cancer pagurus *), the common spider crab (*Maja squinado *), the European lobster (*Homarus gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
@@ -596,7 +622,20 @@ The acoustic receivers of the Permanent Belgian Receiver Network (PBARN) were us
 As of 2019, the PBARN consisted of 177 permanently installed and monitored acoustic receivers within the BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse River [@reubens_2018].
 A detection probability of >50% was estimated for a radius of 500-700m around the receiver [@goossens_2022], and >70% for 200m radius [@reubens_2018].
 
-*Find out: how many receivers were in the BPNS and the Scheldt?*
+<!-- *Find out: how many receivers were in the BPNS and the Scheldt?* -->
+
+
+<!-- ::: {#fig-mapdetail} -->
+<!-- ![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png) -->
+<!-- ::: -->
+
+<!-- ![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-mapdetail} -->
+
+*To Do:*
+- put all receiver stations in map (also those further up the river)
+- include outlines of the Western and Eastern Scheldt
+- include outlines of the French and Dutch EEZ and make one colour for EEZ
+- indicate the WS1 and the WS2 array (esp. for vertical space use analysis for acoustic detections)
 
 ### Data Management (change title)
 
@@ -607,7 +646,7 @@ The data storage log files and the outputs of the geolocation models were access
 
 ## Acoustic Tags
 
-The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags, measuring 46mm in length and weighing 13g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensor with logging intervals of 120s and 240s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (pressure:temperature). Further details about the tags can be found in the Supporting Information of @goossens_2023.
+The *M. asterias* individuals were equipped with *Innovasea* ADST-V13TP tags (Innovasea Ltd., Boston, MA, USA), measuring 46 mm in length and weighing 13 g. Each tag had an estimated battery lifetime of 518 days, and contained a pressure and a temperature sensor with logging intervals of 120 s and 240 s, respectively. For each acoustic detection, a pressure or temperature value was transmitted with a ratio of 1:3 (pressure:temperature). Further details about the tags can be found in the Supporting Information of @goossens_2023.
 <!-- reference to innovasea product manual -->
 The pressure sensors recorded with a resolution of 0.3m and an accuracy of $\pm$ 3.4m until the depth of 68m, according to the manufacturer (**ref**).
 
@@ -644,12 +683,14 @@ All data analyses were carried out using R [@R_2022], primarily using the packag
 Detections were accessed from the ETN database. Tags with only a single detection were omitted from all further analyses.
 Summary statistics describing seasonal shark presence around the receivers in the Western Scheldt were calculated: The number of detections and individuals detected at each receiver, per month (*rephrase*).
 
-*To compare shark presence around the receivers in the Western Scheldt between seasons, an ANOVA was executed. (**TO DO**)*.
+<!-- **write: depth use ** -->
 
-####	Vertical space use analysis {-}
+<!-- *To compare shark presence around the receivers in the Western Scheldt between seasons, an ANOVA was executed. (**TO DO**)*. -->
 
-To assess the vertical space use of sharks detected in the WS 1 array, the depths transmitted with the detections were compared to the bathymetry composition around each receiver. A bathymetry dataset from the Flemish government (publication date: November 18, 2019) was used. The dataset had a 1m x 1m resolution and contains the mean depth per grid cell. The seafloor depth within a radius of 200m around each receiver was extracted using the *'sf'*-package in R. The 200m refer to the probability of >70% of an acoustic detection [@reubens_2019].
-The following was done both for the bathymetry subsets and the acoustic detections for each receiver station in the WS1 array: Firstly, the maximum and minimum depth (of seafloor depth and acoustic detections) around each receiver were extracted, and the percentage of grid cells/detections that contained a depth value within a 10m depth bin (spanning from 0m to -50m) was computed.
+####	Vertical space use analysis
+
+To assess the vertical space use of sharks detected in the WS 1 array, the depths transmitted with the detections were compared to the bathymetry composition around each receiver. A bathymetry dataset from the Flemish government (publication date: November 18, 2019) was used. The dataset had a 1m x 1m resolution and contains the mean depth per grid cell. The seafloor depth within a radius of 200 m around each receiver was extracted using the *'sf'*-package in R. The 200 m refer to the probability of >70% of an acoustic detection [@reubens_2019].
+The following was done both for the bathymetry subsets and the acoustic detections for each receiver station in the WS1 array: Firstly, the maximum and minimum depth (of seafloor depth and acoustic detections) around each receiver were extracted, and the percentage of grid cells/detections that contained a depth value within a 10 m depth bin (spanning from 0 m to -50 m) was computed.
 
 
 <!-- make reference to dataset: https://madame.vlaanderen.be/geonetwork/srv/eng/catalog.search#/metadata/718dc576-7ddc-43b5-b71e-3bd3617e1bd3 -->
@@ -667,23 +708,30 @@ The first week of depth values was excluded from all analyses, to remove potenti
 
 Only depthlogs that logged for $\geq$ 365 days where included in the migration period analyses described below. Those will be referred to as *long term DST depthlogs* in the following.
 <!-- maybe rephrase: "excluded from all analyses" -->
-Summary statistics (mean, median, maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~). For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data.
-On the daily summaries a Savitzky-Golay smoothing filter (filter order *p = 1*, filter length *n = 5*) was applied using the *sgolayfilt()*-function from the *signal* package. This particular filter smoothes the data but retains spikes in the data better than other smoothing filters like butterworth or averaging filters (like rolling mean) (**ref**, example in `sgolayfilt()` documentation).
+Summary statistics (median (since depth did not follow a normal distribution), maximum, minimum depth, and depth range) were calculated per hour, day/night, date, week and month. 
+<!-- For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~).  -->
+For the day/night summaries, sunrise and sunset times were extracted using the *'suncalc'*-package. On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data.
+On the daily summaries a Savitzky-Golay smoothing filter (filter order *p = 1*, filter length *n = 5*) was applied using the *sgolayfilt()*-function from the *signal* package. This particular filter smoothes the data but retains spikes in the data better than other smoothing filters like butterworth or averaging filters (like rolling mean) 
+*(**ref**, example in `sgolayfilt()` documentation)*.
 **Prior to spectral analyses, the data was centred and normalised, resulting in a mean of 0 and a sd of 1.**
 <!-- check: sollte ich das noch machen?? -->
 <!-- The animal's vertical speed (in *m/min*) was calculated following @griffiths_2020, dividing the depth difference between two consecutive measurements by the time interval (in min). -->
-<!-- ToDo: debate if the above should be included (is it suuper relevant? only if the vert speed is included in wavelet analyses) -->
+
+
+A Fast Fourier Transform (FFT) was performed on all DST logs
+<!-- the raw longterm DST depthlogs -->
+, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries) (*ref*).
+<!-- give fft source -->
+
 
 ####	Migration Period Analysis {#sec-mm_migration}
 
 <!-- **To do: remove rolling mean but instead use sgolay filter for all, p = 1 and n = 5** -->
+The following steps were only performed on the longterm DST logs.
 
-Firstly, a Fast Fourier Transform (FFT) was performed on the raw longterm DST depthlogs, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries).
-<!-- give fft source -->
-
-Secondly, Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a chi square test. Only frequencies that significantly differed from white noise were incorporated into further analyses (**CWT reference**).
-
-Thirdly, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *Relative unconstrained Least-Squares Importance Fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
+Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. This method gives insights into the occurrence of certain frequencies within the time domain, in contrast to FFT. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a chi square test. Only frequencies that significantly differed from white noise were incorporated into further analyses (**CWT reference**).
+<!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
+Finally, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *Relative unconstrained Least-Squares Importance Fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
 RuLSIF is a density-ratio estimation method and, in brief, approximates the dissimilarity of two subsequent time intervals $\chi$ and $\chi'$, using an $\alpha$*-relative Pearson Divergence* (rPE), with $0 < \alpha < 1$. By making the dissimilarity measure relative, the risk of infinite density ratios is circumvented [@liu_2013].
 
 RuLSIF was employed with the *'ts_detect()'*-function from the *'rulsif.ts'*-package [@brubaker_2021]. The algorithm can take an n-dimensional time series as input, as such allowing for more than one calculated summary statistic to be used as input. In this case, the daily median depth, maximum and minimum were chosen. These three parameters describe the daily depth use in a basic but overseeable way, making the interpretation of results easier.
@@ -740,32 +788,33 @@ dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% re
 #| tbl-cap-location: top
 #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
 
-knitr::kable(dst_summary %>% arrange(`release date`))
+knitr::kable(dst_summary %>% arrange(`release date`)) %>% kableExtra::kable_styling(position = "center", latex_options = "hold_position")
 ```
 
 
-### Raw depthlogs
+### Raw depth and temperature logs
 
-<!-- todo: in die caption schreiben, in welchem Jahr das Tier getaggt wurde. -->
+todo: write tagging year in caption, include temperature!
 
-<!-- The depth log of tag 295 is shown in @fig-dst295. -->
+The depth log of tag 295 is shown in @fig-dst295.
 
 <!-- <!-- dst_summary %>% filter(`tag serial nr.` == "1293295") %>% dplyr::select(`release date`) %>% pull() %>% format("%B %d, %Y"). -->
 
-```{r rawdepthlog-295}
+```{r rawdepthlog295}
 #| include: true
 #| label: fig-dst295
 #| out-width: 75%
 #| fig-cap: "Depth log from the recovered tag 295. This male was tagged on July 19, 2018. "
+
 p_dst_raw_295
 ```
-
+<!-- ##| fig-pos: h -->
 * Question: include raw depthlogs of 308 and 321?*
 
-### Geolocation model outputs (include?)
+<!-- ### Geolocation model outputs (include?) -->
 
-*Question: I didn't do this: include y/n?*
-<!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) -->
+<!-- *Question: I didn't do this: include y/n?* -->
+<!-- <!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) --> -->
 
 ### Summary statistics {#sec-results-dst-summary}
 

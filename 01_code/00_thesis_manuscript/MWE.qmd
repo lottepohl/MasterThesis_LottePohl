@@ -1,0 +1,307 @@
+---
+title: Vertical movement behaviour of the starry smooth-hound shark *Mustelus asterias* in the North Sea
+subtitle: Master Thesis
+author:
+  - name: Lotte Pohl
+    email: lotte.pohl@imbrsea.eu
+    affiliations: 
+        - id: VLIZ
+          name: Flemish Marine Institute
+          department: Marine Observation Centre
+          address: Slipwaykaai 2
+          city: Ostend
+          state: Belgium
+          postal-code: 8400
+        - id: UGent
+          name: Ghent University
+          department: Marine Biology research group
+          address: Krijgslaan 281/S8
+          city: Ghent
+          state: Belgium
+          postal-code: 9000
+    attributes:
+        corresponding: true
+    note: Msc Student
+  - name: Niels Brevé
+    email: breve@sportvisserijnederland.nl
+    affiliations:
+      - id: WUR
+        name: Wageningen University and Research
+        department: Marine Ecology Group
+        address: Droevendaalsesteeg 1
+        city: Wageningen
+        state: The Netherlands
+        postal-code: 6700
+      - id: Sportvisserij
+        name: Sportvisserij Nederlands
+        address: Leyenseweg 115
+        city: Bilthoven
+        state: The Netherlands
+        postal-code: 3721
+    note: Second Promotor
+  - name: Carlota Muñiz
+    email: carlota.muniz@vliz.be
+    affiliations:
+        - ref: VLIZ
+    note: Supervisor
+  - name: Jan Reubens
+    email: jan.reubens@vliz.be
+    affiliations:
+        - ref: VLIZ
+    note: Promotor
+abstract: 
+ Still to be written.
+keywords: 
+  - acoustic telemetry
+  - geolocation modelling
+  - Mustelus asterias
+date: last-modified
+bibliography: bibliography.bib
+execute:
+  echo: false
+  include: false
+knitr:
+  opts_knit:
+    root.dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/"
+    verbose: TRUE
+# output:
+#   pdf_document:
+#     css: custom.css
+#     output_dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/test"
+#     base_url: "http://localhost:3478/01_code/00_thesis_manuscript/test"
+format:
+  #     - title.tex
+  # pdf: default
+  # pdf: # bmc template
+  #   template: bmc_template/bmc_article.tex
+  #   template-partials:
+  elsevier-pdf:
+    keep-tex: true
+    toc: true
+    journal:
+      #   - Highlight 1
+      #   - Highlight 2
+      #   - Highlight 3
+      # - top=2 0mm
+      # - left=20mm
+      # - heightrounded
+      name: Journal of Animal Biotelemetry
+      formatting: review # or preprint, or doubleblind
+      linestretch: 2
+      model: 3p
+      cite-style: authoryear
+      # graphical-abstract: "![](abstract.png)"
+      # highlights:
+        
+      # fig-width: 6.7
+      # fig-height: 4.5
+      # geometry:
+      # tbl-cap-location: top
+editor_options: 
+  chunk_output_type: console
+header-includes:
+  - \newcommand{\mycommand}[1]{\textbf{#1}}
+# crossref:
+#   fig-title: '**Figure**'
+#   fig-labels: arabic
+#   title-delim: "**.**"
+# quarto:
+#   figure:
+#     caption:
+#       format: "<b>Figure %s.</b> %s"
+---
+
+```{r packages}
+library(dplyr)
+# library(tidyverse)
+# library(leaflet)
+# library(ggplot2)
+# library(tibble)
+# library(knitr)
+# library(magrittr)
+library(knitr)
+library(usethis)
+library(kableExtra)
+# library(biwavelet)
+# rm(list = ls())
+```
+
+<!-- ```{r workspace} -->
+<!-- # load functions  -->
+<!-- paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source() -->
+
+<!-- # load plots, data and maps -->
+<!-- # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source() -->
+
+<!-- paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source() -->
+
+<!-- # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source() -->
+
+<!-- # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source() -->
+
+<!-- paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source() -->
+
+<!-- # paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source() -->
+
+<!-- # paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source() -->
+<!-- dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/")) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- path_maps <- paste0(getwd(), "/01_code/00_thesis_manuscript/maps/") -->
+<!-- path_figures <- paste0(getwd(), "/01_code/00_thesis_manuscript/figures/") -->
+<!-- ``` -->
+
+
+<!-- ```{r setplottheme} -->
+<!-- thesis_theme <- ggplot2::theme( -->
+<!--   plot.title = element_text(family = "serif", size = 12, face = "bold"), -->
+<!--   plot.subtitle = element_text(family = "serif", size = 12), -->
+<!--   axis.title = element_text(family = "serif", size = 12), -->
+<!--   axis.text = element_text(family = "serif", size = 10), -->
+<!--   legend.title = element_text(family = "serif", size = 12), -->
+<!--   legend.text = element_text(family = "serif", size = 10), -->
+<!--   # plot.background = element_blank()#, -->
+<!--   panel.background = element_blank(), -->
+<!--   # panel.background = element_rect(fill = "transparent"), -->
+<!--   panel.grid.major = element_line(color = "gray70", linetype = "solid"), -->
+<!--   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"), -->
+<!-- ) -->
+
+<!-- # Set the theme as the default for all plots -->
+<!-- ggplot2::theme_set(thesis_theme) -->
+<!-- ``` -->
+
+# List of Abbreviations {-}
+
+```{r listofabbreviations}
+abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
+                         Explanation= c("Acoustic Data Storage Tag",
+                                        "Data Storage Tag",
+                                        "Diel Vertical Migration"))
+```
+
+
+```{r table-abbreviations}
+#| include: true
+##| echo: false
+#| label: tbl-abbreviations
+#| out-width: 90%
+
+knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
+                                                   latex_options = "hold_position")
+
+```
+
+
+# Maps
+
+
+Test map cross reference @fig-map.
+
+```{r maptest}
+#| include: true
+#| echo: false
+#| label: "fig-map"
+#| fig-cap: "test map."
+
+
+knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
+
+```
+
+Test map cross reference @fig-map.
+<!-- #| out-width: 80% -->
+<!-- ##| layout-ncol: 1 -->
+<!-- ##| column: body #page -->
+<!-- ##| fig-width: 6 -->
+
+
+<!-- ::: {#fig-map} -->
+<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
+<!-- ::: -->
+
+
+<!-- ####	Human activities -->
+
+<!-- -	Windfarms -->
+<!-- -	Shipwrecks -->
+<!-- -	Submarine power and telecommunication cables -->
+
+
+
+<!-- MAP: BPNS with cables, windfarms and shipwrecks -->
+<!-- Maybe 2 maps next to each other, one with acoustic receivers (+ sub areas/receiver arrays, and 2 tagging locations) and one with the human activities (bc 1 map will be too full?) -->
+<!-- Mention that for the windfarms and cables, the years are filtered to be <= 2020 -->
+
+<!-- ```{r map1overview} -->
+<!-- #| include: false -->
+<!-- #| label: fig-map1overview -->
+<!-- #| fig-cap: "Map of the study area." -->
+<!-- # map1_overview -->
+<!-- ``` -->
+
+<!-- ```{r map2detail} -->
+<!-- #| include: false -->
+<!-- #| label: fig-map2detail -->
+<!-- #| fig-cap: "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
+
+<!-- # map2_detail -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- #| include: false -->
+<!-- #| label: fig-map2 -->
+<!-- #| layout-ncol: 1 -->
+<!-- #| column: body #page -->
+<!-- #| fig-width: 6 -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Map of the study area." -->
+<!-- #| - "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
+
+<!-- # knitr::include_graphics(paste0(path_maps, "map1_overview_manual.png")) -->
+<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map1_overview_manual.png") -->
+
+<!-- knitr::include_graphics("map1_overview_manual.png") -->
+<!-- knitr::include_graphics("map2_detail_manual.png") -->
+
+<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map2_detail_manual.png") -->
+<!-- # knitr::include_graphics(paste0(path_maps, "maps/map2_detail_manual.png")) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| include: true -->
+<!-- #| label: fig-map -->
+
+<!-- knitr::include_graphics("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/map1_overview_manual.png", auto_pdf = FALSE) -->
+<!-- ``` -->
+
+**MAP**
+
+<!-- ::: {#fig-map} -->
+<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
+<!-- ::: -->
+
+<!-- ::: {#fig-map layout-ncol=2} -->
+
+<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview} -->
+**make sure to include the locations where tag 321 went on the overview map**
+
+**input all the places mentioned in the description of the north sea and the english channel**
+
+<!-- Maps of the study area. -->
+<!-- ::: -->
+
+<!-- ###	The Scheldt Estuary -->
+
+<!-- ####	The Westerschelde -->
+
+<!-- MAP: Schelde with bathymetry raster or contour lines --> 
+
+<!-- -	Acoustic receiver arrays in WS -->
+<!-- -	Mixing -->
+<!-- -	Salinity -->
+<!-- -	Food abundance for the sharks -->
+<!-- -	Biodiversity and most prominent species -->
+
