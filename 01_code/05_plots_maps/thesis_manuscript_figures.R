@@ -13,6 +13,8 @@ library(gridExtra)
 
 ## plot path ####
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
+path_maps <- paste0(dir_path, "/01_code/00_thesis_manuscript/maps/")
+plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
 paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
 ## load data ####
@@ -23,6 +25,7 @@ paste0(dir_path, "/01_code/02_load_data/load_autocorrelation_results.R") %>% bas
 paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_fft_results.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_cpd_results.R") %>% base::source()
+paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
 ## set path were all figures are saved ####
 plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
@@ -490,6 +493,18 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
 
 # plots ####
 
+## 0. basic acoustic detections/dst plots ####
+
+p_length_sex <- ggplot(data = tagged_animal_info) +
+  geom_boxplot(aes(x = sex, y = length1)) +
+  # geom_text(aes(x = group, y = max(value) + 0.2, label = round(max(value), 2)), 
+  #           size = 3, position = position_dodge(width = 0.75)) +
+  geom_text(data = tagged_animal_info %>% group_by(sex) %>% summarise(n = n()),
+            aes(x = sex, y = 98, label = paste0("n =  ", n)), angle = 0, family = "serif") +
+  labs(x = "sex", y = "total length in cm")
+
+save_data(data = p_length_sex, folder = plot_path)
+  
 ## 1. raw depthlogs ####
 
 p_dst_raw_295 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293295"),

@@ -14,6 +14,10 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
 # plots ####
 
+## 0. basic acoustic/dst plots ####
+
+p_length_sex <- load_data(filestring = "p_length_sex", folder = plot_path)
+
 ## 1. raw depth logs ####
 
 p_dst_raw_295 <- load_data(filestring = "p_dst_raw_295", folder = plot_path)

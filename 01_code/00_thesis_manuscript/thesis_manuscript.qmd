@@ -129,28 +129,32 @@ library(kableExtra)
 # load functions 
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
+# 
+# # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+# 
+# dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
+# 
+paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
+
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+#old
+
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
-
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
-
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
-
-# paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
-
-paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
-dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
+
+# paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
+
 ```
 
 ```{r}
 path_maps <- paste0(getwd(), "/01_code/00_thesis_manuscript/maps/")
 path_figures <- paste0(getwd(), "/01_code/00_thesis_manuscript/figures/")
 ```
-
 
 ```{r setplottheme}
 thesis_theme <- ggplot2::theme(
@@ -225,12 +229,12 @@ Signature:
 
 # List of Abbreviations {-}
 
-```{r listofabbreviations}
-abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
-                         Explanation= c("Acoustic Data Storage Tag",
-                                        "Data Storage Tag",
-                                        "Diel Vertical Migration"))
-```
+<!-- ```{r listofabbreviations} -->
+<!-- abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"), -->
+<!--                          Explanation= c("Acoustic Data Storage Tag", -->
+<!--                                         "Data Storage Tag", -->
+<!--                                         "Diel Vertical Migration")) -->
+<!-- ``` -->
 
 
 ```{r table-abbreviations}
@@ -239,7 +243,7 @@ abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
 #| label: tbl-abbreviations
 #| out-width: 90%
 
-knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
+knitr::kable(abbreviations_list) %>% kableExtra::kable_styling(position = "center",
                                                    latex_options = "hold_position")
 
 ```
@@ -624,6 +628,8 @@ A detection probability of >50% was estimated for a radius of 500-700m around th
 
 <!-- *Find out: how many receivers were in the BPNS and the Scheldt?* -->
 
+<!-- rewrite, from goossens 2016 -->
+<!-- The  data  originated  from   6  2     self  -  contained,  single  channe  l  (69  kHz),  submersible     Vemco     acoustic   receivers  . These receivers were attached to buoys and/or   bottom moorings     and were removed either   manually, either with an acoustic release system.   23     acoustic receivers were   deployed     in the BPNS at   spread out position  s and 39 were set up in the Scheldt Estuary in three receiver   array  s. These receivers   were  categorized  into  four  locations,  based  on  their  positions:  offshore,  coast,  Western  and  Eastern   Scheldt  Estuary.  From  July  2014   until   July  2015,  36  fish  were     caught   by  hand  -  line  and     tagged  with  a   Vemco V9  -  1L transmitter with a unique ID, emitting a signal every 110 to 250 seconds     (Vemco 2016)  .   Tagged  cod  were  released  at  their  capture  location  after  recovery  of  the  sedation  and  surgery.   -->
 
 <!-- ::: {#fig-mapdetail} -->
 <!-- ![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png) -->
@@ -660,8 +666,28 @@ tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate
 
 
 Tagging of the 30 *M. asterias* individuals occured in July and August, 2018 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and 12, n = `r tagging_info$n[4]` for both dates).
-Tagged animals were both caught and released in two locations, just west of *Neeltje Jans* (all individuals tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018). 
+Tagged animals were both caught and released in two locations, just west of *Neeltje Jans* (all individuals tagged in July, both 2018 and 2019), and outside the mouth of the Western Scheldt (all individuals tagged in August 2018). The tagging locations are listed in @tbl-releaseloc.
 <!-- The two locations are shown in @fig-map_detail. -->
+
+```{r prepare-releaseloc}
+release_locations  <- release_locations  %>% 
+  rename(`release location` = release_loc,
+         `latitude` = lat,
+         `longitude` = lng)
+```
+
+
+```{r table-animalinfo}
+#| include: true
+#| label: tbl-releaseloc
+#| out-width: 90%
+#| tbl-cap-location: top
+#| tbl-cap: "Tagging locations. All sharks were tagged within a radius of 2 km of the tagging locations."
+
+knitr::kable(release_locations) %>% kableExtra::kable_styling(position = "center", latex_options = "hold_position")
+```
+
+
 
 Animals were caught using line fishing or handline. After capture, each animal was placed in a holding tank filled with sea water. Before the surgery the animals were turned with the ventral side facing upwards to induce tonic immobility [@kessel_2015] and the midventral line was incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was inserted into the abdominal cavity with forceps, and the incision was closed with 2-3 stitches of non-absorbable mono-filament [@goossens_2023].
 
@@ -756,7 +782,38 @@ To group detected change points into change periods, change points that were les
 # Results {#sec-results}
 
 ## Tagged animals
-<!--	TABLE with info on each individuals -->
+
+Details on the tagged individuals is listed in @tbl-animalinfo.
+
+```{r prepare-animalinfo}
+tagged_animal_info  <- tagged_animal_info  %>% 
+  arrange(release_date_time) %>%
+  rename(`tag serial nr.` = tag_serial_number, 
+         `TL (cm)` = length1,
+         `release date` = release_date_time, 
+         `# detected` = n_detect, 
+         `h detected` = hours_detected,
+         `d detected` = days_detected,
+         `days at liberty` = days_at_liberty,
+         `release location` = release_loc,
+         `date last detected` = date_last_detected)
+#%>% relocate(sex, .after = tag_serial_number)
+```
+
+
+```{r table-animalinfo}
+#| include: true
+#| label: tbl-animalinfo
+#| out-width: 90%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. "
+
+knitr::kable(tagged_animal_info) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "hold_position")
+```
+
+*To Do: fix col width for table.*
+
 
 ## Acoustic detections
 
@@ -777,7 +834,7 @@ Upon writing of this thesis, nine tags were recovered, one of which still is wit
 
 ```{r prepare-dstsummary}
 
-dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial nr.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty)
+dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial nr.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty, `tag recapture date` = recapture_date_time)
 ```
 
 
