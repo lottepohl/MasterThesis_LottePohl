@@ -116,8 +116,7 @@ library(dplyr)
 # library(tidyverse)
 # library(leaflet)
 # library(ggplot2)
-# library(tibble)
-# library(knitr)
+library(tibble)
 # library(magrittr)
 library(knitr)
 library(usethis)
@@ -190,6 +189,54 @@ abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
 
 knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
                                                    latex_options = "hold_position")
+
+```
+
+# Tables
+
+```{r tableprepare}
+
+table <- tibble(`A long\ncolumn name` = seq(1:5))
+# table %>% linebreak(align = "c")
+
+```
+
+```{r table-tests}
+#| include: true
+#| echo: true
+#| label: tbl-tests
+#| out-width: 90%
+
+# knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
+#                                                    latex_options = "hold_position")
+
+# table %>%
+#   mutate_all(linebreak(x = table, align = "c")) %>%
+#   kable() %>% #format = 'latex', booktabs = TRUE
+#   kable_styling() %>%
+#   add_header_above(c(" " = 1, "Group 1" = 2, "Group 2" = 2))
+# 
+# library(kableExtra)
+# 
+# # generate a data frame with long column names
+# df <- data.frame("Long\nColumn Name 1" = rnorm(10), "Long\\nColumn Name 2" = rnorm(10))
+# 
+# # use linebreak to introduce line breaks in column names
+# names(df) <- linebreak(names(df), align = "c")
+# 
+# # use kable with booktabs and latex_options
+# kable(df, format = "latex", booktabs = TRUE) %>%
+#   kable_styling(latex_options = c("striped", "scale_down"))
+
+# generate a data frame with long column names
+df <- data.frame("Long.Column.Name.1" = rnorm(10), "Long.Column.Name.2" = rnorm(10))
+
+# replace periods with line breaks in column names
+names(df) <- gsub("\\.", "\\\\\\\\", names(df))
+
+# use kable with booktabs and latex_options
+kable(df, format = "latex", booktabs = TRUE) %>%
+  kable_styling(latex_options = c("striped", "scale_down"))
 
 ```
 

@@ -481,7 +481,7 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 ## Study Area {#sec-mm_studyarea}
 
-*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration? --> solve*
+*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration? solve*
 
 ###	The BPNS and Scheldt Estuary
 
@@ -496,22 +496,21 @@ Between Bergen op Zoom and the island Neeltje Jans (both Netherlands), the Estua
 An overview map of the BPNS and the Scheldt Estuary is provided in @fig-mapdetail.
 Fish and crustacean species composition and abundance underlies strong seasonal patterns, peaking in summer [@maes_1998; @maes_2005]. Seasonally occuring species are marine fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus sprattus*) or Whiting (*Merlangius merlangus*), and abundant crustacean species include the common shrimp (*Crangon crangon*) and the palaemonid shrimp [*Palaemon varians*, @maes_1998].
 
-<!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
 
-Test map cross reference @fig-map.
-
-```{r maptest}
+```{r mapdetail}
 #| include: true
 #| echo: false
-#| label: "fig-map"
-#| fig-cap: "test map."
+#| label: "fig-mapdetail"
+#| fig-cap: "Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt."
 
-
-knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
+knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png", rel_path = FALSE)
 
 ```
 
-Test map cross reference @fig-map.
+
+<!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
+
+<!-- Test map cross reference @fig-map. -->
 <!-- #| out-width: 80% -->
 <!-- ##| layout-ncol: 1 -->
 <!-- ##| column: body #page -->
@@ -586,9 +585,6 @@ Test map cross reference @fig-map.
 <!-- ::: {#fig-map layout-ncol=2} -->
 
 <!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview} -->
-**make sure to include the locations where tag 321 went on the overview map**
-
-**input all the places mentioned in the description of the north sea and the english channel**
 
 <!-- Maps of the study area. -->
 <!-- ::: -->
@@ -607,10 +603,26 @@ Test map cross reference @fig-map.
 
 ###	The English channel
 
-The English Channel (EC) extends from the Dover Strait to England's southwestern tip, spanning 77 000 km^2 [@dauvin_2012]. The mean seafloor depth increases from around 25 m in the east to 75m in the west [@dauvin_2012], except for the 174 m deep *Hurd deep*, a trench located close to the Channel Island Guernsey.
+The English Channel (EC) extends from the Dover Strait to England's southwestern tip, spanning 77 000 km^2^ [@dauvin_2012]. The mean seafloor depth increases from around 25 m in the east to 75m in the west [@dauvin_2012], except for the 174 m deep *Hurd deep*, a trench located close to the Channel Island Guernsey.
+An overview of the English Channel and the North Sea is provided in @fig-mapoverview.
 Shipping, fishing and granulate extraction occurs all over the EC region [@dauvin_2015]. Strong tidal currents from west to east are present, which are higher on the French than on the English coast due to Coriolis force, reaching maximum values of 8 knots at the Cap de la Hague [@salomon_1993]. Tidal circulation influences the composition of superficial seafloor sediments with coarse sediments dominating in areas of strong tidal currents and fine and muddy sediments dominating in bays and estuaries with weaker tidal currents as well as on the English Coast [@larsonneur_1982].
 From the western end up to Guernsey and the Hurd Deep, stratification occurs in summer, which is broken down as water progresses towards the east, resulting no vertical temperature gradient to be present in the eastern EC [@holme_1966]. Seafloor temperatures vary less in the western EC (range: 9 $\circ$ C to 14 $\circ$ C) than in the eastern EC (8 $\circ$ C and 16 $\circ$ C).
 Species living on the seafloor include Crustacea like the edible crab (*Cancer pagurus *), the common spider crab (*Maja squinado *), the European lobster (*Homarus gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
+
+
+
+```{r mapoverview}
+#| include: true
+#| echo: false
+#| label: "fig-mapoverview"
+#| out-width: 100%
+#| fig-cap: "Overview map of the study area. To do: make sure to include the locations where tag 321 went on the overview map, input all the places mentioned in the description of the north sea and the english channel."
+
+knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
+
+```
+
+
 <!-- from dauvin 2015 -->
 
 <!-- in holme 1966 it says that temp in western channel drop below 10 degrees in winter...how does that fit together with the 13 deg temp limit of masterias? -->
@@ -626,7 +638,7 @@ The acoustic receivers of the Permanent Belgian Receiver Network (PBARN) were us
 As of 2019, the PBARN consisted of 177 permanently installed and monitored acoustic receivers within the BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse River [@reubens_2018].
 A detection probability of >50% was estimated for a radius of 500-700m around the receiver [@goossens_2022], and >70% for 200m radius [@reubens_2018].
 
-<!-- *Find out: how many receivers were in the BPNS and the Scheldt?* -->
+
 
 <!-- rewrite, from goossens 2016 -->
 <!-- The  data  originated  from   6  2     self  -  contained,  single  channe  l  (69  kHz),  submersible     Vemco     acoustic   receivers  . These receivers were attached to buoys and/or   bottom moorings     and were removed either   manually, either with an acoustic release system.   23     acoustic receivers were   deployed     in the BPNS at   spread out position  s and 39 were set up in the Scheldt Estuary in three receiver   array  s. These receivers   were  categorized  into  four  locations,  based  on  their  positions:  offshore,  coast,  Western  and  Eastern   Scheldt  Estuary.  From  July  2014   until   July  2015,  36  fish  were     caught   by  hand  -  line  and     tagged  with  a   Vemco V9  -  1L transmitter with a unique ID, emitting a signal every 110 to 250 seconds     (Vemco 2016)  .   Tagged  cod  were  released  at  their  capture  location  after  recovery  of  the  sedation  and  surgery.   -->
@@ -643,8 +655,10 @@ A detection probability of >50% was estimated for a radius of 500-700m around th
 - include outlines of the French and Dutch EEZ and make one colour for EEZ
 - indicate the WS1 and the WS2 array (esp. for vertical space use analysis for acoustic detections)
 
-### Data Management (change title)
+### Data Management
 
+*change title*
+ 
 The database of the European Tracking Network (https://lifewatch.be/etn) stores the acoustic detections, and metadata connected to the animal individuals and the tags used. <!-- make etn link into citation -->
 The data storage log files and the outputs of the geolocation models were accessed and management via the Marine Data Archive (MDA).
 
@@ -804,7 +818,7 @@ tagged_animal_info  <- tagged_animal_info  %>%
 ```{r table-animalinfo}
 #| include: true
 #| label: tbl-animalinfo
-#| out-width: 90%
+#| out-width: 100%
 #| tbl-cap-location: top
 #| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. "
 
