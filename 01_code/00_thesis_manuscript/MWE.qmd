@@ -125,26 +125,29 @@ library(kableExtra)
 # rm(list = ls())
 ```
 
-<!-- ```{r workspace} -->
-<!-- # load functions  -->
-<!-- paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source() -->
+```{r workspace}
+# load functions
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
-<!-- # load plots, data and maps -->
-<!-- # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source() -->
+# load plots, data and maps
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
 
-<!-- paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source() -->
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
-<!-- # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source() -->
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
-<!-- # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source() -->
+# paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
-<!-- paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source() -->
+# paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
-<!-- # paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source() -->
+# paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
-<!-- # paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source() -->
-<!-- dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/")) -->
-<!-- ``` -->
+# paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
+
+# dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
+
+```
 
 <!-- ```{r} -->
 <!-- path_maps <- paste0(getwd(), "/01_code/00_thesis_manuscript/maps/") -->
@@ -194,6 +197,67 @@ knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
 
 # Tables
 
+Details on the tagged individuals are listed in @tbl-animalinfo.
+
+
+```{r prepare-animalinfo}
+# tagged_animal_info  <- tagged_animal_info  %>% 
+#   arrange(release_date_time) %>%
+#   rename(`tag serial nr.` = tag_serial_number, 
+#          `TL (cm)` = length1,
+#          `release date` = release_date_time, 
+#          `# detected` = n_detect, 
+#          `h detected` = hours_detected,
+#          `d detected` = days_detected,
+#          `days at liberty` = days_at_liberty,
+#          `release location` = release_loc,
+#          `date last detected` = date_last_detected)
+# #%>% relocate(sex, .after = tag_serial_number)
+```
+
+
+```{r table-animalinfo}
+#| include: true
+#| label: tbl-animalinfo
+#| out-width: 100%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. To do: exclude animals without detection, put those in Annex (maybe that's a bad idea), fix col width for table."
+
+# dt2$Item <- linebreak(dt2$Item)
+# dt2 %>%
+# kable("latex", booktabs = T, escape = F,
+# caption = "Main Title\\\\Subtitle",
+# col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c"))
+# 
+# tagged_animal_info  <- tagged_animal_info  %>% 
+#   arrange(release_date_time) %>%
+#   rename(`tag serial nr.` = tag_serial_number, 
+#          `TL (cm)` = length1,
+#          `release date` = release_date_time, 
+#          `# detected` = n_detect, 
+#          `h detected` = hours_detected,
+#          `d detected` = days_detected,
+#          `days at liberty` = days_at_liberty,
+#          `release location` = release_loc,
+#          `date last detected` = date_last_detected)
+
+knitr::kable(x = tagged_animal_info %>% 
+               #set column order & order rows
+               dplyr::select(tag_serial_number, sex, length1,
+                             release_date_time, n_detect, days_detected,
+                             hours_detected, date_last_detected, 
+                             days_at_liberty, release_loc) %>%
+               arrange(release_date_time) %>%
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>%
+  kableExtra::kable_styling(position = "center", latex_options = "hold_position")
+```
+
+
+
+see @tbl-tests.
+
 ```{r tableprepare}
 
 table <- tibble(`A long\ncolumn name` = seq(1:5))
@@ -202,41 +266,37 @@ table <- tibble(`A long\ncolumn name` = seq(1:5))
 ```
 
 ```{r table-tests}
-#| include: true
+#| include: false
 #| echo: true
 #| label: tbl-tests
 #| out-width: 90%
 
-# knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
-#                                                    latex_options = "hold_position")
+dt2 <- data.frame(
+Item = c("Hello\nWorld", "This\nis a cat"),
+Value = c(10, 100)
+)
+dt2$Item <- linebreak(dt2$Item)
+dt2 %>%
+kable("latex", booktabs = T, escape = F,
+caption = "Main Title\\\\Subtitle",
+col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c"))
 
-# table %>%
-#   mutate_all(linebreak(x = table, align = "c")) %>%
-#   kable() %>% #format = 'latex', booktabs = TRUE
-#   kable_styling() %>%
-#   add_header_above(c(" " = 1, "Group 1" = 2, "Group 2" = 2))
-# 
+
 # library(kableExtra)
 # 
 # # generate a data frame with long column names
-# df <- data.frame("Long\nColumn Name 1" = rnorm(10), "Long\\nColumn Name 2" = rnorm(10))
+# df <- data.frame("Long\nColumn Name 1" = rnorm(10), "Long \n Column Name 2" = rnorm(10))
 # 
-# # use linebreak to introduce line breaks in column names
-# names(df) <- linebreak(names(df), align = "c")
-# 
+# knitr::kable(df) %>% kableExtra::kable_styling(position = "center",
+#                                                    latex_options = "hold_position")
+
 # # use kable with booktabs and latex_options
-# kable(df, format = "latex", booktabs = TRUE) %>%
-#   kable_styling(latex_options = c("striped", "scale_down"))
+# kable(df, format = "latex", booktabs = TRUE) %>% #,      latex_options = "hold_position"
+#   kable_styling(latex_options = c("striped", "scale_down")) %>%
+#   # use column_spec to fix column widths and force line breaks
+#   column_spec(1:2, width = "3cm") #, escape = FALSE
+# 
 
-# generate a data frame with long column names
-df <- data.frame("Long.Column.Name.1" = rnorm(10), "Long.Column.Name.2" = rnorm(10))
-
-# replace periods with line breaks in column names
-names(df) <- gsub("\\.", "\\\\\\\\", names(df))
-
-# use kable with booktabs and latex_options
-kable(df, format = "latex", booktabs = TRUE) %>%
-  kable_styling(latex_options = c("striped", "scale_down"))
 
 ```
 

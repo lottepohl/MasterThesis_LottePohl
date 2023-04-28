@@ -495,6 +495,7 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
 
 ## 0. basic acoustic detections/dst plots ####
 
+### boxplot length per sex
 p_length_sex <- ggplot(data = tagged_animal_info) +
   geom_boxplot(aes(x = sex, y = length1)) +
   # geom_text(aes(x = group, y = max(value) + 0.2, label = round(max(value), 2)), 
