@@ -52,7 +52,7 @@ dst_longterm_periods <- tibble(tag_serial_number = c(rep("1293308", times = 6), 
 
 death_dates <- tibble(
   tag_serial_number = c("1293295", "1293319", "1293322", "1293304", "1293310", "1293312", "1293308", "1293321"),
-  death_date = c("2018-08-20", "2018-08-08", "2018-08-08", "2019-07-21", "2019-08-13", "2019-08-07", "2019-12-12", "2019-12-12"))
+  death_date = c("2018-08-19", "2018-08-08", "2018-08-08", "2019-07-21", "2019-08-13", "2019-08-07", "2019-12-12", "2019-12-12"))
 
 # 2. day/night, dusk/dawn with `masterias_dst_geolocation_output` ####
 masterias_depth_temp_summary <- masterias_depth_temp %>% 
@@ -429,7 +429,7 @@ long_dst_date <- masterias_depth_date %>%
          depth_range_sgolay = depth_range %>% signal::sgolayfilt(p = 5, n = 7),
          depth_max_sgolay = depth_max %>% signal::sgolayfilt(p = 1, n = 5),
          depth_min_sgolay = depth_min %>% signal::sgolayfilt(p = 1, n = 5)) %>%
-  tidyr::drop_na() %>%
+  # tidyr::drop_na() %>%
   ungroup()
 
 

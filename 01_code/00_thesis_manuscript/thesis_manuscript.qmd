@@ -54,7 +54,7 @@ abstract:
 keywords: 
   - acoustic telemetry
   - geolocation modelling
-  - Mustelus asterias
+  - mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
 execute:
@@ -126,6 +126,9 @@ library(kableExtra)
 ```
 
 ```{r workspace}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
 # load functions 
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
@@ -158,12 +161,12 @@ path_figures <- paste0(getwd(), "/01_code/00_thesis_manuscript/figures/")
 
 ```{r setplottheme}
 thesis_theme <- ggplot2::theme(
-  plot.title = element_text(family = "serif", size = 12, face = "bold"),
-  plot.subtitle = element_text(family = "serif", size = 12),
-  axis.title = element_text(family = "serif", size = 12),
-  axis.text = element_text(family = "serif", size = 10),
-  legend.title = element_text(family = "serif", size = 12),
-  legend.text = element_text(family = "serif", size = 10),
+  plot.title = element_text(family = "serif", size = 9, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 9),
+  axis.title = element_text(family = "serif", size = 9),
+  axis.text = element_text(family = "serif", size = 7),
+  legend.title = element_text(family = "serif", size = 9),
+  legend.text = element_text(family = "serif", size = 7),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
   # panel.background = element_rect(fill = "transparent"),
@@ -208,13 +211,19 @@ metadata) must also be included in the thesis manuscript as an annex. Thesis man
 - unpublished data and personal communication shall not be cited but included as footnotes.
 - reference style: https://paperpile.com/s/animal-biotelemetry-citation-style/
   1. Meyer E. Physics. Controlling friction atom by atom. Science. 2015;348:1089.
-  
-## Markdown syntax {-}
-Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013].
 
-## General Questions to Jan, Niels and Carlota {-}
+<!-- ## Markdown syntax {-} -->
+<!-- Here is some normal text, and then we'll use the \mycommand{custom command} to make this text bold. Also, this is a reference test @dodge_2013. And to combine references, we can use this [@nathan_2008; @dodge_2013]. -->
 
-- active or passive style of writing? I learned to write passively but I see a lot of active writing in literature (i.e. "we did this" instead of "this was done")
+# Questions to Jan, Niels and Carlota {-}
+1. active or passive style of writing? I learned to write passively but I see a lot of active writing in literature (i.e. we did this instead of this was done)
+
+2. how should I include the geolocation model output of tag 308 and 321? It is not sth that I did, so it should not go in my results. Thus, intro? and how? It would be nice to show a map and underneath the raw depth- and temperature log. But these logs are kind of a result, and I want to put the raw plots in my results section to build up on that. But then I have sth similar both in the intro and the results? I cannot do that..
+
+3. how do I structure my results best? I am indecisive between making 1 big figure per tag containing the raw depth and temp log, the autocorrelation plot, the fft periodogram and the daily summary statistics&vertical movement. In my eyes, this makes the most sense since then you have all result plots at once for each tag, but it also is a lot of information and might be overwhelming. The alternative would be to make subchapters for `daily summaries`, `fft`, `raw depthlogs` etc and plot all plots from the same category for each tag. What do you think would be best?
+
+4. I have trouble defining the study area: is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration?
+I find it important to introduce those habitats as well, because in the discussion I want to talk about food availability and living conditions in the english channel & northern north sea to relate to the putative migration paths. But it also gets long in the methods to describe all 4 areas: the BPNS, the Scheldt Estuary
 
 {{< pagebreak >}}
 
@@ -329,7 +338,8 @@ Details about the CPD algorithm chosen for the present study are explained in @s
 
 <!-- *put knowledge about the species into context of related species* -->
 
-The starry smooth-hound shark (*Mustelus asterias*, Cloquet 1819) is a medium-sized triakid elasmobranch, measuring around 30 cm in total length (TL) at birth and 120 cm (females) and 100 cm (males) when reaching sexual maturity [@farrell_2010]. It can attain up to 140 cm TL [@mccullyphillips_2015].
+The starry smooth-hound shark (*Mustelus asterias*, Cloquet 1819) is a medium-sized triakid elasmobranch, measuring around 30 cm in total length (TL) at birth and 100 cm (males) and 120 cm (females) when reaching sexual maturity [@farrell_2010]. It can attain up to 140 cm TL [@mccullyphillips_2015]. Sexual maturity is reached at 4-5 and 6 years of age for males and females, respectively, and longevity is 13 years and 18 years for males and females, respectively @farrell_2010.
+
 
 ###	Abundance
 
@@ -368,12 +378,16 @@ Annual migration is part of the life cycle of adult *M. asterias*, with females 
 
 @goossens_2023 used a geolocation model approach with a two-state HMM following the geolocation approach by @woillez_2016. The inferred daily locations of two *M. asterias* individuals tagged in 2018 are shown in @fig-mapgeolocation.
 
-<!-- **map with geolocation output by Jolien here** -->
+```{r mapgeolocation}
+#| include: true
+#| echo: false
+#| label: "fig-mapgeolocation"
+#| out-width: 85%
+#| fig-cap: "Placeholder for a map of the geolocation output for 308 and 321. But I kind of cannot put the raw dst depthlog in there right? bc that kind of is a result? Have to check with J/C/N."
 
-**MAP**
-<!-- ::: {#fig-mapgeolocation} -->
-<!-- ![Placeholder for the geolocation output map(s)](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map_geolocation_output_placeholder.png) -->
-<!-- ::: -->
+knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map_geolocation_output_placeholder.png", rel_path = FALSE)
+
+```
 
 
 <!-- also found in other sharks, eg the tope shark (Colloca 2019, from breve 2020) -->
@@ -481,7 +495,8 @@ into a format that transmit relevant messages to one/several groups of non-scien
 
 ## Study Area {#sec-mm_studyarea}
 
-*is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration? solve*
+<!-- Lennox et al. 2022 referenced EMODnet Bathymetry in their figure caption:  -->
+<!-- Base map provided by EMODnet  https://doi.org/10.12770/bb6a87dd-e579-4036abe1-e649cea9881a   -->
 
 ###	The BPNS and Scheldt Estuary
 
@@ -767,6 +782,8 @@ A Fast Fourier Transform (FFT) was performed on all DST logs
 <!-- **To do: remove rolling mean but instead use sgolay filter for all, p = 1 and n = 5** -->
 The following steps were only performed on the longterm DST logs, that is, tag 1293308 and 1293321.
 
+<!-- include function settings for CWT: dt = 1, factor_smallest_scale = 2) -->
+
 Continuous Wavelet Transform (CWT) was performed on the daily summary statistics of the longterm DST depthlogs, using the *'biwavelet'*-package. In contrast to FFT, this method gives insights into the occurrence of certain frequencies within the time domain. Thus, not only information about the dominant frequencies is gathered, but also when in the time signal those frequencies appear. In order to resolve the components of the frequency domain within the time domain, however, the resolution of both is minimised (following Heisenberg's uncertainty principle). To obtain robust and valid results despite the resolution loss, frequencies were compared against white noise using a $\chi^2$ test. Only frequencies that significantly differed from white noise were incorporated into further analyses (**CWT reference**).
 <!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
 Finally, daily summary statistics were used to detect abrupt changes in the depth time series, indicating the start of a migration phase. Following @aminikhanghahi_2017, *Relative unconstrained Least-Squares Importance Fitting* [RuLSIF, @liu_2013] is a robust method which is adequate to use with non-stationary (i.e., statistical properties such as the mean, or autocorrelation are non-constant over time) time series data like the dataset at hand. 
@@ -777,7 +794,7 @@ RuLSIF was employed with the *'ts_detect()'*-function from the *'rulsif.ts'*-pac
 Hyperparameters are non-learned settings of a machine learning algorithm that control the learning behaviour during the algorithm's training [@yang_2020].
 Several hyperparameters needed to be chosen: the relative parameter $\alpha$, the window size *w*, the number of samples before and after a data point to compare between (*step*), and the threshold of the relative PE score above which a time point is classified as a change point (*thresh*).
 Hyperparameters were either chosen based on already established settings (here, $\alpha$ was kept at the function's default of 0.05) of the RuLSIF algorithm, based on ecological properties of the dataset (*w* = 7, because roughly one week long migrations were expected), or logical reasoning (*thresh = 0.95*, higher than the default 0.9, thus requiring the divergence measure (the rPE score) to be relatively high for a point to be classified as a change point). 
-As default in the *`ts_detect()`*, *step* is set to 10% of the amount of time points in the dataset used, but it is advised to decrease the step if computational resources allow for it [since smaller steps increase computation time, @brubaker_2021]. In the present study, RuLSIF was performed for different values of *step*: 2.5%, 5% and 10% of the input dataset length. For example, the DST 321 logged for 471 days, and a *step* of 5% of the input dataset length would amount to a *step* of 24 (days, rounded to the nearest integer).
+As default in *`ts_detect()`*, *step* is set to 10% of the amount of time points in the dataset used, but it is advised to decrease the step if computational resources allow for it [since smaller steps increase computation time, @brubaker_2021]. In the present study, RuLSIF was performed for different values of *step*: 2.5%, 5% and 10% of the input dataset length. For example, the DST 321 logged for 471 days, and a *step* of 5% of the input dataset length would amount to a *step* of 24 (days, rounded to the nearest integer).
 To group detected change points into change periods, change points that were less than 7 days apart from each other were classified as the same change period.
 
 
@@ -799,28 +816,14 @@ To group detected change points into change periods, change points that were les
 Tagging of 30 *M. asterias* individuals occured in July and August, 2018 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and 12, n = `r tagging_info$n[4]` for both dates).
 Details on the tagged individuals are listed in @tbl-animalinfo.
 
-```{r prepare-animalinfo}
-# tagged_animal_info  <- tagged_animal_info  %>% 
-#   arrange(release_date_time) %>%
-#   rename(`tag serial nr.` = tag_serial_number, 
-#          `TL (cm)` = length1,
-#          `release date` = release_date_time, 
-#          `# detected` = n_detect, 
-#          `h detected` = hours_detected,
-#          `d detected` = days_detected,
-#          `days at liberty` = days_at_liberty,
-#          `release location` = release_loc,
-#          `date last detected` = date_last_detected)
-# #%>% relocate(sex, .after = tag_serial_number)
-```
-
+<!-- say sth about the tagging locations and refer to  (see @tbl-releaseloc and @fig-mapdetail) (doesn't work in table caption) -->
 
 ```{r table-animalinfo}
 #| include: true
 #| label: tbl-animalinfo
 #| out-width: 100%
 #| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. To do: exclude animals without detection, put those in Annex (maybe that's a bad idea), fix col width for table."
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt."
 
 # dt2$Item <- linebreak(dt2$Item)
 # dt2 %>%
@@ -846,24 +849,65 @@ knitr::kable(x = tagged_animal_info %>%
                              release_date_time, n_detect, days_detected,
                              hours_detected, date_last_detected, 
                              days_at_liberty, release_loc) %>%
-               arrange(release_date_time),
+               arrange(release_date_time) %>%
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
              booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial nr.", "sex", "TL (cm)", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>%
-  kableExtra::kable_styling(position = "center", latex_options = "hold_position")
+             col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
 
 
+
+<!-- ```{r table-animalinfo} -->
+<!-- #| include: true -->
+<!-- #| label: tbl-animalinfo -->
+<!-- #| out-width: 100% -->
+<!-- #| tbl-cap-location: top -->
+<!-- #| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. To do: exclude animals without detection, put those in Annex (maybe that's a bad idea), fix col width for table." -->
+
+
+
+<!-- # dt2$Item <- linebreak(dt2$Item) -->
+<!-- # dt2 %>% -->
+<!-- # kable("latex", booktabs = T, escape = F, -->
+<!-- # caption = "Main Title\\\\Subtitle", -->
+<!-- # col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c")) -->
+<!-- #  -->
+<!-- # tagged_animal_info  <- tagged_animal_info  %>%  -->
+<!-- #   arrange(release_date_time) %>% -->
+<!-- #   rename(`tag serial nr.` = tag_serial_number,  -->
+<!-- #          `TL (cm)` = length1, -->
+<!-- #          `release date` = release_date_time,  -->
+<!-- #          `# detected` = n_detect,  -->
+<!-- #          `h detected` = hours_detected, -->
+<!-- #          `d detected` = days_detected, -->
+<!-- #          `days at liberty` = days_at_liberty, -->
+<!-- #          `release location` = release_loc, -->
+<!-- #          `date last detected` = date_last_detected) -->
+
+<!-- knitr::kable(x = tagged_animal_info %>%  -->
+<!--                #set column order & order rows -->
+<!--                dplyr::select(tag_serial_number, sex, length1, -->
+<!--                              release_date_time, n_detect, days_detected, -->
+<!--                              hours_detected, date_last_detected,  -->
+<!--                              days_at_liberty, release_loc) %>% -->
+<!--                arrange(release_date_time), -->
+<!--              booktabs = T, escape = F, -->
+<!--              col.names = linebreak(c("tag serial nr.", "sex", "TL (cm)", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>% -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = "hold_position") -->
+<!-- ``` -->
 
 ```{r ttestlength}
 length_ttest <- t.test(x = tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1), y = tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1), alternative = "greater")
 ```
 
 
-Females were significantly larger than males (one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* = `r length_ttest$p.value`), see @fig-lengthboxplot.
+Females (n = `r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()`, mean TL = `r tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)`) were significantly larger than males (n = `r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()`, mean TL = `r tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)`, one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* = `r length_ttest$p.value`).
+<!-- , see @fig-lengthboxplot. -->
 
 
 ```{r lengthboxplot}
-#| include: true
+#| include: false
 #| label: fig-lengthboxplot
 #| out-width: 75%
 #| fig-cap: "Total Length of all tagged sharks (n~total~ = 30), per sex."
@@ -901,202 +945,345 @@ dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% re
 #| label: tbl-dstsum
 #| out-width: 90%
 #| tbl-cap-location: top
-#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date."
+#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date. The tag recapture date was not recorded for all tags."
 
-knitr::kable(dst_summary %>% arrange(`release date`)) %>% kableExtra::kable_styling(position = "center", latex_options = "hold_position")
+knitr::kable(dst_summary %>% arrange(`release date`)) %>% kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
+
+*Write stuff about which tags logged for long and which did not.*
+*For the short term DST logs, tag 295 will be further discussed (?).*
+
+```{r allresults308}
+#| include: false
+#| label: fig-allresults308
+#| out-width: 100%
+#| layout-ncol: 2
+#| fig-cap: "Results for tag 308."
+#| fig-pos: "H"
+
+# if I do one big figure per tag, I should have the page in landscape orientation
+
+p_dst_raw_308
+
+p_acf_308
+
+p_308_sum_stats
+
+p_fft_308
+```
+
 
 
 ### Raw depth and temperature logs
 
-todo: write tagging year in caption, include temperature!
-
-The depth log of tag 295 is shown in @fig-dst295.
+The depth log of tag 295 is shown in @fig-dst295. The depth logs of the two long term DST are shown in @fig-dst308 and @fig-dst321. The remaining depth logs are depicted in the Annex (*ref to annex*).
 
 <!-- <!-- dst_summary %>% filter(`tag serial nr.` == "1293295") %>% dplyr::select(`release date`) %>% pull() %>% format("%B %d, %Y"). -->
 
 ```{r rawdepthlog295}
 #| include: true
 #| label: fig-dst295
-#| out-width: 75%
-#| fig-cap: "Depth log from the recovered tag 295. This male was tagged on July 19, 2018. Question: include raw depthlogs of 308 and 321?"
+#| out-width: 95%
+#| fig-height: 2
+#| fig-cap: "Depth log from the recovered tag 295. This female was tagged on August 2, 2018."
 #| fig-pos: "H"
 
 p_dst_raw_295
 ```
 
 
+```{r rawdepthlog308}
+#| include: true
+#| label: fig-dst308
+#| out-width: 95%
+#| fig-height: 2
+#| fig-cap: "Depth log from the recovered tag 308. This female was tagged on August 2, 2018."
+#| fig-pos: "H"
 
-<!-- ### Geolocation model outputs (include?) -->
+p_dst_raw_308
+```
 
-<!-- *Question: I didn't do this: include y/n?* -->
-<!-- <!-- iii.	MAP: geolocation outputs of recovered short-term dst tags (include) --> -->
+
+```{r rawdepthlog321}
+#| include: true
+#| label: fig-dst321
+#| out-width: 95%
+#| fig-height: 2
+#| fig-cap: "Depth log from the recovered tag 321. This male was tagged on July 19, 2018."
+#| fig-pos: "H"
+
+p_dst_raw_321
+```
+
+### Autocorrelation
+
+The autocorrelation plots of the two long term DST logs are shown in @fig-acf308 and @fig-acf321.
+
+
+```{r acf308}
+#| include: true
+#| label: fig-acf308
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Autocorrelation plot from the recovered tag 308. This female was tagged on August 02, 2018."
+#| fig-pos: "H"
+
+p_acf_308
+```
+
+
+
+```{r acf321}
+#| include: true
+#| label: fig-acf321
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Autocorrelation plot from the recovered tag 321. This male was tagged on July 19, 2018."
+#| fig-pos: "H"
+
+p_acf_321
+```
+
+
+### Fast Fourier Transform (FFT)
+
+The resulting periodograms from the Fast Fourier Transform for tags 295 (*m*), 308 (*f*) and 321 (*m*) are depicted below.
+
+```{r fft295}
+#| include: true
+#| label: fig-fft295
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Periodogram from the recovered tag 295. This male was tagged on August 02, 2018 with 31 days of liberty."
+#| fig-pos: "H"
+
+p_fft_295
+```
+
+
+
+```{r fft308}
+#| include: true
+#| label: fig-fft308
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Periodogram from the recovered tag 308. This female was tagged on August 02, 2018."
+#| fig-pos: "H"
+
+p_fft_308
+```
+
+
+
+```{r fft321}
+#| include: true
+#| label: fig-fft321
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Periodogram from the recovered tag 321. This male was tagged on July 19, 2018."
+#| fig-pos: "H"
+
+p_fft_321
+```
+
 
 ### Summary statistics {#sec-results-dst-summary}
 
 <!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
 
-The summary statistics of the depthlogs of tags 308 and 321 are displayed below.
-<!-- in @fig-dstsum. -->
-<!-- Let's check if the cross referencing of sections works, see @sec-intro. -->
+The summary statistics of the depthlogs of tags 308 and 321 are displayed in @fig-dstsum308 and in @fig-dstsum321.
+The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).
 
-**To Do: incorporate 2nd y axis for depth median change**
 
-```{r testdstsum}
+
+```{r dstsum308}
 #| include: true
-#| fig-cap: "Test caption."
-#| fig-subcap:
-#| - "test1"
-#| - "test2"
-#| layout-ncol: 1
-#| fig-pos: h!
+#| label: fig-dstsum308
+#| out-width: 95%
+#| fig-height: 2.5
+#| fig-cap: "Daily median depth, and maximum and minimum depth in the ribbon."
+#| fig-pos: "H"
 
 p_308_sum_stats
+```
+
+
+```{r dstsum321}
+#| include: true
+#| label: fig-dstsum321
+#| out-width: 95%
+#| fig-height: 2.5
+#| fig-cap: "Daily median depth, and maximum and minimum depth in the ribbon."
+#| fig-pos: "H"
 
 p_321_sum_stats
 ```
 
 
-<!-- ```{r dstsummary} -->
-<!-- #| include: true -->
-<!-- #| label: fig-dstsum -->
-<!-- #| fig-cap: "test." -->
-<!-- #| fig-subcap: -->
-<!-- #|   - "Tag 308" -->
-<!-- #|   - "Tag 321" -->
-<!-- ## | column: body-outset -->
-<!-- #| out-width: 80% -->
-<!-- #| fig.align: "center" -->
-<!-- #| layout-ncol: 1 -->
-
-<!-- p_308_sum_stats -->
-
-<!-- p_321_sum_stats -->
-<!-- ``` -->
-
 <!-- Daily summary statistics for tag 308 and tag 321. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).  -->
-
-<!-- The result of the autocorrelation analysis is shown in @fig-acf. -->
-
-<!-- ```{r acf} -->
-<!-- #| include: true -->
-<!-- #| label: fig-acf -->
-<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
-<!-- #| fig-subcap: -->
-<!-- #|   - "Tag 308" -->
-<!-- #|   - "Tag 321" -->
-<!-- ## | column: body-outset -->
-<!-- #| out-width: 80% -->
-<!-- #| fig.align: "center" -->
-<!-- #| layout-ncol: 1 -->
-
-<!-- p_acf_308 -->
-
-<!-- p_acf_321 -->
-<!-- ``` -->
-
-<!-- The result of the Fast Fourier Transform performed on the raw depthlogs is shown in @fig-fft, for tag 295, 308 ad 321. -->
-
-<!-- ```{r fft} -->
-<!-- #| include: true -->
-<!-- #| label: fig-fft -->
-<!-- #| fig-cap: "Autocorrelation plots of the daily median depth." -->
-<!-- #| fig-subcap: -->
-<!-- #|   - "Tag 295" -->
-<!-- #|   - "Tag 308" -->
-<!-- #|   - "Tag 321" -->
-<!-- ## | column: body-outset -->
-<!-- #| out-width: 100% -->
-<!-- #| fig.align: "center" -->
-<!-- #| layout-ncol: 1 -->
-
-<!-- p_fft_295 -->
-
-<!-- p_fft_308 -->
-
-<!-- p_fft_321 -->
-<!-- ``` -->
-
 
 ### Wavelet analysis
 
-```{r wavelet-median}
-#| include: true
-#| label: fig-wave_depthmedian
-#| layout-ncol: 1
-#| column: body #page
-#| fig-width: 8
-#| fig-cap: "Wavelet transform results from the daily median depth."
-#| fig-subcap: 
-#| - "female shark (tag 308)"
-#| - "male shark (tag 321)"
-#| 
-p_308_wavelet_depth_median_roll3
+The wavelet transform results of the daily median, maximum and minimum depth for tag 308 and 321 are shown below, in @fig-waveletresults308 and @fig-waveletresults321. A Savitzky-Golay smoothing filter was applied to all daily summary statistics, as described in @sec-mm_dsts.
 
-p_321_wavelet_depth_median_roll3
+```{r wavelet308}
+#| include: true
+#| label: fig-waveletresults308
+#| fig-pos: "H!"
+#| layout-ncol: 1
+#| out-width: 100%
+#| fig-height: 2.5
+#| fig-cap: "Wavelet transform results from the daily median depth. The fully opaque areas refer to periods that significantly differ from white noise."
+#| fig-subcap: 
+#| - "Daily median depth"
+#| - "Daily minimum depth"
+#| - "Daily maximum depth"
+
+p_308_wavelet_depth_median_sgolay
+p_308_wavelet_depth_min_sgolay
+p_308_wavelet_depth_max_sgolay
 ```
 
 
-```{r wavelet-min}
+```{r wavelet321}
 #| include: true
-#| label: fig-wave_depthmin
+#| label: fig-waveletresults321
 #| layout-ncol: 1
-#| column: body #page
-#| fig-width: 8
-#| fig-cap: "Wavelet transform results from the daily minimum depth."
+#| out-width: 100%
+#| fig-height: 2.5
+#| fig-cap: "Wavelet transform results from the daily median depth. The fully opaque areas refer to periods that significantly differ from white noise."
 #| fig-subcap: 
-#| - "female shark (tag 308)"
-#| - "male shark (tag 321)"
-#| 
-p_308_wavelet_depth_min
-p_321_wavelet_depth_min
+#| - "Daily median depth"
+#| - "Daily minimum depth"
+#| - "Daily maximum depth"
+#| fig-pos: "H!"
+p_321_wavelet_depth_median_sgolay
+p_321_wavelet_depth_min_sgolay
+p_321_wavelet_depth_max_sgolay
 ```
-
-
-<!-- ```{r wave_depthmedian_308} -->
-<!-- ##| layout: [[40,-20,40], [100]] -->
-<!-- #| include: true -->
-<!-- #| label: fig-wave_depthmedian_308 -->
-<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 308). All depth values were smoothed with a rolling mean over 3 days." -->
-<!-- #| fig-subcap: -->
-<!-- #|   - "daily median depth" -->
-<!-- #|   - "change of daily median depth." -->
-<!-- ## | column: body-outset -->
-<!-- #| out-width: 80% -->
-<!-- #| fig.align: "center" -->
-<!-- #| layout-ncol: 1 -->
-
-<!-- p_308_wavelet_depth_median_roll3 -->
-
-<!-- p_308_wavelet_depth_median_change_roll3 -->
-
-<!-- ``` -->
-
-
-
-<!-- ```{r wave_depthmedian_321} -->
-<!-- ##| layout: [[40,-20,40], [100]] -->
-<!-- #| include: true -->
-<!-- #| label: fig-wave_depthmedian_321 -->
-<!-- #| fig-cap: "Wavelet plots of daily median depth summary statistics of the female shark (tag 321). All depth values were smoothed with a rolling mean over 3 days." -->
-<!-- #| fig-subcap: -->
-<!-- #|   - "daily median depth" -->
-<!-- #|   - "change of daily median depth." -->
-<!-- ## | column: body-outset -->
-<!-- #| out-width: 80% -->
-<!-- #| fig.align: "center" -->
-<!-- #| layout-ncol: 1 -->
-
-<!-- p_321_wavelet_depth_median_roll3 -->
-
-<!-- p_321_wavelet_depth_median_change_roll3 -->
-
-<!-- ``` -->
 
 ### Change Point Detection
 
+#### Tag 308
 
-<!-- ix.	wavelet plot and frequency spectrum of putative migration period raw depthlogs -->
+```{r rulsif30825}
+#| include: true
+#| label: fig-rulsif30825
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 2.5
+#| fig-cap: "Rulsif results for tag 308, step = 2.5 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_308_ribbon_rulsif_2_5percent
+
+p_308_scores_rulsif_2_5percent
+
+```
+
+
+
+```{r rulsif3085}
+#| include: true
+#| label: fig-rulsif3085
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 2
+#| fig-cap: "Rulsif results for tag 308, step = 5 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_308_ribbon_rulsif_5percent
+
+p_308_scores_rulsif_5percent
+
+```
+
+
+```{r rulsif3085}
+#| include: true
+#| label: fig-rulsif30810
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Rulsif results for tag 308, step = 10 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_308_ribbon_rulsif_10percent
+
+p_308_scores_rulsif_10percent
+
+```
+
+#### Tag 321
+
+```{r rulsif32125}
+#| include: true
+#| echo: false
+#| label: fig-rulsif32125
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 3
+#| fig-cap: "Rulsif results for tag 321, step = 2.5 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_321_ribbon_rulsif_2_5percent
+
+p_321_scores_rulsif_2_5percent
+
+```
+
+
+
+```{r rulsif3215}
+#| include: true
+#| label: fig-rulsif3215
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 2
+#| fig-cap: "Rulsif results for tag 321, step = 5 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_321_ribbon_rulsif_5percent
+
+p_321_scores_rulsif_5percent
+
+```
+
+
+```{r rulsif3215}
+#| include: true
+#| label: fig-rulsif32110
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 1.5
+#| fig-cap: "Rulsif results for tag 321, step = 10 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| fig-pos: "H"
+
+p_321_ribbon_rulsif_10percent
+
+p_321_scores_rulsif_10percent
+
+```
+
+
 
 # Discussion
 
@@ -1119,6 +1306,13 @@ The results show deeper waters utilised by *M. asterias* around a receiver than 
 
 ##	Tag recoveries
 
+### Tag sensitivity
+
+2% - 5% tag to body weight ratio. study by brown and japsen (or sth), eels and cyprinid are more robust --> pieterjan, here ratio max 1.4% so from the study's point of view, the sharks should it have taken alright
+
+**effect: as soon as you do any observation on animals, you interfere with the system
+ that means: all tagging has an effect** discuss
+
 ###	Possible death reasons of short term dst’s
 
 -	Tagging consequences
@@ -1127,6 +1321,9 @@ The results show deeper waters utilised by *M. asterias* around a receiver than 
 -	Laying dead on seafloor (tidal signal)
 
 ##	Ecological inferences from migration dataset analysis
+
+- intensity of dial patterns in different periods for tag 308 and 321
+  - e.g. periods of 6 and 12 h stronger present in 308 than 321: what could that mean? different foraging strategy or diet? Literature on sex-specific diet?
 
 ###	Vertical patterns during migration
 

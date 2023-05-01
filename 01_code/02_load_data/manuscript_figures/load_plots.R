@@ -42,17 +42,28 @@ p_fft_321 <- load_data(filestring = "p_fft_321", folder = plot_path)
 
 ## 5. wavelet results ####
 
-p_308_wavelet_depth_median_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_roll3", folder = plot_path)
-p_321_wavelet_depth_median_roll3 <- load_data(filestring = "p_321_wavelet_depth_median_roll3", folder = plot_path)
+p_308_wavelet_depth_median_sgolay <- load_data(filestring = "p_308_wavelet_depth_median_sgolay", folder = plot_path)
+p_308_wavelet_depth_min_sgolay <- load_data(filestring = "p_308_wavelet_depth_min_sgolay", folder = plot_path)
+p_308_wavelet_depth_max_sgolay <- load_data(filestring = "p_308_wavelet_depth_max_sgolay", folder = plot_path)
 
-p_308_wavelet_depth_median_change_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_change_roll3", folder = plot_path)
-p_321_wavelet_depth_median_change_roll3 <- load_data(filestring = "p_321_wavelet_depth_median_change_roll3", folder = plot_path)
+p_321_wavelet_depth_median_sgolay <- load_data(filestring = "p_321_wavelet_depth_median_sgolay", folder = plot_path)
+p_321_wavelet_depth_min_sgolay <- load_data(filestring = "p_321_wavelet_depth_min_sgolay", folder = plot_path)
+p_321_wavelet_depth_max_sgolay <- load_data(filestring = "p_321_wavelet_depth_max_sgolay", folder = plot_path)
 
-p_308_wavelet_depth_min <- load_data(filestring = "p_308_wavelet_depth_min", folder = plot_path)
-p_321_wavelet_depth_min <- load_data(filestring = "p_321_wavelet_depth_min", folder = plot_path)
+# p_308_wavelet_depth_median_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_roll3", folder = plot_path)
+# p_321_wavelet_depth_median_roll3 <- load_data(filestring = "p_321_wavelet_depth_median_roll3", folder = plot_path)
+# 
+# p_308_wavelet_depth_median_change_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_change_roll3", folder = plot_path)
+# p_321_wavelet_depth_median_change_roll3 <- load_data(filestring = "p_321_wavelet_depth_median_change_roll3", folder = plot_path)
 
-p_308_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_308_wavelet_maxdepth_change_roll3", folder = plot_path)
-p_321_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_321_wavelet_maxdepth_change_roll3", folder = plot_path)
+# p_308_wavelet_depth_min <- load_data(filestring = "p_308_wavelet_depth_min", folder = plot_path)
+# p_321_wavelet_depth_min <- load_data(filestring = "p_321_wavelet_depth_min", folder = plot_path)
+
+# p_308_wavelet_depth_max <- load_data(filestring = "p_308_wavelet_depth_max", folder = plot_path)
+# p_321_wavelet_depth_max <- load_data(filestring = "p_321_wavelet_depth_max", folder = plot_path)
+
+# p_308_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_308_wavelet_maxdepth_change_roll3", folder = plot_path)
+# p_321_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_321_wavelet_maxdepth_change_roll3", folder = plot_path)
 
 ## 6. change point detection results ####
 

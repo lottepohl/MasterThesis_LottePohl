@@ -34,12 +34,12 @@ plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
 # set plot theme ####
 
 thesis_theme <- ggplot2::theme(
-  plot.title = element_text(family = "serif", size = 12, face = "bold"),
-  plot.subtitle = element_text(family = "serif", size = 12),
-  axis.title = element_text(family = "serif", size = 12),
-  axis.text = element_text(family = "serif", size = 10),
-  legend.title = element_text(family = "serif", size = 12),
-  legend.text = element_text(family = "serif", size = 10),
+  plot.title = element_text(family = "serif", size = 11, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 11),
+  axis.title = element_text(family = "serif", size = 11),
+  axis.text = element_text(family = "serif", size = 9),
+  legend.title = element_text(family = "serif", size = 11),
+  legend.text = element_text(family = "serif", size = 9),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
   # panel.background = element_rect(fill = "transparent"),
@@ -64,12 +64,17 @@ plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
   }
   # date_breaks <- ifelse((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300, "6 weeks", "1 week")
   # angle <- ifelse((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300, 50, 0)
-  dst_plot <- ggplot2::ggplot(data = data) + geom_point(aes(x = .data[[time_vector]], y = -depth_m), size = 0.5) + 
+  dst_plot <- ggplot2::ggplot(data = data) + geom_point(aes(x = .data[[time_vector]], y = -depth_m, color = temp_c), size = 0.5) + 
     # scale_y_continuous(limits = c(-80, 5), breaks = seq(-70, 0, by = 10)) +
     # scale_y_continuous(expand = c((-data$depth_m %>% min()) - 2, (-data$depth_m %>% max()) + 2)) +
     scale_x_datetime(date_breaks = date_breaks, date_labels = "%b %d") + #, %y
     theme(axis.text.x = element_text(angle = angle, hjust = 0.5)) + #
-    labs(x = "date", y = "depth in m") #title = paste0("tag ", tag_serial_number_short), 
+    # scale_colour_distiller(palette ="Spectral") +
+    # scale_color_gradient2(low = "#003399", mid = "#b30000", high = "#ff8c1a") +
+    scale_color_gradientn(colors = c("#003399", "#b30000", "#ff8c1a")) +
+    labs(x = "Date", y = "Depth in m", color = "Temperature in °C") #+ #title = paste0("tag ", tag_serial_number_short), 
+    # theme(legend.position = "bottom",
+    #       legend.box = "horizontal")
   return(dst_plot)
 }
 
@@ -79,7 +84,7 @@ plot_dst_autocorrelation <- function(acf_df){
   acf_plot <- ggplot(data = acf_df, mapping = aes(x = lag, y = acf)) +
     geom_hline(aes(yintercept = 0)) +
     geom_segment(mapping = aes(xend = lag, yend = 0)) +
-    labs(y = "autocorrelation", x = "lag in days") #, title = "tag 308 (female), daily median depth roll3"
+    labs(y = "Autocorrelation", x = "Lag in days") #, title = "tag 308 (female), daily median depth roll3"
   return(acf_plot)
 }
 
@@ -91,24 +96,52 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
            filter(tag_serial_number == tag_serial_num) %>% 
            mutate(t_days = t_days %>% as.numeric())) +
     geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = 3, fill = "DVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
+             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
     geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = 3, fill = "rDVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
+             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
     geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = 3, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-    geom_line(aes(x = date, y = -depth_median_roll3, colour = "median")) +
-    geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "range"), alpha = 0.2) +
-    geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "median change")) + # %>% abs()
-    scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
+             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+    # geom_rect(data = data_DVM %>% filter(tag_serial_number == tag_serial_num),
+    #             aes(x = date_24hcycle,
+    #                 ymin = -70,
+    #                 ymax = 0,
+    #                 fill = vertical_movement)) +
+    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 1) +
+    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
+    # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
+    scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) + #, %y
     theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "date", y = "depth (change) in m") +  
-    scale_colour_manual(name = "", values = c("median" = "black", "range" = "transparent", "change of range" = "black", "median change" = "purple",
-                                              "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #
-    scale_fill_manual(name = "", values = c("range" = "transparent", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
-                                            "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
-  theme(legend.position = "bottom",
-        legend.box = "horizontal")
+    labs(x = "Date", y = "Depth in m") +  
+    scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+                                              "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+    scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+    
+    theme(legend.position = "bottom",
+          legend.box = "horizontal")
+  
+  # ggplot(data = data_depth %>% ungroup() %>% 
+  #          filter(tag_serial_number == tag_serial_num) %>% 
+  #          mutate(t_days = t_days %>% as.numeric())) +
+  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+  #            aes(x = date_24hcycle, y = 3, fill = "DVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
+  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+  #            aes(x = date_24hcycle, y = 3, fill = "rDVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
+  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+  #            aes(x = date_24hcycle, y = 3, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
+  #   geom_line(aes(x = date, y = -depth_median_roll3, colour = "median")) +
+  #   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "range"), alpha = 0.2) +
+  #   geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "median change")) + # %>% abs()
+  #   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
+  #   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
+  #   scale_y_continuous(expand = c(0,0)) +
+  #   labs(x = "date", y = "depth (change) in m") +  
+  #   scale_colour_manual(name = "", values = c("median" = "black", "range" = "transparent", "change of range" = "black", "median change" = "purple",
+  #                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #
+  #   scale_fill_manual(name = "", values = c("range" = "transparent", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
+  # theme(legend.position = "bottom",
+  #       legend.box = "horizontal")
   
 }
 
@@ -145,7 +178,7 @@ plot_fft <- function(fft_result, tag_serial_number_short, period_upperlim = 40, 
     geom_line(aes(x = period, y = spec), colour = "black") +
     scale_y_continuous(expand = c(0,0)) +
     scale_x_continuous(expand = c(0,0), breaks = seq(2, period_upperlim, by = 2)) +
-    labs(y = "spectral density", x = "period in hours") #, title = paste0("tag ", tag_serial_number_short)
+    labs(y = "Spectral density", x = "Period in hours") #, title = paste0("tag ", tag_serial_number_short)
   return(periodogram)
 }
 
@@ -188,7 +221,9 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   # scale_x_discrete(breaks = x_breaks) +
                   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "date", y = "period in hours", fill = "log2(power)") #+
+                  labs(x = "Date", y = "Period in hours", fill = "log2(Power)") #+
+                  # theme(legend.position = "bottom",
+                  #       legend.box = "horizontal")
                 # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                 ,
                 
@@ -323,7 +358,7 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
                 fill = "yellow", alpha = 0.25) +
     geom_line(colour = "black") + 
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "rPE score")
+    labs(x = "Date", y = "rPE Score")
   
   # p_scores
   
@@ -452,7 +487,15 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
                   end_date = max(date)) %>%
     dplyr::select(CP_period, start_date, end_date) %>%
     # mutate(CP_period = CP_period %>% as.factor()) %>%
-    distinct()
+    distinct()%>%
+    mutate(duration = base::difftime(end_date + lubridate::days(1), start_date, units = "days") %>% 
+             as.numeric()) %>%
+    dplyr::filter(duration > 3) %>% #only keep the periods that last more than 3 days
+    ungroup() %>%
+    mutate(CP_period_new = 1:n()) #make new CP_periods count
+  
+  df_c_points <- df_c_points %>%
+    dplyr::filter(CP_period %in% (df_c_points_week$CP_period %>% unique()))
   
   # plots 
   p_data <- ggplot() +
@@ -466,15 +509,16 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
     geom_vline(data = df_c_points, aes(xintercept = date, colour = CP_period %>% as.factor()), alpha = 1) +
     geom_line(aes(x = dates$date, y = var_df %>% dplyr::select(contains("median")) %>% pull())) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
+    labs(x = "Date", y = "Depth in m", fill = "CP period", colour = "CP period") +
     # theme(legend.position = "bottom",
     #       legend.box = "horizontal")
-    theme(legend.position="bottom", legend.direction="horizontal")
+    theme(legend.position="bottom", legend.direction="horizontal") #"bottom"
   
   # p_data
   return(p_data)
   
 }
+
 
 
 # plot_all_rulsif_data <- function(rulsif_result, var_list, tag_serial_num_short, all_data){
@@ -502,7 +546,7 @@ p_length_sex <- ggplot(data = tagged_animal_info) +
   #           size = 3, position = position_dodge(width = 0.75)) +
   geom_text(data = tagged_animal_info %>% group_by(sex) %>% summarise(n = n()),
             aes(x = sex, y = 98, label = paste0("n =  ", n)), angle = 0, family = "serif") +
-  labs(x = "sex", y = "total length in cm")
+  labs(x = "Sex", y = "Total Length in cm")
 
 save_data(data = p_length_sex, folder = plot_path)
   
@@ -553,8 +597,37 @@ p_fft_321 <- plot_fft(fft_result = fft_321,
 # p_fft_321
 save_data(data = p_fft_321, folder = plot_path)
 
-
 ## 4. summary statistics ####
+
+# p <- ggplot(data = data_depth %>% ungroup() %>% 
+#          filter(tag_serial_number == tag_serial_num) %>% 
+#          mutate(t_days = t_days %>% as.numeric())) +
+#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+#   # geom_rect(data = data_DVM %>% filter(tag_serial_number == tag_serial_num),
+#   #             aes(x = date_24hcycle,
+#   #                 ymin = -70,
+#   #                 ymax = 0,
+#   #                 fill = vertical_movement)) +
+#   geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 1) +
+#   geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
+#   # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
+#   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
+#   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
+#   scale_y_continuous(expand = c(0,0)) +
+#   labs(x = "date", y = "depth in m") +  
+#   scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+#                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+#   scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+# 
+#   theme(legend.position = "bottom",
+#         legend.box = "horizontal")
+# 
+#  p #%>% ggplotly()
 
 p_308_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
                                       data_DVM = masterias_DVM_sum_day,
@@ -595,6 +668,30 @@ p_308_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_308_mindepth,
 # p_308_wavelet_depth_min
 save_data(data = p_308_wavelet_depth_min, folder = plot_path)
 
+p_308_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_308_maxdepth,
+                                        type = "power_log") 
+
+# p_308_wavelet_depth_max
+save_data(data = p_308_wavelet_depth_max, folder = plot_path)
+
+p_308_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_308_mediandepth_sgolay,
+                                                 type = "power_log") 
+
+# p_308_wavelet_depth_median_sgolay
+save_data(data = p_308_wavelet_depth_median_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_308_mindepth_sgolay,
+                                                  type = "power_log") 
+
+# p_308_wavelet_depth_min_sgolay
+save_data(data = p_308_wavelet_depth_min_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_308_maxdepth_sgolay,
+                                                  type = "power_log") 
+
+# p_308_wavelet_depth_max_sgolay
+save_data(data = p_308_wavelet_depth_max_sgolay, folder = plot_path)
+
 ### tag 321 ####
 
 p_321_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_roll3,
@@ -622,6 +719,29 @@ p_321_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_321_mindepth,
 # p_321_wavelet_depth_min
 save_data(data = p_321_wavelet_depth_min, folder = plot_path)
 
+p_321_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_321_maxdepth,
+                                        type = "power_log") 
+
+# p_321_wavelet_depth_max
+save_data(data = p_321_wavelet_depth_max, folder = plot_path)
+
+p_321_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_321_mediandepth_sgolay,
+                                                  type = "power_log") 
+
+# p_321_wavelet_depth_median_sgolay
+save_data(data = p_321_wavelet_depth_median_sgolay, folder = plot_path)
+
+p_321_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_321_mindepth_sgolay,
+                                               type = "power_log") 
+
+# p_321_wavelet_depth_min_sgolay
+save_data(data = p_321_wavelet_depth_min_sgolay, folder = plot_path)
+
+p_321_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_321_maxdepth_sgolay,
+                                               type = "power_log") 
+
+# p_321_wavelet_depth_max_sgolay
+save_data(data = p_321_wavelet_depth_max_sgolay, folder = plot_path)
 
 ## 6. Change Point Detections ####
 
@@ -639,7 +759,7 @@ p_308_ribbon_rulsif_2_5percent <- plot_rulsif_data_ribbon(rulsif_result = rulsif
                                                           var = var_list,
                                                           tag_serial_num_short = "308")
 save_data(data = p_308_ribbon_rulsif_2_5percent, folder = plot_path)
-# grid.arrange(p_308_ribbon_rulsif_2_5percent, p_308_scores_rulsif_2_5percent, ncol = 1)
+grid.arrange(p_308_ribbon_rulsif_2_5percent, p_308_scores_rulsif_2_5percent, ncol = 1)
 
 # step = 5 %
 p_308_scores_rulsif_5percent <- plot_rulsif_scores(rulsif_result = rulsif_308_res_5percent,

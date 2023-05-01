@@ -133,7 +133,7 @@ paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% ba
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
@@ -318,97 +318,50 @@ knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/Maste
 ```
 
 Test map cross reference @fig-map.
-<!-- #| out-width: 80% -->
-<!-- ##| layout-ncol: 1 -->
-<!-- ##| column: body #page -->
-<!-- ##| fig-width: 6 -->
 
-
-<!-- ::: {#fig-map} -->
-<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
-<!-- ::: -->
-
-
-<!-- ####	Human activities -->
-
-<!-- -	Windfarms -->
-<!-- -	Shipwrecks -->
-<!-- -	Submarine power and telecommunication cables -->
+# Plots
 
 
 
-<!-- MAP: BPNS with cables, windfarms and shipwrecks -->
-<!-- Maybe 2 maps next to each other, one with acoustic receivers (+ sub areas/receiver arrays, and 2 tagging locations) and one with the human activities (bc 1 map will be too full?) -->
-<!-- Mention that for the windfarms and cables, the years are filtered to be <= 2020 -->
+```{r allresults308}
+#| include: true
+#| label: fig-allresults308
+#| out-width: 85%
+#| fig-height: 2.5
+#| layout-ncol: 1
+#| fig-cap: "All results for tag 308."
+#| fig-subcap: 
+#| - "Raw depthlog."
+#| - "Autocorrelation of daily median depth (?)"
+#| - "Daily median, minimum and maximum depth and daily vertical migration behaviour."
+#| - "periodogram of the raw depth data"
+#| fig-pos: "H"
 
-<!-- ```{r map1overview} -->
-<!-- #| include: false -->
-<!-- #| label: fig-map1overview -->
-<!-- #| fig-cap: "Map of the study area." -->
-<!-- # map1_overview -->
-<!-- ``` -->
+p_dst_raw_308
 
-<!-- ```{r map2detail} -->
-<!-- #| include: false -->
-<!-- #| label: fig-map2detail -->
-<!-- #| fig-cap: "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
+p_acf_308
 
-<!-- # map2_detail -->
-<!-- ``` -->
+p_308_sum_stats
+
+p_fft_308
+```
 
 
-<!-- ```{r} -->
-<!-- #| include: false -->
-<!-- #| label: fig-map2 -->
+
+<!-- ```{r wavelet-median} -->
+<!-- #| include: true -->
+<!-- #| label: fig-wave_depthmedian -->
 <!-- #| layout-ncol: 1 -->
 <!-- #| column: body #page -->
-<!-- #| fig-width: 6 -->
+<!-- #| fig-width: 8 -->
+<!-- #| fig-cap: "Wavelet transform results from the daily median depth." -->
 <!-- #| fig-subcap:  -->
-<!-- #| - "Map of the study area." -->
-<!-- #| - "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
+<!-- #| - "female shark (tag 308)" -->
+<!-- #| - "male shark (tag 321)" -->
 
-<!-- # knitr::include_graphics(paste0(path_maps, "map1_overview_manual.png")) -->
-<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map1_overview_manual.png") -->
+<!-- p_308_wavelet_depth_median_roll3 -->
 
-<!-- knitr::include_graphics("map1_overview_manual.png") -->
-<!-- knitr::include_graphics("map2_detail_manual.png") -->
-
-<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map2_detail_manual.png") -->
-<!-- # knitr::include_graphics(paste0(path_maps, "maps/map2_detail_manual.png")) -->
+<!-- p_321_wavelet_depth_median_roll3 -->
 <!-- ``` -->
 
-<!-- ```{r} -->
-<!-- #| include: true -->
-<!-- #| label: fig-map -->
-
-<!-- knitr::include_graphics("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/map1_overview_manual.png", auto_pdf = FALSE) -->
-<!-- ``` -->
-
-**MAP**
-
-<!-- ::: {#fig-map} -->
-<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
-<!-- ::: -->
-
-<!-- ::: {#fig-map layout-ncol=2} -->
-
-<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview} -->
-**make sure to include the locations where tag 321 went on the overview map**
-
-**input all the places mentioned in the description of the north sea and the english channel**
-
-<!-- Maps of the study area. -->
-<!-- ::: -->
-
-<!-- ###	The Scheldt Estuary -->
-
-<!-- ####	The Westerschelde -->
-
-<!-- MAP: Schelde with bathymetry raster or contour lines --> 
-
-<!-- -	Acoustic receiver arrays in WS -->
-<!-- -	Mixing -->
-<!-- -	Salinity -->
-<!-- -	Food abundance for the sharks -->
-<!-- -	Biodiversity and most prominent species -->
 
