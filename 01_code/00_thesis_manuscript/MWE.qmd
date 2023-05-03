@@ -174,158 +174,80 @@ paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% bas
 <!-- ggplot2::theme_set(thesis_theme) -->
 <!-- ``` -->
 
-# List of Abbreviations {-}
-
-```{r listofabbreviations}
-abbrev <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
-                         Explanation= c("Acoustic Data Storage Tag",
-                                        "Data Storage Tag",
-                                        "Diel Vertical Migration"))
-```
-
-
-```{r table-abbreviations}
-#| include: true
-##| echo: false
-#| label: tbl-abbreviations
-#| out-width: 90%
-
-knitr::kable(abbrev) %>% kableExtra::kable_styling(position = "center",
-                                                   latex_options = "hold_position")
-
-```
-
-# Tables
-
-Details on the tagged individuals are listed in @tbl-animalinfo.
-
-
-```{r prepare-animalinfo}
-# tagged_animal_info  <- tagged_animal_info  %>% 
-#   arrange(release_date_time) %>%
-#   rename(`tag serial nr.` = tag_serial_number, 
-#          `TL (cm)` = length1,
-#          `release date` = release_date_time, 
-#          `# detected` = n_detect, 
-#          `h detected` = hours_detected,
-#          `d detected` = days_detected,
-#          `days at liberty` = days_at_liberty,
-#          `release location` = release_loc,
-#          `date last detected` = date_last_detected)
-# #%>% relocate(sex, .after = tag_serial_number)
-```
-
-
-```{r table-animalinfo}
-#| include: true
-#| label: tbl-animalinfo
-#| out-width: 100%
-#| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. To do: exclude animals without detection, put those in Annex (maybe that's a bad idea), fix col width for table."
-
-# dt2$Item <- linebreak(dt2$Item)
-# dt2 %>%
-# kable("latex", booktabs = T, escape = F,
-# caption = "Main Title\\\\Subtitle",
-# col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c"))
-# 
-# tagged_animal_info  <- tagged_animal_info  %>% 
-#   arrange(release_date_time) %>%
-#   rename(`tag serial nr.` = tag_serial_number, 
-#          `TL (cm)` = length1,
-#          `release date` = release_date_time, 
-#          `# detected` = n_detect, 
-#          `h detected` = hours_detected,
-#          `d detected` = days_detected,
-#          `days at liberty` = days_at_liberty,
-#          `release location` = release_loc,
-#          `date last detected` = date_last_detected)
-
-knitr::kable(x = tagged_animal_info %>% 
-               #set column order & order rows
-               dplyr::select(tag_serial_number, sex, length1,
-                             release_date_time, n_detect, days_detected,
-                             hours_detected, date_last_detected, 
-                             days_at_liberty, release_loc) %>%
-               arrange(release_date_time) %>%
-               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>%
-  kableExtra::kable_styling(position = "center", latex_options = "hold_position")
-```
-
-
-
-see @tbl-tests.
-
-```{r tableprepare}
-
-table <- tibble(`A long\ncolumn name` = seq(1:5))
-# table %>% linebreak(align = "c")
-
-```
-
-```{r table-tests}
-#| include: false
-#| echo: true
-#| label: tbl-tests
-#| out-width: 90%
-
-dt2 <- data.frame(
-Item = c("Hello\nWorld", "This\nis a cat"),
-Value = c(10, 100)
-)
-dt2$Item <- linebreak(dt2$Item)
-dt2 %>%
-kable("latex", booktabs = T, escape = F,
-caption = "Main Title\\\\Subtitle",
-col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c"))
-
-
-# library(kableExtra)
-# 
-# # generate a data frame with long column names
-# df <- data.frame("Long\nColumn Name 1" = rnorm(10), "Long \n Column Name 2" = rnorm(10))
-# 
-# knitr::kable(df) %>% kableExtra::kable_styling(position = "center",
-#                                                    latex_options = "hold_position")
-
-# # use kable with booktabs and latex_options
-# kable(df, format = "latex", booktabs = TRUE) %>% #,      latex_options = "hold_position"
-#   kable_styling(latex_options = c("striped", "scale_down")) %>%
-#   # use column_spec to fix column widths and force line breaks
-#   column_spec(1:2, width = "3cm") #, escape = FALSE
-# 
-
-
-```
-
-
-# Maps
-
-
-Test map cross reference @fig-map.
-
-```{r maptest}
-#| include: true
-#| echo: false
-#| label: "fig-map"
-#| fig-cap: "test map."
-
-
-knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
-
-```
-
-Test map cross reference @fig-map.
-
 # Plots
 
+A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown below
+<!-- in @fig-rulsif30825 and in @tbl-tblrulsif30825. -->
+
+```{r}
+#| include: false
+#| layout: [[60,-1, 39], [100]]
+#| fig-cap: "A plot"
+#| tbl-cap: "A table"
 
 
-```{r allresults308}
+# plot on the left
+p_308_ribbon_rulsif_2_5percent
+
+# table on the right
+knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+<!-- #| layout-valign: bottom -->
+<!-- #| cap-location: bottom -->
+
+<!-- :::{layout-ncol=2} -->
+
+```{r rulsif30825}
 #| include: true
-#| label: fig-allresults308
+#| label: fig-rulsif30825
+#| layout-nrow: 2
+#| fig-cap: "Rulsif results for tag 308, step = 2.5 %."
+#| fig-subcap: 
+#| - "Change point periods."
+#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
+#| fig-pos: "H"
+#| out-width: 100%
+
+p_308_ribbon_rulsif_2_5percent
+
+knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+
+p_308_scores_rulsif_2_5percent
+
+```
+<!-- #| fig-subcap:  -->
+<!-- #| - "Change point periods." -->
+<!-- #| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow." -->
+
+<!-- #| fig-height: 2.5 -->
+<!-- #| out-width: 95% -->
+
+```{r table-rulsif30825}
+#| include: false
+#| label: tbl-tblrulsif30825
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
+#| out-width: 35%
+
+knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+<!-- #| out-width: 90% -->
+<!-- ::: -->
+
+```{r allresults3082}
+#| include: false
+#| label: fig-allresults3082
 #| out-width: 85%
 #| fig-height: 2.5
 #| layout-ncol: 1
@@ -337,31 +259,12 @@ Test map cross reference @fig-map.
 #| - "periodogram of the raw depth data"
 #| fig-pos: "H"
 
-p_dst_raw_308
-
-p_acf_308
-
-p_308_sum_stats
-
-p_fft_308
+# ggplot(masterias_detections_clean) +
+#   geom_point(mapping = aes(x = date_time, y = tag_serial_number, color = area, pch = sex),
+#              size = 5) + #
+#   ggsci::scale_color_jco() +
+#   labs(x = "Date", y = "Tag serial number", color = "Area", pch = "Sex") +
+#   theme_minimal()
 ```
-
-
-
-<!-- ```{r wavelet-median} -->
-<!-- #| include: true -->
-<!-- #| label: fig-wave_depthmedian -->
-<!-- #| layout-ncol: 1 -->
-<!-- #| column: body #page -->
-<!-- #| fig-width: 8 -->
-<!-- #| fig-cap: "Wavelet transform results from the daily median depth." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "female shark (tag 308)" -->
-<!-- #| - "male shark (tag 321)" -->
-
-<!-- p_308_wavelet_depth_median_roll3 -->
-
-<!-- p_321_wavelet_depth_median_roll3 -->
-<!-- ``` -->
 
 

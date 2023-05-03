@@ -16,7 +16,7 @@ tables_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/tables/")
 paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base::source()
-
+paste0(dir_path, "/01_code/02_load_data/load_cpd_results.R") %>% base::source()
 
 # table 1: list of abbreviations ####
 
@@ -76,10 +76,116 @@ dst_summary <- masterias_depth_date %>%
          recapture_date_time = recapture_date_time %>% as.Date())
 # include max and min depth, and max and min temp?
 
+# 6. change periods ####
+
+var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
+
+get_change_periods <- function(rulsif_result, var = var_list, tag_serial_num_short, all_data, time_vector = "date"){
+  
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+  
+  # # add rulsif_result$step length days of data from the last day
+  # pad_data_end <- tibble(date = seq(from = all_data$date %>% max() + lubridate::days(1), to = (all_data$date %>% max()) + lubridate::days(rulsif_result$step), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[(nrow(all_data) - 10) :nrow(all_data)]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # pad_data_start <- tibble(date = seq(from = all_data$date %>% min() - lubridate::days(rulsif_result$step), to = (all_data$date %>% min()) - lubridate::days(1), by = "day")) %>%
+  #   mutate(depth_median_sgolay = (mean(all_data$depth_median_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_max_sgolay = (mean(all_data$depth_max_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5),
+  #          depth_min_sgolay = (mean(all_data$depth_min_sgolay[1:10]) + rnorm(n = rulsif_result$step)) %>% signal::sgolayfilt(p = 1, n = 5))
+  # 
+  # # pad data
+  # all_data <- all_data %>%
+  #   full_join(pad_data_start, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>%
+  #   full_join(pad_data_end, by = join_by(date, depth_median_sgolay, depth_max_sgolay, depth_min_sgolay), multiple = "all") %>% 
+  #   arrange(date)
+  
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+  
+  var_df <- all_data %>% dplyr::select(var %>% all_of()) 
+  var_df <- -var_df
+  
+  # change_points
+  c_points <- rulsif_result$change_points %>% 
+    as.data.frame() %>% 
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+  
+  df_c_points <- dates %>% 
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+  
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+  
+  df_c_points_week <- df_c_points %>% 
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date),
+                  end_date = max(date)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct()%>%
+    mutate(duration = base::difftime(end_date + lubridate::days(1), start_date, units = "days") %>% 
+             as.numeric()) %>%
+    dplyr::filter(duration > 3) %>% #only keep the periods that last more than 3 days
+    ungroup() %>%
+    dplyr::mutate(CP_period_new = 1:n(), #make new CP_periods count
+                  step = rulsif_result$step) %>%
+    dplyr::relocate(CP_period_new, .before = CP_period)
+  
+  return(df_c_points_week)
+  
+}
+
+# tag 308 ####
+rulsif_308_table_2_5percent <- get_change_periods(rulsif_result = rulsif_308_res_2_5percent, 
+                         tag_serial_num_short = "308",
+                         all_data = long_dst_date)
+
+rulsif_308_table_5percent <- get_change_periods(rulsif_result = rulsif_308_res_5percent, 
+                                                  tag_serial_num_short = "308",
+                                                  all_data = long_dst_date)
+
+rulsif_308_table_10percent <- get_change_periods(rulsif_result = rulsif_308_res_10percent, 
+                                                tag_serial_num_short = "308",
+                                                all_data = long_dst_date)
+
+# tag 321 ####
+rulsif_321_table_2_5percent <- get_change_periods(rulsif_result = rulsif_321_res_2_5percent, 
+                                                  tag_serial_num_short = "321",
+                                                  all_data = long_dst_date)
+
+rulsif_321_table_5percent <- get_change_periods(rulsif_result = rulsif_321_res_5percent, 
+                                                tag_serial_num_short = "321",
+                                                all_data = long_dst_date)
+
+rulsif_321_table_10percent <- get_change_periods(rulsif_result = rulsif_321_res_10percent, 
+                                                 tag_serial_num_short = "321",
+                                                 all_data = long_dst_date)
 
 # save tables #####
 save_data(data = dst_summary, folder = tables_path)
 save_data(data = tagged_animal_info, folder = tables_path)
 save_data(data = release_locations, folder = tables_path)
 save_data(data = abbreviations_list, folder = tables_path)
+
+save_data(data = rulsif_308_table_2_5percent, folder = tables_path)
+save_data(data = rulsif_308_table_5percent, folder = tables_path)
+save_data(data = rulsif_308_table_10percent, folder = tables_path)
+
+save_data(data = rulsif_321_table_2_5percent, folder = tables_path)
+save_data(data = rulsif_321_table_5percent, folder = tables_path)
+save_data(data = rulsif_321_table_10percent, folder = tables_path)
+
 

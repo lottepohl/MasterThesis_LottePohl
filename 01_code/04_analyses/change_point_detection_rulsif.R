@@ -70,46 +70,46 @@ compute_rulsif <- function(all_data = long_dst_date, tag_serial_num_short = "321
 
 ## get change point periods ####
 # not necessarily needed for the analysis but potentially helpful for the manuscript (to e.g. generate a table): migrated to 'thesis_manuscript_tables'
-# get_change_point_periods <- function(rulsif_result, tag_serial_num_short, all_data, time_vector = "date"){
-#   
-#   all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
-#   
-#   dates <- all_data %>% dplyr::select(time_vector %>% all_of())
-#   
-#   # change_points
-#   c_points <- rulsif_result$change_points %>% 
-#     as.data.frame() %>% 
-#     `colnames<-`("r_num") %>%
-#     mutate(c_point = TRUE)
-#   
-#   df_c_points <- dates %>% 
-#     mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
-#     left_join(c_points, by = "r_num") %>%
-#     dplyr::filter(c_point == TRUE) %>%
-#     dplyr::select(date) %>%
-#     dplyr::mutate(week = date %>% lubridate::week(),
-#                   year = date %>% lubridate::year(),
-#                   CP_period = 1) %>%
-#     mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
-#   
-#   for(i in 2:nrow(df_c_points)){
-#     if(df_c_points$week_diff[i] <= 1){
-#       df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
-#     }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
-#   }
-#   
-#   df_c_points_week <- df_c_points %>% 
-#     # dplyr::ungroup() %>%
-#     dplyr::group_by(CP_period) %>%
-#     dplyr::mutate(start_date = min(date, na.rm = T),
-#                   end_date = max(date, na.rm = T)) %>%
-#     dplyr::select(CP_period, start_date, end_date) %>%
-#     # mutate(CP_period = CP_period %>% as.factor()) %>%
-#     distinct() %>%
-#     dplyr::mutate(step = rulsif_result$step)
-#   
-#   return(df_c_points_week)
-# }
+get_change_point_periods <- function(rulsif_result, tag_serial_num_short, all_data, time_vector = "date"){
+
+  all_data <- all_data %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short))
+
+  dates <- all_data %>% dplyr::select(time_vector %>% all_of())
+
+  # change_points
+  c_points <- rulsif_result$change_points %>%
+    as.data.frame() %>%
+    `colnames<-`("r_num") %>%
+    mutate(c_point = TRUE)
+
+  df_c_points <- dates %>%
+    mutate(r_num = seq(from = 1, to = nrow(dates))) %>%
+    left_join(c_points, by = "r_num") %>%
+    dplyr::filter(c_point == TRUE) %>%
+    dplyr::select(date) %>%
+    dplyr::mutate(week = date %>% lubridate::week(),
+                  year = date %>% lubridate::year(),
+                  CP_period = 1) %>%
+    mutate(week_diff = (week - dplyr::lag(week, default = week[1])) %>% abs())
+
+  for(i in 2:nrow(df_c_points)){
+    if(df_c_points$week_diff[i] <= 1){
+      df_c_points$CP_period[i] <- df_c_points$CP_period[i-1]
+    }else{df_c_points$CP_period[i] <- df_c_points$CP_period[i-1] + 1}
+  }
+
+  df_c_points_week <- df_c_points %>%
+    # dplyr::ungroup() %>%
+    dplyr::group_by(CP_period) %>%
+    dplyr::mutate(start_date = min(date, na.rm = T),
+                  end_date = max(date, na.rm = T)) %>%
+    dplyr::select(CP_period, start_date, end_date) %>%
+    # mutate(CP_period = CP_period %>% as.factor()) %>%
+    distinct() %>%
+    dplyr::mutate(step = rulsif_result$step)
+
+  return(df_c_points_week)
+}
 
 # var list prepare ####
 
@@ -434,22 +434,22 @@ rulsif_321_table_15percent <- get_change_point_periods(rulsif_result = rulsif_32
 
 # save data ####
 save_data(data = rulsif_308_res_2_5percent, folder = rulsif_data_path)
-save_data(data = rulsif_308_table_2_5percent, folder = rulsif_data_path)
+# save_data(data = rulsif_308_table_2_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_res_5percent, folder = rulsif_data_path)
-save_data(data = rulsif_308_table_5percent, folder = rulsif_data_path)
+# save_data(data = rulsif_308_table_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_res_10percent, folder = rulsif_data_path)
-save_data(data = rulsif_308_table_10percent, folder = rulsif_data_path)
+# save_data(data = rulsif_308_table_10percent, folder = rulsif_data_path)
 save_data(data = rulsif_308_res_15percent, folder = rulsif_data_path)
-save_data(data = rulsif_308_table_15percent, folder = rulsif_data_path)
+# save_data(data = rulsif_308_table_15percent, folder = rulsif_data_path)
 
 save_data(data = rulsif_321_res_2_5percent, folder = rulsif_data_path)
-save_data(data = rulsif_321_table_2_5percent, folder = rulsif_data_path)
+# save_data(data = rulsif_321_table_2_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_321_res_5percent, folder = rulsif_data_path)
-save_data(data = rulsif_321_table_5percent, folder = rulsif_data_path)
+# save_data(data = rulsif_321_table_5percent, folder = rulsif_data_path)
 save_data(data = rulsif_321_res_10percent, folder = rulsif_data_path)
-save_data(data = rulsif_321_table_10percent, folder = rulsif_data_path)
+# save_data(data = rulsif_321_table_10percent, folder = rulsif_data_path)
 save_data(data = rulsif_321_res_15percent, folder = rulsif_data_path)
-save_data(data = rulsif_321_table_15percent, folder = rulsif_data_path)
+# save_data(data = rulsif_321_table_15percent, folder = rulsif_data_path)
 
 # other plots 
 

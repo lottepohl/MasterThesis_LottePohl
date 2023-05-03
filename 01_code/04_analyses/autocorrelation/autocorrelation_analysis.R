@@ -1,7 +1,5 @@
 # Script to carry out autocorrelation analysis on longterm dst plots
 
-
-# library(biwavelet)
 library(dplyr)
 library(plotly)
 library(tibble)
@@ -18,21 +16,24 @@ plot_path <- paste0(getwd(), "/02_results/dst_autocorrelation/")
 
 ## tag 321 ####
 
-acf_321 <- acf(data_321_summary_wt_all$depth_median_roll3, lag.max = 400, type = "correlation", plot = F) 
+# acf_321 <- acf(data_321_summary_wt_all$depth_median_roll3, lag.max = 400, type = "correlation", plot = F) 
+acf_321 <- acf(long_dst_date %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(depth_median_sgolay), lag.max = 400, type = "correlation", plot = F) 
 
 acf_321_df <- data.frame(acf = acf_321$acf,
                         lag = acf_321$lag)
 
-p_acf_321 <- ggplot(data = acf_321_df, mapping = aes(x = lag, y = acf)) +
-  geom_hline(aes(yintercept = 0)) +
-  geom_segment(mapping = aes(xend = lag, yend = 0)) +
-  theme_minimal() +
-  labs(y = "autocorrelation", x = "lag in days", title = "tag 321 (male), daily median depth roll3")
+# p_acf_321 <- ggplot(data = acf_321_df, mapping = aes(x = lag, y = acf)) +
+#   geom_hline(aes(yintercept = 0)) +
+#   geom_segment(mapping = aes(xend = lag, yend = 0)) +
+#   theme_minimal() +
+#   labs(y = "autocorrelation", x = "lag in days", title = "tag 321 (male), daily median depth roll3")
 # p_acf_321 %>% ggplotly()
 
 ## tag 308 ####
 
-acf_308 <- acf(data_308_summary_wt_all$depth_median_roll3, lag.max = 400, type = "correlation", plot = F) 
+# acf_308 <- acf(data_308_summary_wt_all$depth_median_roll3, lag.max = 400, type = "correlation", plot = F) 
+acf_308 <- acf(long_dst_date %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(depth_median_sgolay), lag.max = 400, type = "correlation", plot = F) 
+
 
 acf_308_df <- data.frame(acf = acf_308$acf,
                          lag = acf_308$lag)

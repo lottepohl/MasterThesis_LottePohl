@@ -16,3 +16,11 @@ dst_summary <- load_data(filestring = "dst_summary", folder = tables_path)
 tagged_animal_info <- load_data(filestring = "tagged_animal_info", folder = tables_path)
 release_locations <- load_data(filestring = "release_locations", folder = tables_path)
 abbreviations_list <- load_data(filestring = "abbreviations_list", folder = tables_path)
+
+rulsif_308_table_2_5percent <- load_data(filestring = "rulsif_308_table_2_5percent", folder = tables_path)
+rulsif_308_table_5percent <- load_data(filestring = "rulsif_308_table_5percent", folder = tables_path)
+rulsif_308_table_10percent <- load_data(filestring = "rulsif_308_table_10percent", folder = tables_path)
+
+rulsif_321_table_2_5percent <- load_data(filestring = "rulsif_321_table_2_5percent", folder = tables_path)
+rulsif_321_table_5percent <- load_data(filestring = "rulsif_321_table_5percent", folder = tables_path)
+rulsif_321_table_10percent <- load_data(filestring = "rulsif_321_table_10percent", folder = tables_path)

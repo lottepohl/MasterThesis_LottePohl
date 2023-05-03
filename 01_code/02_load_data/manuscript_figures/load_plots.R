@@ -17,6 +17,10 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 ## 0. basic acoustic/dst plots ####
 
 p_length_sex <- load_data(filestring = "p_length_sex", folder = plot_path)
+p_abacus <- load_data(filestring = "p_abacus", folder = plot_path)
+plot_depth_range <- load_data(filestring = "plot_depth_range", folder = plot_path)
+plot_depth_range_heatmap <- load_data(filestring = "plot_depth_range_heatmap", folder = plot_path)
+
 
 ## 1. raw depth logs ####
 
@@ -28,6 +32,8 @@ p_dst_raw_321 <- load_data(filestring = "p_dst_raw_321", folder = plot_path)
 
 p_acf_308 <- load_data(filestring = "p_acf_308", folder = plot_path)
 p_acf_321 <- load_data(filestring = "p_acf_321", folder = plot_path)
+
+p_308_rulsif_all <- load_data(filestring = "p_308_rulsif_all", folder = plot_path)
 
 ## 3. summary statistics ####
 

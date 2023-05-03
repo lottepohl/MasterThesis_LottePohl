@@ -167,6 +167,7 @@ thesis_theme <- ggplot2::theme(
   axis.text = element_text(family = "serif", size = 7),
   legend.title = element_text(family = "serif", size = 9),
   legend.text = element_text(family = "serif", size = 7),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
   # panel.background = element_rect(fill = "transparent"),
@@ -224,6 +225,8 @@ metadata) must also be included in the thesis manuscript as an annex. Thesis man
 
 4. I have trouble defining the study area: is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration?
 I find it important to introduce those habitats as well, because in the discussion I want to talk about food availability and living conditions in the english channel & northern north sea to relate to the putative migration paths. But it also gets long in the methods to describe all 4 areas: the BPNS, the Scheldt Estuary
+
+5. Do you think that a linear model trying to relate daily summary statistics to identified migration behaviour could make sense. Having the behavioural state (migratory/resident) as dependent variable, and then trying daily median/max/min, but also the vertical migration behaviour, the most prominent periods and maybe even things like the temperature range as independent variables?
 
 {{< pagebreak >}}
 
@@ -920,10 +923,44 @@ p_length_sex
 ## Acoustic detections
 
 Two tags only had a single detection (serial number `r tag_serial_number_omit[1,] %>% dplyr::pull()` and `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted from all further analyses.
-<!-- i.	PLOT: Abacus plot -->
+The acoustic detections of each tag are showh in @fig-abacus.
+
+
+```{r abacus}
+#| include: true
+#| label: fig-abacus
+#| out-width: 95%
+#| fig-height: 3
+#| fig-cap: "Abacus plot of the tagged starry smooth-hounds."
+#| fig-pos: "H"
+
+p_abacus
+```
+
+
 <!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
 
 ###	Vertical space use analysis
+
+Results of the analysis of the vertical space use of *M. asterias* around the acoustic receiver stations in the receiver array just outside the Western Scheldt are shown in @fig-verticalspaceuse.
+
+```{r depthrange}
+#| include: true
+#| label: fig-verticalspaceuse
+#| out-width: 95%
+#| fig-height: 3
+#| layout-ncol: 1
+#| fig-cap: "Results of the vertical space use analysis."
+#| fig-subcap: 
+#| - "Depth range of acoustic detections at each receiver station and the bathymetry in a 200 m radius around the station."
+#| - "Heatmap of the share of detections and bathymetry grid cells per depth bin. Depth was binned every 10 m."
+#| fig-pos: "H"
+
+plot_depth_range
+
+plot_depth_range_heatmap
+```
+
 
 <!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins -->
 <!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? -->
@@ -972,6 +1009,17 @@ p_308_sum_stats
 p_fft_308
 ```
 
+```{r}
+#| include: false
+#| label: fig-allresults308
+#| out-width: 100%
+#| layout-ncol: 2
+#| fig-cap: "Results for tag 308."
+#| fig-pos: "H"
+
+ggplot(data = dst_summary %>% left_join(tagged_animal_info %>% dplyr::select(tag_serial_number, length1), by = "tag_serial_number")) +
+  geom_point(aes(x = time_at_liberty, y = length1, colour = sex), size = 4)
+```
 
 
 ### Raw depth and temperature logs
@@ -1017,7 +1065,7 @@ p_dst_raw_321
 
 ### Autocorrelation
 
-The autocorrelation plots of the two long term DST logs are shown in @fig-acf308 and @fig-acf321.
+The autocorrelation plots of the two long term DST logs are shown in @fig-acf308 and @fig-acf321. The variable used for computing the autocorrelation is the Savitztky-Golay filtered median depth.
 
 
 ```{r acf308}
@@ -1091,8 +1139,8 @@ p_fft_321
 
 <!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
 
-The summary statistics of the depthlogs of tags 308 and 321 are displayed in @fig-dstsum308 and in @fig-dstsum321.
-The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).
+The daily summary statistics of the depthlogs of tags 308 and 321 are displayed in @fig-dstsum308 and in @fig-dstsum321.
+The black line shows the daily median (not the mean since depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).
 
 
 
@@ -1132,8 +1180,8 @@ The wavelet transform results of the daily median, maximum and minimum depth for
 #| fig-pos: "H!"
 #| layout-ncol: 1
 #| out-width: 100%
-#| fig-height: 2.5
-#| fig-cap: "Wavelet transform results from the daily median depth. The fully opaque areas refer to periods that significantly differ from white noise."
+#| fig-height: 2
+#| fig-cap: "Wavelet transform results for tag 308 (f). The fully opaque areas refer to periods that significantly differ from white noise."
 #| fig-subcap: 
 #| - "Daily median depth"
 #| - "Daily minimum depth"
@@ -1150,8 +1198,8 @@ p_308_wavelet_depth_max_sgolay
 #| label: fig-waveletresults321
 #| layout-ncol: 1
 #| out-width: 100%
-#| fig-height: 2.5
-#| fig-cap: "Wavelet transform results from the daily median depth. The fully opaque areas refer to periods that significantly differ from white noise."
+#| fig-height: 2
+#| fig-cap: "Wavelet transform results for tag 321 (m). The fully opaque areas refer to periods that significantly differ from white noise."
 #| fig-subcap: 
 #| - "Daily median depth"
 #| - "Daily minimum depth"
@@ -1166,12 +1214,14 @@ p_321_wavelet_depth_max_sgolay
 
 #### Tag 308
 
+A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30825 and in @tbl-tblrulsif30825.
+
 ```{r rulsif30825}
 #| include: true
 #| label: fig-rulsif30825
 #| layout-ncol: 1
 #| out-width: 95%
-#| fig-height: 2.5
+#| fig-height: 1.5
 #| fig-cap: "Rulsif results for tag 308, step = 2.5 %."
 #| fig-subcap: 
 #| - "Change point periods."
@@ -1185,13 +1235,27 @@ p_308_scores_rulsif_2_5percent
 ```
 
 
+```{r table-rulsif30825}
+#| include: true
+#| label: tbl-tblrulsif30825
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
+
+knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+A step of 5 % of the time vector's length amounts to `r rulsif_321_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3085 and in @tbl-tblrulsif3085.
 
 ```{r rulsif3085}
 #| include: true
 #| label: fig-rulsif3085
 #| layout-ncol: 1
 #| out-width: 95%
-#| fig-height: 2
+#| fig-height: 1.5
 #| fig-cap: "Rulsif results for tag 308, step = 5 %."
 #| fig-subcap: 
 #| - "Change point periods."
@@ -1204,8 +1268,23 @@ p_308_scores_rulsif_5percent
 
 ```
 
+```{r table-rulsif3085}
+#| include: true
+#| label: tbl-tblrulsif3085
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 308 (f)."
 
-```{r rulsif3085}
+knitr::kable(rulsif_321_table_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+
+A step of 10 % of the time vector's length amounts to `r rulsif_321_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30810 and @tbl-tblrulsif30810.
+
+```{r rulsif30810}
 #| include: true
 #| label: fig-rulsif30810
 #| layout-ncol: 1
@@ -1223,15 +1302,48 @@ p_308_scores_rulsif_10percent
 
 ```
 
+
+```{r table-rulsif30810}
+#| include: false
+#| label: tbl-tblrulsif30810
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 308 (f)."
+
+knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+
+
+<!-- ```{r} -->
+<!-- #| layout-ncol: 2 -->
+<!-- #| layout-valign: bottom -->
+<!-- #| cap-location: bottom -->
+<!-- #| fig-cap: "A plot" -->
+<!-- #| tbl-cap: "A table" -->
+
+<!-- library(knitr) -->
+
+<!-- # plot on the left -->
+<!-- plot(cars) -->
+
+<!-- # table on the right -->
+<!-- kable(head(cars)) -->
+<!-- ``` -->
+
 #### Tag 321
+
+A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32125 and in @tbl-tblrulsif32125.
 
 ```{r rulsif32125}
 #| include: true
-#| echo: false
 #| label: fig-rulsif32125
 #| layout-ncol: 1
 #| out-width: 95%
-#| fig-height: 3
+#| fig-height: 1.5
 #| fig-cap: "Rulsif results for tag 321, step = 2.5 %."
 #| fig-subcap: 
 #| - "Change point periods."
@@ -1245,13 +1357,27 @@ p_321_scores_rulsif_2_5percent
 ```
 
 
+```{r table-rulsif32125}
+#| include: true
+#| label: tbl-tblrulsif32125
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 321 (f)."
+
+knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+A step of 5 % of the time vector's length amounts to `r rulsif_321_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3215 and in @tbl-tblrulsif3215.
 
 ```{r rulsif3215}
 #| include: true
 #| label: fig-rulsif3215
 #| layout-ncol: 1
 #| out-width: 95%
-#| fig-height: 2
+#| fig-height: 1.5
 #| fig-cap: "Rulsif results for tag 321, step = 5 %."
 #| fig-subcap: 
 #| - "Change point periods."
@@ -1264,8 +1390,23 @@ p_321_scores_rulsif_5percent
 
 ```
 
+```{r table-rulsif3215}
+#| include: true
+#| label: tbl-tblrulsif3215
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 321 (f)."
 
-```{r rulsif3215}
+knitr::kable(rulsif_321_table_5percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+
+A step of 10 % of the time vector's length amounts to `r rulsif_321_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32110 and @tbl-tblrulsif32110.
+
+```{r rulsif32110}
 #| include: true
 #| label: fig-rulsif32110
 #| layout-ncol: 1
@@ -1284,9 +1425,24 @@ p_321_scores_rulsif_10percent
 ```
 
 
+```{r table-rulsif32110}
+#| include: false
+#| label: tbl-tblrulsif32110
+#| out-width: 40%
+#| tbl-cap-location: top
+#| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 321 (f)."
+
+knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+
 
 # Discussion
 
+- relate the DVM to change periods: can patterns be observed?
 <!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
 
 ##	Seasonality of starry smooth-hound presence
@@ -1329,6 +1485,13 @@ The results show deeper waters utilised by *M. asterias* around a receiver than 
 
 -	Yes, but eventually swimming inshore
 -	How strong are diel patterns in putative migration weeks? Check wavelet median depth
+
+## Reflection on the analysis methods used
+
+### Autocorrelation
+
+Autocorrelation is a very basic exploratory analysis method used, amongst others, to determine the scale of patterns in time series data. In the present study an annual pattern could be seen, as both for tag 308 and 321 the autocorrelation reached a local maximum at a lag of around 350 days. (*get exact lag and reference figures*) Going further, the minimum of the autocorrelation occurs in winter. 
+Thus, autocorrelation is a useful method to check if the assumptions about general vertical patterns (in the present case, the same vertical behaviour (resulting in a local autocorrelation maximum) every summer and a different behaviour (resulting in a local minimum) in winter). Potentially interesting are the points at which the autocorrelation is 0. This is the case at a lag (*insert exact lags and dates here*). It might be indicative of a behavioural switch. But this would only hold true in the case of behaviours that can be distinguishable from the depthlog. While it might not be the most resultful exploratory analysis it can be a helpful auxiliary tool to 1) explore the depth time series data and 2) potentially confirm identified periods with occurring behavioural switches.
 
 ##	Limits of biologging/ fish tagging
 

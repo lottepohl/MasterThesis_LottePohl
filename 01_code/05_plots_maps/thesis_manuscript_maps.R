@@ -334,7 +334,7 @@ addSimpleGraticule(interval = 0.5) %>%
                                                             # "font-weight" = "bold",
                                                             "font-size" = "12px"))) %>%
   # ADD CONTROLS #
-  # leafem::addMouseCoordinates() %>%
+  leafem::addMouseCoordinates() %>%
   setView(3.5, 51.35, zoom = 8) %>%
   # setView(3.5, 51.35, zoom = 9) %>%
   addLegend(position = "bottomleft",
