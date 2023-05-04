@@ -10,6 +10,7 @@ library(ggplot2)
 library(dplyr)
 library(scales)
 library(gridExtra)
+library(pracma)
 
 ## plot path ####
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
@@ -58,11 +59,15 @@ ggplot2::theme_set(thesis_theme)
 ## 1. plot raw depthlogs ####
 plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
   if((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300){ # make different choices for longterm and short term dsts
-    date_breaks <- "6 weeks"
+    date_breaks <- "2 months"
+    date_minor_breaks <- "1 month"
+    date_labels <- "%b %Y"
     data <- data %>% filter(row_number() %% 5 == 0)
-    angle <- 30
+    angle <- 0 #30
   }else{
     date_breaks <- "1 week"
+    date_minor_breaks <- "1 day"
+    date_labels <- "%d.%m.%y"
     angle <- 0
   }
   # date_breaks <- ifelse((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300, "6 weeks", "1 week")
@@ -70,7 +75,12 @@ plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
   dst_plot <- ggplot2::ggplot(data = data) + geom_point(aes(x = .data[[time_vector]], y = -depth_m, color = temp_c), size = 0.5) + 
     # scale_y_continuous(limits = c(-80, 5), breaks = seq(-70, 0, by = 10)) +
     # scale_y_continuous(expand = c((-data$depth_m %>% min()) - 2, (-data$depth_m %>% max()) + 2)) +
-    scale_x_datetime(date_breaks = date_breaks, date_labels = "%b %d") + #, %y
+    # scale_x_datetime(date_breaks = date_breaks, date_labels = "%b %d") + #, %y
+    scale_x_datetime(date_minor_breaks = date_minor_breaks,
+                     date_breaks = date_breaks,
+                     date_labels = date_labels,
+                     expand = c(0,0)) +
+    scale_y_continuous(expand = c(0,0)) +
     theme(axis.text.x = element_text(angle = angle, hjust = 0.5)) + #
     # scale_colour_distiller(palette ="Spectral") +
     # scale_color_gradient2(low = "#003399", mid = "#b30000", high = "#ff8c1a") +
@@ -83,23 +93,74 @@ plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
 
 ## 2. plot autocorrelation ####
 
-plot_dst_autocorrelation <- function(acf_df, tagging_date, xaxis_lag = FALSE){
-  tagging_date_seq <- base::seq(from = tagging_date %>% pull(), to = (tagging_date %>% pull()) + lubridate::days(nrow(acf_df) - 1), by = 1) #%>% base::as.data.frame()
+plot_dst_autocorrelation <- function(acf_df, tagging_date, xaxis_lag = T){
+  # tagging_date_seq <- base::seq(from = tagging_date %>% pull(), to = (tagging_date %>% pull()) + lubridate::days(nrow(acf_df) - 1), by = 1) #%>% base::as.data.frame()
   # xvals <- ifelse(isFALSE(xaxis_lag), seq(from = 0, to = nrow(acf_df) -1 , by = 1), tagging_date_seq)
-  xvals <- tagging_date_seq # for now bc ifelse does not work
-  xaxislab <- ifelse(isFALSE(xaxis_lag), "Lag in days", "Lag date")
-  acf_plot <- ggplot(data = acf_df, mapping = aes(x = xvals, y = acf)) +
+  # xvals <- tagging_date_seq # for now bc ifelse does not work
+  # xaxislab <- ifelse(isFALSE(xaxis_lag), "Lag in days", "Lag date")
+  
+  # # sum dataframe
+  # acf_df_sum <- acf_308_df %>% mutate(acf_abs = abs(acf)) %>% filter(acf == min(acf)  | acf_abs == min(acf_abs))
+  # acf_df_sum
+  # acf_df$acf <- acf_df$acf %>% abs()
+  # 
+  # test <- findpeaks(acf_df$acf, npeaks = 3)
+  
+  acf_plot <- ggplot(data = acf_df, mapping = aes(x = lag, y = acf)) +
     geom_hline(aes(yintercept = 0)) +
-    geom_segment(mapping = aes(xend = xvals, yend = 0)) +
-    labs(y = "Autocorrelation", x = "Lag date") +
-    scale_x_date(date_minor_breaks = "1 month",
-                     date_breaks = "2 months",
-                     date_labels = "%b %Y",
-                 expand = c(0,0))
+    geom_segment(mapping = aes(xend = lag, yend = 0)) +
+    labs(y = "Autocorrelation", x = "Lag in days") +
+    scale_x_continuous(expand = c(0,0))
+    # scale_x_datetime(date_minor_breaks = "1 month",
+    #                  date_breaks = "2 months",
+    #                  date_labels = "%b %Y",
+    #              expand = c(0,0))
   return(acf_plot)
 }
 
-# test_acf <- plot_dst_autocorrelation(acf_df = acf_308_df, 
+# library(ggpmisc)
+# library(splus2R)
+# 
+# acf_plot308 <- ggplot(data = acf_308_df, mapping = aes(x = lag, y = acf %>% abs())) +
+#   geom_hline(aes(yintercept = 0)) +
+#   geom_segment(mapping = aes(xend = lag,
+#                              yend = 0)) +
+#   labs(y = "Autocorrelation", x = "Lag date") 
+# acf_plot308 %>% ggplotly()
+# 
+# acf_plot321 <- ggplot(data = acf_321_df, mapping = aes(x = lag, y = acf)) +
+#   geom_hline(aes(yintercept = 0)) +
+#   geom_segment(mapping = aes(xend = lag,
+#                              yend = 0)) +
+#   labs(y = "Autocorrelation", x = "Lag date") 
+# acf_plot321 %>% ggplotly()
+
+# acf_plot <- ggplot(data = acf_df, mapping = aes(x = xvals, y = acf)) +
+#   geom_hline(aes(yintercept = 0)) +
+#   geom_segment(mapping = aes(xend = xvals, yend = 0)) +
+#   labs(y = "Autocorrelation", x = "Lag date") +
+#   # scale_x_datetime(date_minor_breaks = "1 month",
+#   #                  date_breaks = "2 months",
+#   #                  date_labels = "%b %Y",
+#   #                  expand = c(0,0)) +
+#   theme(plot.margin = unit(c(1, 1, 4, 1), "lines"),
+#         axis.title.x = element_blank(),
+#         axis.text.x = element_blank()) +
+#   coord_cartesian(clip = "off") +
+#   annotate(geom = "text",
+#            x = 1:nrow(acf_df),
+#            y = 3,
+#            label = xvals,
+#            vjust = 3.5) +
+#   annotate(geom = "text",
+#            x = seq(from = 0, to = nrow(acf_308_df), by = 50),
+#            y = 0,
+#            label = seq(from = 0, to = nrow(acf_308_df), by = 50),
+#            vjust = 5)
+# 
+# acf_plot
+# 
+# test_acf <- plot_dst_autocorrelation(acf_df = acf_308_df,
 #                                      tagging_date = tagged_animal_info %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(release_date_time))
 # test_acf
 
@@ -125,7 +186,7 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
     geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
     # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
     # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) + #, %y
-    theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
+    theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + #angle = 30
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "Date", y = "Depth in m") +  
     scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
@@ -238,9 +299,13 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                                      breaks = y_breaks, 
                                      expand = c(0,0)) +
                   # scale_x_discrete(breaks = x_breaks) +
-                  scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                  # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                  scale_x_datetime(date_minor_breaks = "1 month",
+                                   date_breaks = "2 months",
+                                   date_labels = "%b %Y",
+                                   expand = c(0,0)) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "Date", y = "Period in hours", fill = "log2(Power)") #+
+                  labs(x = "Date", y = "Period in days", fill = "log2(Power)") #+
                   # theme(legend.position = "bottom",
                   #       legend.box = "horizontal")
                 # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
@@ -377,7 +442,11 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
                 fill = "yellow", alpha = 0.25) +
     geom_line(colour = "black") + 
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "Date", y = "rPE Score")
+    labs(x = "Date", y = "rPE Score") +
+    scale_x_datetime(date_minor_breaks = "1 month",
+                     date_breaks = "2 months",
+                     date_labels = "%b %Y",
+                     expand = c(0,0))
   
   # p_scores
   
@@ -531,7 +600,11 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
     labs(x = "Date", y = "Depth in m", fill = "CP period", colour = "CP period") +
     # theme(legend.position = "bottom",
     #       legend.box = "horizontal")
-    theme(legend.position="none", legend.direction="horizontal") #"bottom"
+    theme(legend.position="none", legend.direction="horizontal") + #"bottom"
+    scale_x_datetime(date_minor_breaks = "1 month",
+                     date_breaks = "2 months",
+                     date_labels = "%b %Y",
+                     expand = c(0,0))
   
   # p_data
   return(p_data)
@@ -590,12 +663,13 @@ save_data(data = p_abacus, folder = plot_path)
 
 ### vertical space use analysis ####
 
-plot_depth_range <- ggplot(data = summary_all2 %>% dplyr::mutate(station_name = gsub("ws-", "", station_name))) +
+plot_depth_range <- ggplot(data = summary_all2 %>% dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                                                                 group = ifelse(group == "depth", "bathymetry", group))) +
   # geom_point(aes(x = station_name, y = -min_depth, colour = group)) +
   # geom_point(aes(x = station_name, y = -max_depth, colour = group)) +
   # geom_rect(aes(ymin = -min_depth, ymax = -max_depth, fill = group, x = station_name)) +
   geom_linerange(aes(ymin = min_depth, ymax = max_depth, x = station_name, color = group), linewidth = 3, alpha = 0.7) +
-  geom_text(aes(x = station_name, y = -47.5, label = paste0(n_detect)), angle = 0, family = "serif", size = 4) + #"n =  ", 
+  geom_text(aes(x = station_name, y = -47.5, label = paste0(n_detect)), angle = 20, family = "serif", size = 3) + #"n =  ", 
   # geom_text(aes(x = station_name, y = -45), label = "n =", angle = 0, family = "serif") + #"n =  ", 
   # theme_minimal(base_size = 12) +
   scale_y_continuous(limits = c(-49,0)) +
@@ -629,6 +703,39 @@ p_dst_raw_295 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(ta
 # p_dst_raw_295
 save_data(data = p_dst_raw_295, folder = plot_path)
 
+p_dst_raw_319 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293319"),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "319")
+# p_dst_raw_319
+save_data(data = p_dst_raw_319, folder = plot_path)
+
+p_dst_raw_322 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293322"),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "322")
+# p_dst_raw_322
+save_data(data = p_dst_raw_322, folder = plot_path)
+
+p_dst_raw_304 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293304"),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "304")
+# p_dst_raw_304
+save_data(data = p_dst_raw_304, folder = plot_path)
+
+p_dst_raw_310 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293310"),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "310")
+# p_dst_raw_310
+save_data(data = p_dst_raw_310, folder = plot_path)
+
+p_dst_raw_312 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293312"),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "312")
+# p_dst_raw_312
+save_data(data = p_dst_raw_312, folder = plot_path)
+
+
+
+
 p_dst_raw_308 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308"),
                                        time_vector = "date_time",
                                        tag_serial_number_short = "308")
@@ -645,27 +752,52 @@ save_data(data = p_dst_raw_321, folder = plot_path)
 
 p_acf_308 <- plot_dst_autocorrelation(acf_308_df,
                                       tagging_date = tagged_animal_info %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(release_date_time))
-# p_acf_308 %>% ggplotly()
+p_acf_308 %>% ggplotly()
+
+# get important lags (max, min, 0)
+lags_308_important <- c(81, 170, 264, 300)
+
+p_acf_308 <- p_acf_308 +
+  geom_point(data = acf_308_df %>% dplyr::filter(lag %in% lags_308_important),
+               mapping = aes(x = lag , y = acf), #, xend = lag, yend = 0
+               colour = "blue", size = 3) +
+  geom_text(data = acf_308_df %>% dplyr::filter(lag %in% lags_308_important),
+            aes(x = lag, y = 0.625, label = lag), colour = "blue", family = "serif", size = 3.5) 
+  
 save_data(data = p_acf_308, folder = plot_path)
 
 p_acf_321 <- plot_dst_autocorrelation(acf_321_df,
                                       tagging_date = tagged_animal_info %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(release_date_time))
-# p_acf_321
+p_acf_321 %>% ggplotly()
+
+grid.arrange(p_acf_308, p_acf_321, ncol = 1)
+
+# get important lags (max, min, 0)
+lags_321_important <- c(75, 138, 256, 345, 383)
+
+p_acf_321 <- p_acf_321 +
+  geom_point(data = acf_321_df %>% dplyr::filter(lag %in% lags_321_important),
+             mapping = aes(x = lag , y = acf), #, xend = lag, yend = 0
+             colour = "blue", size = 3) +
+  geom_text(data = acf_321_df %>% dplyr::filter(lag %in% lags_321_important),
+            aes(x = lag, y = 0.625, label = lag), colour = "blue", family = "serif", size = 3.5) 
+
+p_acf_321
 save_data(data = p_acf_321, folder = plot_path)
 
 
 ### acf + rulsif ####
 
 
-rulsif_table_all <- rbind(rulsif_308_table_2_5percent %>% mutate(step_percent = 2.5),
+rulsif_308_table_all <- rbind(rulsif_308_table_2_5percent %>% mutate(step_percent = 2.5),
                           rulsif_308_table_5percent %>% mutate(step_percent = 5),
                           rulsif_308_table_10percent %>% mutate(step_percent = 10))
 
-p_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == 
+p_308_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == 
                                                 "1293308")) + 
   geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay), alpha = 0.7, fill = "grey") + #, fill = "depth range"
   geom_line(aes(x = date, y = -depth_median_sgolay), colour = "black") +
-  geom_rect(data = rulsif_table_all, aes(xmin = start_date, xmax = end_date, fill = step_percent %>% as.factor(),
+  geom_rect(data = rulsif_308_table_all, aes(xmin = start_date, xmax = end_date, fill = step_percent %>% as.factor(),
                                          ymin = -Inf, ymax = Inf),
             alpha = 0.6) +
   scale_x_datetime(date_minor_breaks = "1 month",
@@ -673,10 +805,36 @@ p_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number 
                    date_labels = "%b %Y",
                    expand = c(0,0)) +
   scale_y_continuous(expand = c(0,0)) +
-  labs(x = "Date", y = "Depth in m", fill = "Step percent") 
-p_rulsif_all 
+  labs(x = "Date", y = "Depth in m", fill = "Step percent") +
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
+# p_308_rulsif_all 
 
-save_data(data = p_rulsif_all, folder = plot_path)
+save_data(data = p_308_rulsif_all, folder = plot_path)
+
+
+rulsif_321_table_all <- rbind(rulsif_321_table_2_5percent %>% mutate(step_percent = 2.5),
+                              rulsif_321_table_5percent %>% mutate(step_percent = 5),
+                              rulsif_321_table_10percent %>% mutate(step_percent = 10))
+
+p_321_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_number == 
+                                                                    "1293321")) + 
+  geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay), alpha = 0.7, fill = "grey") + #, fill = "depth range"
+  geom_line(aes(x = date, y = -depth_median_sgolay), colour = "black") +
+  geom_rect(data = rulsif_321_table_all, aes(xmin = start_date, xmax = end_date, fill = step_percent %>% as.factor(),
+                                             ymin = -Inf, ymax = Inf),
+            alpha = 0.6) +
+  scale_x_datetime(date_minor_breaks = "1 month",
+                   date_breaks = "2 months",
+                   date_labels = "%b %Y",
+                   expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  labs(x = "Date", y = "Depth in m", fill = "Step percent") +
+  theme(legend.position = "bottom",
+        legend.box = "horizontal")
+# p_321_rulsif_all 
+
+save_data(data = p_321_rulsif_all, folder = plot_path)
 
 ## 3. fft ####
 

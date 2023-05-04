@@ -62,11 +62,18 @@ tagged_animal_info <- masterias_info %>%
 # table 5: dst summary ####
 
 dst_summary <- masterias_depth_date %>% 
-  # mutate(tag_serial_number = tag_serial_number %>% as.numeric()) %>%
   dplyr::group_by(tag_serial_number) %>%
   summarise(release_date = min(date) - lubridate::days(8),
             death_date = date %>% max(),
-            time_at_liberty = base::difftime(release_date, death_date, units = "days")%>% abs() %>% as.numeric()) %>%
+            time_at_liberty = base::difftime(release_date, death_date, units = "days")%>% abs() %>% as.numeric(),
+            depth_min_total = min(depth_min),
+            depth_max_total = max(depth_max),
+            temp_min_total = min(temp_min),
+            temp_max_total = min(temp_max),
+            date_depth_max = date[which.max(depth_max)],
+            date_depth_min = date[which.min(depth_min)],
+            date_temp_max = date[which.max(temp_max)],
+            date_temp_min = date[which.min(temp_min)]) %>%
   arrange(time_at_liberty) %>%
   left_join(masterias_info %>%
               dplyr::select(tag_serial_number, sex, recapture_date_time), 

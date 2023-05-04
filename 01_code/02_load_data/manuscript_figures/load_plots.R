@@ -27,6 +27,11 @@ plot_depth_range_heatmap <- load_data(filestring = "plot_depth_range_heatmap", f
 p_dst_raw_295 <- load_data(filestring = "p_dst_raw_295", folder = plot_path)
 p_dst_raw_308 <- load_data(filestring = "p_dst_raw_308", folder = plot_path)
 p_dst_raw_321 <- load_data(filestring = "p_dst_raw_321", folder = plot_path)
+p_dst_raw_322 <- load_data(filestring = "p_dst_raw_322", folder = plot_path)
+p_dst_raw_319 <- load_data(filestring = "p_dst_raw_319", folder = plot_path)
+p_dst_raw_304 <- load_data(filestring = "p_dst_raw_304", folder = plot_path)
+p_dst_raw_310 <- load_data(filestring = "p_dst_raw_310", folder = plot_path)
+p_dst_raw_312 <- load_data(filestring = "p_dst_raw_312", folder = plot_path)
 
 ## 2. autocorrelation ####
 
@@ -34,6 +39,7 @@ p_acf_308 <- load_data(filestring = "p_acf_308", folder = plot_path)
 p_acf_321 <- load_data(filestring = "p_acf_321", folder = plot_path)
 
 p_308_rulsif_all <- load_data(filestring = "p_308_rulsif_all", folder = plot_path)
+p_321_rulsif_all <- load_data(filestring = "p_321_rulsif_all", folder = plot_path)
 
 ## 3. summary statistics ####
 

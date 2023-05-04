@@ -153,7 +153,10 @@ masterias_depth_daynight <- masterias_depth_temp_summary %>% group_by(date, tag_
             vertical_speed_median = median(vertical_speed_m_min, na.rm = T),
             hour_depth_max = date_time[which.max(depth_m)] %>% lubridate::hour() %>% as.factor(), #find out how to order the numbers correctly #levels = c("0", "1"," 2", "3", "4",'5',"6"," 7", "8", "9", "10", "11", "12", "13" ,"14" ,"15", "16", "17", "18", "1", "20", "21", "22", "23", "24")
             hour_depth_min = date_time[which.min(depth_m)] %>% lubridate::hour() %>% as.factor(),
-            hour_vertical_speed_max = date_time[which.max(vertical_speed_m_min)] %>% lubridate::hour() %>%as.factor()) %>%
+            hour_vertical_speed_max = date_time[which.max(vertical_speed_m_min)] %>% lubridate::hour() %>%as.factor(),
+          temp_min = min(temp_c, na.rm = T),
+          temp_max = max(temp_c, na.rm = T),
+          temp_median = median(temp_c, na.rm = T)) %>%
   mutate(day = day %>% as.factor(),
          dusk = dusk %>% as.factor(),
          dawn = dawn %>% as.factor(),
@@ -186,7 +189,10 @@ masterias_depth_date <- masterias_depth_temp_summary %>% group_by(date, tag_seri
             vertical_speed_range = vertical_speed_max - vertical_speed_min,
             vertical_speed_mean = mean(vertical_speed_m_min, na.rm = T),
             vertical_speed_sd = sd(vertical_speed_m_min, na.rm = T),
-            vertical_speed_median = median(vertical_speed_m_min, na.rm = T)) %>%
+            vertical_speed_median = median(vertical_speed_m_min, na.rm = T),
+            temp_min = min(temp_c, na.rm = T),
+            temp_max = max(temp_c, na.rm = T),
+            temp_median = median(temp_c, na.rm = T)) %>%
   mutate(day = "full") %>%
   left_join(dst_longterm_periods, # get manually separated activities and periods
             by = join_by(tag_serial_number == tag_serial_number,

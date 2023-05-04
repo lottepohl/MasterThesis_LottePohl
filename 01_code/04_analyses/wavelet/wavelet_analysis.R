@@ -16,6 +16,7 @@ library(zoo)
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 source(paste0(dir_path, "/01_code/06_functions/compute_wavelettransform.R"))
 source(paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R"))
+source(paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R"))
 
 data_path <- paste0(dir_path, "/02_results/dst_wavelet/")
 
@@ -443,6 +444,16 @@ save_data(data = wt_df_308_maxdepth_sgolay, folder = data_path)
 # save_data(data = wt_308_mediandepth_change_roll3, folder = data_path)
 # save_data(data = wt_308_depthrange, folder = data_path)
 # save_data(data = wt_308_depthrange_roll3, folder = data_path)
+
+# CWT of raw depth logs ####
+wt_308_raw <- compute_wavelet(parameter = masterias_depth_temp_summary %>% 
+                                              filter(tag_serial_number == "1293308") %>%
+                                              dplyr::select(depth_m),
+                                            dt = 1/720,
+                                            factor_smallest_scale = 2)
+wt_df_308_raw <- wavelet_output_compare(dates = dates_308, wt_output = wt_308_mediandepth_roll3)
+
+
 
 # old ####
 

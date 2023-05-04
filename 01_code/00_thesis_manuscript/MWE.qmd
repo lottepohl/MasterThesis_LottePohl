@@ -1,6 +1,8 @@
 ---
 title: Vertical movement behaviour of the starry smooth-hound shark *Mustelus asterias* in the North Sea
 subtitle: Master Thesis
+filters:
+  - multibib
 author:
   - name: Lotte Pohl
     email: lotte.pohl@imbrsea.eu
@@ -57,6 +59,8 @@ keywords:
   - Mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
+  # main: bibliography.bib
+  # software: software.bib
 execute:
   echo: false
   include: false
@@ -174,97 +178,42 @@ paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% bas
 <!-- ggplot2::theme_set(thesis_theme) -->
 <!-- ``` -->
 
-# Plots
+@fig-acf, and @fig-acf-1, and @fig-acf-2.
 
-A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown below
-<!-- in @fig-rulsif30825 and in @tbl-tblrulsif30825. -->
-
-```{r}
-#| include: false
-#| layout: [[60,-1, 39], [100]]
-#| fig-cap: "A plot"
-#| tbl-cap: "A table"
-
-
-# plot on the left
-p_308_ribbon_rulsif_2_5percent
-
-# table on the right
-knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
-<!-- #| layout-valign: bottom -->
-<!-- #| cap-location: bottom -->
-
-<!-- :::{layout-ncol=2} -->
-
-```{r rulsif30825}
-#| include: true
-#| label: fig-rulsif30825
-#| layout-nrow: 2
-#| fig-cap: "Rulsif results for tag 308, step = 2.5 %."
-#| fig-subcap: 
-#| - "Change point periods."
-#| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow."
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
-#| fig-pos: "H"
-#| out-width: 100%
-
-p_308_ribbon_rulsif_2_5percent
-
-knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-
-p_308_scores_rulsif_2_5percent
-
-```
-<!-- #| fig-subcap:  -->
-<!-- #| - "Change point periods." -->
-<!-- #| - "Scores of the dissimilarity measure, relative Pearson E? (rPE). Region of classification for a change point marked in yellow." -->
-
-<!-- #| fig-height: 2.5 -->
+<!-- ```{r acf} -->
+<!-- #| include: true -->
+<!-- #| label: fig-acf -->
 <!-- #| out-width: 95% -->
+<!-- #| fig-height: 1.5 -->
+<!-- #| fig-cap: "Autocorrelation plots of daily median depth. The x axis is labelled with dates instead of the lag in days so ease interpretation." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Tag 308 (f)" -->
+<!-- #| - "Tag 321 (m)" -->
+<!-- #| fig-pos: "H" -->
 
-```{r table-rulsif30825}
-#| include: false
-#| label: tbl-tblrulsif30825
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
-#| out-width: 35%
+<!-- p_acf_308 -->
 
-knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
-<!-- #| out-width: 90% -->
-<!-- ::: -->
+<!-- p_acf_321 -->
+<!-- ``` -->
 
-```{r allresults3082}
-#| include: false
-#| label: fig-allresults3082
-#| out-width: 85%
-#| fig-height: 2.5
+
+```{r depthrange}
+#| include: true
+#| label: fig-acf
+#| out-width: 95%
+#| fig-height: 3
 #| layout-ncol: 1
-#| fig-cap: "All results for tag 308."
+#| fig-cap: "Results of the vertical space use analysis of the acoustically detected female *M. asterias* individuals in the WS1 and WS2 array in 2019. The amount of detections at each station are printed as text below the bars."
 #| fig-subcap: 
-#| - "Raw depthlog."
-#| - "Autocorrelation of daily median depth (?)"
-#| - "Daily median, minimum and maximum depth and daily vertical migration behaviour."
-#| - "periodogram of the raw depth data"
+#| - "Depth range of acoustic detections at each receiver station and the bathymetry in a 200 m radius around the station."
+#| - "Heatmap of the share of detections and bathymetry grid cells per depth bin. Depth was binned every 10 m."
 #| fig-pos: "H"
 
-# ggplot(masterias_detections_clean) +
-#   geom_point(mapping = aes(x = date_time, y = tag_serial_number, color = area, pch = sex),
-#              size = 5) + #
-#   ggsci::scale_color_jco() +
-#   labs(x = "Date", y = "Tag serial number", color = "Area", pch = "Sex") +
-#   theme_minimal()
+plot_depth_range
+
+plot_depth_range_heatmap
 ```
 
+
+<!-- test @griffiths_2020, but also test @quignard_1972 and @Innovasea_2023. -->
 
