@@ -661,6 +661,25 @@ p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_numbe
 p_abacus
 save_data(data = p_abacus, folder = plot_path)
 
+# plot to see if the tagging batch has sth to do with mortality
+
+plot <- ggplot(data = tagged_animal_info) +
+  geom_point(aes(x = days_at_liberty, y = length1, 
+                 colour = release_date_time %>% as.factor(),
+                 pch = release_loc %>% as.factor()),
+             size = 7, alpha = 0.6) +
+  geom_text(aes(x = days_at_liberty, y = length1, label = str_trunc(tag_serial_number, width = 3, side = "left", ellipsis = "")), nudge_y = 0, size = 4) +
+  labs(colour = "release date", y = "total length in cm", pch = "release location", x = "days at liberty")
+
+plot# %>% ggplotly()
+
+tagged_animal_info <- tagged_animal_info %>% mutate(release_date_time = release_date_time %>% as.factor(),
+                                                    release_loc = release_loc %>% as.factor())
+
+lm_release <- lm(formula = days_at_liberty ~ release_date_time, data = tagged_animal_info)
+lm_release %>% summary()
+
+
 ### vertical space use analysis ####
 
 plot_depth_range <- ggplot(data = summary_all2 %>% dplyr::mutate(station_name = gsub("ws-", "", station_name),
@@ -733,7 +752,11 @@ p_dst_raw_312 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(ta
 # p_dst_raw_312
 save_data(data = p_dst_raw_312, folder = plot_path)
 
-
+p_dst_raw_308_subset <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308", lubridate::date(date_time) > as.POSIXct("2019-06-01")),
+                                       time_vector = "date_time",
+                                       tag_serial_number_short = "308")
+# p_dst_raw_308_subset
+save_data(data = p_dst_raw_308_subset, folder = plot_path)
 
 
 p_dst_raw_308 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308"),
