@@ -1239,6 +1239,11 @@ p_321_sum_stats #%>% ggplotly()
 
 ### Wavelet analysis
 
+<!-- check how you call the wavelet result plot: scalogram? Spectrogram? -->
+<!-- according to this paper:Wavelet analysis of lunar semidiurnal -->
+<!-- tidal influence on selected inland rivers -->
+<!-- across the globe scalogram -->
+
 The wavelet transform results of the daily median, maximum and minimum depth for tag 308 and 321 are shown below, in @fig-waveletresults308 and @fig-waveletresults321. A Savitzky-Golay smoothing filter was applied to all daily summary statistics, as described in @sec-mm_dsts.
 
 ```{r wavelet308}
@@ -1509,6 +1514,78 @@ knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)),
 
 # Discussion
 
+<!-- figure 11 (fft 295): -->
+<!-- highest spectral density at 2h, peak at 12 and small peak at 6h.  -->
+<!-- Same spectral density peak at 23h as at 12h. Why?? -->
+
+<!-- figure 12: -->
+<!-- highest peak at 12h, then24h but about same sized peaks at 6,8, 23 and 26h. -->
+<!-- the tidal related peaks (6, 12, 24h) could lead to selective tidal stream transport. -->
+<!-- the other peaks? No idea what they could mean. -->
+
+<!-- fig 13: -->
+<!-- peaks at 6, 12 and 24h. and small peak at 35h -->
+
+<!-- Discussion:  -->
+<!-- - female 308 has more different spectral content than male. male: selective tidal  -->
+<!-- stream transport than male. -->
+<!-- - could mean that female shows different behaviour?? -->
+<!-- - CWT can show more which frequencies occur at what time -->
+
+
+<!-- figure 14: -->
+<!-- - until end september: daily max 20m, then, until beginning of october the daily -->
+<!-- median decreases and reaches 68m, the maximum of the tag sensor range. -->
+<!-- - until beginning of dec: deep depth, and minimum depth not shallower than 50m,  -->
+<!-- after that until mid march: daily depth between 40 and 68m and daily min between -->
+<!-- 5 and 50m. -->
+<!-- - after march 8 (?) the daily median is always less than 60m. then same median -->
+<!-- of 35m for about 10 days (depth range between 2m and 60m),  -->
+<!-- end april 15m depth with low depth range (5m and 20m),  -->
+<!-- then around 10m with depth ragnge bwtween 3m and 10m, -->
+<!-- after jul 10 median 15m again with range etween 0 and 20m. -->
+
+<!-- Discussion:  -->
+<!-- - there are some patterns in the diel vertical behaviour between end mai and -->
+<!-- mid june. Only a few days of nDVM but first 7(?) days with rDVM, then 3 days -->
+<!-- of DVM, then 5  days of rDVM and then 5 days of DVM. seems to switch every few days -->
+<!-- TODO: maybe look into model of shark and if days at borssele e.g. overlap with a -->
+<!-- certain behaviour. -->
+<!-- But together with the depths used around WS2 receivers (mainly water column) -->
+<!-- it might point to some behaviour that is different from behaviour normally known -->
+<!-- of. -->
+<!-- TODO: Check Diel patterns of detections in WS2 array. deeper at day than at night? -->
+<!-- maybe calc DVM. -->
+
+<!-- fig 15: -->
+<!-- depth between 0 and 20m until end september, then consistent drop to 45m within a week -->
+<!-- then about 3 weeks of median around 50m with depth range between 25 and 50m, -->
+<!-- then depth decrease to around 35-40m median, with range between 15 and 50m until -->
+<!-- may. Then depth drop but fast after also depth increase.  -->
+<!-- from end may until end september: median depth around 10-15m and range between 2m  -->
+<!-- and 25m. Then depth increase from median depth of 20 to 50m within a week. -->
+
+<!-- DVM: mostly DVM when lookin at graph, only rarely nVM. at End october in  -->
+<!-- both years, when depth increases fast: rDVM -->
+
+<!-- Discussion: rDVM (= shallower depth at day than at night) interesting, bc it  -->
+<!-- differs from commonly known behavioural patterns from M. asterias. Could indic -->
+<!-- ate different behavioural state such as migration. -->
+<!-- Between end may and end June rDVM dominant as well, but this cannot be linked -->
+<!-- to special depth patterns ocurring. Could still indicate the period that  -->
+<!-- the shark is migrating from winter to summer grounds. -->
+
+<!-- fig 16:  -->
+<!-- median: no period of 12 or 24h between end may and july (dis: could mean  -->
+<!-- different behavioural state, eg pupping or at least not feeding or travelling) -->
+
+
+
+<!-- Discussion: female putatively stops feeding as soon as the starts migrating to  -->
+<!-- her parturition grounds -->
+
+<!-- Put in where fitting!! -->
+
 - relate the DVM to change periods: can patterns be observed?
 <!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
 
@@ -1577,6 +1654,20 @@ Looking at the vertical space use of *M. asterias* females in the WS2 array in 2
 
 -	Yes, but eventually swimming inshore
 -	How strong are diel patterns in putative migration weeks? Check wavelet median depth
+
+#### lunar influences on winter residency behaviour of tag 308  
+
+- english channel: among the strongest tidal currents in the world
+- less activity during full and new moon: neap currents, ie. weaker tidal currents
+
+<!-- from chatCPT, umschreiben: -->
+<!-- The English Channel, including the waters around the Channel Islands, experiences some of the strongest tidal currents in the world due to its funnel-like shape and shallow depths. The tidal currents are primarily driven by the gravitational pull of the moon and to a lesser extent, the sun. -->
+
+<!-- Tidal currents in the English Channel and around the Channel Islands can reach speeds of up to 4-5 knots (2-2.5 m/s) during spring tides, when the gravitational pull of the moon and sun are aligned. During neap tides, when the gravitational pull of the moon and sun are perpendicular, the tidal currents are weaker and can reach speeds of around 1-2 knots (0.5-1 m/s). The difference in tidal current speeds between spring and neap tides is particularly pronounced in narrow channels and around islands, where the flow is constricted. -->
+
+<!-- The timing of high and low tides also varies with the lunar cycle, with high tides occurring during the new moon and full moon phases and low tides during the first and third quarter phases. This is because during the new and full moon phases, the gravitational pull of the moon and sun are aligned and reinforce each other, resulting in higher high tides and lower low tides. -->
+
+<!-- The English Channel and the waters around the Channel Islands are also influenced by other factors, such as wind and water temperature, which can affect the strength and direction of the tidal currents. However, the lunar cycle remains the primary driver of tidal currents in the region. -->
 
 ## Reflection on the analysis methods used
 

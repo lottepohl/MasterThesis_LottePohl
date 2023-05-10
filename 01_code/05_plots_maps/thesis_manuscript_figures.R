@@ -168,21 +168,25 @@ plot_dst_autocorrelation <- function(acf_df, tagging_date, xaxis_lag = T){
 
 plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
   
+  # date_breaks_minor <- tibble(dates = c("2019-08-15", "2019-09-15", "2019-10-15", "2019-11-15"))
+  # test <- date_breaks_minor + lubridate::days(30)
+  
   ggplot(data = data_depth %>% ungroup() %>% 
            filter(tag_serial_number == tag_serial_num) %>% 
            mutate(t_days = t_days %>% as.numeric())) +
-    geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-    geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-    geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-             aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
+    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
+    # OLD
     # geom_rect(data = data_DVM %>% filter(tag_serial_number == tag_serial_num),
     #             aes(x = date_24hcycle,
     #                 ymin = -70,
     #                 ymax = 0,
     #                 fill = vertical_movement)) +
-    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 1) +
+    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 0.55) +
     geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
     # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
     # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) + #, %y
@@ -195,10 +199,14 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
     
     theme(legend.position = "bottom",
           legend.box = "horizontal") +
-    scale_x_datetime(date_minor_breaks = "1 month",
-                 date_breaks = "2 months",
-                 date_labels = "%b %Y",
-                 expand = c(0,0))
+    scale_x_datetime(
+      # date_minor_breaks = "2 weeks", # make vector with 15.1., 15.2. to take as minor breaks
+                 date_breaks = "1 month",
+                 # date_minor_breaks = "1 month",
+                 # date_breaks = "2 months",
+                 date_labels = "%b %Y"
+                 # ,expand = c(0,0)
+                 )
   
   # ggplot(data = data_depth %>% ungroup() %>% 
   #          filter(tag_serial_number == tag_serial_num) %>% 
