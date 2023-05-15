@@ -197,7 +197,7 @@ plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
                                               "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
     scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
     
-    theme(legend.position = "bottom",
+    theme(legend.position = "none", # "bottom",
           legend.box = "horizontal") +
     scale_x_datetime(
       # date_minor_breaks = "2 weeks", # make vector with 15.1., 15.2. to take as minor breaks
@@ -313,9 +313,9 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                                    date_labels = "%b %Y",
                                    expand = c(0,0)) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "Date", y = "Period in days", fill = "log2(Power)") #+
-                  # theme(legend.position = "bottom",
-                  #       legend.box = "horizontal")
+                  labs(x = "Date", y = "Period in days", fill = "log2(Power)") +
+                  theme(legend.position = "none", # "bottom",
+                        legend.box = "horizontal")
                 # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
                 ,
                 
@@ -931,41 +931,47 @@ save_data(data = p_321_sum_stats, folder = plot_path)
 
 ## 5. wavelet results ####
 ### tag 308 ####
-p_308_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_roll3,
-                                                 type = "power_log") 
-
-# p_308_wavelet_depth_median_roll3
-save_data(data = p_308_wavelet_depth_median_roll3, folder = plot_path)
-
-p_308_wavelet_depth_median_change_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_change_roll3,
-                                                        type = "power_log") 
-
-# p_308_wavelet_depth_median_change_roll3
-save_data(data = p_308_wavelet_depth_median_change_roll3, folder = plot_path)
-
-p_308_wavelet_maxdepth_change_roll3 <- plot_wavelet(wt_df = wt_df_308_maxdepth_change_roll3,
-                                                 type = "power_log") 
-
-# p_308_wavelet_maxdepth_change_roll3
-save_data(data = p_308_wavelet_maxdepth_change_roll3, folder = plot_path)
-
-p_308_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_308_mindepth,
-                                                 type = "power_log") 
-
-# p_308_wavelet_depth_min
-save_data(data = p_308_wavelet_depth_min, folder = plot_path)
-
-p_308_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_308_maxdepth,
-                                        type = "power_log") 
+# p_308_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_roll3,
+#                                                  type = "power_log") 
+# 
+# # p_308_wavelet_depth_median_roll3
+# save_data(data = p_308_wavelet_depth_median_roll3, folder = plot_path)
+# 
+# p_308_wavelet_depth_median_change_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_change_roll3,
+#                                                         type = "power_log") 
+# 
+# # p_308_wavelet_depth_median_change_roll3
+# save_data(data = p_308_wavelet_depth_median_change_roll3, folder = plot_path)
+# 
+# p_308_wavelet_maxdepth_change_roll3 <- plot_wavelet(wt_df = wt_df_308_maxdepth_change_roll3,
+#                                                  type = "power_log") 
+# 
+# # p_308_wavelet_maxdepth_change_roll3
+# save_data(data = p_308_wavelet_maxdepth_change_roll3, folder = plot_path)
+# 
+# p_308_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_308_mindepth,
+#                                                  type = "power_log") 
+# 
+# # p_308_wavelet_depth_min
+# save_data(data = p_308_wavelet_depth_min, folder = plot_path)
+# 
+# p_308_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_308_maxdepth,
+#                                         type = "power_log") 
 
 # p_308_wavelet_depth_max
-save_data(data = p_308_wavelet_depth_max, folder = plot_path)
+# save_data(data = p_308_wavelet_depth_max, folder = plot_path)
 
 p_308_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_308_mediandepth_sgolay,
-                                                 type = "power_log") 
+                                                 type = "power_log")
 
 # p_308_wavelet_depth_median_sgolay
 save_data(data = p_308_wavelet_depth_median_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_308_depthrange_sgolay,
+                                                  type = "power_log")
+
+# p_308_wavelet_depth_range_sgolay #%>% ggplotly()
+save_data(data = p_308_wavelet_depth_range_sgolay, folder = plot_path)
 
 p_308_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_308_mindepth_sgolay,
                                                   type = "power_log") 
@@ -981,42 +987,48 @@ save_data(data = p_308_wavelet_depth_max_sgolay, folder = plot_path)
 
 ### tag 321 ####
 
-p_321_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_roll3,
-                                                 type = "power_log") 
-
-# p_321_wavelet_depth_median_roll3
-save_data(data = p_321_wavelet_depth_median_roll3, folder = plot_path)
-
-p_321_wavelet_depth_median_change_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_change_roll3,
-                                                 type = "power_log") 
-
-# p_321_wavelet_depth_median_change_roll3
-save_data(data = p_321_wavelet_depth_median_change_roll3, folder = plot_path)
-
-
-p_321_wavelet_maxdepth_change_roll3 <- plot_wavelet(wt_df = wt_df_321_maxdepth_change_roll3,
-                                                    type = "power_log") 
-
-# p_321_wavelet_maxdepth_change_roll3
-save_data(data = p_321_wavelet_maxdepth_change_roll3, folder = plot_path)
-
-p_321_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_321_mindepth,
-                                        type = "power_log") 
-
-# p_321_wavelet_depth_min
-save_data(data = p_321_wavelet_depth_min, folder = plot_path)
-
-p_321_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_321_maxdepth,
-                                        type = "power_log") 
-
-# p_321_wavelet_depth_max
-save_data(data = p_321_wavelet_depth_max, folder = plot_path)
+# p_321_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_roll3,
+#                                                  type = "power_log") 
+# 
+# # p_321_wavelet_depth_median_roll3
+# save_data(data = p_321_wavelet_depth_median_roll3, folder = plot_path)
+# 
+# p_321_wavelet_depth_median_change_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_change_roll3,
+#                                                  type = "power_log") 
+# 
+# # p_321_wavelet_depth_median_change_roll3
+# save_data(data = p_321_wavelet_depth_median_change_roll3, folder = plot_path)
+# 
+# 
+# p_321_wavelet_maxdepth_change_roll3 <- plot_wavelet(wt_df = wt_df_321_maxdepth_change_roll3,
+#                                                     type = "power_log") 
+# 
+# # p_321_wavelet_maxdepth_change_roll3
+# save_data(data = p_321_wavelet_maxdepth_change_roll3, folder = plot_path)
+# 
+# p_321_wavelet_depth_min <- plot_wavelet(wt_df = wt_df_321_mindepth,
+#                                         type = "power_log") 
+# 
+# # p_321_wavelet_depth_min
+# save_data(data = p_321_wavelet_depth_min, folder = plot_path)
+# 
+# p_321_wavelet_depth_max <- plot_wavelet(wt_df = wt_df_321_maxdepth,
+#                                         type = "power_log") 
+# 
+# # p_321_wavelet_depth_max
+# save_data(data = p_321_wavelet_depth_max, folder = plot_path)
 
 p_321_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_321_mediandepth_sgolay,
                                                   type = "power_log") 
 
 # p_321_wavelet_depth_median_sgolay
 save_data(data = p_321_wavelet_depth_median_sgolay, folder = plot_path)
+
+p_321_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_321_depthrange_sgolay,
+                                                  type = "power_log") 
+
+# p_321_wavelet_depth_range_sgolay
+save_data(data = p_321_wavelet_depth_range_sgolay, folder = plot_path)
 
 p_321_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_321_mindepth_sgolay,
                                                type = "power_log") 

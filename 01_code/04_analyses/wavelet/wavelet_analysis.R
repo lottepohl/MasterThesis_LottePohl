@@ -168,6 +168,14 @@ wt_321_mediandepth_sgolay <- compute_wavelet(parameter = long_dst_date %>%
                                       factor_smallest_scale = 2)
 wt_df_321_mediandepth_sgolay <- wavelet_output_compare(dates = dates_321, wt_output = wt_321_mediandepth_sgolay)
 
+wt_321_depthrange_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
+                                               filter(tag_serial_number == "1293321") %>%
+                                               dplyr::select(depth_range_sgolay),
+                                             dt = 1,
+                                             factor_smallest_scale = 2)
+wt_df_321_depthrange_sgolay <- wavelet_output_compare(dates = dates_321, wt_output = wt_321_depthrange_sgolay)
+
+
 wt_321_mindepth_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
                                                filter(tag_serial_number == "1293321") %>%
                                                dplyr::select(depth_min_sgolay),
@@ -325,6 +333,13 @@ wt_308_mediandepth_sgolay <- compute_wavelet(parameter = long_dst_date %>%
                                              factor_smallest_scale = 2)
 wt_df_308_mediandepth_sgolay <- wavelet_output_compare(dates = dates_308, wt_output = wt_308_mediandepth_sgolay)
 
+wt_308_depthrange_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
+                                              filter(tag_serial_number == "1293308") %>%
+                                              dplyr::select(depth_range_sgolay),
+                                            dt = 1,
+                                            factor_smallest_scale = 2)
+wt_df_308_depthrange_sgolay <- wavelet_output_compare(dates = dates_308, wt_output = wt_308_depthrange_sgolay)
+
 wt_308_mindepth_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
                                             filter(tag_serial_number == "1293308") %>%
                                             dplyr::select(depth_min_sgolay),
@@ -344,6 +359,7 @@ wt_df_308_maxdepth_sgolay <- wavelet_output_compare(dates = dates_308, wt_output
 ## tag 321 ####
 ### raw wavelet result ####
 save_data(data = wt_321_mediandepth_roll3, folder = data_path)
+save_data(data = wt_321_depthrange_sgolay, folder = data_path)
 save_data(data = wt_321_mediandepth, folder = data_path)
 save_data(data = wt_321_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_321_depthrange, folder = data_path)
@@ -367,6 +383,7 @@ save_data(data = wt_321_mindepth_sgolay, folder = data_path)
 save_data(data = wt_321_maxdepth_sgolay, folder = data_path)
 ### df for gg plotting ####
 save_data(data = wt_df_321_mediandepth_roll3, folder = data_path)
+save_data(data = wt_df_321_depthrange_sgolay, folder = data_path)
 save_data(data = wt_df_321_mediandepth, folder = data_path)
 save_data(data = wt_df_321_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_df_321_depthrange, folder = data_path)
@@ -393,6 +410,7 @@ save_data(data = wt_df_321_maxdepth_sgolay, folder = data_path)
 ## tag 308 ####
 ### raw wavelet result ####
 save_data(data = wt_308_mediandepth_roll3, folder = data_path)
+save_data(data = wt_308_depthrange_sgolay, folder = data_path)
 save_data(data = wt_308_mediandepth, folder = data_path)
 save_data(data = wt_308_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_308_depthrange, folder = data_path)
@@ -416,6 +434,7 @@ save_data(data = wt_308_mindepth_sgolay, folder = data_path)
 save_data(data = wt_308_maxdepth_sgolay, folder = data_path)
 ### df for gg plotting ####
 save_data(data = wt_df_308_mediandepth_roll3, folder = data_path)
+save_data(data = wt_df_308_depthrange_sgolay, folder = data_path)
 save_data(data = wt_df_308_mediandepth, folder = data_path)
 save_data(data = wt_df_308_mediandepth_change_roll3, folder = data_path)
 save_data(data = wt_df_308_depthrange, folder = data_path)
