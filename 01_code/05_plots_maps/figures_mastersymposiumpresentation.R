@@ -10,6 +10,7 @@
 library(ggplot2)
 library(dplyr)
 library(scales)
+library(plotly)
 library(gridExtra)
 library(pracma)
 library(sf)
@@ -64,12 +65,28 @@ ggplot2::theme_set(presentation_theme) # or theme minimal
 
 # functions for plotting ####
 
-plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num){
+plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
   data <- depthlog %>% filter(tag_serial_number == tag_serial_num)
   max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
   min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
+  
+  # # calc moon fraction illuminated
+  # dates <- seq(from = min(data$date_time %>% lubridate::date()), to = max(data$date_time %>% lubridate::date()), by = "day")
+  # moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction #coordinates approx of dunkerque
+  # moonfraq <- (moonfraq * max(data$depth_m)) - max(data$depth_m)
+  # moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
+  #                               moonfraq = moonfraq)
+  
   plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
     # geom_point(aes(color = temp_c), size = 0.5) + 
+    # geom_line(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    #           aes(x = date, y = depth_range - max(depth_range)), colour = "blue") +
+    # geom_ribbon(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    #             aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay), fill = "grey", alpha = 0.75) +
+    # geom_line(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    #           aes(x = date, y = -depth_median_sgolay), colour = "black", linewidth = 1) +
+    
+    # geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq), colour = "red") +
     geom_line() +
     scale_x_datetime(date_breaks = "1 month",
                      # date_breaks = "1 day",
@@ -79,9 +96,12 @@ plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num){
                      limits = c(min_date, max_date)) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "Depth in m", color = "Temperature in °C") #+ #title = paste0("tag ", tag_serial_number_short), 
+    labs(x = "", y = "Depth in m") #+ #title = paste0("tag ", tag_serial_number_short), 
+  # plot %>% plotly::ggplotly()
   
 }
+
+
 
 plot_depth_subset_points <- function(depthlog = masterias_depth_temp, tag_serial_num, start_date_chr, end_date_chr){
   data <- depthlog %>% filter(tag_serial_number == tag_serial_num,
@@ -106,34 +126,48 @@ plot_depth_subset_points <- function(depthlog = masterias_depth_temp, tag_serial
 }
 
 
-plot_summary_stats <- function(data_depth, tag_serial_num){
+plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
   data <- data_depth %>% ungroup() %>% 
     filter(tag_serial_number == tag_serial_num) %>% 
     mutate(t_days = t_days %>% as.numeric())
   max_date <- max(data$date) + lubridate::days(10)
   min_date <- min(data$date) -lubridate::days(10)
-  ggplot(data = data) +
+  
+  # calc moon fraction illuminated
+  dates <- seq(from = min(data$date), to = max(data$date), by = "day")
+  moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction #coordinates approx of dunkerque
+  moonfraq <- (moonfraq * max(data$depth_median_sgolay)) - max(data$depth_median_sgolay)
+  moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
+                                moonfraq = moonfraq)
+  
+  # alphamoon <- ifelse(isTRUE(moon), 1,0)
+  
+  plot <- ggplot(data = data) +
     geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "daily depth range"), alpha = 0.75) +
     geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 1) +
     theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + #angle = 30
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "", y = "Depth in m") +  
-    scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+    scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red", "alphamoon" = "transparent", "median change" = "purple",
                                               "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
     scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
     
     theme(legend.position = "bottom",
           legend.box = "horizontal") +
-    scale_x_datetime(
-      # date_minor_breaks = "2 weeks", # make vector with 15.1., 15.2. to take as minor breaks
-      date_breaks = "1 month",
+    scale_x_datetime(date_breaks = "1 month",
       # date_minor_breaks = "1 month",
       # date_breaks = "2 months",
       date_labels = "%b'%y"
       ,expand = c(0,0),
       limits = c(min_date, max_date)
     ) +
-    theme(axis.text.x = element_text(angle = 15, hjust = 0.25))
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) 
+  
+  if(isTRUE(moon)){
+    plot <- plot + geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq, colour = "illuminated moon fraction"), linewidth = 1)
+  }
+  
+  return(plot)
 }
 
 ## fft ####
@@ -240,7 +274,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                 plot <- ggplot(data = wt_df) +
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
-                            alpha = 0.65) +
+                            alpha = 0.5) +
                   geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
@@ -367,7 +401,9 @@ tag295_raw_depth #ggplotly()
 
 tag308_raw_depth <- plot_raw_depth(masterias_depth_temp, tag_serial_num = "1293308")
 
-tag308_raw_depth %>% ggplotly()
+tag308_raw_depth
+
+# %>% ggplotly()
 
 gridExtra::grid.arrange(tag308_raw_depth, tag321_raw_depth, nrow = 1)
 
@@ -406,7 +442,8 @@ gridExtra::grid.arrange(tag308_raw_depth, tag321_raw_depth, tag308_raw_temp, tag
 ## daily summaries ####
 
 p_308_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
-                                      tag_serial_num = "1293308")
+                                      tag_serial_num = "1293308",
+                                      moon = T)
 p_308_sum_stats
 
 p_321_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
@@ -514,8 +551,8 @@ detections_sum_area
 
 ## abacus plot ####
 
-masterias_info %>% 
-  mutate(tag_serial_num_short = tag_serial_number %>% 
+masterias_info %>%
+  mutate(tag_serial_num_short = tag_serial_number %>%
            stringr::str_trunc(width = 3, side = "left", ellipsis = ""))
 
 p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_number, masterias_info$release_date_time))
@@ -556,6 +593,7 @@ station_names_order <- c("OG10", "DL7", "DL9", "DL12", "OGDL", "SP3", "GVWSP","T
                          "Birkenfels","CPowerReefballs", "G-88", "Grafton", "LottoBuoy", "Nauticaena", "S4", "VG2", "W1", "WK12", "Westhinder" #BPNS
                          ) %>% base::rev()
 
+### stations Westerschelde ####
 detections_sum_station <- detections_tempdepth_daynight %>% 
   dplyr::mutate(station_name = gsub("ws-", "", station_name),
                 station_name = gsub("bpns-", "", station_name),
@@ -567,8 +605,8 @@ detections_sum_station <- detections_tempdepth_daynight %>%
   summarise(n_detect = n(),
             area = area %>% unique(),
             month_year_chr = month_year_chr %>% unique(), 
-            n_ind = tag_serial_number %>% unique() %>% length()) %>%
-  mutate(n_detect = ifelse(n_detect > 1500, 1000, n_detect))
+            n_ind = tag_serial_number %>% unique() %>% length()) #%>%
+  # mutate(n_detect = ifelse(n_detect > 1500, 1000, n_detect))
 
 p_detections_heatmap <- ggplot(data = detections_sum_station %>% filter(!area == "BPNS", sex == "f"), #
                                aes(x = month_year, y = station_name, fill = n_detect, colour = n_detect)) + #, colour = n_detect
@@ -594,13 +632,15 @@ p_detections_heatmap #%>% ggplotly()
 
 gridExtra::grid.arrange(p_abacus, p_detections_heatmap, ncol = 1)
 
-### heatmap detail ####
+### heatmap OG10 ####
 
 detections_OG102019 <- detections_tempdepth_daynight %>% 
-  dplyr::mutate(station_name = gsub("ws-", "", station_name)
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                tag_serial_number = tag_serial_number %>%
+                  stringr::str_trunc(width = 3, side = "left", ellipsis = "")
                 # station_name = gsub("bpns-", "", station_name),
                 # station_name = factor(station_name, levels = station_names_order)
-                ) %>% 
+  ) %>% 
   # mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-17')),
   #        month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
   dplyr::filter(station_name == "OG10",
@@ -608,8 +648,86 @@ detections_OG102019 <- detections_tempdepth_daynight %>%
   group_by(tag_serial_number, date) %>%
   summarise(n_detect = n(),
             depth_median = median(parameter[sensor_type == "pressure"]),
-            sex = sex %>% unique()
-            ) 
+            sex = sex %>% unique()) %>%
+  mutate(date = date %>% as.POSIXct(tz = "utc")) %>%
+  ungroup()
+  
+
+p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
+                               aes(x = date, y = tag_serial_number, fill = n_detect, colour = n_detect)) + #, colour = n_detect
+  # geom_tile(linewidth = 0.75) +
+  geom_tile(linewidth = 1) +
+  # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
+  # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  # facet_grid(vars(sex), scales="free_y") +
+  scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
+  # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+  scale_x_datetime(date_breaks = "1 month",
+                   # date_minor_breaks = "1 day",
+                   date_labels = "%b'%y"
+                   ,expand = c(0,0)) +
+  scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
+  theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+  labs(x = "", y = "tag serial nr.", fill = "# detections", colour = "# detections") #, colour = "# detections"
+
+p_detections_heatmap_OG10 #%>% ggplotly()
+
+
+#### residency index OG10 2019 ####
+OG102019_residency <- detections_OG102019 %>% 
+  mutate(total_days = base::difftime(date %>% max(), date %>% min(), units = "days") %>% as.numeric()) %>%
+  group_by(tag_serial_number) %>%
+  summarise(days_detected = n(),
+            residency_index = days_detected / unique(total_days))
+
+
+detections_OG102019 <- detections_OG102019 %>% 
+  left_join(OG102019_residency, by = "tag_serial_number")
+
+#### boxplot n_detect RI #####
+
+ggplot(data = detections_OG102019) +
+  geom_boxplot(aes(x = tag_serial_number, y = n_detect, fill = residency_index)) +
+  scale_fill_viridis_c(option = "plasma", direction = -1) +
+  geom_text(aes(x = tag_serial_number, y = 175, label = paste0("RI = ", residency_index %>% round(digits = 2))), colour = "black", angle = 0, fontface = "plain", family = "serif", size = 4) + #, colour = "grey" 
+  labs(x = "tag serial nr.", y = "# detections per day", fill = "residency index")
+
+
+# detections_per_day_OG102019_308 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
+#                                       n_detect = 0,
+#                                       tag_serial_number = "308") %>%
+#   full_join(detections_OG102019 %>% filter(tag_serial_number == "308"), 
+#             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
+#   group_by(date) %>%
+#   summarise(tag_serial_number = tag_serial_number %>% unique(),
+#             n_detect = n_detect %>% sum())
+# 
+# detections_per_day_OG102019_307 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
+#                                           n_detect = 0,
+#                                           tag_serial_number = "307") %>%
+#   full_join(detections_OG102019 %>% filter(tag_serial_number == "307"), 
+#             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
+#   group_by(date) %>%
+#   summarise(tag_serial_number = tag_serial_number %>% unique(),
+#             n_detect = n_detect %>% sum())
+# 
+# detections_per_day_OG102019_299 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
+#                                           n_detect = 0,
+#                                           tag_serial_number = "299") %>%
+#   full_join(detections_OG102019 %>% filter(tag_serial_number == "299"), 
+#             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
+#   group_by(date) %>%
+#   summarise(tag_serial_number = tag_serial_number %>% unique(),
+#             n_detect = n_detect %>% sum())
+# 
+# detections_per_day_OG102019 <- rbind(detections_per_day_OG102019_307, detections_per_day_OG102019_308, detections_per_day_OG102019_299)
+
+
+
+#### detections OG10 pointplot ####
 
 # p <- ggplot(data = detections_OG102019 %>% filter(sensor_type == "pressure"), aes(x = date_time, y = -parameter)) +
 #   geom_line(aes(colour = tag_serial_number)) +
@@ -623,7 +741,7 @@ p <- ggplot(data = detections_OG102019, aes(x = date, y = -depth_median, colour 
   geom_point(aes(size = n_detect)) + #aes(pch = sex), 
   labs(x = "", y = "depth in m", colour = "tag serial number") #, size = "# detections per day"
 
-p %>% ggplotly()
+p #%>% ggplotly()
 
 ### tag 299 ####
 p_299_2019_WS <- ggplot(data = detections_tempdepth_daynight %>% 

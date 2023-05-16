@@ -11,11 +11,13 @@ library(dplyr)
 library(scales)
 library(gridExtra)
 library(pracma)
+library(oce)
 
 ## plot path ####
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 path_maps <- paste0(dir_path, "/01_code/00_thesis_manuscript/maps/")
 plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
+models_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/models/")
 paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
 ## load data ####
@@ -27,8 +29,9 @@ paste0(dir_path, "/01_code/02_load_data/load_autocorrelation_results.R") %>% bas
 paste0(dir_path, "/01_code/02_load_data/load_depth_temp_logs.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_fft_results.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_cpd_results.R") %>% base::source()
-paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_vertical_space_use_analysis.R") %>% base::source()
+paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
 ## set path were all figures are saved ####
 plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
@@ -118,146 +121,51 @@ plot_dst_autocorrelation <- function(acf_df, tagging_date, xaxis_lag = T){
   return(acf_plot)
 }
 
-# library(ggpmisc)
-# library(splus2R)
-# 
-# acf_plot308 <- ggplot(data = acf_308_df, mapping = aes(x = lag, y = acf %>% abs())) +
-#   geom_hline(aes(yintercept = 0)) +
-#   geom_segment(mapping = aes(xend = lag,
-#                              yend = 0)) +
-#   labs(y = "Autocorrelation", x = "Lag date") 
-# acf_plot308 %>% ggplotly()
-# 
-# acf_plot321 <- ggplot(data = acf_321_df, mapping = aes(x = lag, y = acf)) +
-#   geom_hline(aes(yintercept = 0)) +
-#   geom_segment(mapping = aes(xend = lag,
-#                              yend = 0)) +
-#   labs(y = "Autocorrelation", x = "Lag date") 
-# acf_plot321 %>% ggplotly()
-
-# acf_plot <- ggplot(data = acf_df, mapping = aes(x = xvals, y = acf)) +
-#   geom_hline(aes(yintercept = 0)) +
-#   geom_segment(mapping = aes(xend = xvals, yend = 0)) +
-#   labs(y = "Autocorrelation", x = "Lag date") +
-#   # scale_x_datetime(date_minor_breaks = "1 month",
-#   #                  date_breaks = "2 months",
-#   #                  date_labels = "%b %Y",
-#   #                  expand = c(0,0)) +
-#   theme(plot.margin = unit(c(1, 1, 4, 1), "lines"),
-#         axis.title.x = element_blank(),
-#         axis.text.x = element_blank()) +
-#   coord_cartesian(clip = "off") +
-#   annotate(geom = "text",
-#            x = 1:nrow(acf_df),
-#            y = 3,
-#            label = xvals,
-#            vjust = 3.5) +
-#   annotate(geom = "text",
-#            x = seq(from = 0, to = nrow(acf_308_df), by = 50),
-#            y = 0,
-#            label = seq(from = 0, to = nrow(acf_308_df), by = 50),
-#            vjust = 5)
-# 
-# acf_plot
-# 
-# test_acf <- plot_dst_autocorrelation(acf_df = acf_308_df,
-#                                      tagging_date = tagged_animal_info %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(release_date_time))
-# test_acf
-
 ## 3. plot summary statistics ####
 
-plot_summary_stats <- function(data_depth, data_DVM, tag_serial_num){
+plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
+  data <- data_depth %>% ungroup() %>% 
+    filter(tag_serial_number == tag_serial_num) %>% 
+    mutate(t_days = t_days %>% as.numeric())
+  max_date <- max(data$date) + lubridate::days(10)
+  min_date <- min(data$date) -lubridate::days(10)
   
-  # date_breaks_minor <- tibble(dates = c("2019-08-15", "2019-09-15", "2019-10-15", "2019-11-15"))
-  # test <- date_breaks_minor + lubridate::days(30)
+  # calc moon fraction illuminated
+  dates <- seq(from = min(data$date), to = max(data$date), by = "day")
+  moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction #coordinates approx of dunkerque
+  moonfraq <- (moonfraq * max(data$depth_max_sgolay)) - max(data$depth_max_sgolay)
+  moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
+                                moonfraq = moonfraq)
   
-  ggplot(data = data_depth %>% ungroup() %>% 
-           filter(tag_serial_number == tag_serial_num) %>% 
-           mutate(t_days = t_days %>% as.numeric())) +
-    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-    # geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-    #          aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-    # OLD
-    # geom_rect(data = data_DVM %>% filter(tag_serial_number == tag_serial_num),
-    #             aes(x = date_24hcycle,
-    #                 ymin = -70,
-    #                 ymax = 0,
-    #                 fill = vertical_movement)) +
-    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 0.55) +
-    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
-    # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
-    # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) + #, %y
+  # alphamoon <- ifelse(isTRUE(moon), 1,0)
+  
+  plot <- ggplot(data = data) +
+    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "daily depth range"), alpha = 0.75) +
+    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 1) +
     theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + #angle = 30
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "Date", y = "Depth in m") +  
-    scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
-                                              "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
-    scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+    labs(x = "", y = "Depth in m") +  
+    scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red"))  + #, "alphamoon" = "transparent", "median change" = "purple", "DVM" = "red", "rDVM" = "blue", "nVM" = "green"
+    scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) + #, "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
     
-    theme(legend.position = "none", # "bottom",
+    theme(legend.position = "bottom",
           legend.box = "horizontal") +
-    scale_x_datetime(
-      # date_minor_breaks = "2 weeks", # make vector with 15.1., 15.2. to take as minor breaks
-                 date_breaks = "1 month",
-                 # date_minor_breaks = "1 month",
-                 # date_breaks = "2 months",
-                 date_labels = "%b %Y"
-                 # ,expand = c(0,0)
-                 )
+    scale_x_datetime(date_breaks = "1 month",
+                     # date_minor_breaks = "1 month",
+                     # date_breaks = "2 months",
+                     date_labels = "%b'%y"
+                     ,expand = c(0,0),
+                     limits = c(min_date, max_date)
+    ) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) 
   
-  # ggplot(data = data_depth %>% ungroup() %>% 
-  #          filter(tag_serial_number == tag_serial_num) %>% 
-  #          mutate(t_days = t_days %>% as.numeric())) +
-  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-  #            aes(x = date_24hcycle, y = 3, fill = "DVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-  #            aes(x = date_24hcycle, y = 3, fill = "rDVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-  #   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-  #            aes(x = date_24hcycle, y = 3, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-  #   geom_line(aes(x = date, y = -depth_median_roll3, colour = "median")) +
-  #   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "range"), alpha = 0.2) +
-  #   geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "median change")) + # %>% abs()
-  #   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
-  #   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
-  #   scale_y_continuous(expand = c(0,0)) +
-  #   labs(x = "date", y = "depth (change) in m") +  
-  #   scale_colour_manual(name = "", values = c("median" = "black", "range" = "transparent", "change of range" = "black", "median change" = "purple",
-  #                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #
-  #   scale_fill_manual(name = "", values = c("range" = "transparent", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
-  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) +
-  # theme(legend.position = "bottom",
-  #       legend.box = "horizontal")
+  if(isTRUE(moon)){
+    plot <- plot + geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.5)
+  }
   
+  return(plot)
 }
 
-# ggplot(data = long_dst_date %>% ungroup() %>% 
-#          filter(tag_serial_number == "1293308") %>% 
-#          mutate(t_days = t_days %>% as.numeric())) +
-#   geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = 5, fill = "DVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-#   geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = 5, fill = "rDVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-#   geom_bar(data = masterias_DVM_sum_day %>% filter(tag_serial_number == "1293308", vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = 5, fill = "nVM"), stat = "identity", alpha = 0.5, position = position_nudge(y = 10), width = NULL) +
-#   geom_line(aes(x = date, y = -depth_median_roll3, colour = "daily median")) +
-#   geom_ribbon(aes(x = date, ymin = -depth_max_roll3, ymax = -depth_min_roll3, colour = "daily range"), alpha = 0.2) +
-#   geom_line(aes(x = date, y = -depth_median_change_roll3, colour = "daily median change")) + # %>% abs()
-#   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
-#   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
-#   scale_y_continuous(expand = c(0,0)) +
-#   labs(x = "date", y = "depth (change) in m") + #title = 'Tag 308 (female)', 
-#   scale_colour_manual(name = "", values = c("daily median" = "black", "daily range" = "transparent", "change of daily range" = "black", "daily median change" = "purple",
-#                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "change of daily median change" = "lightblue", "daily median change raw" = "orange",
-#                                             "change of daily median change abs" = "darkgreen", "change of daily range abs" = "purple")) + #
-#   scale_fill_manual(name = "", values = c("daily range" = "transparent", #"daily median" = "black", "change of daily range" = "black", "daily median change" = "darkblue",
-#                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) #+
-# # theme(legend.position = "bottom",
-# #       legend.box = "horizontal")
-# 
-# p_t_308_depth_median_range_change_ribbon #%>% ggplotly()
 
 ## 4. plot fft ####
 
@@ -269,6 +177,66 @@ plot_fft <- function(fft_result, tag_serial_number_short, period_upperlim = 40, 
     labs(y = "Spectral density", x = "Period in hours") #, title = paste0("tag ", tag_serial_number_short)
   return(periodogram)
 }
+
+calc_fft <- function(depth_log, sample_freq){
+  # `depth_log` contains the columns `depth_m` and `date_time`.
+  
+  # prepare/format data
+  depth_log <- depth_log %>% 
+    # make time vector
+    mutate(t = difftime(date_time, date_time[1], units = "hours") %>% as.numeric()) %>% 
+    #filter out NAs
+    filter(!is.na(depth_m))
+  
+  # define tmax and n
+  tmax <- depth_log$t %>% max()
+  n <- depth_log$t %>% length()
+  
+  # mit nullen auffuellen bis naechste n^2
+  next_power <- 2^ceiling(log2(n))
+  depth_log_padded <- c(depth_log$depth_m, rep(0, next_power - n))
+  
+  # compute the frequency spectrum
+  spec <- abs(fft(depth_log_padded))^2
+  
+  # compute the frequency vector
+  # freq <- seq(0, length(spec) - 1) * (1/sample_freq) / length(spec)
+  freq <- seq(0, length(spec) - 1) * (sample_freq) / length(spec)
+  
+  # make result dataframe
+  result_fft <- cbind(spec, freq) %>% as.data.frame() %>% 
+    # calculate period
+    mutate(period = 1 / freq)
+  
+  return(result_fft)
+}
+
+# plot periodogram 
+plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05, path = plot_path){
+  # todo: get local rule or set values for period upper and lower lim
+  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + 
+    geom_line(aes(x = period, y = spec), colour = "black", linewidth = 1) + #theme_bw() +
+    scale_y_continuous(expand = c(0,0)) +
+    # theme_bw(base_size = 12) +
+    scale_x_continuous(expand = c(0,0), breaks = seq(2, period_upperlim, by = 2)) +
+    labs(y = "spectral density", x = "period in hours") #, title = paste0("tag ", tag_serial_number_short)
+  
+  # ggplot2::ggsave(filename = paste0(plot_path, "periodogram_", tag_serial_number_short, ".pdf"), plot = periodogram, width = 18, height = 12, units = "cm")
+  # ggplot2::ggsave(filename = paste0(plot_path, "periodogram_", tag_serial_number_short, ".png"), plot = periodogram, width = 18, height = 12, units = "cm")
+  return(periodogram)
+}
+
+fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date, sample_frequency){
+  fft_res <- calc_fft(depth_log = depth_log %>% filter(tag_serial_number == paste0("1293", tag_serial_num_short),
+                                                       lubridate::date(date_time) %>% 
+                                                         between(start_date %>% as.POSIXct(), end_date %>% as.POSIXct())),
+                      sample_freq = sample_frequency)
+  
+  pgram <- plot_periodogram(fft_result = fft_res, 
+                            tag_serial_number_short = tag_serial_num_short)
+  pgram %>% return()
+}
+
 
 ## 5. plot wavelet results ####
 plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
@@ -300,7 +268,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                 plot <- ggplot(data = wt_df) +
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
-                            alpha = 0.65) +
+                            alpha = 0.5) +
                   geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
@@ -801,7 +769,7 @@ p_acf_321 <- plot_dst_autocorrelation(acf_321_df,
                                       tagging_date = tagged_animal_info %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(release_date_time))
 p_acf_321 %>% ggplotly()
 
-grid.arrange(p_acf_308, p_acf_321, ncol = 1)
+grid.arrange(p_acf_308, p_acf_321, ncol = 2)
 
 # get important lags (max, min, 0)
 lags_321_important <- c(75, 138, 256, 345, 383)
@@ -884,6 +852,104 @@ p_fft_321 <- plot_fft(fft_result = fft_321,
 # p_fft_321
 save_data(data = p_fft_321, folder = plot_path)
 
+## fft subsets ####
+### tag 308 ####
+#### summer residence ####
+pgram_308_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
+                                      start_date = "2018-08-09",
+                                      # end_date = as.POSIXct("2018-09-30"), 
+                                      end_date = "2018-09-25", 
+                                      sample_frequency = 30)
+pgram_308_summerres_2018 <- pgram_308_summerres_2018 + labs(title = "summer residency, Aug 11 - Sep 25, 2018")
+save_data(data = pgram_308_summerres_2018, folder = plot_path)
+#### winter migration ####
+pgram_308_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
+                                          start_date = "2018-09-26",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2018-10-10", 
+                                          sample_frequency = 30)
+pgram_308_wintermig_2018 <- pgram_308_wintermig_2018 + labs(title = "winter migration, Sep 26 - Oct 10, 2018")
+save_data(data = pgram_308_wintermig_2018, folder = plot_path)
+#### winter residence ####
+pgram_308_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
+                                          start_date = "2018-10-11",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-03-21", 
+                                          sample_frequency = 30)
+pgram_308_winterres_2018 <- pgram_308_winterres_2018  + labs(title = "winter residency, Oct 11, 2018 - Mar 21, 2019")
+save_data(data = pgram_308_winterres_2018, folder = plot_path)
+#### summer migration ####
+pgram_308_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
+                                          start_date = "2019-03-22",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-05-10", 
+                                          sample_frequency = 30)
+pgram_308_summermig_2019 <- pgram_308_summermig_2019 + labs(title = "summer migration, Mar 22 - May 10, 2019")
+save_data(data = pgram_308_summermig_2019, folder = plot_path)
+#### summer residence ###
+pgram_308_summerres_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
+                                          start_date = "2019-05-11",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-08-03", 
+                                          sample_frequency = 30)
+pgram_308_summerres_2019 <- pgram_308_summerres_2019 + labs(title = "summer residency, May 11 - Aug 03, 2019")
+save_data(data = pgram_308_summerres_2019, folder = plot_path)
+
+gridExtra::grid.arrange(pgram_308_summerres_2018, pgram_308_wintermig_2018, pgram_308_winterres_2018, pgram_308_summermig_2019, pgram_308_summerres_2019, ncol = 2)
+
+### tag 321 ####
+#### summer residence ####
+pgram_321_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2018-07-29",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2018-09-29", 
+                                          sample_frequency = 30)
+pgram_321_summerres_2018 <- pgram_321_summerres_2018 + labs(title = "summer residency, Jul 29 - Sep 29, 2018")
+save_data(data = pgram_321_summerres_2018, folder = plot_path)
+#### winter migration ####
+pgram_321_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2018-09-30",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2018-11-03", 
+                                          sample_frequency = 30)
+pgram_321_wintermig_2018 <- pgram_321_wintermig_2018 + labs(title = "winter migration, Sep 30 - Nov 03, 2018")
+save_data(data = pgram_321_wintermig_2018, folder = plot_path)
+#### winter residence ####
+pgram_321_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2018-11-03",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-05-02", 
+                                          sample_frequency = 30)
+pgram_321_winterres_2018 <- pgram_321_winterres_2018  + labs(title = "winter residency, Oct 03, 2018 - May 02, 2019")
+save_data(data = pgram_321_winterres_2018, folder = plot_path)
+#### summer migration ####
+pgram_321_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2019-05-03",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-05-26", 
+                                          sample_frequency = 30)
+pgram_321_summermig_2019 <- pgram_321_summermig_2019 + labs(title = "summer migration, May 03 - May 26, 2019")
+save_data(data = pgram_321_summermig_2019, folder = plot_path)
+#### summer residence ###
+pgram_321_summerres_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2019-05-27",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-09-11", 
+                                          sample_frequency = 30)
+pgram_321_summerres_2019 <- pgram_321_summerres_2019 + labs(title = "summer residency, May 27 - Sep 1, 2019")
+save_data(data = pgram_321_summerres_2019, folder = plot_path)
+#### winter migration ####
+pgram_321_wintermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
+                                          start_date = "2019-09-12",
+                                          # end_date = as.POSIXct("2018-09-30"), 
+                                          end_date = "2019-10-15", 
+                                          sample_frequency = 30)
+pgram_321_wintermig_2019 <- pgram_321_wintermig_2019 + labs(title = "winter migration, Sep 12 - Oct 15, 2019")
+save_data(data = pgram_321_wintermig_2019, folder = plot_path)
+
+gridExtra::grid.arrange(pgram_321_summerres_2018, pgram_321_wintermig_2018, pgram_321_winterres_2018, pgram_321_summermig_2019, pgram_321_summerres_2019, pgram_321_wintermig_2019, ncol = 2)
+
+
 ## 4. summary statistics ####
 
 # p <- ggplot(data = data_depth %>% ungroup() %>% 
@@ -917,18 +983,109 @@ save_data(data = p_fft_321, folder = plot_path)
 #  p #%>% ggplotly()
 
 p_308_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
-                                      data_DVM = masterias_DVM_sum_day,
                                       tag_serial_num = "1293308")
-# p_308_sum_stats
+p_308_sum_stats %>% ggplotly()
 save_data(data = p_308_sum_stats, folder = plot_path)
 
 p_321_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
-                                      data_DVM = masterias_DVM_sum_day,
                                       tag_serial_num = "1293321")
-# p_321_sum_stats
+p_321_sum_stats %>% ggplotly()
 save_data(data = p_321_sum_stats, folder = plot_path)
 
-
+# lm to see if between jan and apr 2019 the moon illuminated fraction correlates with min depth 
+# start_date <- "2018-12-12" %>% as.POSIXct()
+# end_date <- "2019-03-05" %>% as.POSIXct()
+# 
+# # prepare data
+# 
+# data_lm_308 <- long_dst_date %>% 
+#   filter(tag_serial_number == "1293308",
+#                                  date %>% between(start_date, end_date)) %>%
+#   # dplyr::select(tag_serial_number, date, depth_min_sgolay) %>%
+#   mutate(moonfraq = oce::moonAngle(t = data_lm_308$date, longitude = 2.45, latitude = 51)$illuminatedFraction)
+# 
+# data_lm_308_sum <- data_lm_308 %>% group_by(moonfraq) %>% #make summary per moonfraq
+#   summarise(depth_min_median = median(depth_min_sgolay),
+#             depth_min_mean = mean(depth_min_sgolay))
+# 
+# ## min depth
+# 
+# lm_depthmin_moonfraq <- stats::lm(data = data_lm_308, formula = depth_min_sgolay ~ moonfraq)
+# lm_depthmin_moonfraq %>% summary()
+# 
+# resid_depthmin_moonfraq <- stats::resid(lm_depthmin_moonfraq) %>% as.data.frame() %>% `colnames<-`("residuals")
+# 
+# # plot lm
+# ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)", title = 'daily min depth over moon fraq')
+# 
+# # plot residuals
+# ggplot(lm_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# ggplot(resid_depthmin_moonfraq, aes(sample=residuals)) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# # ## log transformed -> does not look better
+# # ggplot(data_lm_308, aes(sample=-log(depth_min_sgolay))) +
+# #   stat_qq(size=2.5) + 
+# #   stat_qq_line() +
+# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# 
+# # plot density (to assess normal distribution of residuals)
+# # plot(density(resid_depthmin_moonfraq))
+# 
+# ggplot(resid_depthmin_moonfraq, aes(x=residuals))+
+#   geom_density(linewidth = 1) 
+#   
+# 
+# ## median depth
+# 
+# 
+# lm_depthmedian_moonfraq <- stats::lm(data = data_lm_308, formula = depth_median_sgolay ~ moonfraq)
+# lm_depthmedian_moonfraq %>% summary()
+# 
+# resid_depthmedian_moonfraq <- stats::resid(lm_depthmedian_moonfraq) %>% as.data.frame() %>% `colnames<-`("residuals")
+# 
+# # plot lm
+# ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)", title = 'daily median depth over moon fraq')
+# 
+# # plot residuals
+# ggplot(lm_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# ggplot(resid_depthmedian_moonfraq, aes(sample=residuals)) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# # ## log transformed -> does not look better
+# # ggplot(data_lm_308, aes(sample=-log(depth_median_sgolay))) +
+# #   stat_qq(size=2.5) + 
+# #   stat_qq_line() +
+# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# 
+# # plot density (to assess normal distribution of residuals)
+# # plot(density(resid_depthmedian_moonfraq))
+# 
+# ggplot(resid_depthmedian_moonfraq, aes(x=residuals))+
+#   geom_density(linewidth = 1) 
+  
 ## 5. wavelet results ####
 ### tag 308 ####
 # p_308_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_roll3,
@@ -984,6 +1141,10 @@ p_308_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_308_maxdepth_sgolay
 
 # p_308_wavelet_depth_max_sgolay
 save_data(data = p_308_wavelet_depth_max_sgolay, folder = plot_path)
+
+gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "daily median depth"),
+                        p_308_wavelet_depth_range_sgolay + labs(title = "daily depth range"),
+                        ncol = 1)
 
 ### tag 321 ####
 
@@ -1041,6 +1202,12 @@ p_321_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_321_maxdepth_sgolay
 
 # p_321_wavelet_depth_max_sgolay
 save_data(data = p_321_wavelet_depth_max_sgolay, folder = plot_path)
+
+gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "female, daily median depth"),
+                        p_321_wavelet_depth_median_sgolay + labs(title = "male, daily median depth"),
+                        p_308_wavelet_depth_range_sgolay + labs(title = "female, daily depth range"),
+                        p_321_wavelet_depth_range_sgolay + labs(title = "male, daily depth range"),
+                        ncol = 2)
 
 ## 6. Change Point Detections ####
 
@@ -1150,7 +1317,149 @@ save_data(data = p_321_ribbon_rulsif_10percent, folder = plot_path)
 #                                                          tag_serial_num_short = "321")
 # grid.arrange(p_321_ribbon_rulsif_15percent, p_321_scores_rulsif_15percent, ncol = 1)
 
-# save all plots ad .pdf and .png ####
+## 7. lm moon illumination ####
+
+
+### plot lm 308 ####
+
+### min daily depth
+p_308_lm_min_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
+  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+  geom_point() +
+  labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
+save_data(data = p_308_lm_min_moonfraq_smooth, folder = plot_path)
+
+# plot residuals
+p_308_lm_min_moonfraq_residuals <- ggplot(lm_308_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0, linewidth = 0.75) +
+  labs(x = "fitted", y = "residuals")
+save_data(data = p_308_lm_min_moonfraq_residuals, folder = plot_path)
+
+# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+p_308_lm_min_moonfraq_qq <- ggplot(lm_308_depthmin_moonfraq, aes(sample = .resid)) +
+  stat_qq(size=2.5) + 
+  stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+save_data(data = p_308_lm_min_moonfraq_qq, folder = plot_path)
+
+# ## log transformed -> does not look better
+# ggplot(data_lm_308, aes(sample=-log(depth_min_sgolay))) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+
+
+# plot density (to assess normal distribution of residuals)
+p_308_lm_min_moonfraq_density <- ggplot(lm_308_depthmin_moonfraq, aes(x=.resid))+
+  geom_density(linewidth = 1) 
+save_data(data = p_308_lm_min_moonfraq_density, folder = plot_path)
+
+
+### median daily depth
+p_308_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+  geom_point() +
+  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+save_data(data = p_308_lm_median_moonfraq_smooth, folder = plot_path)
+
+# plot residuals
+p_308_lm_median_moonfraq_residuals <- ggplot(lm_308_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0, linewidth = 0.75) +
+  labs(x = "fitted", y = "residuals")
+save_data(data = p_308_lm_median_moonfraq_residuals, folder = plot_path)
+
+# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+p_308_lm_median_moonfraq_qq <- ggplot(lm_308_depthmedian_moonfraq, aes(sample = .resid)) +
+  stat_qq(size=2.5) + 
+  stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+save_data(data = p_308_lm_median_moonfraq_qq, folder = plot_path)
+
+# ## log transformed -> does not look better
+# ggplot(data_lm_308, aes(sample=-log(depth_median_sgolay))) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+
+
+# plot density (to assess normal distribution of residuals)
+p_308_lm_median_moonfraq_density <- ggplot(lm_308_depthmedian_moonfraq, aes(x=.resid))+
+  geom_density(linewidth = 1) 
+save_data(data = p_308_lm_median_moonfraq_density, folder = plot_path)
+
+### plot lm 321 ####
+
+### min daily depth
+p_321_lm_min_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
+  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+  geom_point() +
+  labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
+save_data(data = p_321_lm_min_moonfraq_smooth, folder = plot_path)
+
+# plot residuals
+p_321_lm_min_moonfraq_residuals <- ggplot(lm_321_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0, linewidth = 0.75) +
+  labs(x = "fitted", y = "residuals")
+save_data(data = p_321_lm_min_moonfraq_residuals, folder = plot_path)
+
+# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+p_321_lm_min_moonfraq_qq <- ggplot(lm_321_depthmin_moonfraq, aes(sample = .resid)) +
+  stat_qq(size=2.5) + 
+  stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+save_data(data = p_321_lm_min_moonfraq_qq, folder = plot_path)
+
+# ## log transformed -> does not look better
+# ggplot(data_lm_321, aes(sample=-log(depth_min_sgolay))) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+
+
+# plot density (to assess normal distribution of residuals)
+p_321_lm_min_moonfraq_density <- ggplot(lm_321_depthmin_moonfraq, aes(x=.resid))+
+  geom_density(linewidth = 1) 
+save_data(data = p_321_lm_min_moonfraq_density, folder = plot_path)
+
+
+### median daily depth
+p_321_lm_median_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+  geom_point() +
+  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+save_data(data = p_321_lm_median_moonfraq_smooth, folder = plot_path)
+
+# plot residuals
+p_321_lm_median_moonfraq_residuals <- ggplot(lm_321_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0, linewidth = 0.75) +
+  labs(x = "fitted", y = "residuals")
+save_data(data = p_321_lm_median_moonfraq_residuals, folder = plot_path)
+
+# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+p_321_lm_median_moonfraq_qq <- ggplot(lm_321_depthmedian_moonfraq, aes(sample = .resid)) +
+  stat_qq(size=2.5) + 
+  stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+save_data(data = p_321_lm_median_moonfraq_qq, folder = plot_path)
+
+# ## log transformed -> does not look better
+# ggplot(data_lm_321, aes(sample=-log(depth_median_sgolay))) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+
+
+# plot density (to assess normal distribution of residuals)
+p_321_lm_median_moonfraq_density <- ggplot(lm_321_depthmedian_moonfraq, aes(x=.resid))+
+  geom_density(linewidth = 1) 
+save_data(data = p_321_lm_median_moonfraq_density, folder = plot_path)
+
+
+# save all plots as .pdf and .png ####
 #To Do
 
 # ggplot2::ggsave(filename = paste0(plot_path_dst, "depth_", tag_serial_number_short, ".pdf"), plot = dst_plot, width = 18, height = 12, units = "cm")

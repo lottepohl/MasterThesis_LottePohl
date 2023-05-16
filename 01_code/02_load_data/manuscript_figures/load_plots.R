@@ -96,3 +96,16 @@ p_321_ribbon_rulsif_5percent <- load_data(filestring = "p_321_ribbon_rulsif_5per
 
 p_321_scores_rulsif_10percent <- load_data(filestring = "p_321_scores_rulsif_10percent", folder = plot_path)
 p_321_ribbon_rulsif_10percent <- load_data(filestring = "p_321_ribbon_rulsif_10percent", folder = plot_path)
+
+## 7. lm moon illumination plots ####
+
+p_308_lm_min_moonfraq_smooth <- load_data(filestring = "p_308_lm_min_moonfraq_smooth", folder = plot_path)
+p_308_lm_min_moonfraq_residuals <- load_data(filestring = "p_308_lm_min_moonfraq_residuals", folder = plot_path)
+p_308_lm_min_moonfraq_qq <- load_data(filestring = "p_308_lm_min_moonfraq_qq", folder = plot_path)
+p_308_lm_min_moonfraq_density <- load_data(filestring = "p_308_lm_min_moonfraq_density", folder = plot_path)
+
+p_321_lm_min_moonfraq_smooth <- load_data(filestring = "p_321_lm_min_moonfraq_smooth", folder = plot_path)
+p_321_lm_min_moonfraq_residuals <- load_data(filestring = "p_321_lm_min_moonfraq_residuals", folder = plot_path)
+p_321_lm_min_moonfraq_qq <- load_data(filestring = "p_321_lm_min_moonfraq_qq", folder = plot_path)
+p_321_lm_min_moonfraq_density <- load_data(filestring = "p_321_lm_min_moonfraq_density", folder = plot_path)
+
