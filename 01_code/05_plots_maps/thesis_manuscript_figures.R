@@ -268,7 +268,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                 plot <- ggplot(data = wt_df) +
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
-                            alpha = 0.5) +
+                            alpha = 0.35) +
                   geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,

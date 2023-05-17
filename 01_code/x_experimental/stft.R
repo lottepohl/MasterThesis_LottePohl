@@ -26,7 +26,7 @@ binfile  = system.file("binfile/TESTfile.bin", package = "GENEAread")[1]
 # Read in the entire file, calibrated
 procfile<-read.bin(binfile)
 # Default is mv
-GENEAread::stft(procfile, plot.it = TRUE)
+GENEAread::stft(procfile, plot.it = T)
 # Try sum?
 GENEAread::stft(procfile, plot.it = TRUE, type = "sum", reassign = FALSE)
 
