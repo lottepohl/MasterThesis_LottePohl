@@ -56,6 +56,25 @@ tagged_animal_info <- masterias_info %>%
   
 # tagged_animal_info %>% View()
 
+# table 4: detections summary ####
+
+
+detections_month <- detections_tempdepth_daynight %>%
+  group_by(month_name) %>%
+  summarise(n_detect = n(),
+            percent = round(100 * (n_detect / nrow(detections_tempdepth_daynight)), digits = 2),
+            # n_ind = tag_serial_number %>% unique() %>% length(),
+            n_male = tag_serial_number[sex == "m"] %>% unique() %>% length(),
+            n_female = tag_serial_number[sex == "f"] %>% unique() %>% length())
+   
+
+
+
+detections_month <- detections_tempdepth_daynight %>% 
+  group_by(month_name, sex) %>%
+  summarise(n_detect = n(),
+            n_ind = tag_serial_number %>% unique() %>% length()) %>%
+  pivot_wider(names_from = sex, values_from = c(n_detect, n_ind), values_fill = 0)
 
 # include capture method y or n?
 
@@ -186,6 +205,7 @@ save_data(data = dst_summary, folder = tables_path)
 save_data(data = tagged_animal_info, folder = tables_path)
 save_data(data = release_locations, folder = tables_path)
 save_data(data = abbreviations_list, folder = tables_path)
+save_data(data = detections_month, folder = tables_path)
 
 save_data(data = rulsif_308_table_2_5percent, folder = tables_path)
 save_data(data = rulsif_308_table_5percent, folder = tables_path)

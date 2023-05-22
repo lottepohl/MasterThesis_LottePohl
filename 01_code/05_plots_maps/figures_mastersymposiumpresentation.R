@@ -66,7 +66,7 @@ ggplot2::theme_set(presentation_theme) # or theme minimal
 # functions for plotting ####
 
 plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
-  data <- depthlog %>% filter(tag_serial_number == tag_serial_num)
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
   max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
   min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
   
@@ -79,11 +79,11 @@ plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "12
   
   plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
     # geom_point(aes(color = temp_c), size = 0.5) + 
-    # geom_line(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    # geom_line(data = long_dst_date %>% dplyr::filter(tag_serial_number == tag_serial_num),
     #           aes(x = date, y = depth_range - max(depth_range)), colour = "blue") +
-    # geom_ribbon(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    # geom_ribbon(data = long_dst_date %>% dplyr::filter(tag_serial_number == tag_serial_num),
     #             aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay), fill = "grey", alpha = 0.75) +
-    # geom_line(data = long_dst_date %>% filter(tag_serial_number == tag_serial_num),
+    # geom_line(data = long_dst_date %>% dplyr::filter(tag_serial_number == tag_serial_num),
     #           aes(x = date, y = -depth_median_sgolay), colour = "black", linewidth = 1) +
     
     # geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq), colour = "red") +
@@ -94,7 +94,7 @@ plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "12
                      date_labels = "%b'%y",
                      expand = c(0,0),
                      limits = c(min_date, max_date)) +
-    theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "", y = "Depth in m") #+ #title = paste0("tag ", tag_serial_number_short), 
   # plot %>% plotly::ggplotly()
@@ -104,7 +104,7 @@ plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "12
 
 
 plot_depth_subset_points <- function(depthlog = masterias_depth_temp, tag_serial_num, start_date_chr, end_date_chr){
-  data <- depthlog %>% filter(tag_serial_number == tag_serial_num,
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num,
                               lubridate::date(date_time) %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
                               row_number() %% 1 == 0)
   # max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
@@ -128,7 +128,7 @@ plot_depth_subset_points <- function(depthlog = masterias_depth_temp, tag_serial
 
 plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
   data <- data_depth %>% ungroup() %>% 
-    filter(tag_serial_number == tag_serial_num) %>% 
+    dplyr::filter(tag_serial_number == tag_serial_num) %>% 
     mutate(t_days = t_days %>% as.numeric())
   max_date <- max(data$date) + lubridate::days(10)
   min_date <- min(data$date) -lubridate::days(10)
@@ -180,7 +180,7 @@ calc_fft <- function(depth_log, sample_freq){
     # make time vector
     mutate(t = difftime(date_time, date_time[1], units = "hours") %>% as.numeric()) %>% 
     #filter out NAs
-    filter(!is.na(depth_m))
+    dplyr::filter(!is.na(depth_m))
   
   # define tmax and n
   tmax <- depth_log$t %>% max()
@@ -208,7 +208,7 @@ calc_fft <- function(depth_log, sample_freq){
 # plot periodogram 
 plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05, path = plot_path){
   # todo: get local rule or set values for period upper and lower lim
-  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + 
+  periodogram <- ggplot(data = fft_result %>% dplyr::filter(period < period_upperlim & period > period_lowerlim)) + 
     geom_line(aes(x = period, y = spec), colour = "black", linewidth = 1) + #theme_bw() +
     scale_y_continuous(expand = c(0,0)) +
     # theme_bw(base_size = 12) +
@@ -222,7 +222,7 @@ plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperli
 
 plot_periodogram_biweekly <- function(fft_result, tag_serial_number_short, period_upperlim = 500, period_lowerlim = 0.05, path = plot_path){
   # todo: get local rule or set values for period upper and lower lim
-  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + 
+  periodogram <- ggplot(data = fft_result %>% dplyr::filter(period < period_upperlim & period > period_lowerlim)) + 
     geom_line(aes(x = period, y = spec), colour = "black", linewidth = 1) + #theme_bw() +
     scale_y_continuous(expand = c(0,0)) +
     # theme_bw(base_size = 12) +
@@ -237,7 +237,7 @@ plot_periodogram_biweekly <- function(fft_result, tag_serial_number_short, perio
 # calc and plot subset periodograms 
 
 fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date, sample_frequency){
-  fft_res <- calc_fft(depth_log = depth_log %>% filter(tag_serial_number == paste0("1293", tag_serial_num_short),
+  fft_res <- calc_fft(depth_log = depth_log %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short),
                                                        lubridate::date(date_time) %>% 
                                                          between(as.POSIXct(start_date), as.POSIXct(end_date))),
                       sample_freq = sample_frequency)
@@ -275,7 +275,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
                             alpha = 0.5) +
-                  geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power_log),
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
                                      breaks = y_breaks, 
@@ -300,7 +300,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = date, y = period, fill = significance),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = significance),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = significance),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -316,7 +316,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = date, y = period, fill = power),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -337,7 +337,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   geom_tile(aes(x = t, y = period, fill = power_log),
                             position = "identity",
                             alpha = 0.65) +
-                  geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power_log),
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
                                      breaks = y_breaks, 
@@ -355,7 +355,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = t, y = period, fill = significance),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = significance),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = significance),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -371,7 +371,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = t, y = period, fill = power),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -403,12 +403,10 @@ tag308_raw_depth <- plot_raw_depth(masterias_depth_temp, tag_serial_num = "12933
 
 tag308_raw_depth
 
-# %>% ggplotly()
-
 gridExtra::grid.arrange(tag308_raw_depth, tag321_raw_depth, nrow = 1)
 
 ### templog 
-tag308_raw_temp <- ggplot2::ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308"), aes(x = date_time, y = temp_c)) + 
+tag308_raw_temp <- ggplot2::ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308"), aes(x = date_time, y = temp_c)) + 
   geom_line(colour = "black") +
   scale_x_datetime(date_breaks = "1 month",
                    date_labels = "%b'%y",
@@ -425,7 +423,7 @@ gridExtra::grid.arrange(tag308_raw_depth, tag308_raw_temp, ncol = 1)
 tag321_raw_depth <- plot_raw_depth(masterias_depth_temp, tag_serial_num = "1293321")
 tag321_raw_depth %>% ggplotly()
 ### templog 
-tag321_raw_temp <- ggplot2::ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293321"), aes(x = date_time, y = temp_c)) + 
+tag321_raw_temp <- ggplot2::ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293321"), aes(x = date_time, y = temp_c)) + 
   geom_line(colour = "black") +
   scale_x_datetime(date_breaks = "1 month",
                    date_labels = "%b'%y",
@@ -491,14 +489,14 @@ gridExtra::grid.arrange(p_308_depth_summer,p_321_depth_summer,
 
 ### winter fft long period ####
 
-fft_308_winter <- calc_fft(depth_log = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+fft_308_winter <- calc_fft(depth_log = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                           lubridate::date(date_time) %>% 
                                             between(as.POSIXct("2018-11-15"), as.POSIXct("2019-03-15"))), sample_freq  = 30)
 
 pgram_308_winter <- plot_periodogram_biweekly(fft_result = fft_308_winter, tag_serial_number_short = "308", period_upperlim = 400, period_lowerlim = 0.05, path = plot_path)
 pgram_308_winter# %>% ggplotly()
 
-fft_321_winter <- calc_fft(depth_log = masterias_depth_temp %>% filter(tag_serial_number == "1293321",
+fft_321_winter <- calc_fft(depth_log = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293321",
                                                                        lubridate::date(date_time) %>% 
                                                                          between(as.POSIXct("2018-11-15"), as.POSIXct("2019-03-15"))), sample_freq  = 30)
 
@@ -509,12 +507,12 @@ pgram_321_winter %>% ggplotly()
 ## wavelet ####
 
 # dates
-dates_308 <- long_dst_date %>% filter(tag_serial_number == "1293308") %>% dplyr::select(date)
-dates_321 <- long_dst_date %>% filter(tag_serial_number == "1293321") %>% dplyr::select(date)
+dates_308 <- long_dst_date %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date)
+dates_321 <- long_dst_date %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date)
 
 ## tag 308
 wt_308_depthmedian_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
-                                              filter(tag_serial_number == "1293308") %>%
+                                              dplyr::filter(tag_serial_number == "1293308") %>%
                                               dplyr::select(depth_median_sgolay),
                                             dt = 1,
                                             factor_smallest_scale = 2)
@@ -526,7 +524,7 @@ p_wt_308_depthmedian_sgolay
 
 ## tag 321
 wt_321_depthmedian_sgolay <- compute_wavelet(parameter = long_dst_date %>% 
-                                               filter(tag_serial_number == "1293321") %>%
+                                               dplyr::filter(tag_serial_number == "1293321") %>%
                                                dplyr::select(depth_median_sgolay),
                                              dt = 1,
                                              factor_smallest_scale = 2)
@@ -551,9 +549,9 @@ detections_sum_area
 
 ## abacus plot ####
 
-masterias_info %>%
-  mutate(tag_serial_num_short = tag_serial_number %>%
-           stringr::str_trunc(width = 3, side = "left", ellipsis = ""))
+# masterias_info %>%
+#   mutate(tag_serial_num_short = tag_serial_number %>%
+#            stringr::str_trunc(width = 3, side = "left", ellipsis = ""))
 
 p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_number, masterias_info$release_date_time))
   # geom_point(data = masterias_info %>% dplyr::filter(n_detect > 1) %>% mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = T)),
@@ -608,7 +606,7 @@ detections_sum_station <- detections_tempdepth_daynight %>%
             n_ind = tag_serial_number %>% unique() %>% length()) #%>%
   # mutate(n_detect = ifelse(n_detect > 1500, 1000, n_detect))
 
-p_detections_heatmap <- ggplot(data = detections_sum_station %>% filter(!area == "BPNS", sex == "f"), #
+p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!area == "BPNS", sex == "f"), #
                                aes(x = month_year, y = station_name, fill = n_detect, colour = n_detect)) + #, colour = n_detect
   # geom_tile(linewidth = 0.75) +
   geom_tile(linewidth = 1) +
@@ -622,7 +620,7 @@ p_detections_heatmap <- ggplot(data = detections_sum_station %>% filter(!area ==
   #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
   scale_x_datetime(date_breaks = "1 month",
                    date_minor_breaks = "1 month",
-                   date_labels = "%b'%y"
+                   date_labels = "%b '%y"
                    ,expand = c(0,0)) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
@@ -699,7 +697,7 @@ ggplot(data = detections_OG102019) +
 # detections_per_day_OG102019_308 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
 #                                       n_detect = 0,
 #                                       tag_serial_number = "308") %>%
-#   full_join(detections_OG102019 %>% filter(tag_serial_number == "308"), 
+#   full_join(detections_OG102019 %>% dplyr::filter(tag_serial_number == "308"), 
 #             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
 #   group_by(date) %>%
 #   summarise(tag_serial_number = tag_serial_number %>% unique(),
@@ -708,7 +706,7 @@ ggplot(data = detections_OG102019) +
 # detections_per_day_OG102019_307 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
 #                                           n_detect = 0,
 #                                           tag_serial_number = "307") %>%
-#   full_join(detections_OG102019 %>% filter(tag_serial_number == "307"), 
+#   full_join(detections_OG102019 %>% dplyr::filter(tag_serial_number == "307"), 
 #             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
 #   group_by(date) %>%
 #   summarise(tag_serial_number = tag_serial_number %>% unique(),
@@ -717,7 +715,7 @@ ggplot(data = detections_OG102019) +
 # detections_per_day_OG102019_299 <- tibble(date = seq(from = detections_OG102019$date %>% min(), to = detections_OG102019$date %>% max(), by = "day"),
 #                                           n_detect = 0,
 #                                           tag_serial_number = "299") %>%
-#   full_join(detections_OG102019 %>% filter(tag_serial_number == "299"), 
+#   full_join(detections_OG102019 %>% dplyr::filter(tag_serial_number == "299"), 
 #             by = c("date", "n_detect", "tag_serial_number"), multiple = "all") %>%
 #   group_by(date) %>%
 #   summarise(tag_serial_number = tag_serial_number %>% unique(),
@@ -729,7 +727,7 @@ ggplot(data = detections_OG102019) +
 
 #### detections OG10 pointplot ####
 
-# p <- ggplot(data = detections_OG102019 %>% filter(sensor_type == "pressure"), aes(x = date_time, y = -parameter)) +
+# p <- ggplot(data = detections_OG102019 %>% dplyr::filter(sensor_type == "pressure"), aes(x = date_time, y = -parameter)) +
 #   geom_line(aes(colour = tag_serial_number)) +
 #   geom_point(aes(colour = lubridate::hour(date_time) %>% as.factor()), size = 2) + #aes(pch = sex), 
 #   labs(x = "", y = "depth in m", colour = "tag serial number")
@@ -747,7 +745,7 @@ p #%>% ggplotly()
 p_299_2019_WS <- ggplot(data = detections_tempdepth_daynight %>% 
          dplyr::mutate(station_name = gsub("ws-", "", station_name),
                        station_name = factor(station_name, levels = station_names_order)) %>%
-         filter(tag_serial_number == "1293299",
+         dplyr::filter(tag_serial_number == "1293299",
                 lubridate::year(date_time) == "2019",
                 sensor_type == "pressure"),
        aes(x = date_time, y = station_name)) +
@@ -768,7 +766,7 @@ p_297_2019_WS <- ggplot(data = detections_tempdepth_daynight %>%
                           dplyr::mutate(station_name = gsub("ws-", "", station_name),
                                         station_name = gsub("bpns-", "", station_name),
                                         station_name = factor(station_name, levels = station_names_order)) %>%
-                          filter(tag_serial_number == "1293297",
+                          dplyr::filter(tag_serial_number == "1293297",
                                  lubridate::year(date_time) == "2019",
                                  sensor_type == "pressure"),
                         aes(x = date_time, y = station_name)) +
@@ -789,7 +787,7 @@ p_308_2019_WS <- ggplot(data = detections_tempdepth_daynight %>%
                           dplyr::mutate(station_name = gsub("ws-", "", station_name),
                                         station_name = gsub("bpns-", "", station_name),
                                         station_name = factor(station_name, levels = station_names_order)) %>%
-                          filter(tag_serial_number == "1293308",
+                          dplyr::filter(tag_serial_number == "1293308",
                                  lubridate::year(date_time) == "2019",
                                  sensor_type == "pressure"),
                         aes(x = date_time, y = station_name)) +
@@ -810,29 +808,37 @@ gridExtra::grid.arrange(p_299_2019_WS, p_297_2019_WS, p_308_2019_WS, ncol = 1)
 ### combine DST adn acoustic ####
 
 p_308_DST_acoustic <- ggplot() +
-  geom_line(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+  geom_line(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                    lubridate::date(date_time) > as.POSIXct("2019-04-30", tz = "utc")), 
             aes(x = date_time, y = -depth_m)) +
   geom_point(data = detections_tempdepth_daynight %>%
                dplyr::mutate(station_name = gsub("ws-", "", station_name),
-                             station_name = gsub("bpns-", "", station_name),
-                             station_name = factor(station_name, levels = station_names_order %>% base::rev())) %>%
+                             station_name = gsub("bpns-", "", station_name)) %>%
                dplyr::filter(tag_serial_number == "1293308",
                              lubridate::year(date_time) == "2019",
                              sensor_type == "pressure"),
              aes(x = date_time, y = -parameter, colour = station_name), size = 2.5) +
+  geom_point(data = detections_tempdepth_daynight %>%
+               dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                             station_name = gsub("bpns-", "", station_name)) %>%
+               dplyr::filter(tag_serial_number == "1293308",
+                             lubridate::year(date_time) == "2019",
+                             station_name == "Birkenfels",
+                             sensor_type == "pressure"),
+             aes(x = date_time, y = -parameter), colour ="red", size = 4) +
   scale_x_datetime(date_breaks = "1 month",
                    # date_minor_breaks = "1 week",
                    date_labels = "%b'%y"
                    # ,expand = c(0,0)
                    ) +
+  scale_color_brewer(palette = "Set1") +
   labs(x = "", y = "Depth in m", colour = "Receiver station")
 
 p_308_DST_acoustic# %>% ggplotly()
 
 # maps ####
 
-# bathy_belgium <- bathy_belgium %>% filter(dplyr::between(latitude, 51.343, 51.485) & dplyr::between(longitude, 3.455, 3.77))
+# bathy_belgium <- bathy_belgium %>% dplyr::filter(dplyr::between(latitude, 51.343, 51.485) & dplyr::between(longitude, 3.455, 3.77))
 
 labels_latlng <- tibble(name = c("North Sea", "Hurd deep", "English Channel", "France", "Belgium", "the Netherlands"),
                         lat = c(51.92, Hurd_deep$latitude, 50.5, 49.8, 50.86, 52.5),
@@ -844,11 +850,11 @@ receiver_stations <- deployments %>%
             deploy_longitude = mean(deploy_longitude)) %>%
   dplyr::mutate(station_name = gsub("ws-", "", station_name),
                 station_name = gsub("bpns-", "", station_name)) %>%
-  filter(deploy_latitude %>% between(50, 52),
+ dplyr::filter(deploy_latitude %>% between(50, 52),
          deploy_longitude %>% between(1.5, 4.5))
 
 ws_stations <- receiver_stations %>% 
-  filter(deploy_latitude %>% between(51.3, 51.5),
+ dplyr::filter(deploy_latitude %>% between(51.3, 51.5),
          deploy_longitude %>% between(3.4, 4.05)) %>%
   mutate(area = ifelse(deploy_longitude < 3.6, "WS1", 
                        ifelse(deploy_longitude < 3.9, "WS2", "WS3")) %>%
@@ -940,7 +946,7 @@ addCircleMarkers(data = receiver_stations,
   addCircleMarkers(data = masterias_stations %>% # WS1
                      dplyr::mutate(station_name = gsub("ws-", "", station_name),
                                    station_name = gsub("bpns-", "", station_name)) %>%
-                     filter(area == "WS1"),
+                    dplyr::filter(area == "WS1"),
                    lat = ~deploy_latitude,
                    lng = ~deploy_longitude,
                    # fillColor = "",
@@ -961,7 +967,7 @@ addCircleMarkers(data = receiver_stations,
   addCircleMarkers(data = masterias_stations %>% #WS2
                      dplyr::mutate(station_name = gsub("ws-", "", station_name),
                                    station_name = gsub("bpns-", "", station_name)) %>%
-                     filter(area == "WS2"),
+                    dplyr::filter(area == "WS2"),
                    lat = ~deploy_latitude,
                    lng = ~deploy_longitude,
                    # fillColor = "",
@@ -1076,7 +1082,7 @@ map1_overview
 #                  radius = 0.9,
 #                  label = ~paste0("Object: ", obj_type, ", sink year: ", sink_yr),
 #                  group = "wrecks, OWFs, cables") %>%
-# addCircleMarkers(data = wrecks_BE %>% filter(Staat != "Geborgen"),
+# addCircleMarkers(data = wrecks_BE %>%dplyr::filter(Staat != "Geborgen"),
 #                  lng = ~longitude,
 #                  lat = ~latitude,
 #                  fillColor = "green",
@@ -1090,7 +1096,7 @@ map1_overview
 #                  opacity = 0, fillOpacity = 0,
 #                  label = ~paste0(depth_m %>% round(digits = 2), " m")) %>%
 # windfarms #
-# addPolygons(data = windfarms_polygons %>% filter(!status %in% c("Approved", "Planned")),
+# addPolygons(data = windfarms_polygons %>% dplyr::filter(!status %in% c("Approved", "Planned")),
 #             color = "red",
 #             weight = 1,
 #             opacity = 1,
@@ -1151,12 +1157,12 @@ map2_overview
 ## investigaion pupping ####
 
 leaflet() %>% addTiles() %>%
-  addCircleMarkers(data = detections_tempdepth_daynight %>% filter(tag_serial_number == "1293299",
+  addCircleMarkers(data = detections_tempdepth_daynight %>% dplyr::filter(tag_serial_number == "1293299",
                                                                    lubridate::year(date_time) == "2019"),
                    lat = ~deploy_latitude,
                    lng = ~deploy_longitude,
                    label = ~paste0("date:", date_time, ", sensor: ", parameter, " ", sensor_unit %>% round(digits = 2))) %>%
-  addPolylines(data = detections_tempdepth_daynight %>% filter(tag_serial_number == "1293299",
+  addPolylines(data = detections_tempdepth_daynight %>% dplyr::filter(tag_serial_number == "1293299",
                                                                lubridate::year(date_time) == "2019"),
                lat = ~deploy_latitude,
                lng = ~deploy_longitude)

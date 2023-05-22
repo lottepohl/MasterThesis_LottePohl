@@ -441,15 +441,34 @@ long_dst_date <- masterias_depth_date %>%
 
 long_dst_daynight <- masterias_depth_daynight %>% 
   ungroup() %>%
-  filter(tag_serial_number %in% c("1293321", "1293308"), dawn == 0 & dusk == 0) %>%
-  dplyr::select(!c(dawn, dusk)) %>%
-  group_by(tag_serial_number, day) %>%
-  mutate(depth_median_roll3 = zoo::rollmean(depth_median, k = 3, fill = NA), ### rolling median and daily change
-         depth_max_roll3 = zoo::rollmean(depth_max, k = 3, fill = NA),
-         depth_min_roll3 = zoo::rollmean(depth_min, k = 3, fill = NA),
-         depth_range_roll3 = zoo::rollmean(depth_range, k = 3, fill = NA)) %>%
+  dplyr::filter(tag_serial_number %in% c("1293321", "1293308")) %>%
+  dplyr::filter(
+         dawn == 0 & dusk == 0
+         # ,day == 0
+         ) %>%
+  dplyr::select(!c(dawn, dusk, activity)) %>%
+  group_by(tag_serial_number, day) %>% #, day
+  mutate(
+    depth_median_sgolay = depth_median %>% signal::sgolayfilt(p = 1, n = 5),
+         depth_max_sgolay = depth_max %>% signal::sgolayfilt(p = 1, n = 5),
+         depth_min_sgolay = depth_min %>% signal::sgolayfilt(p = 1, n = 5),
+         # depth_median_roll3 = zoo::rollmean(depth_median, k = 3, fill = NA), ### rolling median and daily change
+         # depth_max_roll3 = zoo::rollmean(depth_max, k = 3, fill = NA),
+         # depth_min_roll3 = zoo::rollmean(depth_min, k = 3, fill = NA),
+         # depth_range_roll3 = zoo::rollmean(depth_range, k = 3, fill = NA)
+                                           ) %>%
   tidyr::drop_na()
 
+# tests bc activity == NA at some dates
+# long_dst_daynight %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308") %>% #dplyr::filter(day == 0) %>%
+#   # View()
+#   select(date) %>% unique() %>% nrow()
+# 
+# masterias_depth_daynight %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308") %>% 
+#   View()
+#   select(date) %>% unique() %>% nrow()
+
+  
 # # total summary for dst data ####
 # 
 # dst_summary <- masterias_depth_date %>% 

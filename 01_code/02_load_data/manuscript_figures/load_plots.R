@@ -18,11 +18,28 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
 p_length_sex <- load_data(filestring = "p_length_sex", folder = plot_path)
 p_abacus <- load_data(filestring = "p_abacus", folder = plot_path)
+p_detections_heatmap <- load_data(filestring = "p_detections_heatmap", folder = plot_path)
+p_detections_heatmap_OG10 <- load_data(filestring = "p_detections_heatmap_OG10", folder = plot_path)
+p_OG10_boxplot <- load_data(filestring = "p_OG10_boxplot", folder = plot_path)
+p_308_DST_acoustic <- load_data(filestring = "p_308_DST_acoustic", folder = plot_path)
+
+
+### 0.6. vertical analysis ####
 plot_depth_range <- load_data(filestring = "plot_depth_range", folder = plot_path)
 plot_depth_range_heatmap <- load_data(filestring = "plot_depth_range_heatmap", folder = plot_path)
 
 
 ## 1. raw depth logs ####
+
+### lines ####
+
+p_308_depth <- load_data(filestring = "p_308_depth", folder = plot_path)
+p_321_depth <- load_data(filestring = "p_321_depth", folder = plot_path)
+
+p_308_temp <- load_data(filestring = "p_308_temp", folder = plot_path)
+p_321_temp <- load_data(filestring = "p_321_temp", folder = plot_path)
+
+### points ####
 
 p_dst_raw_295 <- load_data(filestring = "p_dst_raw_295", folder = plot_path)
 p_dst_raw_308 <- load_data(filestring = "p_dst_raw_308", folder = plot_path)
@@ -46,6 +63,14 @@ p_321_rulsif_all <- load_data(filestring = "p_321_rulsif_all", folder = plot_pat
 p_308_sum_stats <- load_data(filestring = "p_308_sum_stats", folder = plot_path)
 p_321_sum_stats <- load_data(filestring = "p_321_sum_stats", folder = plot_path)
 
+### 3.1. daynight sum stats ####
+
+p_308_sum_day <- load_data(filestring = "p_308_sum_day", folder = plot_path)
+p_308_sum_night <- load_data(filestring = "p_308_sum_night", folder = plot_path)
+
+p_321_sum_day <- load_data(filestring = "p_321_sum_day", folder = plot_path)
+p_321_sum_night <- load_data(filestring = "p_321_sum_night", folder = plot_path)
+
 ## 4. fft results ####
 
 p_fft_295 <- load_data(filestring = "p_fft_295", folder = plot_path)
@@ -57,10 +82,12 @@ p_fft_321 <- load_data(filestring = "p_fft_321", folder = plot_path)
 p_308_wavelet_depth_median_sgolay <- load_data(filestring = "p_308_wavelet_depth_median_sgolay", folder = plot_path)
 p_308_wavelet_depth_min_sgolay <- load_data(filestring = "p_308_wavelet_depth_min_sgolay", folder = plot_path)
 p_308_wavelet_depth_max_sgolay <- load_data(filestring = "p_308_wavelet_depth_max_sgolay", folder = plot_path)
+p_308_wavelet_depth_range_sgolay <- load_data(filestring = "p_308_wavelet_depth_range_sgolay", folder = plot_path)
 
 p_321_wavelet_depth_median_sgolay <- load_data(filestring = "p_321_wavelet_depth_median_sgolay", folder = plot_path)
 p_321_wavelet_depth_min_sgolay <- load_data(filestring = "p_321_wavelet_depth_min_sgolay", folder = plot_path)
 p_321_wavelet_depth_max_sgolay <- load_data(filestring = "p_321_wavelet_depth_max_sgolay", folder = plot_path)
+p_321_wavelet_depth_range_sgolay <- load_data(filestring = "p_321_wavelet_depth_range_sgolay", folder = plot_path)
 
 # p_308_wavelet_depth_median_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_roll3", folder = plot_path)
 # p_321_wavelet_depth_median_roll3 <- load_data(filestring = "p_321_wavelet_depth_median_roll3", folder = plot_path)
@@ -76,6 +103,11 @@ p_321_wavelet_depth_max_sgolay <- load_data(filestring = "p_321_wavelet_depth_ma
 
 # p_308_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_308_wavelet_maxdepth_change_roll3", folder = plot_path)
 # p_321_wavelet_maxdepth_change_roll3 <- load_data(filestring = "p_321_wavelet_maxdepth_change_roll3", folder = plot_path)
+
+### 5.1. hourly wavelets ####
+
+p_308_wavelet_depth_hr <- load_data(filestring = "p_308_wavelet_depth_hr", folder = plot_path)
+p_321_wavelet_depth_hr <- load_data(filestring = "p_321_wavelet_depth_hr", folder = plot_path)
 
 ## 6. change point detection results ####
 

@@ -60,11 +60,49 @@ ggplot2::theme_set(thesis_theme)
 # plot functions ####
 
 ## 1. plot raw depthlogs ####
+plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
+  # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
+  
+  max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
+  min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
+  
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+    geom_line() +
+    scale_x_datetime(date_breaks = "1 month",
+                     date_labels = "%b '%y",
+                     expand = c(0,0),
+                     limits = c(min_date, max_date)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "Depth in m") 
+}
+# p_test <- plot_raw_temp()
+
+plot_raw_temp <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
+  # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
+  
+  max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
+  min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
+  
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = temp_c)) + 
+    geom_line() +
+    scale_x_datetime(date_breaks = "1 month",
+                     date_labels = "%b '%y",
+                     expand = c(0,0),
+                     limits = c(min_date, max_date)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "Temperature in °C") 
+}
+
+
 plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
   if((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300){ # make different choices for longterm and short term dsts
-    date_breaks <- "2 months"
-    date_minor_breaks <- "1 month"
-    date_labels <- "%b %Y"
+    date_breaks <- "1 month"
+    # date_minor_breaks <- "1 month"
+    date_labels <- "%b '%y"
     data <- data %>% filter(row_number() %% 5 == 0)
     angle <- 0 #30
   }else{
@@ -79,7 +117,8 @@ plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
     # scale_y_continuous(limits = c(-80, 5), breaks = seq(-70, 0, by = 10)) +
     # scale_y_continuous(expand = c((-data$depth_m %>% min()) - 2, (-data$depth_m %>% max()) + 2)) +
     # scale_x_datetime(date_breaks = date_breaks, date_labels = "%b %d") + #, %y
-    scale_x_datetime(date_minor_breaks = date_minor_breaks,
+    scale_x_datetime(
+      # date_minor_breaks = date_minor_breaks,
                      date_breaks = date_breaks,
                      date_labels = date_labels,
                      expand = c(0,0)) +
@@ -124,53 +163,145 @@ plot_dst_autocorrelation <- function(acf_df, tagging_date, xaxis_lag = T){
 ## 3. plot summary statistics ####
 
 plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
-  data <- data_depth %>% ungroup() %>% 
-    filter(tag_serial_number == tag_serial_num) %>% 
+
+  data <- data_depth %>%
+    ungroup() %>%
+    dplyr::filter(tag_serial_number == tag_serial_num) %>%
     mutate(t_days = t_days %>% as.numeric())
   max_date <- max(data$date) + lubridate::days(10)
-  min_date <- min(data$date) -lubridate::days(10)
+  min_date <- min(data$date) - lubridate::days(10)
   
-  # calc moon fraction illuminated
+  # Calculate moon fraction illuminated
   dates <- seq(from = min(data$date), to = max(data$date), by = "day")
-  moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction #coordinates approx of dunkerque
-  moonfraq <- (moonfraq * max(data$depth_max_sgolay)) - max(data$depth_max_sgolay)
+  moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction
+  moonfraq_scaled <- (moonfraq * max(data$depth_max_sgolay)) - max(data$depth_max_sgolay)
   moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
-                                moonfraq = moonfraq)
-  
-  # alphamoon <- ifelse(isTRUE(moon), 1,0)
+                                moonfraq = moonfraq_scaled)
   
   plot <- ggplot(data = data) +
     geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "daily depth range"), alpha = 0.75) +
     geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 1) +
-    theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + #angle = 30
-    scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "Depth in m") +  
-    scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red"))  + #, "alphamoon" = "transparent", "median change" = "purple", "DVM" = "red", "rDVM" = "blue", "nVM" = "green"
-    scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) + #, "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
-    
-    theme(legend.position = "bottom",
-          legend.box = "horizontal") +
-    scale_x_datetime(date_breaks = "1 month",
-                     # date_minor_breaks = "1 month",
-                     # date_breaks = "2 months",
-                     date_labels = "%b'%y"
-                     ,expand = c(0,0),
-                     limits = c(min_date, max_date)
-    ) +
-    theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) 
+    theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0, 0)) + #, sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent())) +
+    labs(x = "", y = "Depth in m") +
+    scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red")) +
+    scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) +
+    theme(legend.position = "none", legend.box = "horizontal") + #"bottom"
+    scale_x_datetime(date_breaks = "1 month", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
   
-  if(isTRUE(moon)){
-    plot <- plot + geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.5)
+  if (isTRUE(moon)) {
+    plot <- plot +
+      geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.5) +
+      geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.75) +
+      scale_y_continuous(expand = c(0, 0), sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent()))
   }
   
-  return(plot)
+  plot
+  
+  
+  # 
+  # 
+  # 
+  # data <- data_depth %>% ungroup() %>% 
+  #   filter(tag_serial_number == tag_serial_num) %>% 
+  #   mutate(t_days = t_days %>% as.numeric())
+  # max_date <- max(data$date) + lubridate::days(10)
+  # min_date <- min(data$date) -lubridate::days(10)
+  # 
+  # # calc moon fraction illuminated
+  # dates <- seq(from = min(data$date), to = max(data$date), by = "day")
+  # moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction #coordinates approx of dunkerque
+  # moonfraq <- (moonfraq * max(data$depth_max_sgolay)) - max(data$depth_max_sgolay)
+  # moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
+  #                               moonfraq = moonfraq)
+  # 
+  # plot <- ggplot(data = data) +
+  #   geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "daily depth range"), alpha = 0.75) +
+  #   geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 1) +
+  #   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + #angle = 30
+  #   scale_y_continuous(expand = c(0,0)) +
+  #   labs(x = "", y = "Depth in m") +  
+  #   scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red"))  + #, "alphamoon" = "transparent", "median change" = "purple", "DVM" = "red", "rDVM" = "blue", "nVM" = "green"
+  #   scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) + #, "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
+  #   
+  #   theme(legend.position = "bottom",
+  #         legend.box = "horizontal") +
+  #   scale_x_datetime(date_breaks = "1 month",
+  #                    # date_minor_breaks = "1 month",
+  #                    # date_breaks = "2 months",
+  #                    # date_labels = "%b '%y"
+  #                    date_labels = "%b %Y"
+  #                    ,expand = c(0,0),
+  #                    limits = c(min_date, max_date)
+  #   ) +
+  #   theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) 
+  # 
+  # if(isTRUE(moon)){
+  #   plot <- plot + geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.5)
+  # }
+  # 
+  # return(plot)
 }
 
+plot_summary_daynight <- function(data_depth, tag_serial_num, moon = TRUE, daytime = 1){
+  
+  data <- data_depth %>%
+    ungroup() %>%
+    # mutate(day = as.numeric(day)) %>%
+    dplyr::filter(tag_serial_number == tag_serial_num
+           ,day == daytime
+           ) 
+  # %>% mutate(t_days = t_days %>% as.numeric())
+  max_date <- max(data$date) + lubridate::days(10)
+  min_date <- min(data$date) - lubridate::days(10)
+  
+  # Calculate moon fraction illuminated
+  dates <- seq(from = min(data$date), to = max(data$date), by = "day")
+  moonfraq <- oce::moonAngle(t = dates, longitude = 2.45, latitude = 51)$illuminatedFraction
+  moonfraq_scaled <- (moonfraq * max(data$depth_max_sgolay)) - max(data$depth_max_sgolay)
+  moonfraq_df <- tibble::tibble(dates = dates %>% as.POSIXct(tz = "utc"),
+                                moonfraq = moonfraq_scaled)
+  # depth_median_label <- ifelse(daytime == 1, 
+  #                              "median depth during day",
+  #                              "median depth during night")
+  # depth_median_label <- "median depth during day"
+  # depth_range_label <- ifelse(daytime == 1, 
+  #                              "depth range during day",
+  #                              "depth range during night")
+  
+  plot <- ggplot(data = data) + #data = data
+    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 0.75) +
+    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median depth"), linewidth = 1) +
+    
+    # geom_ribbon(data = data %>% dplyr::filter(day == 0), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range (N)"), colour = "darkblue", alpha = 0.75) +
+    # geom_ribbon(data = data %>% dplyr::filter(day == 1), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range (D)"), colour = "orange", alpha = 0.75) +
+    # geom_line(data = data %>% dplyr::filter(day == 1), aes(x = date, y = -depth_median_sgolay, colour = "median depth (D)"), linewidth = 1) +
+    # geom_line(data = data %>% dplyr::filter(day == 0), aes(x = date, y = -depth_median_sgolay, colour = "median depth (N)"), linewidth = 1) +
+    # 
+    theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0, 0), sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent())) +
+    labs(x = "", y = "Depth in m") +
+    scale_colour_manual(name = "", values = c("median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = "black", "depth range" = "lightgrey", "illuminated moon fraction" = "red")) +
+    scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "depth range (D)" = "yellow", "depth range (N)" = "lightblue")) +
+    theme(legend.position = "bottom", legend.box = "horizontal") + #"bottom"
+    scale_x_datetime(date_breaks = "1 month", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
+    geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.5) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
+  
+  if (isTRUE(moon)) {
+    plot <- plot +
+      geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.75)
+  }
+  
+  plot
+
+}
 
 ## 4. plot fft ####
 
 plot_fft <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05){
-  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + 
+  periodogram <- ggplot(data = fft_result %>% dplyr::filter(period < period_upperlim & period > period_lowerlim)) + 
     geom_line(aes(x = period, y = spec), colour = "black") +
     scale_y_continuous(expand = c(0,0)) +
     scale_x_continuous(expand = c(0,0), breaks = seq(2, period_upperlim, by = 2)) +
@@ -185,8 +316,8 @@ calc_fft <- function(depth_log, sample_freq){
   depth_log <- depth_log %>% 
     # make time vector
     mutate(t = difftime(date_time, date_time[1], units = "hours") %>% as.numeric()) %>% 
-    #filter out NAs
-    filter(!is.na(depth_m))
+    #dplyr::filter out NAs
+    dplyr::filter(!is.na(depth_m))
   
   # define tmax and n
   tmax <- depth_log$t %>% max()
@@ -214,7 +345,7 @@ calc_fft <- function(depth_log, sample_freq){
 # plot periodogram 
 plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05, path = plot_path){
   # todo: get local rule or set values for period upper and lower lim
-  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + 
+  periodogram <- ggplot(data = fft_result %>% dplyr::filter(period < period_upperlim & period > period_lowerlim)) + 
     geom_line(aes(x = period, y = spec), colour = "black", linewidth = 1) + #theme_bw() +
     scale_y_continuous(expand = c(0,0)) +
     # theme_bw(base_size = 12) +
@@ -227,7 +358,7 @@ plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperli
 }
 
 fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date, sample_frequency){
-  fft_res <- calc_fft(depth_log = depth_log %>% filter(tag_serial_number == paste0("1293", tag_serial_num_short),
+  fft_res <- calc_fft(depth_log = depth_log %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short),
                                                        lubridate::date(date_time) %>% 
                                                          between(start_date %>% as.POSIXct(), end_date %>% as.POSIXct())),
                       sample_freq = sample_frequency)
@@ -242,7 +373,7 @@ fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date,
 plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                              # y_breaks = c(4, 8, 16, 32, 64, 128),
                              # x_breaks = c("000", "100", "200", "300", "400", "500"),
-                             date = TRUE){
+                             date = TRUE, max_period = 50){
   # transformation function for the y axis
   my_trans <- scales::trans_new("log2_reverse", function(x) -log2(x), function(x) 2^-x)
   
@@ -250,16 +381,17 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
   
   # y axis labels
   y_breaks <- 2^floor(log2(wt_df$period)) %>% unique()
+  y_breaks <- y_breaks[y_breaks <= max_period]
   
-  # transform dates ####
+  wt_df <- wt_df  %>% dplyr::filter(period <= max_period)
+  
+  # transform dates
   wt_df$date <- wt_df$date %>% as.POSIXct(tz = "UTC")
-  # # x axis labels
-  # ifelse(date %>% isTRUE(),
-  #        x_breaks <- c(wt_df$date[1], wt_df$date[(1/5) * n_data], wt_df$date[(2/5) * n_data], wt_df$date[(3/5) * n_data],
-  #                      wt_df$date[(4/5) * n_data], wt_df$date[(5/5) * n_data])
-  # ,
-  # x_breaks <- sprintf("%03d", seq(from = 0, to = n_data, by = 100)))
-  # 
+
+  # change max and min date to include max x axis label completely
+  max_date <- max(wt_df$date) + lubridate::days(10)
+  min_date <- min(wt_df$date) -lubridate::days(10) #17 days bc one week of data was cut off
+  
   #plot
   ifelse(date %>% isTRUE(),
          
@@ -269,22 +401,24 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
                             alpha = 0.35) +
-                  geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power_log),
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
                                      breaks = y_breaks, 
                                      expand = c(0,0)) +
                   # scale_x_discrete(breaks = x_breaks) +
                   # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
-                  scale_x_datetime(date_minor_breaks = "1 month",
-                                   date_breaks = "2 months",
-                                   date_labels = "%b %Y",
-                                   expand = c(0,0)) +
+                  scale_x_datetime(
+                    # date_minor_breaks = "1 month",
+                                   date_breaks = "1 month",
+                                   date_labels = "%b '%y",
+                                   expand = c(0,0), 
+                                   limits = c(min_date, max_date)) +
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
-                  labs(x = "Date", y = "Period in days", fill = "log2(Power)") +
-                  theme(legend.position = "none", # "bottom",
-                        legend.box = "horizontal")
-                # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                  labs(x = "", y = "Period in days", fill = "log2(Power)") +
+                  theme(legend.position = "bottom", # "bottom",
+                        legend.box = "horizontal") +
+                  theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
                 ,
                 
                 ifelse(type == "significance",
@@ -293,7 +427,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = date, y = period, fill = significance),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = significance),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = significance),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -309,7 +443,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = date, y = period, fill = power),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = date, y = period, fill = power),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -330,7 +464,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   geom_tile(aes(x = t, y = period, fill = power_log),
                             position = "identity",
                             alpha = 0.65) +
-                  geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power_log),
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
                                      breaks = y_breaks, 
@@ -348,7 +482,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = t, y = period, fill = significance),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = significance),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = significance),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -364,7 +498,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                          geom_tile(aes(x = t, y = period, fill = power),
                                    position = "identity",
                                    alpha = 0.65) +
-                         geom_tile(data = wt_df %>% filter(sig == 1), aes(x = t, y = period, fill = power),
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power),
                                    position = "identity") +
                          scale_y_continuous(trans = my_trans,
                                             breaks = y_breaks, 
@@ -379,6 +513,158 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
   )
   return(plot)
 }
+
+plot_wavelet_hrperiod <- function(wt_df = wt_df, type = c("power", "significance", "power_log"),
+                                  date = TRUE, max_period = 72 #hours = 3 days
+){
+  # transformation function for the y axis
+  my_trans <- scales::trans_new("log2_reverse", function(x) -log2(x), function(x) 2^-x)
+  
+  wt_df <- wt_df %>% dplyr::filter(date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
+  
+  # y axis labels
+  y_breaks <- 2^floor(log2(wt_df$period)) %>% unique()
+  y_breaks <- y_breaks[y_breaks <= max_period]
+  # transform dates
+  # wt_df$date_time <- wt_df$date_time %>% as.POSIXct(tz = "UTC") # not needed bc we have the posict objects
+  
+  # # x axis labels
+  # ifelse(date %>% isTRUE(),
+  #        x_breaks <- c(wt_df$date_time[1], wt_df$date_time[(1/5) * n_data], wt_df$date_time[(2/5) * n_data], wt_df$date_time[(3/5) * n_data],
+  #                      wt_df$date_time[(4/5) * n_data], wt_df$date_time[(5/5) * n_data])
+  # ,
+  # x_breaks <- sprintf("%03d", seq(from = 0, to = n_data, by = 100)))
+  # 
+  #plot
+  
+  wt_df <- wt_df  %>% dplyr::filter(period <= max_period)
+  
+  # change max and min date to include max x axis label completely
+  max_date <- max(wt_df$date) + lubridate::days(10)
+  min_date <- min(wt_df$date) -lubridate::days(10)
+  
+  
+  ifelse(date %>% isTRUE(),
+         
+         ifelse(type == "power_log",
+                
+                plot <- ggplot(data = wt_df) +
+                  geom_tile(aes(x = date, y = period, fill = power_log),
+                            position = "identity",
+                            alpha = 0.5) +
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power_log),
+                            position = "identity") +
+                  scale_y_continuous(trans = my_trans,
+                                     breaks = y_breaks, 
+                                     expand = c(0,0)) +
+                  # scale_x_discrete(breaks = x_breaks) +
+                  # scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                  scale_x_datetime(
+                    # date_minor_breaks = "1 month",
+                    date_breaks = "1 month",
+                    date_labels = "%b '%y",
+                    expand = c(0,0),
+                    limits = c(min_date, max_date)) +
+                  scale_fill_viridis_c(direction = 1, option = "turbo") +
+                  labs(x = "", y = "Period in hours", fill = "log2(Power)") +
+                  theme(legend.position = "bottom", # "bottom",
+                        legend.box = "horizontal") +
+                  theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
+                ,
+                
+                ifelse(type == "significance",
+                       
+                       plot <- ggplot(data = wt_df) +
+                         geom_tile(aes(x = date_posicxt, y = period, fill = significance),
+                                   position = "identity",
+                                   alpha = 0.65) +
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date_posicxt, y = period, fill = significance),
+                                   position = "identity") +
+                         scale_y_continuous(trans = my_trans,
+                                            breaks = y_breaks, 
+                                            expand = c(0,0)) +
+                         # scale_x_discrete(breaks = x_breaks) +
+                         scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                         scale_fill_viridis_c(direction = 1, option = "turbo") +
+                         labs(x = "date", y = "period in hours", fill = "significance") #+
+                       # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                       ,
+                       
+                       plot <- ggplot(data = wt_df) +
+                         geom_tile(aes(x = date_posicxt, y = period, fill = power),
+                                   position = "identity",
+                                   alpha = 0.65) +
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date_posicxt, y = period, fill = power),
+                                   position = "identity") +
+                         scale_y_continuous(trans = my_trans,
+                                            breaks = y_breaks, 
+                                            expand = c(0,0)) +
+                         # scale_x_discrete(breaks = x_breaks) +
+                         scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                         scale_fill_viridis_c(direction = 1, option = "turbo") +
+                         labs(x = "date", y = "period in hours", fill = "power") #+
+                       # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                       
+                )
+         )
+         ,
+         
+         ifelse(type == "power_log",
+                
+                plot <- ggplot(data = wt_df) +
+                  geom_tile(aes(x = t, y = period, fill = power_log),
+                            position = "identity",
+                            alpha = 0.65) +
+                  geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power_log),
+                            position = "identity") +
+                  scale_y_continuous(trans = my_trans,
+                                     breaks = y_breaks, 
+                                     expand = c(0,0)) +
+                  # scale_x_discrete(breaks = x_breaks) +
+                  scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                  scale_fill_viridis_c(direction = 1, option = "turbo") +
+                  labs(x = "date", y = "period in hours", fill = "log2(power)") #+
+                # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                ,
+                
+                ifelse(type == "significance",
+                       
+                       plot <- ggplot(data = wt_df) +
+                         geom_tile(aes(x = t, y = period, fill = significance),
+                                   position = "identity",
+                                   alpha = 0.65) +
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = significance),
+                                   position = "identity") +
+                         scale_y_continuous(trans = my_trans,
+                                            breaks = y_breaks, 
+                                            expand = c(0,0)) +
+                         # scale_x_discrete(breaks = x_breaks) +
+                         scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                         scale_fill_viridis_c(direction = 1, option = "turbo") +
+                         labs(x = "date", y = "period in hours", fill = "significance") #+
+                       # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                       ,
+                       
+                       plot <- ggplot(data = wt_df) +
+                         geom_tile(aes(x = t, y = period, fill = power),
+                                   position = "identity",
+                                   alpha = 0.65) +
+                         geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = t, y = period, fill = power),
+                                   position = "identity") +
+                         scale_y_continuous(trans = my_trans,
+                                            breaks = y_breaks, 
+                                            expand = c(0,0)) +
+                         # scale_x_discrete(breaks = x_breaks) +
+                         scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d", expand = c(0,0)) +
+                         scale_fill_viridis_c(direction = 1, option = "turbo") +
+                         labs(x = "date", y = "period in hours", fill = "power") #+
+                       # theme(axis.text.x = element_text(angle = 60, hjust = 0.5))
+                )
+         )
+  )
+  return(plot)
+}
+
 
 ## 6. plot Depth Change Points ####
 
@@ -603,60 +889,195 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
 
 # plots ####
 
+
 ## 0. basic acoustic detections/dst plots ####
 
-### boxplot length per sex
+### 0.1. boxplot length per sex ####
 p_length_sex <- ggplot(data = tagged_animal_info) +
   geom_boxplot(aes(x = sex, y = length1)) +
   # geom_text(aes(x = group, y = max(value) + 0.2, label = round(max(value), 2)), 
   #           size = 3, position = position_dodge(width = 0.75)) +
   geom_text(data = tagged_animal_info %>% group_by(sex) %>% summarise(n = n()),
             aes(x = sex, y = 98, label = paste0("n =  ", n)), angle = 0, family = "serif") +
-  labs(x = "Sex", y = "Total Length in cm") 
+  labs(x = "Sex", y = "Total Length in cm")
 
 save_data(data = p_length_sex, folder = plot_path)
 
-### abacus plot ####
+### 0.2. abacus plot ####
 # detections_tempdepth_daynight2 <- detections_tempdepth_daynight %>%
 #   left_join(masterias_info %>% 
 #               dplyr::mutate(area = "tagging date"), by = "tag_serial_number")
 
 p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_number, masterias_info$release_date_time))
+  # geom_point(data = masterias_info %>% dplyr::filter(n_detect > 1) %>% mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = T)),
+  #            aes(x = release_date_time, y = tag_serial_number), stroke = 1, colour = "black", size = 3, pch = 4) +
   geom_point(data = masterias_info %>% dplyr::filter(n_detect > 1) %>% mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = T)),
-             aes(x = release_date_time, y = tag_serial_number), stroke = 1, colour = "black", size = 3, pch = 4) +
+             aes(x = release_date_time, y = tag_serial_number, shape = sex), stroke = 0.5, colour = "black", size = 1.5) +
+  
   geom_point(data = detections_tempdepth_daynight,
-             aes(x = date_time, y = tag_serial_number, colour = area, pch = sex), size = 3) +
+             aes(x = date_time, y = tag_serial_number, colour = area), size = 2) + #, pch = sex
   geom_point(data = masterias_info %>% dplyr::filter(n_detect > 1) %>% mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = T)),
-             aes(x = release_date_time, y = tag_serial_number), stroke = 1, colour = "black", size = 3, pch = 4) +
-  scale_x_datetime(date_minor_breaks = "1 month",
-                   date_breaks = "2 months",
-                   date_labels = "%b %Y") +
-  labs(x = "Date", y = "Tag serial nr.", colour = "Area", pch = "Sex") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 0.5))
+             aes(x = release_date_time, y = tag_serial_number, shape = sex), stroke = 0.5, colour = "black", size = 1.5) +
+  scale_x_datetime(date_breaks = "2 months",
+                   date_minor_breaks = "1 month",
+                   date_labels = "%b '%y"
+                   # ,expand = c(0,0)
+  ) +
+  scale_y_discrete(labels = masterias_info %>%
+                     dplyr::filter(n_detect > 1) %>%
+                     mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = F) %>%
+                              as.character() %>% rev()) %>%
+                     dplyr::select(tag_serial_number) %>%
+                     pull() %>%
+                     stringr::str_trunc(width = 3, side = "left", ellipsis = "")
+  ) +
+  scale_color_manual(values = c("black", "#ed7d31","#3483ac")) + #, "#34b3bb"
+  # scale_shape_manual(values = c(2, 4)) +
+  scale_shape_manual(values = c(0,2)) + #c("\u2640", "\u2642") # unicode symbols for female and male
+  labs(x = "", y = "tag serial nr.", colour = "receiver array:", shape = "tagging date:") +
+  theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
+  theme(legend.position = "bottom", # "bottom",
+        legend.box = "horizontal") 
 
 p_abacus
 save_data(data = p_abacus, folder = plot_path)
 
-# plot to see if the tagging batch has sth to do with mortality
+### 0.3. heatmap detections ####
 
-plot <- ggplot(data = tagged_animal_info) +
-  geom_point(aes(x = days_at_liberty, y = length1, 
-                 colour = release_date_time %>% as.factor(),
-                 pch = release_loc %>% as.factor()),
-             size = 7, alpha = 0.6) +
-  geom_text(aes(x = days_at_liberty, y = length1, label = str_trunc(tag_serial_number, width = 3, side = "left", ellipsis = "")), nudge_y = 0, size = 4) +
-  labs(colour = "release date", y = "total length in cm", pch = "release location", x = "days at liberty")
+station_names_order <- c("OG10", "DL7", "DL9", "DL12", "OGDL", "SP3", "GVWSP","TRAWL", "WN2", "W6", "W7", #WS1
+                         "borssele", "11", "13", "PVTSS", "4", #WS2
+                         "Birkenfels","CPowerReefballs", "G-88", "Grafton", "LottoBuoy", "Nauticaena", "S4", "VG2", "W1", "WK12", "Westhinder" #BPNS
+) %>% base::rev()
 
-plot# %>% ggplotly()
+### stations Westerschelde
+detections_sum_station <- detections_tempdepth_daynight %>% 
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                station_name = gsub("bpns-", "", station_name),
+                station_name = factor(station_name, levels = station_names_order)) %>% 
+  mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-16')),
+         month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
+  group_by(station_name, month_year, sex) %>%
+  # group_by(area, month_year, sex) %>%
+  summarise(n_detect = n(),
+            area = area %>% unique(),
+            month_year_chr = month_year_chr %>% unique(), 
+            n_ind = tag_serial_number %>% unique() %>% length()) #%>%
+# mutate(n_detect = ifelse(n_detect > 1500, 1000, n_detect))
 
-tagged_animal_info <- tagged_animal_info %>% mutate(release_date_time = release_date_time %>% as.factor(),
-                                                    release_loc = release_loc %>% as.factor())
+p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!area == "BPNS", sex == "f"), #
+                               aes(x = month_year, y = station_name, fill = n_detect, colour = n_detect)) + #, colour = n_detect
+  # geom_tile(linewidth = 0.75) +
+  geom_tile(linewidth = 1) +
+  # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
+  geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 3) + #, colour = "grey"
+  # facet_grid(vars(sex), scales="free_y") +
+  scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
+  # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+  scale_x_datetime(date_breaks = "2 months",
+                   date_minor_breaks = "1 month",
+                   date_labels = "%b '%y"
+                   ,expand = c(0,0)) +
+  scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
+  theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+  labs(x = "", y = "receiver station", fill = "# detections", colour = "# detections")  +
+  theme(legend.position = "bottom", # "bottom",
+        legend.box = "horizontal") 
 
-lm_release <- lm(formula = days_at_liberty ~ release_date_time, data = tagged_animal_info)
-lm_release %>% summary()
+p_detections_heatmap #%>% ggplotly()
+
+save_data(data = p_detections_heatmap, folder = plot_path)
+
+### 0.4. heatmap OG10 ####
+
+detections_OG102019 <- detections_tempdepth_daynight %>% 
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                tag_serial_number = tag_serial_number %>%
+                  stringr::str_trunc(width = 3, side = "left", ellipsis = "")
+                # station_name = gsub("bpns-", "", station_name),
+                # station_name = factor(station_name, levels = station_names_order)
+  ) %>% 
+  # mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-17')),
+  #        month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
+  dplyr::filter(station_name == "OG10",
+                lubridate::year(date_time) == "2019") %>%
+  group_by(tag_serial_number, date) %>%
+  summarise(n_detect = n(),
+            depth_median = median(parameter[sensor_type == "pressure"]),
+            sex = sex %>% unique()) %>%
+  mutate(date = date %>% as.POSIXct(tz = "utc")) %>%
+  ungroup()
 
 
-### vertical space use analysis ####
+p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
+                                    aes(x = date, y = tag_serial_number, fill = n_detect, colour = n_detect)) + #, colour = n_detect
+  # geom_tile(linewidth = 0.75) +
+  geom_tile(linewidth = 1) +
+  # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
+  # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  # facet_grid(vars(sex), scales="free_y") +
+  scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
+  # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+  scale_x_datetime(date_breaks = "1 month",
+                   # date_minor_breaks = "1 day",
+                   date_labels = "%b'%y"
+                   ,expand = c(0,0)) +
+  scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
+  theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+  labs(x = "", y = "tag serial nr.", fill = "# detections", colour = "# detections")  +
+  theme(legend.position = "bottom", # "bottom",
+        legend.box = "horizontal") 
+
+p_detections_heatmap_OG10 #%>% ggplotly()
+
+save_data(data = p_detections_heatmap_OG10, folder = plot_path)
+
+### 0.5. residency index OG10 2019 ####
+OG102019_residency <- detections_OG102019 %>% 
+  mutate(total_days = base::difftime(date %>% max(), date %>% min(), units = "days") %>% as.numeric()) %>%
+  group_by(tag_serial_number) %>%
+  summarise(days_detected = n(),
+            residency_index = days_detected / unique(total_days))
+
+detections_OG102019 <- detections_OG102019 %>% 
+  left_join(OG102019_residency, by = "tag_serial_number")
+
+### boxplot n_detect RI
+
+p_OG10_boxplot <- ggplot(data = detections_OG102019) +
+  geom_boxplot(aes(x = tag_serial_number, y = n_detect, fill = residency_index)) +
+  scale_fill_viridis_c(option = "plasma", direction = -1) +
+  geom_text(aes(x = tag_serial_number, y = 175, label = paste0("RI = ", residency_index %>% round(digits = 2))), colour = "black", angle = 0, fontface = "plain", family = "serif", size = 4) + #, colour = "grey" 
+  labs(x = "tag serial nr.", y = "# detections per day", fill = "residency index")
+
+p_OG10_boxplot
+save_data(data = p_OG10_boxplot, folder = plot_path)
+
+# # plot to see if the tagging batch has sth to do with mortality
+# 
+# plot <- ggplot(data = tagged_animal_info) +
+#   geom_point(aes(x = days_at_liberty, y = length1, 
+#                  colour = release_date_time %>% as.factor(),
+#                  pch = release_loc %>% as.factor()),
+#              size = 7, alpha = 0.6) +
+#   geom_text(aes(x = days_at_liberty, y = length1, label = str_trunc(tag_serial_number, width = 3, side = "left", ellipsis = "")), nudge_y = 0, size = 4) +
+#   labs(colour = "release date", y = "total length in cm", pch = "release location", x = "days at liberty")
+# 
+# plot# %>% ggplotly()
+# 
+# tagged_animal_info <- tagged_animal_info %>% mutate(release_date_time = release_date_time %>% as.factor(),
+#                                                     release_loc = release_loc %>% as.factor())
+# 
+# lm_release <- lm(formula = days_at_liberty ~ release_date_time, data = tagged_animal_info)
+# lm_release %>% summary()
+
+
+### 0.6. vertical space use analysis ####
 
 plot_depth_range <- ggplot(data = summary_all2 %>% dplyr::mutate(station_name = gsub("ws-", "", station_name),
                                                                  group = ifelse(group == "depth", "bathymetry", group))) +
@@ -689,8 +1110,54 @@ plot_depth_range_heatmap <- ggplot(data = summary_wide2 %>% dplyr::mutate(statio
 
 save_data(data = plot_depth_range_heatmap, folder = plot_path)
 
+### 0.7 ADST 308 ####
+
+p_308_DST_acoustic <- ggplot() +
+  geom_line(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
+                                                          lubridate::date(date_time) > as.POSIXct("2019-04-30", tz = "utc")), 
+            aes(x = date_time, y = -depth_m)) +
+  geom_point(data = detections_tempdepth_daynight %>%
+               dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                             station_name = gsub("bpns-", "", station_name)) %>%
+               dplyr::filter(tag_serial_number == "1293308",
+                             lubridate::year(date_time) == "2019",
+                             sensor_type == "pressure"),
+             aes(x = date_time, y = -parameter, colour = station_name), size = 2.5) +
+  geom_point(data = detections_tempdepth_daynight %>%
+               dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                             station_name = gsub("bpns-", "", station_name)) %>%
+               dplyr::filter(tag_serial_number == "1293308",
+                             lubridate::year(date_time) == "2019",
+                             station_name == "Birkenfels",
+                             sensor_type == "pressure"),
+             aes(x = date_time, y = -parameter), colour ="red", size = 4) +
+  scale_x_datetime(date_breaks = "1 month",
+                   # date_minor_breaks = "1 week",
+                   date_labels = "%b'%y"
+                   # ,expand = c(0,0)
+  ) +
+  scale_color_brewer(palette = "Set1") +
+  labs(x = "", y = "Depth in m", colour = "Receiver station")
+
+p_308_DST_acoustic# %>% ggplotly()
+
+save_data(data = p_308_DST_acoustic, folder = plot_path)
 
 ## 1. raw depthlogs ####
+
+## temp & depth lines ####
+
+p_308_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293308")
+save_data(data = p_308_depth, folder = plot_path)
+p_321_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293321")
+save_data(data = p_321_depth, folder = plot_path)
+
+p_308_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1293308")
+save_data(data = p_308_temp, folder = plot_path)
+p_321_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1293321")
+save_data(data = p_321_temp, folder = plot_path)
+
+## temp points ####
 
 p_dst_raw_295 <- plot_dst_raw_depthlog(data = masterias_depth_temp %>% filter(tag_serial_number == "1293295"),
                               time_vector = "date_time",
@@ -852,9 +1319,9 @@ p_fft_321 <- plot_fft(fft_result = fft_321,
 # p_fft_321
 save_data(data = p_fft_321, folder = plot_path)
 
-## fft subsets ####
-### tag 308 ####
-#### summer residence ####
+### 3.1. fft subsets ####
+#### tag 308 ####
+#### summer residence
 pgram_308_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
                                       start_date = "2018-08-09",
                                       # end_date = as.POSIXct("2018-09-30"), 
@@ -862,7 +1329,7 @@ pgram_308_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                       sample_frequency = 30)
 pgram_308_summerres_2018 <- pgram_308_summerres_2018 + labs(title = "summer residency, Aug 11 - Sep 25, 2018")
 save_data(data = pgram_308_summerres_2018, folder = plot_path)
-#### winter migration ####
+#### winter migration
 pgram_308_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
                                           start_date = "2018-09-26",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -870,7 +1337,7 @@ pgram_308_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_308_wintermig_2018 <- pgram_308_wintermig_2018 + labs(title = "winter migration, Sep 26 - Oct 10, 2018")
 save_data(data = pgram_308_wintermig_2018, folder = plot_path)
-#### winter residence ####
+#### winter residence
 pgram_308_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
                                           start_date = "2018-10-11",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -878,7 +1345,7 @@ pgram_308_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_308_winterres_2018 <- pgram_308_winterres_2018  + labs(title = "winter residency, Oct 11, 2018 - Mar 21, 2019")
 save_data(data = pgram_308_winterres_2018, folder = plot_path)
-#### summer migration ####
+#### summer migration
 pgram_308_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
                                           start_date = "2019-03-22",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -886,7 +1353,7 @@ pgram_308_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_308_summermig_2019 <- pgram_308_summermig_2019 + labs(title = "summer migration, Mar 22 - May 10, 2019")
 save_data(data = pgram_308_summermig_2019, folder = plot_path)
-#### summer residence ###
+#### summer residence
 pgram_308_summerres_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "308",
                                           start_date = "2019-05-11",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -897,8 +1364,8 @@ save_data(data = pgram_308_summerres_2019, folder = plot_path)
 
 gridExtra::grid.arrange(pgram_308_summerres_2018, pgram_308_wintermig_2018, pgram_308_winterres_2018, pgram_308_summermig_2019, pgram_308_summerres_2019, ncol = 2)
 
-### tag 321 ####
-#### summer residence ####
+#### tag 321 ####
+#### summer residence
 pgram_321_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2018-07-29",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -906,7 +1373,7 @@ pgram_321_summerres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_321_summerres_2018 <- pgram_321_summerres_2018 + labs(title = "summer residency, Jul 29 - Sep 29, 2018")
 save_data(data = pgram_321_summerres_2018, folder = plot_path)
-#### winter migration ####
+#### winter migration
 pgram_321_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2018-09-30",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -914,7 +1381,7 @@ pgram_321_wintermig_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_321_wintermig_2018 <- pgram_321_wintermig_2018 + labs(title = "winter migration, Sep 30 - Nov 03, 2018")
 save_data(data = pgram_321_wintermig_2018, folder = plot_path)
-#### winter residence ####
+#### winter residence
 pgram_321_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2018-11-03",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -922,7 +1389,7 @@ pgram_321_winterres_2018 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_321_winterres_2018 <- pgram_321_winterres_2018  + labs(title = "winter residency, Oct 03, 2018 - May 02, 2019")
 save_data(data = pgram_321_winterres_2018, folder = plot_path)
-#### summer migration ####
+#### summer migration
 pgram_321_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2019-05-03",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -930,7 +1397,7 @@ pgram_321_summermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_321_summermig_2019 <- pgram_321_summermig_2019 + labs(title = "summer migration, May 03 - May 26, 2019")
 save_data(data = pgram_321_summermig_2019, folder = plot_path)
-#### summer residence ###
+#### summer residence
 pgram_321_summerres_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2019-05-27",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -938,7 +1405,7 @@ pgram_321_summerres_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                           sample_frequency = 30)
 pgram_321_summerres_2019 <- pgram_321_summerres_2019 + labs(title = "summer residency, May 27 - Sep 1, 2019")
 save_data(data = pgram_321_summerres_2019, folder = plot_path)
-#### winter migration ####
+#### winter migration
 pgram_321_wintermig_2019 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_serial_num_short = "321",
                                           start_date = "2019-09-12",
                                           # end_date = as.POSIXct("2018-09-30"), 
@@ -952,142 +1419,102 @@ gridExtra::grid.arrange(pgram_321_summerres_2018, pgram_321_wintermig_2018, pgra
 
 ## 4. summary statistics ####
 
-# p <- ggplot(data = data_depth %>% ungroup() %>% 
-#          filter(tag_serial_number == tag_serial_num) %>% 
-#          mutate(t_days = t_days %>% as.numeric())) +
-#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "DVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "DVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "rDVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "rDVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-#   geom_bar(data = data_DVM %>% filter(tag_serial_number == tag_serial_num, vertical_movement == "nVM"), #, t_days %>% between(tag_308_migration1_start, tag_308_migration1_end)
-#            aes(x = date_24hcycle, y = (data_depth$depth_max_sgolay %>% max()) * (-1), fill = "nVM"), stat = "identity", alpha = 1, position = 'dodge') + #, width = NULL
-#   # geom_rect(data = data_DVM %>% filter(tag_serial_number == tag_serial_num),
-#   #             aes(x = date_24hcycle,
-#   #                 ymin = -70,
-#   #                 ymax = 0,
-#   #                 fill = vertical_movement)) +
-#   geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 1) +
-#   geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median")) +
-#   # geom_line(aes(x = date, y = -depth_median_change_sgolay, colour = "median change")) + # %>% abs()
-#   scale_x_datetime(date_breaks = "6 weeks", date_labels = "%b %d") + #, %y
-#   theme(axis.text.x = element_text(angle = 30, hjust = 0.5)) +
-#   scale_y_continuous(expand = c(0,0)) +
-#   labs(x = "date", y = "depth in m") +  
-#   scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
-#                                             "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
-#   scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "DVM" = "red", "rDVM" = "blue", "nVM" = "green")) + #"range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
-# 
-#   theme(legend.position = "bottom",
-#         legend.box = "horizontal")
-# 
-#  p #%>% ggplotly()
-
 p_308_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
-                                      tag_serial_num = "1293308")
-p_308_sum_stats %>% ggplotly()
+                                           tag_serial_num = "1293308",
+                                           moon = F)
+p_308_sum_stats # %>% ggplotly()
 save_data(data = p_308_sum_stats, folder = plot_path)
 
+# #assess difference between sgolay filtered and raw min deph
+# p_308_raw_sumstat <- p_308_sum_stats + geom_line(aes(x = date, y = -depth_min), colour = "red")
+# p_308_raw_sumstat %>% ggplotly()
+
 p_321_sum_stats <- plot_summary_stats(data_depth = long_dst_date,
-                                      tag_serial_num = "1293321")
+                                           tag_serial_num = "1293321",
+                                           moon = F)
 p_321_sum_stats %>% ggplotly()
 save_data(data = p_321_sum_stats, folder = plot_path)
 
-# lm to see if between jan and apr 2019 the moon illuminated fraction correlates with min depth 
-# start_date <- "2018-12-12" %>% as.POSIXct()
-# end_date <- "2019-03-05" %>% as.POSIXct()
-# 
-# # prepare data
-# 
-# data_lm_308 <- long_dst_date %>% 
-#   filter(tag_serial_number == "1293308",
-#                                  date %>% between(start_date, end_date)) %>%
-#   # dplyr::select(tag_serial_number, date, depth_min_sgolay) %>%
-#   mutate(moonfraq = oce::moonAngle(t = data_lm_308$date, longitude = 2.45, latitude = 51)$illuminatedFraction)
-# 
-# data_lm_308_sum <- data_lm_308 %>% group_by(moonfraq) %>% #make summary per moonfraq
-#   summarise(depth_min_median = median(depth_min_sgolay),
-#             depth_min_mean = mean(depth_min_sgolay))
-# 
-# ## min depth
-# 
-# lm_depthmin_moonfraq <- stats::lm(data = data_lm_308, formula = depth_min_sgolay ~ moonfraq)
-# lm_depthmin_moonfraq %>% summary()
-# 
-# resid_depthmin_moonfraq <- stats::resid(lm_depthmin_moonfraq) %>% as.data.frame() %>% `colnames<-`("residuals")
-# 
-# # plot lm
-# ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
-#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-#   geom_point() +
-#   labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)", title = 'daily min depth over moon fraq')
-# 
-# # plot residuals
-# ggplot(lm_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
-#   geom_point(size = 3) +
-#   geom_hline(yintercept = 0, linewidth = 0.75) +
-#   labs(x = "fitted", y = "residuals")
-# 
-# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-# ggplot(resid_depthmin_moonfraq, aes(sample=residuals)) +
-#   stat_qq(size=2.5) + 
-#   stat_qq_line() +
-#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-# 
-# # ## log transformed -> does not look better
-# # ggplot(data_lm_308, aes(sample=-log(depth_min_sgolay))) +
-# #   stat_qq(size=2.5) + 
-# #   stat_qq_line() +
-# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-# 
-# 
-# # plot density (to assess normal distribution of residuals)
-# # plot(density(resid_depthmin_moonfraq))
-# 
-# ggplot(resid_depthmin_moonfraq, aes(x=residuals))+
-#   geom_density(linewidth = 1) 
-#   
-# 
-# ## median depth
-# 
-# 
-# lm_depthmedian_moonfraq <- stats::lm(data = data_lm_308, formula = depth_median_sgolay ~ moonfraq)
-# lm_depthmedian_moonfraq %>% summary()
-# 
-# resid_depthmedian_moonfraq <- stats::resid(lm_depthmedian_moonfraq) %>% as.data.frame() %>% `colnames<-`("residuals")
-# 
-# # plot lm
-# ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
-#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-#   geom_point() +
-#   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)", title = 'daily median depth over moon fraq')
-# 
-# # plot residuals
-# ggplot(lm_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
-#   geom_point(size = 3) +
-#   geom_hline(yintercept = 0, linewidth = 0.75) +
-#   labs(x = "fitted", y = "residuals")
-# 
-# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-# ggplot(resid_depthmedian_moonfraq, aes(sample=residuals)) +
-#   stat_qq(size=2.5) + 
-#   stat_qq_line() +
-#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-# 
-# # ## log transformed -> does not look better
-# # ggplot(data_lm_308, aes(sample=-log(depth_median_sgolay))) +
-# #   stat_qq(size=2.5) + 
-# #   stat_qq_line() +
-# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-# 
-# 
-# # plot density (to assess normal distribution of residuals)
-# # plot(density(resid_depthmedian_moonfraq))
-# 
-# ggplot(resid_depthmedian_moonfraq, aes(x=residuals))+
-#   geom_density(linewidth = 1) 
+# with moon
+p_308_sum_stats_moon <- plot_summary_stats(data_depth = long_dst_date,
+                                      tag_serial_num = "1293308",
+                                      moon = T)
+p_308_sum_stats_moon #%>% ggplotly()
+save_data(data = p_308_sum_stats_moon, folder = plot_path)
+
+p_321_sum_stats_moon <- plot_summary_stats(data_depth = long_dst_date,
+                                      tag_serial_num = "1293321",
+                                      moon = T)
+p_321_sum_stats_moon #%>% ggplotly()
+save_data(data = p_321_sum_stats_moon, folder = plot_path)
+
+### 4.1 night sum stats ####
+
+#### night
+p_308_sum_night <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                      tag_serial_num = "1293308", 
+                                      daytime = 0)
+p_308_sum_night #%>% ggplotly()
+save_data(data = p_308_sum_night, folder = plot_path)
+
+p_321_sum_night <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                      tag_serial_num = "1293321", 
+                                      moon = TRUE,
+                                      daytime = 0)
+p_321_sum_night #%>% ggplotly()
+save_data(data = p_321_sum_night, folder = plot_path) 
   
+#### day
+
+p_308_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                      tag_serial_num = "1293308", daytime = 1)
+p_308_sum_day #%>% ggplotly()
+save_data(data = p_308_sum_day, folder = plot_path)
+
+p_321_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                      tag_serial_num = "1293321", daytime = 1)
+p_321_sum_day #%>% ggplotly()
+save_data(data = p_321_sum_day, folder = plot_path) 
+
+gridExtra::grid.arrange(p_308_sum_stats + labs(title = "day + night, female"), p_321_sum_stats + labs(title = "day + night, male"),
+                        p_308_sum_night + labs(title = "day, female"), p_321_sum_night + labs(title = "day, male"),
+                        p_308_sum_day + labs(title = "night, female"), p_321_sum_day + labs(title = "night, male"),
+                        ncol = 2)
+
 ## 5. wavelet results ####
-### tag 308 ####
+
+### 5.1. daily summaries ####
+
+#### tag 308 ####
+
+p_308_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_308_mediandepth_sgolay,
+                                                  type = "power_log", max_period = 50)
+
+# p_308_wavelet_depth_median_sgolay
+save_data(data = p_308_wavelet_depth_median_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_308_depthrange_sgolay,
+                                                 type = "power_log", max_period = 50)
+
+# p_308_wavelet_depth_range_sgolay #%>% ggplotly()
+save_data(data = p_308_wavelet_depth_range_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_308_mindepth_sgolay,
+                                               type = "power_log", max_period = 50) 
+
+# p_308_wavelet_depth_min_sgolay
+save_data(data = p_308_wavelet_depth_min_sgolay, folder = plot_path)
+
+p_308_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_308_maxdepth_sgolay,
+                                               type = "power_log", max_period = 50) 
+
+# p_308_wavelet_depth_max_sgolay
+save_data(data = p_308_wavelet_depth_max_sgolay, folder = plot_path)
+
+# gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "daily median depth"),
+#                         p_308_wavelet_depth_range_sgolay + labs(title = "daily depth range"),
+#                         ncol = 1)
+
 # p_308_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_308_mediandepth_roll3,
 #                                                  type = "power_log") 
 # 
@@ -1118,35 +1545,38 @@ save_data(data = p_321_sum_stats, folder = plot_path)
 # p_308_wavelet_depth_max
 # save_data(data = p_308_wavelet_depth_max, folder = plot_path)
 
-p_308_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_308_mediandepth_sgolay,
-                                                 type = "power_log")
 
-# p_308_wavelet_depth_median_sgolay
-save_data(data = p_308_wavelet_depth_median_sgolay, folder = plot_path)
+#### tag 321 ####
 
-p_308_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_308_depthrange_sgolay,
-                                                  type = "power_log")
+p_321_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_321_mediandepth_sgolay,
+                                                  type = "power_log", max_period = 50) 
 
-# p_308_wavelet_depth_range_sgolay #%>% ggplotly()
-save_data(data = p_308_wavelet_depth_range_sgolay, folder = plot_path)
+# p_321_wavelet_depth_median_sgolay
+save_data(data = p_321_wavelet_depth_median_sgolay, folder = plot_path)
 
-p_308_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_308_mindepth_sgolay,
-                                                  type = "power_log") 
+p_321_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_321_depthrange_sgolay,
+                                                 type = "power_log", max_period = 50) 
 
-# p_308_wavelet_depth_min_sgolay
-save_data(data = p_308_wavelet_depth_min_sgolay, folder = plot_path)
+# p_321_wavelet_depth_range_sgolay
+save_data(data = p_321_wavelet_depth_range_sgolay, folder = plot_path)
 
-p_308_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_308_maxdepth_sgolay,
-                                                  type = "power_log") 
+p_321_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_321_mindepth_sgolay,
+                                               type = "power_log", max_period = 50) 
 
-# p_308_wavelet_depth_max_sgolay
-save_data(data = p_308_wavelet_depth_max_sgolay, folder = plot_path)
+# p_321_wavelet_depth_min_sgolay
+save_data(data = p_321_wavelet_depth_min_sgolay, folder = plot_path)
 
-gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "daily median depth"),
-                        p_308_wavelet_depth_range_sgolay + labs(title = "daily depth range"),
-                        ncol = 1)
+p_321_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_321_maxdepth_sgolay,
+                                               type = "power_log", max_period = 50) 
 
-### tag 321 ####
+# p_321_wavelet_depth_max_sgolay
+save_data(data = p_321_wavelet_depth_max_sgolay, folder = plot_path)
+
+# gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "female, daily median depth"),
+#                         p_321_wavelet_depth_median_sgolay + labs(title = "male, daily median depth"),
+#                         p_308_wavelet_depth_range_sgolay + labs(title = "female, daily depth range"),
+#                         p_321_wavelet_depth_range_sgolay + labs(title = "male, daily depth range"),
+#                         ncol = 2)
 
 # p_321_wavelet_depth_median_roll3 <- plot_wavelet(wt_df = wt_df_321_mediandepth_roll3,
 #                                                  type = "power_log") 
@@ -1179,34 +1609,25 @@ gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "daily 
 # # p_321_wavelet_depth_max
 # save_data(data = p_321_wavelet_depth_max, folder = plot_path)
 
-p_321_wavelet_depth_median_sgolay <- plot_wavelet(wt_df = wt_df_321_mediandepth_sgolay,
-                                                  type = "power_log") 
+### 5.2. hourly summaries ####
+#### tag 308
+p_308_wavelet_depth_hr <- plot_wavelet_hrperiod(wt_df = wt_df_308_depth_hr, type = "power_log",
+                                                date = TRUE, max_period = 72)
 
-# p_321_wavelet_depth_median_sgolay
-save_data(data = p_321_wavelet_depth_median_sgolay, folder = plot_path)
+# p_308_wavelet_depth_hr
+save_data(data = p_308_wavelet_depth_hr, folder = plot_path)
 
-p_321_wavelet_depth_range_sgolay <- plot_wavelet(wt_df = wt_df_321_depthrange_sgolay,
-                                                  type = "power_log") 
+#### tag 321
+p_321_wavelet_depth_hr <- plot_wavelet_hrperiod(wt_df = wt_df_321_depth_hr, type = "power_log",
+                                                date = TRUE, max_period = 72)
 
-# p_321_wavelet_depth_range_sgolay
-save_data(data = p_321_wavelet_depth_range_sgolay, folder = plot_path)
+# p_321_wavelet_depth_hr
+save_data(data = p_321_wavelet_depth_hr, folder = plot_path)
 
-p_321_wavelet_depth_min_sgolay <- plot_wavelet(wt_df = wt_df_321_mindepth_sgolay,
-                                               type = "power_log") 
-
-# p_321_wavelet_depth_min_sgolay
-save_data(data = p_321_wavelet_depth_min_sgolay, folder = plot_path)
-
-p_321_wavelet_depth_max_sgolay <- plot_wavelet(wt_df = wt_df_321_maxdepth_sgolay,
-                                               type = "power_log") 
-
-# p_321_wavelet_depth_max_sgolay
-save_data(data = p_321_wavelet_depth_max_sgolay, folder = plot_path)
-
-gridExtra::grid.arrange(p_308_wavelet_depth_median_sgolay + labs(title = "female, daily median depth"),
-                        p_321_wavelet_depth_median_sgolay + labs(title = "male, daily median depth"),
-                        p_308_wavelet_depth_range_sgolay + labs(title = "female, daily depth range"),
-                        p_321_wavelet_depth_range_sgolay + labs(title = "male, daily depth range"),
+gridExtra::grid.arrange(p_308_sum_stats, p_321_sum_stats,
+                        p_308_wavelet_depth_median_sgolay, p_321_wavelet_depth_median_sgolay, 
+                        p_308_wavelet_depth_hr, p_321_wavelet_depth_hr,
+                        p_308_wavelet_depth_range_sgolay, p_321_wavelet_depth_range_sgolay,
                         ncol = 2)
 
 ## 6. Change Point Detections ####
@@ -1363,6 +1784,13 @@ p_308_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, 
   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
 save_data(data = p_308_lm_median_moonfraq_smooth, folder = plot_path)
 
+### median daily depth daynight
+p_308_daynight_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308_daynight, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+  geom_point() +
+  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+save_data(data = p_308_daynight_lm_median_moonfraq_smooth, folder = plot_path)
+
 # plot residuals
 p_308_lm_median_moonfraq_residuals <- ggplot(lm_308_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
   geom_point(size = 3) +
@@ -1370,12 +1798,26 @@ p_308_lm_median_moonfraq_residuals <- ggplot(lm_308_depthmedian_moonfraq, aes(x 
   labs(x = "fitted", y = "residuals")
 save_data(data = p_308_lm_median_moonfraq_residuals, folder = plot_path)
 
+# plot residuals daynight
+p_308_daynight_lm_median_moonfraq_residuals <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 0, linewidth = 0.75) +
+  labs(x = "fitted", y = "residuals")
+save_data(data = p_308_daynight_lm_median_moonfraq_residuals, folder = plot_path)
+
 # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
 p_308_lm_median_moonfraq_qq <- ggplot(lm_308_depthmedian_moonfraq, aes(sample = .resid)) +
   stat_qq(size=2.5) + 
   stat_qq_line() +
   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
 save_data(data = p_308_lm_median_moonfraq_qq, folder = plot_path)
+
+# plot qq daynight of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+p_308_daynight_lm_median_moonfraq_qq <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(sample = .resid)) +
+  stat_qq(size=2.5) + 
+  stat_qq_line() +
+  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+save_data(data = p_308_daynight_lm_median_moonfraq_qq, folder = plot_path)
 
 # ## log transformed -> does not look better
 # ggplot(data_lm_308, aes(sample=-log(depth_median_sgolay))) +
@@ -1388,6 +1830,12 @@ save_data(data = p_308_lm_median_moonfraq_qq, folder = plot_path)
 p_308_lm_median_moonfraq_density <- ggplot(lm_308_depthmedian_moonfraq, aes(x=.resid))+
   geom_density(linewidth = 1) 
 save_data(data = p_308_lm_median_moonfraq_density, folder = plot_path)
+
+
+# plot density daynight (to assess normal distribution of residuals)
+p_308_daynight_lm_median_moonfraq_density <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x=.resid))+
+  geom_density(linewidth = 1) 
+save_data(data = p_308_daynight_lm_median_moonfraq_density, folder = plot_path)
 
 ### plot lm 321 ####
 

@@ -14,8 +14,8 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
 # load models
 
-lm_308_depthmin_moonfraq <- load_data(filestring = "lm_308_depthmin_moonfraq", folder = path_models)
-lm_308_depthmedian_moonfraq <- load_data(filestring = "lm_308_depthmedian_moonfraq", folder = path_models)
+lm_308_depthmin_moonfraq <- load_data(filestring = "lm_308_depthmin_moonfraq", folder = models_path)
+lm_308_depthmedian_moonfraq <- load_data(filestring = "lm_308_depthmedian_moonfraq", folder = models_path)
 
-lm_321_depthmin_moonfraq <- load_data(filestring = "lm_321_depthmin_moonfraq", folder = path_models)
-lm_321_depthmedian_moonfraq <- load_data(filestring = "lm_321_depthmedian_moonfraq", folder = path_models)
+lm_321_depthmin_moonfraq <- load_data(filestring = "lm_321_depthmin_moonfraq", folder = models_path)
+lm_321_depthmedian_moonfraq <- load_data(filestring = "lm_321_depthmedian_moonfraq", folder = models_path)

@@ -28,11 +28,12 @@ compute_wavelet_hrperiod <- function(depthlog = masterias_depth_temp, tag_serial
   depthlog_downsampled <- depthlog %>% 
     ungroup() %>%
     filter(tag_serial_number == tag_serial_num,
-           row_number() %% ((dt_smallperiods * 60) / 2) == 0) # explanation: ... %% dt[hour] * 60[min] / 2[min] <- sample interval (every 2 min), e.g. for dt_smallperiods = 1: ...%% 30 (i.e. get every 30th val)
+           row_number() %% ((dt_smallperiods * 60) / 2) == 0) %>%
+    dplyr::select(parameter_name)# explanation: ... %% dt[hour] * 60[min] / 2[min] <- sample interval (every 2 min), e.g. for dt_smallperiods = 1: ...%% 30 (i.e. get every 30th val)
 
   # make time vector according to nrow() of parameter and given dt
   timevector <- seq(from = 0, to = (nrow(depthlog_downsampled) * dt) - dt, by = dt)
-  wt_input <- cbind(timevector, parameter) %>% as.matrix()
+  wt_input <- cbind(timevector, depthlog_downsampled) %>% as.matrix()
   # make wt result
   wt_output <- biwavelet::wt(d = wt_input,
                              dt = dt,
@@ -41,11 +42,6 @@ compute_wavelet_hrperiod <- function(depthlog = masterias_depth_temp, tag_serial
   
   return(wt_output)
 }
-# test with 321 date vector
-# dates <- long_dst_date %>% filter(tag_serial_number == "1293321") %>% dplyr::select(date) 
-# t1 <- cbind(1:100, rnorm(100))
-# wt_output <- t1 %>% wt()
-# dates <- t1[,1] %>% as.data.frame()
 
 wavelet_output_compare_hrperiod <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308", parameter_name = "depth_m", dt = dt_smallperiods, wt_output = wt_output){
   
@@ -53,7 +49,8 @@ wavelet_output_compare_hrperiod <- function(depthlog = masterias_depth_temp, tag
   depthlog_downsampled <- depthlog %>% 
     ungroup() %>%
     filter(tag_serial_number == tag_serial_num,
-           row_number() %% ((dt_smallperiods * 60) / 2) == 0) # explanation: ... %% dt[hour] * 60[min] / 2[min] <- sample interval (every 2 min), e.g. for dt_smallperiods = 1: ...%% 30 (i.e. get every 30th val)
+           row_number() %% ((dt_smallperiods * 60) / 2) == 0) %>%
+    dplyr::select(c(parameter_name, date_time))# explanation: ... %% dt[hour] * 60[min] / 2[min] <- sample interval (every 2 min), e.g. for dt_smallperiods = 1: ...%% 30 (i.e. get every 30th val)
   
   # make time vector according to nrow() of parameter and given dt
   timevector <- seq(from = 0, to = (nrow(depthlog_downsampled) * dt) - dt, by = dt)
@@ -138,7 +135,7 @@ plot_wavelet_hrperiod <- function(wt_df = wt_df, type = c("power", "significance
          
          ifelse(type == "power_log",
                 
-                plot2 <- ggplot(data = wt_df) +
+                plot <- ggplot(data = wt_df) +
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
                             alpha = 0.35) +
@@ -263,7 +260,7 @@ plot_wavelet_hrperiod <- function(wt_df = wt_df, type = c("power", "significance
 
 #### compute wavelets ####
 
-# tag 321 test ####
+# tag 321 ####
 
 wt_321_depth_hr <- compute_wavelet_hrperiod(depthlog = masterias_depth_temp,
                                             tag_serial_num = "1293321",
@@ -277,10 +274,26 @@ wt_df_321_depth_hr <- wavelet_output_compare_hrperiod(depthlog = masterias_depth
                                                       dt = dt_smallperiods,
                                                       wt_output = wt_321_depth_hr)
 
-## tag 321 
-wt_321_mediandepth_roll3 <- compute_wavelet(parameter = long_dst_date %>% 
-                                              filter(tag_serial_number == "1293321") %>%
-                                              dplyr::select(depth_median_roll3),
-                                            dt = 1,
-                                            factor_smallest_scale = 2)
-wt_df_321_mediandepth_roll3 <- wavelet_output_compare(dates = dates_321, wt_output = wt_321_mediandepth_roll3)
+p_wt_321_depth_hr <- plot_wavelet_hrperiod(wt_df = wt_df_321_depth_hr,
+                                           type = "power_log",
+                                           date = TRUE,
+                                           max_period = 72)
+
+## tag 308 ####
+
+wt_308_depth_hr <- compute_wavelet_hrperiod(depthlog = masterias_depth_temp,
+                                            tag_serial_num = "1293308",
+                                            parameter_name = "depth_m",
+                                            dt = dt_smallperiods,
+                                            factor_smallest_scale = 8)
+
+wt_df_308_depth_hr <- wavelet_output_compare_hrperiod(depthlog = masterias_depth_temp,
+                                                      tag_serial_num = "1293308",
+                                                      parameter_name = "depth_m",
+                                                      dt = dt_smallperiods,
+                                                      wt_output = wt_308_depth_hr)
+
+p_wt_308_depth_hr <- plot_wavelet_hrperiod(wt_df = wt_df_308_depth_hr,
+                                           type = "power_log",
+                                           date = TRUE,
+                                           max_period = 72)

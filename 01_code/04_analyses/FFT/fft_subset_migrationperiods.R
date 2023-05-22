@@ -26,7 +26,7 @@ calc_fft <- function(depth_log, sample_freq){
     # make time vector
     mutate(t = difftime(date_time, date_time[1], units = "hours") %>% as.numeric()) %>% 
     #filter out NAs
-    filter(!is.na(depth_m))
+    dplyr::filter(!is.na(depth_m))
   
   # define tmax and n
   tmax <- depth_log$t %>% max()
@@ -54,7 +54,7 @@ calc_fft <- function(depth_log, sample_freq){
 # plot periodogram ####
 plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperlim = 40, period_lowerlim = 0.05, path = plot_path){
   # todo: get local rule or set values for period upper and lower lim
-  periodogram <- ggplot(data = fft_result %>% filter(period < period_upperlim & period > period_lowerlim)) + geom_line(aes(x = period, y = spec), colour = "black") + theme_bw() +
+  periodogram <- ggplot(data = fft_result %>% dplyr::filter(period < period_upperlim & period > period_lowerlim)) + geom_line(aes(x = period, y = spec), colour = "black") + theme_bw() +
     scale_y_continuous(expand = c(0,0)) +
     theme_bw(base_size = 12) +
     scale_x_continuous(expand = c(0,0), breaks = seq(2, period_upperlim, by = 2)) +
@@ -68,7 +68,7 @@ plot_periodogram <- function(fft_result, tag_serial_number_short, period_upperli
 # calc and plot subset periodograms ####
 
 fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date, sample_frequency){
-  fft_res <- calc_fft(depth_log = depth_log %>% filter(tag_serial_number == paste0("1293", tag_serial_num_short),
+  fft_res <- calc_fft(depth_log = depth_log %>% dplyr::filter(tag_serial_number == paste0("1293", tag_serial_num_short),
                                                                       lubridate::date(date_time) %>% 
                                                                         between(start_date, end_date)),
                           sample_freq = sample_frequency)
@@ -85,7 +85,7 @@ fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date,
 
 ### potential winter mig ####
 
-p_308_wintermig <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_308_wintermig <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-20"), as.POSIXct("2018-10-15")),
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-21"), as.POSIXct("2018-09-25")),
                                                                  row_number() %% 1 == 0), aes(x = date_time, y = -depth_m)) +
@@ -108,7 +108,7 @@ pgram_308_wintermigpause <- fft_calc_plot(depth_log = masterias_depth_temp, tag_
                                       sample_frequency = 30)
 pgram_308_wintermigpause
 
-p_308_wintermigpause <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_308_wintermigpause <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-01"), as.POSIXct("2018-09-25")), #to see if the shark rests the whole time
                                                                  lubridate::date(date_time) %>% between(as.POSIXct("2018-09-29"), as.POSIXct("2018-10-07")),
                                                                  row_number() %% 1 == 0), aes(x = date_time, y = -depth_m, colour = lubridate::hour(date_time))) +
@@ -138,7 +138,7 @@ pgram_308_beforewintermig
 
 ### winter residency ####
 
-p_308_winterres <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_308_winterres <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                       # lubridate::date(date_time) %>% between(as.POSIXct("2018-11-01"), as.POSIXct("2019-04-15")), #to see if the shark rests the whole time
                                                                       # lubridate::date(date_time) %>% between(as.POSIXct("2018-12-05"), as.POSIXct("2018-12-20")),
                                                                       row_number() %% 1 == 0), aes(x = date_time, y = -depth_m)) +
@@ -196,7 +196,7 @@ pgram_308_potentialpupping
 
 ### potential pupping time ####
 
-p_summerpupping <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_summerpupping <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                  lubridate::date(date_time) %>% between(as.POSIXct("2019-07-11"), as.POSIXct("2019-07-17")),
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2019-05-10"), as.POSIXct("2019-08-03")),
                                                                  row_number() %% 1 == 0), aes(x = date_time, y = -depth_m, colour = lubridate::hour(date_time))) +
@@ -214,7 +214,7 @@ pgram_308_pupping
 
 ### summer migration 308 ####
 
-p_summermig19_308 <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_summermig19_308 <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                    lubridate::date(date_time) %>% between(as.POSIXct("2019-03-18"), as.POSIXct("2019-05-10"))
                                                                    # lubridate::date(date_time) %>% between(as.POSIXct("2019-03-10"), as.POSIXct("2019-03-30"))
                                                                    # ,row_number() %% 5 == 0
@@ -234,7 +234,7 @@ pgram_308_summermig
 
 #### 2nd potential summer migration ####
 
-p_summermig19_308_2 <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293308",
+p_summermig19_308_2 <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                                      lubridate::date(date_time) %>% between(as.POSIXct("2019-04-10"), as.POSIXct("2019-05-14"))
                                                                      # ,row_number() %% 5 == 0
 ), aes(x = date_time, y = -depth_m, colour = lubridate::hour(date_time))) + #, colour = lubridate::hours(date_time)
@@ -260,7 +260,7 @@ pgram_308_summermig2_2 <- fft_calc_plot(depth_log = masterias_depth_temp, tag_se
 pgram_308_summermig2_2
 
 # data_test <- masterias_depth_temp %>% 
-#   filter(lubridate::date(date_time) %>% 
+#   dplyr::filter(lubridate::date(date_time) %>% 
 #                                   between(as.POSIXct("2019-06-16"), as.POSIXct("2019-06-18")),
 #                                 row_number() %% 5 == 0) %>% 
 #   mutate(hour = lubridate::hour(date_time)) # %>% as.factor())
@@ -272,7 +272,7 @@ pgram_308_summermig2_2
 # p3 #%>% ggplotly()
 
 # plot female and male behaviour in summer
-p4 <- ggplot(data = masterias_depth_temp %>% filter(lubridate::date(date_time) %>% between(as.POSIXct("2019-05-11"), as.POSIXct("2019-08-15"))
+p4 <- ggplot(data = masterias_depth_temp %>% dplyr::filter(lubridate::date(date_time) %>% between(as.POSIXct("2019-05-11"), as.POSIXct("2019-08-15"))
                                                     ,tag_serial_number %in% c("1293308", "1293321"), row_number() %% 5 == 0
 ), aes(x = date_time, y = -depth_m, colour = tag_serial_number)) + #lubridate::hour(date_time)
   geom_point() +
@@ -282,7 +282,7 @@ p4 %>% ggplotly()
 
 ## tag 321 ####
 
-p_321_winterres <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293321",
+p_321_winterres <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293321",
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2019-02-12"), as.POSIXct("2019-02-15")), #to see if the shark rests the whole time
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-14"), as.POSIXct("2018-09-19")),
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-10-21"), as.POSIXct("2018-11-05")),
@@ -325,7 +325,7 @@ pgram_321_winterrres_2018_2_detail
 
 ## summer mig ####
 
-p_321_winterres <- ggplot(data = masterias_depth_temp %>% filter(tag_serial_number == "1293321",
+p_321_winterres <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293321",
                                                                  lubridate::date(date_time) %>% between(as.POSIXct("2019-06-01"), as.POSIXct("2019-09-20")), #to see if the shark rests the whole time
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-14"), as.POSIXct("2018-09-19")),
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-10-21"), as.POSIXct("2018-11-05")),
@@ -355,3 +355,11 @@ pgram_321_summerres <- fft_calc_plot(depth_log = masterias_depth_temp, tag_seria
                                      end_date = as.POSIXct("2019-09-25"),
                                      sample_frequency = 30)
 pgram_321_summerres
+
+
+# test with downsampled depthlog ####
+pgram_308_downsampled <- fft_calc_plot(depth_log = masterias_depth_temp %>% dplyr::filter(row_number() %% 15 == 0), tag_serial_num_short = "308",
+                                           start_date = as.POSIXct("2018-09-01"),
+                                           end_date = as.POSIXct("2018-09-25"), 
+                                           sample_frequency = 2)
+pgram_308_downsampled

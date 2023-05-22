@@ -143,7 +143,11 @@ paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::so
 
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
-paste0(dir_path, "/01_code/02_load_data/load_vertical_space_use_analysis.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
+
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tests.R") %>% base::source()
+
+# paste0(dir_path, "/01_code/02_load_data/load_vertical_space_use_analysis.R") %>% base::source()
 
 #old
 
@@ -235,15 +239,15 @@ How do I structure my results best? I am indecisive between making 1 big figure 
 I have trouble defining the study area: is the study area the BPNS and the Scheldt, because there sharks were tagged? What are the greater north sea and the english channel for the study, as sharks putatively moved there during migration?
 I find it important to introduce those habitats as well, because in the discussion I want to talk about food availability and living conditions in the english channel & northern north sea to relate to the putative migration paths. But it also gets long in the methods to describe all 4 areas: the BPNS, the Scheldt Estuary
 
-## linear model
+<!-- ## linear model -->
 
-Do you think that a linear model trying to relate daily summary statistics to identified migration behaviour could make sense. Having the behavioural state (migratory/resident) as dependent variable, and then trying daily median/max/min, but also the vertical migration behaviour, the most prominent periods and maybe even things like the temperature range as independent variables?
+<!-- Do you think that a linear model trying to relate daily summary statistics to identified migration behaviour could make sense. Having the behavioural state (migratory/resident) as dependent variable, and then trying daily median/max/min, but also the vertical migration behaviour, the most prominent periods and maybe even things like the temperature range as independent variables? -->
 
-## working hypotheses {#sec-questionshypotheses}
+<!-- ## working hypotheses {#sec-questionshypotheses} -->
 
-(How) should I include working hypotheses?
+<!-- (How) should I include working hypotheses? -->
 
-I feel like the structure of the data does not really allow for hypotheses to be made, but maybe I am too cautious. In @sec-introaims I try to define some hypotheses but please let me know if this makes sense at all or not.
+<!-- I feel like the structure of the data does not really allow for hypotheses to be made, but maybe I am too cautious. In @sec-introaims I try to define some hypotheses but please let me know if this makes sense at all or not. -->
 
 ## maps {#sec-questionsmaps}
 
@@ -288,11 +292,28 @@ knitr::kable(abbreviations_list) %>% kableExtra::kable_styling(position = "cente
 
 # Introduction {#sec-intro}
 
-***problem statement: migratory fish, large migrations, management and conservation needed, sharks especially vulnerable, lead to M. asterias.***
+Gathering knowledge on migratory fish species with complex life cycles is challenging, yet necessary to improve management of such species in the future [@brownscombe_2022].
+Fish with late reproduction and low offspring numbers such as elasmobranchs are especially vulnerable to anthropogenic effects and require special attention [@stevens_2000].
+
+<!-- ***problem statement: migratory fish, large migrations, management and conservation needed, sharks especially vulnerable, lead to M. asterias.*** -->
+An elasmobranch with a complex life cycle involving biannual reproduction and a sex-specific annual migration is the starry smooth-hound shark *Mustelus asterias* (Cloquet, 1819), a demersal triakid shark widely distributed in the Northeast Atlantic [@breve_2016; @griffiths_2020]. Commercial interest and landings have shifted from the recently protected *Squalus acanthias* to *M. asterias* in the past decade [@mccullyphillips_2015], leading to a decreasing population trend [@ices_2022, status: *Near Threatened*]. 
+<!-- o	One such species is the starry smooth-hound Mustelus asterias (+ 1-2 sentences about the species) -->
+<!-- 	Demersal triakid shark (IUCN: near threatened, decreasing population trend) with broad distribution in the NE atlantic and a complex life cycle involving biannual reproduction and a sex-specific annual migration -->
+<!-- 	Refer to subchapter about M. asterias (with more in-depth info) -->
+Meanwhile, knowledge about the seasonal presence of *M. asterias* in the Belgian Part of the North Sea (BPNS) and especially the estuary of the Western Scheldt was almost non-existent[^1]. In Dutch coastal waters, this species was almost never caught until 2009 [@breve_2016]. @breve_2016 hypothesize that *M. asterias* might increasingly use the Scheldt estuary because of changing environmental conditions in former habitats due to climate change (i.e., change of pH, eutrophication and differing water temperatures).
+   
+  [^1]: Reubens, Jan (*personal communication*), May 09, 2023.
+  
+<!-- o	Until recently, close to nothing about the seasonal presence of M. asterias in the Belgian Part of the North Sea and especially the Scheldt Estuary was known -->
+<!-- o	But catches are increasing, alongside the species’ commervial value (Griffiths et al., 2002 and ICES, 2017) -->
+<!-- o	Advanced technology is required to follow the movements of demersal, migratory species (transition to telemetry and ADST)  -->
+
+Tracking the movement and presence of migratory aquatic species requires advanced technologies which have improved substantially in recent years [@whoriskey_2019]. 
+
 
 ##	Acquatic telemetry
 
-***Overview of the field of acoustic telemetry, popular methods and the resulting dataset structure***
+<!-- ***Overview of the field of acoustic telemetry, popular methods and the resulting dataset structure*** -->
 
 Telemetry refers to the remote monitoring of animals using electronic transmitters or tags,	and receivers [@whoriskey_2019], allowing for the  tracking of marine animal movement. A multitude of telemetry methods exists today, popular technologies to study acquatic animals include acoustic telemetry and archival telemetry [@thorstad_2013].
 <!-- satellite telemetry,  -->
@@ -307,6 +328,9 @@ Acoustic telemetry refers to the use of acoustic receivers that are placed in th
 Archival telemetry uses tags or biologgers that locally store recorded data about water pressure, temperature and other environmental variables. Popup Satellite Archival Tags (PSAT) disattach from the animal and float to the surface, transmitting recorded data to satellites, while Data Storage Tags (DST) require the retrieval of the tag for downloading data [@thorstad_2013].
 
 Acoustic data storage tags (ADST) are a combination tag, merging acoustic and data storage tags [@goossens_2023]. As such, the tag emits unique acoustic signals that can be detected by an acoustic receiver within a certain range, and additionally records water pressure in predefined intervals.
+<!-- The advantage of ADST lies in the combination of  -->
+ADST gather data on horizontal fish movement inside acoustic receiver networks while simultaneously collecting fine-scale vertical movement data that can be used to infer movement of the fish beyond the receiver array.
+<!-- •	State advantage of ADST: gathering knowledge on horizontal movement within areas of acoustic receiver array, and additionally gaining fine-scale data beyond those receiver areas to investigate movement and migrations outside the receiver areas -->
 
 Different telemetry methods result in different datasets. 
 In acoustic telemetry, recorded data contains the time that a specific tag was detected by a specific receiver (with a known location), resulting in an irregular time series (i.e., a time series with irregularly spaced observations). These datasets are in a horizontal dimension, i.e., with a latitude and longitude position.
@@ -315,103 +339,20 @@ Archival telemetry generates regular time series in pre-defined intervals, loggi
 
 ADST datasets contain timestamps of the tag's detection at a specific acoustic receiver, and, in case the tag was recovered, logs of water depth and other variables (temperature, for example).
 
-##	Geolocation modelling
+<!-- ###	Geolocation modelling -->
 
-***see @sec-questiongeolocation.***
+<!-- ***see @sec-questiongeolocation.*** -->
 
-Geolocation models are a common method to infer the latitude and longitude (i.e., the horizontal dimension) of a DST log (which is in a vertical dimension).
-These models use the seafloor bathymetry in combination with other environmental variables such as temperature to estimate the most likely path that was taken by the animal (*ref*). 
+Stochastic geolocation models are a common method to infer the latitude and longitude (i.e., the horizontal dimension) of a DST log (which is in a vertical dimension).
+These models use the seafloor bathymetry in combination with other environmental variables such as temperature to estimate the most likely path that was taken by the animal [@nielsen_2004; @gatti_2021]. 
 
-@pedersen_2008 introduced a geolocation model using Hidden Markov Models (HMM), which was refined by @woillez_2016. The method by @woillez_2016 involves a HMM with an observation and a behavioural model.
-
-***go more in depth***
-
-<!-- - Method: HMM with observation and behavioural model -->
-<!-- - behavioural switches improve geolocation models significantly [@pedersen_2008]. -->
-<!-- *First talk about geolocation modelling in general, and then describe M. asterias behaviours in the chapter about m. asterias, in the aims state that possible improvements of the m. asterias geolocation model exceeding behavioural states will be discussed* -->
-
-<!-- **Where do I put the geolocation results of Jolien? In the introduction or in the discussion? I kind of need to put them in the intro because I am referring to them a lot...** -->
-
-## Inferring behavioural states
-
-<!-- - Different techniques for behavioural states -->
-<!-- - Spectral method by Heerah 2017 -->
-<!-- - Tidal method by Pedersen 2008 -->
-<!-- - Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement -->
-
-In response to their environment and internal ecophysiological processes, animals exhibit different behaviours. The change from one behavioural 'state' to another is referred to as behavioural switching [@gurarie_2016].
-Detecting such switches and linking them to environmental factors, amongst others, is an important part of animal movement ecology and can inform species conservation and management [@hays_2016]. 
-<!-- drinlassen? -->
-
-For marine animals equipped with data storage tags, several methods to identify behavioural states have been proposed. These inferred states can be used as additional input for the geolocation model. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*. 
-
-***reasons why I didn't use their methods***
-
-The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed. 
-The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) behavioural states [@schliehediecks_2012]. 
-*The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.* (***Either put in discussion or leave out, goes too much into detail***)
-
-Furthermore, the development of a robust HMM framework requires time and experience, and was beyond the scope of this study. 
-
-<!-- comparison between marine and terrestrial methods to infer behaviour -->
-The analysis and segmentation of behavioural states is much more explored for data in the horizontal dimension than in the vertical dimension (*ref*).
-Satellite-recorded movement of marine animals can be analysed with a hierarchical Switching State Space Model [SSSM, @francis_2019].
-<!-- For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**).  -->
-Other commonly emplyed methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data.
-
-### Change Point Detection
-
-<!-- why I did CPD -->
-It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. A simpler version of BCPA, for instance, is Change Point Detection (CPD).
-<!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
-CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013].
-Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ. 
-CPD detection is an unsupervised machine learning technique that, in contrast to unsupervised clustering algorithms like k-means, compares subsequent samples, thus implementing the time aspect in the learning process.
-Details about the CPD algorithm chosen for the present study are explained in @sec-mm_migration.
-
-##	The starry smooth-hound shark
-
-<!-- *put knowledge about the species into context of related species* -->
-
-The starry smooth-hound shark (*Mustelus asterias*, Cloquet 1819) is a medium-sized triakid elasmobranch, measuring around 30 cm in total length (TL) at birth and 100 cm (males) and 120 cm (females) when reaching sexual maturity [@farrell_2010]. It can attain up to 140 cm TL [@mccullyphillips_2015]. Sexual maturity is reached at 4-5 and 6 years of age for males and females, respectively, and longevity is 13 years and 18 years for males and females, respectively @farrell_2010.
-
-It is the only occurring *Mustelus* species in the Northeast Atlantic (*ref*).
-***Elaborate***
-
-<!-- ###	Abundance -->
-
-<!-- - only species in NE Atlantic -->
-<!-- - continue -->
-
-### Reproductive behaviour
-<!-- *M. asterias* has a complex reproduction behaviour. -->
-*M. asterias* is aplacentally viviparous (i.e. embryos are absorb nutrients from a yolk sack that is used up during gestation). It displays polyandry (i.e., one female mating with several males within one breeding season) and multiple paternity [i.e., pups within one litter originating from several males, @farrell_2014].
-Moreover, it has a biennally gestation cycle with a gestation period of about 12 months, followed by a 12-month resting period. *M. asterias* females can store sperm for up to 12 months [@farrell_2010a]. The same study found embryos from different developmental stages in gestating females (termed embryo asynchronism).
-@griffiths_2020 reported philopatric behaviour (i.e., females returning to the same area for parturition) for the first time. 
-Identified parturition grounds for *M. asterias* include the Eastern Scheldt and, more generally, the Bristol Channel, Southern North Sea and the English Channel [@dureuil_2013; @mccullyphillips_2015; @breve_2016]. Pupping possibly takes place between April and September [@farrell_2010a; @mccullyphillips_2015].
-
-###	Feeding behaviour
-
-<!-- IMAGE: starry smooth-hound -->
-
-Its ventrally located snout enables it to feed on prey on the seafloor, indicating that it swims closely above the seafloor during foraging and preying (*ref*).
-*M. asterias* is a specialist feeder on benthic and suprabenthic crustaceans, common prey include the hermit crab (*Pagurus bernhardus*), the flying crab (*Liocarcinus holsatus*), the common shore crab (*Carcinus maenas*) and the edible crab (*Cancer pagurus*) [@mccullyphillips_2015; @mccullyphillips_2020]. 
-Potential predators of *M. asterias* are the grey seal (*Halichoerus grypus*) which occurs in the North Sea, the blue shark (*Prionace glauca*) and the common dolphin (*Delphinus delphis*), both of which occur in the Western English Channel [@griffiths_2020].
-
-<!-- - Feeding: crustaceans, swimming shorewards at night -->
-
-### Migration
-
-- 1 sentence about the potential of two populations in the greater north sea, and one population going into the Scheldt Estuary in summer [@breve_2016].
-
-*M. asterias* displays circannual and potentially sex-specific migration,
-<!-- Annual migration is part of the life cycle of adult *M. asterias*, -->
-with females moving into the English Channel and the Bay of Biscay, and males moving into the Northern North Sea and into the English Channel [@breve_2020]. Potential reasons of this sex-specific migration are females avoiding mating, resource competition, or reduction of embryo mortality [@speed_2010].
+@pedersen_2008 introduced a geolocation model for a demersal fish species using Hidden Markov Models (HMM), which was refined by @woillez_2016. This model framework was applied to DST data from *M. asterias* individuals [see @goossens_2023, the geolocation results for one female and one male shark are shown in @fig-mapgeolocation].
+<!-- The method by @woillez_2016 involves a HMM with two sub-models  an observation and a behavioural model. --> 
 
 
-##### Geolocation Model Results
+<!-- ##### Geolocation Model Results -->
 
-@goossens_2023 used a geolocation model approach with a two-state HMM following the geolocation approach by @woillez_2016. The inferred daily locations of two *M. asterias* individuals tagged in 2018 are shown in @fig-mapgeolocation.
+<!-- @goossens_2023 used a geolocation model approach with a two-state HMM following the geolocation approach by @woillez_2016. The inferred daily locations of two *M. asterias* individuals tagged in 2018 are shown in @fig-mapgeolocation. -->
 
 ```{r mapgeolocation}
 #| include: true
@@ -425,13 +366,112 @@ knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/Maste
 ```
 
 
+
+<!-- ***go more in depth*** -->
+
+<!-- - Method: HMM with observation and behavioural model -->
+<!-- - behavioural switches improve geolocation models significantly [@pedersen_2008]. -->
+<!-- *First talk about geolocation modelling in general, and then describe M. asterias behaviours in the chapter about m. asterias, in the aims state that possible improvements of the m. asterias geolocation model exceeding behavioural states will be discussed* -->
+
+<!-- **Where do I put the geolocation results of Jolien? In the introduction or in the discussion? I kind of need to put them in the intro because I am referring to them a lot...** -->
+
+<!-- ## Inferring behavioural states -->
+
+
+<!-- - Different techniques for behavioural states -->
+<!-- - Spectral method by Heerah 2017 -->
+<!-- - Tidal method by Pedersen 2008 -->
+<!-- - Drawbacks of the methods for species with limited knowledge, a benthic lifestyle with a broad range of horizontal movement -->
+
+In response to their environment and internal ecophysiological processes, animals exhibit different behaviours. The change from one behavioural 'state' to another is referred to as behavioural switching [@gurarie_2016].
+Detecting such switches and linking them to environmental factors is an important part of animal movement ecology and can inform species conservation and management [@hays_2016]. 
+For species with high economic relevance like European seabass (*Dicentrarchus labrax*), approaches for detecting behaviour of high and low activity have already been developed [@heerah_2017]. Until now, no behavioural segmentation approach exists for *M. asterias*, although the incorporation of behavioural states into geolocation models have shown to improve the model's results [@pedersen_2008].
+
+The raw data storage tag data (i.e., the depth and temperature time series) are ground truth information and their investigation can already give insights into the behaviour of the fish and is therefore relevant information for the protection of that species.
+
+<!-- *change: not inferring behavioural states, but identifying the start of migrations.* -->
+
+
+<!-- For marine animals equipped with data storage tags, several methods to identify behavioural states have been proposed. These inferred states can be used as additional input for the geolocation model. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*.  -->
+
+<!-- <!-- ***reasons why I didn't use their methods*** --> 
+
+<!-- The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed.  -->
+<!-- The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) behavioural states [@schliehediecks_2012].  -->
+<!-- *The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.* (***Either put in discussion or leave out, goes too much into detail***) -->
+
+<!-- Furthermore, the development of a robust HMM framework requires time and experience, and was beyond the scope of this study.  -->
+
+<!-- <!-- comparison between marine and terrestrial methods to infer behaviour --> 
+<!-- The analysis and segmentation of behavioural states is much more explored for data in the horizontal dimension than in the vertical dimension (*ref*). -->
+<!-- Satellite-recorded movement of marine animals can be analysed with a hierarchical Switching State Space Model [SSSM, @francis_2019]. -->
+<!-- <!-- For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**).  -->
+<!-- Other commonly emplyed methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data. -->
+
+<!-- ### Change Point Detection -->
+
+<!-- <!-- why I did CPD --> 
+<!-- It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. A simpler version of BCPA, for instance, is Change Point Detection (CPD). -->
+<!-- <!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  --> -->
+<!-- CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013]. -->
+<!-- Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ.  -->
+<!-- CPD detection is an unsupervised machine learning technique that, in contrast to unsupervised clustering algorithms like k-means, compares subsequent samples, thus implementing the time aspect in the learning process. -->
+<!-- Details about the CPD algorithm chosen for the present study are explained in @sec-mm_migration. -->
+
+##	The starry smooth-hound shark *Mustelus asterias*
+
+<!-- *put knowledge about the species into context of related species* -->
+
+The starry smooth-hound shark (*Mustelus asterias*, Family: Triakidae) inhabits waters of the Northeast Atlantic and the Mediterranean Sea, stretching from the Irish Sea and Central North Sea in the North, to an unknown limit in the south.
+ @farrell_2009 confirmed *M. asterias* as the only occurring *Mustelus* species in the Northeast Atlantic following decades of partial misidentification of *M. asterias* as the common smoothhound *Mustelus mustelus* (which occupies warmer waters in the central eastern Atlantic and the Mediterranean Sea, @farrell_2015).
+ 
+<!-- ### Migration -->
+
+<!-- - 1 sentence about the potential of two populations in the greater north sea, and one population going into the Scheldt Estuary in summer [@breve_2016]. -->
+
+*M. asterias* displays circannual and potentially sex-specific migration,
+<!-- Annual migration is part of the life cycle of adult *M. asterias*, -->
+with females thought to move into the English Channel and the Bay of Biscay in winter, and males moving into the Northern North Sea and into the English Channel [@breve_2020]. Females are known to stay in and around the Scheldt Estuary in summer months.
+The *M. asterias* population in the Northeast Atlantic potentially consists of two (or more) sub populations [@breve_2016; @griffiths_2020] that mix on seasonal grounds.
+
+Potential reasons of this sex-specific migration are females avoiding mating, resource competition, or reduction of embryo mortality [@speed_2010].
+
 <!-- also found in other sharks, eg the tope shark (Colloca 2019, from breve 2020) -->
 
 <!-- - Sex bias: Males into Northern North Sea, females into Bay of Biscay -->
 
 <!-- - Daily horizontal distance: up to 70km (**ref!**) -->
 
-### Daily behaviour
+*M. asterias* measures around 30 cm in total length (TL) at birth, 100 cm (males) and 120 cm (females) when reaching sexual maturity [@farrell_2010], and can attain up to 140 cm TL [@mccullyphillips_2015]. Sexual maturity is reached at 4-5 and 6 years of age for males and females, respectively, and longevity is 13 years and 18 years for males and females, respectively [@farrell_2010].
+
+<!-- From griffiths 2020: This uncertainty is mainly driven by species identification issues, as morphological similarities between -->
+<!-- M. asterias and the common smooth-hound Mustelus mustelus (a separate species that occupies the warmer waters of the central eastern Atlantic, Mediterranean Sea [14, 15] and Black -->
+<!-- Sea [16]) have confounded both fishery-independent trawl surveys and commercial catch data -->
+<!-- [18]. This misidentification may have led to an over-estimation of the stock’s spatial range for much of the 20th century -->
+
+<!-- ### Reproductive behaviour -->
+<!-- *M. asterias* has a complex reproduction behaviour. -->
+The species is aplacentally viviparous (i.e. embryos are absorb nutrients from a yolk sack that is used up during gestation). It displays polyandry (i.e., one female mating with several males within one breeding season) and multiple paternity [i.e., pups within one litter originating from several males, @farrell_2014].
+Moreover, it has a biennally reproduction cycle with a gestation period of about 12 months, followed by a 12-month resting period. *M. asterias* females can store sperm for up to 12 months [@farrell_2010a]. The same study found embryos from different developmental stages in gestating females (termed embryo asynchronism).
+@griffiths_2020 reported philopatric behaviour (i.e., females returning to the same area for parturition) for the first time. 
+Identified parturition grounds for *M. asterias* include the Eastern Scheldt and, more generally, the Bristol Channel, Southern North Sea and the English Channel [@dureuil_2013; @mccullyphillips_2015; @breve_2016]. Pupping possibly takes place between April and September [@farrell_2010a; @mccullyphillips_2015].
+
+<!-- ###	Feeding behaviou -->
+
+<!-- IMAGE: starry smooth-hound -->
+
+Its ventrally located snout enables *M. asterias* to feed on prey on the seafloor, indicating that it swims closely above the seafloor during foraging and preying. 
+<!-- <!-- [^1]. --> -->
+
+<!--   [^1]: Brevé, Niels (*personal communication*), March 27, 2023. -->
+
+*M. asterias* is a specialist feeder on benthic and suprabenthic crustaceans. Common prey include the hermit crab (*Pagurus bernhardus*), the flying crab (*Liocarcinus holsatus*), the common shore crab (*Carcinus maenas*) and the edible crab (*Cancer pagurus*) [@mccullyphillips_2015; @mccullyphillips_2020]. 
+Potential predators of *M. asterias* are the grey seal (*Halichoerus grypus*) which occurs in the North Sea, the blue shark (*Prionace glauca*) and the common dolphin (*Delphinus delphis*), both of which occur in the Western English Channel [@griffiths_2020].
+
+<!-- - Feeding: crustaceans, swimming shorewards at night -->
+
+
+<!-- ### Daily behaviour -->
 
 <!-- - daily vertical migration: present (find source), but also (most likely) horizontal movement associated with the vertical movement, i.e. the animal stays on the seafloor and swims shorewards during the night, feeding on crustaceans (?) -->
 
@@ -439,18 +479,20 @@ knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/Maste
 
 
 
+<!-- To Do: umschreiben und genauer auf meine studie umformulieren -->
+ 
 ###	Research gaps
 
 <!-- #### Relevance of the Study -->
 @griffiths_2020 identified seabed association of *M. asterias* as a research gap.
 @breve_2020 advised to further research *M. asterias* with a combination of telemetry and genetic techniques.
 
-#### Migration
+<!-- #### Migration -->
 - sex bias known, but no exact locations, timing also unknown
 -	Horizontal and vertical behaviour during migration
 <!-- -	Until now, many capture/recapture studies, but no in-depth tracking studies (to our knowledge) -->
 
-####	Reproduction
+<!-- ####	Reproduction -->
 - reproductive habitats already studied to some extent, but e.g. parturition site Western Scheldt unconfirmed
   -	General details about parturition: all pups released at once, batches?
 
@@ -583,12 +625,14 @@ Animals were caught using line fishing or handline. After capture, each animal w
 
 ###	The BPNS and Scheldt Estuary {#sec-mmscheldtBPNS}
 
-The Belgian Part of the North Sea (BPNS) is generally characterised by shallow water depths below 40 m [@thierry_2019], sandy or muddy sediment [@vasquez_2021] and multiple sandbanks and troughs. 
+The Belgian Part of the North Sea (BPNS) is generally characterised by shallow water depths below 40 m [@thierry_2019], sandy or muddy sediment [@wolff_1973; @vasquez_2021] and multiple sandbanks and troughs. 
 Artificial structures resulting from human activities, such as shipwrecks and Offshore Wind Farms (OWF), provide hard substrate.
 Apart from seafaring and energy production, shipping, fishing (including trawling) or sand and gravel extraction take place in the BPNS [@chen_2005; @douvere_2007]. Furthermore, submarine cables to facilitate energy transport and telecommunication have been present in the North Sea for decades [@degroot_1979].
 The river Scheldt meets the North Sea north of the border between the Netherlands and Belgium, forming an Estuary with a complex regime of sandflats and channels [@claessens_1988].
 Both the BPNS and the Scheldt Estuary are highly mixed due to strong currents and tides [@otto_1990], introducing saline waters well into the Scheldt Estuary [@ouboter_1998].
-The Scheldt Estuary is characterised by medium to coarse sand and salinity between ranges 2 and 33.5 ppt [@baeyens_1998], peaking in summer [@maes_1998]. The seafloor depth averages around 11m with occasional troughs of up to 20 or 30m [@thierry_2019]. 
+The Scheldt Estuary is characterised by medium to coarse sand and salinity between ranges 2 and 33.5 ppt [@baeyens_1998], peaking in summer [@maes_1998]. The seafloor depth averages around 11 m with occasional troughs of up to 20 or 30 m [@thierry_2019]. 
+The BPNS and the Scheldt Estuary are influenced by two water bodies [@wolff_1973]: The Channel water and the Continental coastal water. The former is characterised by high salinity (> 18 ppt), low nutrient levels and water temperatures ranging between 6 °C in winter to 16°C in summer. The latter has a lower salinity, has high nutrient levels and a larger temperature range than the Channel water averaging between 3°C in winter and 17°C in summer.
+
 The lower part of the Scheldt Estuary from Vlissingen (The Netherlands) 55-60 km upstream is referred to as Western Scheldt Estuary[@baeyens_1998; @ouboter_1998].
 Between Bergen op Zoom and the island Neeltje Jans (both Netherlands), the Estuary is referred to as the Eastern Scheldt Estuary.
 An overview map of the BPNS and the Scheldt Estuary is provided in @fig-mapdetail.
@@ -839,6 +883,11 @@ The autocorrelation was calculated using the *`stats::acf()`*-function. Autocorr
 A Fast Fourier Transform (FFT) was performed on all DST logs, using the *'base::fft()'*-function. This method decomposes a signal in the time domain (which is a combination of multiple sine waves with different frequencies) into its components in the frequency domain. Dominant frequencies (or rather periods, which is the inverse of the frequency) give insights about the scale of periodicity of a signal (in the present case the signal is the depth-timeseries) (*ref*).
 <!-- give fft source -->
 
+#### Lunar influences on vertical movement during winter
+
+To investigate the influences of moon phases and possible correlating variables, the illuminated fraction of the moon was calculated using the *`moonAngle()`*-function from the *'oce'* package.
+Then, the daily summary statistics were subset with the dates that each individual most likely was in its winter habitat, i.e. during winter and in deeper waters compared to summer. For the female individual (tag 308), the depth data was subset between December 12, 2018 and March 11, 2019, and for the male individual, the depth data was subset between December 09, 2018 and April 30, 2019. Firstly, the median depth was compared between day and night, using a one-sided Wilcoxon Test.
+Then, simple linear regression was employed to investigate the relationship between the median depth and the moon phase (represented by the illuminated fraction of the moon). Two kinds of regression models were done. The first model takes as input the median depth per date (thus, not considering day and night). The second model takes as input the median depth per date and day/night, and tests for an interaction effect of the illuminated fraction of the moon and whether or not it is day or night.
 
 #### Migration Period Analysis {#sec-mm_migration}
 
@@ -884,12 +933,14 @@ Of the `r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()` tagged fe
 
 <!-- say sth about the tagging locations and refer to  (see @tbl-releaseloc and @fig-mapdetail) (doesn't work in table caption) -->
 
+<!-- ***Include Residency Index per individual?*** -->
+
 ```{r table-animalinfo}
 #| include: true
 #| label: tbl-animalinfo
 #| out-width: 100%
 #| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. ***Include Residency Index per individual?***."
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt."
 
 knitr::kable(x = tagged_animal_info %>% 
                #set column order & order rows
@@ -968,63 +1019,101 @@ p_length_sex
 ## Acoustic detections
 
 Two tags only had a single detection (serial number `r tag_serial_number_omit[1,] %>% dplyr::pull()` and `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted from all further analyses.
-The acoustic detections of the remaining tags over time are shown in @fig-abacus.
+The acoustic detections of the remaining tags over time are shown in @fig-abacus. The acoustic detections at each receiver station of female *M. asterias* within the Westerschelde are shown in @fig-heatmapdetections.
 
 Within the study period from August, 2018 to August, 2020, there are no acoustic detections between November and April in either year. `r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` % of detections are in the WS1 area, and of those, `r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow()) * 100, digits = 2)` % are at station *ws-OG10* (see @fig-mapdetail). Of the `r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()` detected males, 3 were detected inside the BPNS and one in the WS1 array.
+
+Across all years, most detections (n = 2484) were in the month of May, while most individuals (n = 10) were detected in August.
 
 ```{r abacus}
 #| include: true
 #| label: fig-abacus
 #| out-width: 95%
 #| fig-height: 3
-#| fig-cap: "Acoustic detectiosn of the tagged starry smooth-hounds, the colour responds to the area the receiver was in. The black cross refers to the tagging date."
+#| fig-cap: "Acoustic detections of the tagged starry smooth-hounds, the colour responds to the area the receiver was in. The shapes with black outlines refer to the tagging date and the sex of the individual."
 #| fig-pos: "H"
 
 p_abacus
 ```
 
 
-<!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
-
-###	Vertical space use analysis
-
-Results of the analysis of the vertical space use of *M. asterias* around the acoustic receiver stations in the WS1 receiver array of 2019 are shown in @fig-verticalspaceuse. 
-<!--  Only 2019 was included since *detections percentage* --> 
-<!-- round((detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2) -->
-The amount of detections varies between receivers (max. = `r detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% group_by(station_name) %>% summarise(n_detect = n()) %>% ungroup() %>% summarise(max = max(n_detect), min = min(n_detect)) %>% dplyr::select(max) %>% pull()` at station *ws-OG10*, min. = `r detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% group_by(station_name) %>% summarise(n_detect = n()) %>% ungroup() %>% summarise(max = max(n_detect), min = min(n_detect)) %>% dplyr::select(min) %>% pull()` at station *ws-3*).
-
-Out of the `r close_stations %>% filter(area %in% c("WS1", "WS2")) %>% dplyr::select(station_name) %>% unique() %>% nrow()` receiver stations overall in the WS1 and the WS2 receiver array, *M. asterias* individuals were detected at `r summary_all2$station_name %>% unique() %>% length()` receiver stations.
-
-As shown in @fig-verticalspaceuse-1, at 3  of these 16 stations (4, 11, 13), the maximum depth in a bathymetry cell in a 200 m radius around the receiver is deeper than the maximum depth of an acoustic detection at the receiver.
-In 3 out of the 16 stations (GVWSP, PVTSS, W6), the maximum depth in the bathymetry dataset and an acoustic detection is about the same.
-And in the remaining 10 stations (borssele, DL12, DL7, DL9, OG10, OGDL, SP3, TRAWL, W7, WN2) the maximum depth of an acoustic detection is deeper than the maximum depth of a grid cell within 200 m around the receiver.
-
-@fig-verticalspaceuse-2 shows the vertical distribution of acoustic detections and the available depths around each receiver station.
-***continue***
-
-```{r depthrange}
+```{r heatmapdetections}
 #| include: true
-#| label: fig-verticalspaceuse
+#| label: fig-heatmapdetections
 #| out-width: 95%
 #| fig-height: 3
-#| layout-ncol: 1
-#| fig-cap: "Results of the vertical space use analysis of the acoustically detected female *M. asterias* individuals in the WS1 and WS2 array in 2019. The prefix *'ws-'* was removed from each station name to increase readability."
-#| fig-subcap: 
-#| - "Depth range of acoustic detections at each receiver station and the bathymetry in a 200 m radius around the station. The amount of detections at each station are printed as text below the bars."
-#| - "Heatmap of the share of detections and bathymetry grid cells per depth bin. Depth was binned every 10 m."
+#| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Westerschelde (receiver arrays *Ws1*, *WS2* and *WS3*). "
 #| fig-pos: "H"
 
-plot_depth_range
-
-plot_depth_range_heatmap
-
+p_detections_heatmap
 ```
 
 
-<!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins -->
-<!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? -->
 
-<!-- iii.	PLOT: # detected individuals, # detections (2 plots next to each other with circles) -->
+```{r heatmapOG10}
+#| include: false
+#| label: fig-heatmapOG10
+#| out-width: 95%
+#| fig-height: 3
+#| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10."
+#| fig-pos: "H"
+
+p_detections_heatmap_OG10
+```
+
+
+```{r boxplotOG10}
+#| include: false
+#| label: fig-boxplotOG10
+#| out-width: 95%
+#| fig-height: 3
+#| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10."
+#| fig-pos: "H"
+
+p_OG10_boxplot
+```
+
+<!-- ii.	PLOT: Detections & # of sharks tagged, cf Espinoza 2016, plus # detections?? -->
+
+<!-- ###	Vertical space use analysis -->
+
+<!-- Results of the analysis of the vertical space use of *M. asterias* around the acoustic receiver stations in the WS1 receiver array of 2019 are shown in @fig-verticalspaceuse.  -->
+<!-- <!--  Only 2019 was included since *detections percentage* --> 
+<!-- <!-- round((detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2) --> 
+<!-- The amount of detections varies between receivers (max. = `r detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% group_by(station_name) %>% summarise(n_detect = n()) %>% ungroup() %>% summarise(max = max(n_detect), min = min(n_detect)) %>% dplyr::select(max) %>% pull()` at station *ws-OG10*, min. = `r detections_tempdepth_daynight %>% dplyr::filter(lubridate::year(date_time) == "2019") %>% group_by(station_name) %>% summarise(n_detect = n()) %>% ungroup() %>% summarise(max = max(n_detect), min = min(n_detect)) %>% dplyr::select(min) %>% pull()` at station *ws-3*). -->
+
+
+
+<!-- As shown in @fig-verticalspaceuse-1, at 3  of these 16 stations (4, 11, 13), the maximum depth in a bathymetry cell in a 200 m radius around the receiver is deeper than the maximum depth of an acoustic detection at the receiver. -->
+<!-- In 3 out of the 16 stations (GVWSP, PVTSS, W6), the maximum depth in the bathymetry dataset and an acoustic detection is about the same. -->
+<!-- And in the remaining 10 stations (borssele, DL12, DL7, DL9, OG10, OGDL, SP3, TRAWL, W7, WN2) the maximum depth of an acoustic detection is deeper than the maximum depth of a grid cell within 200 m around the receiver. -->
+
+<!-- @fig-verticalspaceuse-2 shows the vertical distribution of acoustic detections and the available depths around each receiver station. -->
+<!-- ***continue*** -->
+
+<!-- ```{r depthrange} -->
+<!-- #| include: true -->
+<!-- #| label: fig-verticalspaceuse -->
+<!-- #| out-width: 95% -->
+<!-- #| fig-height: 3 -->
+<!-- #| layout-ncol: 1 -->
+<!-- #| fig-cap: "Results of the vertical space use analysis of the acoustically detected female *M. asterias* individuals in the WS1 and WS2 array in 2019. The prefix *'ws-'* was removed from each station name to increase readability." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Depth range of acoustic detections at each receiver station and the bathymetry in a 200 m radius around the station. The amount of detections at each station are printed as text below the bars." -->
+<!-- #| - "Heatmap of the share of detections and bathymetry grid cells per depth bin. Depth was binned every 10 m." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- plot_depth_range -->
+
+<!-- plot_depth_range_heatmap -->
+
+<!-- ``` -->
+
+
+<!-- <!-- v.	PLOT: depth of bathymetry vs depths of detections & depth bins --> 
+<!-- <!-- 1.	Maybe: chi2 test to compare depth bins & ac. Detections? --> 
+
+<!-- <!-- iii.	PLOT: # detected individuals, # detections (2 plots next to each other with circles) --> 
 
 ## Data Storage Tags {#sec-results-dst}
 
@@ -1091,58 +1180,69 @@ p_fft_308
 
 
 
-The depth logs of tag 295, 308 and 321 (the two long term DST) are shown in @fig-dst. 
+The depth and temperature logs of tag 308 and 321 (the two long term DST) are shown in @fig-dst308 and @fig-dst321, respectively. 
 <!-- The depth logs of the two long term DST are shown in @fig-dst308 and @fig-dst321.  -->
-The remaining depth logs are depicted in @sec-annexdst_raw. Only evert fifth value is depicted to increase the readability of the plot, making the time interval between two values 10 minutes.
+The remaining depth logs are depicted in @sec-annexdst_raw.
 
-Tag 295 (@fig-dst-1)shows regular up- and downward movements with minimum depths per day of around 2 m and maximum daily depths between 18 and 35 m. After August 20, 2018, only a tidal signal and no up and down movements were recorded. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on the same day.
-The depth log of tag 308 is shown in @fig-dst-2. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_temp_max) %>% dplyr::pull() %>% format("%B %d %Y")`. The minimum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(temp_min_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_temp_min) %>% dplyr::pull() %>% format("%B %d %Y")`.
-The depth log of tag 321 is shown in @fig-dst-3. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_temp_max) %>% dplyr::pull() %>% format("%B %d %Y")`. The minimum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(temp_min_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_temp_min) %>% dplyr::pull() %>% format("%B %d %Y")`.
+<!-- Tag 295 (@fig-dst-1) shows regular up- and downward movements with minimum depths per day of around 2 m and maximum daily depths between 18 and 35 m. After August 20, 2018, only a tidal signal and no up and down movements were recorded. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on the same day. -->
+
+The depth log of tag 308 is shown in @fig-dst-2. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d, %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_temp_max) %>% dplyr::pull() %>% format("%B %d, %Y")`. The minimum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(temp_min_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(date_temp_min) %>% dplyr::pull() %>% format("%B %d, %Y")`.
+The depth log of tag 321 is shown in @fig-dst-3. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d, %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_temp_max) %>% dplyr::pull() %>% format("%B %d, %Y")`. The minimum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(temp_min_total) %>% dplyr::pull()`$^\circ$C was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_temp_min) %>% dplyr::pull() %>% format("%B %d, %Y")`.
 <!-- Between the tagging on August 2, 2018 and the end of September -->
 
 ```{r rawdepthlog}
-#| include: true
+#| include: false
 #| label: fig-dst
 #| out-width: 95%
 #| fig-height: 2
 #| layout-nrow: 3
 #| fig-cap: "Depth log from the recovered tag 295. This male was tagged on August 2, 2018."
 #| fig-subcap: 
-#| - "Tag 295. This male was tagged on August 2, 2018."
+##| - "Tag 295. This male was tagged on August 2, 2018."
 #| - "Tag 308. This female was tagged on August 2, 2018."
 #| - "Tag 321. This male was tagged on July 19, 2018."
 #| fig-pos: "H"
 
-p_dst_raw_295
+# p_dst_raw_295
 p_dst_raw_308
 p_dst_raw_321
 ```
 
 
 ```{r rawdepthlog308}
-#| include: false
+#| include: true
 #| label: fig-dst308
 #| out-width: 95%
 #| fig-height: 2
-#| fig-cap: "Depth log from the recovered tag 308. This female was tagged on August 2, 2018."
+#| layout-nrow: 2
+#| fig-cap: "Data from the recovered tag 308. The shark was female and tagged on August 2, 2018."
 #| fig-subcap: 
-#| - "Tag 308 (f)"
-#| - "Tag 321 (m)"
+#| - "Water depth"
+#| - "Water temperature"
 #| fig-pos: "H"
 
-p_dst_raw_308
+p_308_depth
+
+p_308_temp
+
 ```
 
-
 ```{r rawdepthlog321}
-#| include: false
+#| include: true
 #| label: fig-dst321
 #| out-width: 95%
 #| fig-height: 2
-#| fig-cap: "Depth log from the recovered tag 321. This male was tagged on July 19, 2018."
+#| layout-nrow: 2
+#| fig-cap: "Data from the recovered tag 321. The shark was male and tagged on July 19, 2018."
+#| fig-subcap: 
+#| - "Water depth"
+#| - "Water temperature"
 #| fig-pos: "H"
 
-p_dst_raw_321
+p_321_depth
+
+p_321_temp
+
 ```
 
 ### Autocorrelation {#sec-resacf}
@@ -1169,48 +1269,20 @@ p_acf_321
 
 ```
 
-### Fast Fourier Transform (FFT)
-
-The resulting periodograms from the Fast Fourier Transform for tags 295 (*m*), 308 (*f*) and 321 (*m*) are depicted in @fig-fft.
-
-In @fig-fft-1, the highest spectral density is at 24 hours, with smaller peaks at 23, 12 and 6 hours.
-@fig-fft-2 shows spectral density peaks at about 12 hours (highest), 24 hours, and smaller peaks at 23, 26, 6 and 8 hours.
-Tag 321 has the highest spectral density at 24 hours, then 12 hours, and small peaks at 6, 23, 25 and 25 hours, see @fig-fft-3.
-
-
-```{r fft}
-#| include: true
-#| label: fig-fft
-#| out-width: 95%
-#| fig-height: 1.5
-#| layout-ncol: 1
-#| fig-cap: "Periodogram from three recovered tags."
-#| fig-subcap: 
-#| - "Tag 295 (m), 31 days of liberty"
-#| - "Tag 308 (f), 366 days of liberty"
-#| - "Tag 321 (m), 485 days of liberty"
-#| fig-pos: "H"
-
-p_fft_295
-p_fft_308
-p_fft_321
-```
-
 
 ### Summary statistics {#sec-results-dst-summary}
 
-<!-- Noch ueberlegen wie ich das mit den Plots mache, weil ich gern alle 4 plots in einer figure vereinen wuerde -->
-
 The daily summary statistics of the depthlogs of tags 308 and 321 are displayed in @fig-dstsum.
-The black line shows the Savityky-Golay filtered daily median (not the mean since depth values are not normally distributed). The grey ribbon spans between the Savityky-Golay filtered daily maximum and minimum depth. The coloured bars represent the vertical movement behaviour per day as classified by a $\chi^2$ test that compares the depths at night to the depths during the day (depth~night~ significantly shallower/deeper than depth~day~: Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).
+The black line shows the Savitzky-Golay filtered daily median (not the mean since depth values are not normally distributed). The grey ribbon spans between the Savitzky-Golay filtered daily maximum and minimum depth. 
+<!-- The coloured bars represent the vertical movement behaviour per day as classified by a $\chi^2$ test that compares the depths at night to the depths during the day (depth~night~ significantly shallower/deeper than depth~day~: Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)). -->
 
 ```{r dstsum}
 #| include: true
 #| label: fig-dstsum
-#| out-width: 90%
+#| out-width: 100%
 #| fig-height: 2.5
 #| layout-ncol: 1
-#| fig-cap: "Daily median depth, maximum and minimum depth in the ribbon. Dial vertical migration behaviour as coloured bars in the background."
+#| fig-cap: "Daily median depth, maximum and minimum depth shaded in grey."
 #| fig-subcap: 
 #| - "Tag 308 (f)"
 #| - "Tag 321 (m)"
@@ -1220,7 +1292,7 @@ p_308_sum_stats #%>% ggplotly()
 p_321_sum_stats
 ```
 
-@fig-dstsum-1 displays a daily maximum of about 20 m until end September and then, until the start of October the daily median decreases and reaches 86 m, the maximum depth that the sensor records. Until the beginning of December the shark swims at deep depth, with minimum daily depths not shallower than 50 m. After that until mid March the daily maximum depth is between 40 and 68 m and the daily minimum depth is between 5 and 50 m. After March 19, 2019, the daily median depth is always shallower than 60 m. Between March until the end of the time series, some plateaus in median depth occur: Around 35 m median depth from end March to end April, around 17 m depth from mid May to the start of June and from end July onwards, and around 8 m depth between June 11 and July 13, 2019.
+@fig-dstsum-1 displays a daily maximum of about 20 m until end September and then, until the start of October the daily median decreases and reaches 86 m, the maximum depth that the sensor records. Until the beginning of December the shark swims at deep depth, with minimum daily depths not shallower than 50 m. After that until mid March the daily maximum depth is between 40 and 68 m and the daily minimum depth is between 5 and 50 m. After March 19, 2019, the daily median depth is always shallower than 60 m. Between March until the end of the time series, some plateaus in median depth occur: Around 35 m median depth from end March to end April, around 17 m depth from mid May to the start of June and from end July onward, and around 8 m depth between June 11 and July 13, 2019.
 
 
 ```{r dstsum321}
@@ -1228,12 +1300,12 @@ p_321_sum_stats
 #| label: fig-dstsum321
 #| out-width: 95%
 #| fig-height: 2.5
-#| fig-cap: "Daily median depth, and maximum and minimum depth in the ribbon. Dial vertical migration behaviour as coloured bars in the background."
+#| fig-cap: "Daily median depth, and maximum and minimum depth in the ribbon."
 #| fig-pos: "H"
 
 p_321_sum_stats #%>% ggplotly()
 ```
-
+<!-- Dial vertical migration behaviour as coloured bars in the background. -->
 
 <!-- Daily summary statistics for tag 308 and tag 321. The black line shows the daily median (not the mean because depth values are not normally distributed) with a rolling mean of 3 days. The grey ribbon spans between the daily maximum and minimum depth. The purple curve shows the change of daily median depth. The coloured bars represent the vertical movement behaviour per day as classified by a chi square test that compares the depths at night to the depths during the day.(depth (night) significantly shallower/deeper than depth (day): Diel Vertical Migration (DVM)/reverse DVM (rDVM), no significant difference: no DVM (nDVM)).  -->
 
@@ -1244,7 +1316,9 @@ p_321_sum_stats #%>% ggplotly()
 <!-- tidal influence on selected inland rivers -->
 <!-- across the globe scalogram -->
 
-The wavelet transform results of the daily median, maximum and minimum depth for tag 308 and 321 are shown below, in @fig-waveletresults308 and @fig-waveletresults321. A Savitzky-Golay smoothing filter was applied to all daily summary statistics, as described in @sec-mm_dsts.
+The Continuous Wavelet Transform results both from the raw depthlog, subsampled to one value every 30 minutes, and from the Savitzky-Golay filtered daily depth range are shown below, in @fig-waveletresults308 and @fig-waveletresults321.
+
+<!-- The wavelet transform results of the daily median, maximum and minimum depth for tag 308 and 321 are shown below, in @fig-waveletresults308 and @fig-waveletresults321. A Savitzky-Golay smoothing filter was applied to all daily summary statistics, as described in @sec-mm_dsts. -->
 
 ```{r wavelet308}
 #| include: true
@@ -1252,16 +1326,17 @@ The wavelet transform results of the daily median, maximum and minimum depth for
 #| fig-pos: "H"
 #| layout-ncol: 1
 #| out-width: 100%
-#| fig-height: 2
+#| fig-height: 3.5
 #| fig-cap: "Wavelet transform results for tag 308 (f). The fully opaque areas refer to periods that significantly differ from white noise."
 #| fig-subcap: 
-#| - "Daily median depth"
-#| - "Daily minimum depth"
-#| - "Daily maximum depth"
+#| - "Raw depth log, subsampled to one value every 30 minutes."
+#| - "Daily depth range"
 
-p_308_wavelet_depth_median_sgolay
-p_308_wavelet_depth_min_sgolay
-p_308_wavelet_depth_max_sgolay
+p_308_wavelet_depth_hr
+
+p_308_wavelet_depth_range_sgolay #put median in annex??
+# p_308_wavelet_depth_min_sgolay
+# p_308_wavelet_depth_max_sgolay
 ```
 
 
@@ -1270,245 +1345,266 @@ p_308_wavelet_depth_max_sgolay
 #| label: fig-waveletresults321
 #| layout-ncol: 1
 #| out-width: 100%
-#| fig-height: 2
+#| fig-height: 3.5
 #| fig-cap: "Wavelet transform results for tag 321 (m). The fully opaque areas refer to periods that significantly differ from white noise."
 #| fig-subcap: 
-#| - "Daily median depth"
-#| - "Daily minimum depth"
-#| - "Daily maximum depth"
-#| fig-pos: "H!"
-p_321_wavelet_depth_median_sgolay
-p_321_wavelet_depth_min_sgolay
-p_321_wavelet_depth_max_sgolay
+#| - "Raw depth log, subsampled to one value every 30 minutes."
+#| - "Daily depth range"
+
+p_308_wavelet_depth_hr
+
+p_308_wavelet_depth_range_sgolay #put median in annex??
+# p_308_wavelet_depth_min_sgolay
+# p_308_wavelet_depth_max_sgolay
 ```
 
-### Change Point Detection
+### Lunar influences on vertical movement during winter
 
-#### Tag 308
 
-A step of 2.5 % of the time vector's length amounts to `r rulsif_308_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30825 and in @tbl-tblrulsif30825.
+## Acoustic detections and depthlog
 
-```{r rulsif30825}
+@fig-adst308 shows the raw depthlog of tag 308, the female shark that logged data for one year, superposed with the acoustic detections of that individual. After the DST had stopped recording on August 03, 2019, the shark was recorded at station OG10. And on October 05, 2019 it was recorded at the Birkenfels station in the BPNS.
+
+```{r adst308}
 #| include: true
-#| label: fig-rulsif30825
+#| label: fig-adst308
 #| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 308, step = 2.5 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
+#| out-width: 100%
+#| fig-height: 3.5
+#| fig-cap: "Raw depthlog of tag 308 (female) in summer 2019 and acoustic detections from the Permanent Belgian Acoustic Receiver Network."
 
-p_308_ribbon_rulsif_2_5percent
-
-p_308_scores_rulsif_2_5percent
-
-```
-
-
-```{r table-rulsif30825}
-#| include: true
-#| label: tbl-tblrulsif30825
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)."
-
-knitr::kable(rulsif_308_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
-
-A step of 5 % of the time vector's length amounts to `r rulsif_308_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3085 and in @tbl-tblrulsif3085.
-
-```{r rulsif3085}
-#| include: true
-#| label: fig-rulsif3085
-#| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 308, step = 5 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
-
-p_308_ribbon_rulsif_5percent
-
-p_308_scores_rulsif_5percent
-
-```
-
-```{r table-rulsif3085}
-#| include: true
-#| label: tbl-tblrulsif3085
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 308 (f)."
-
-knitr::kable(rulsif_308_table_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
-
-
-A step of 10 % of the time vector's length amounts to `r rulsif_308_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30810 and @tbl-tblrulsif30810.
-
-```{r rulsif30810}
-#| include: true
-#| label: fig-rulsif30810
-#| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 308, step = 10 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
-
-p_308_ribbon_rulsif_10percent
-
-p_308_scores_rulsif_10percent
-
-```
-
-
-```{r table-rulsif30810}
-#| include: true
-#| label: tbl-tblrulsif30810
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 308 (f)."
-
-knitr::kable(rulsif_308_table_10percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+p_308_DST_acoustic
 ```
 
 
 
-<!-- ```{r} -->
-<!-- #| layout-ncol: 2 -->
-<!-- #| layout-valign: bottom -->
-<!-- #| cap-location: bottom -->
-<!-- #| fig-cap: "A plot" -->
-<!-- #| tbl-cap: "A table" -->
+<!-- ### Change Point Detection -->
 
-<!-- library(knitr) -->
+<!-- #### Tag 308 -->
 
-<!-- # plot on the left -->
-<!-- plot(cars) -->
+<!-- <!-- A step of 2.5 % of the time vector's length amounts to `r rulsif_308_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30825 and in @tbl-tblrulsif30825. --> -->
 
-<!-- # table on the right -->
-<!-- kable(head(cars)) -->
+<!-- <!-- ```{r rulsif30825} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: fig-rulsif30825 --> -->
+<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- <!-- #| out-width: 95% --> -->
+<!-- <!-- #| fig-height: 1.5 --> -->
+<!-- <!-- #| fig-cap: "Rulsif results for tag 308, step = 2.5 %." --> -->
+<!-- <!-- #| fig-subcap:  --> -->
+<!-- <!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." --> -->
+<!-- <!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." --> -->
+<!-- <!-- #| fig-pos: "H" --> -->
+
+<!-- <!-- p_308_ribbon_rulsif_2_5percent --> -->
+
+<!-- <!-- p_308_scores_rulsif_2_5percent --> -->
+
+<!-- <!-- ``` --> -->
+
+
+<!-- <!-- ```{r table-rulsif30825} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: tbl-tblrulsif30825 --> -->
+<!-- <!-- #| out-width: 40% --> -->
+<!-- <!-- #| tbl-cap-location: top --> -->
+<!-- <!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 308 (f)." --> -->
+
+<!-- <!-- knitr::kable(rulsif_308_table_2_5percent %>% dplyr::select(!c(CP_period, step)), --> -->
+<!-- <!--              booktabs = T, escape = F, --> -->
+<!-- <!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  --> -->
+<!-- <!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") --> -->
+<!-- <!-- ``` --> -->
+
+<!-- <!-- A step of 5 % of the time vector's length amounts to `r rulsif_308_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3085 and in @tbl-tblrulsif3085. --> -->
+
+<!-- <!-- ```{r rulsif3085} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: fig-rulsif3085 --> -->
+<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- <!-- #| out-width: 95% --> -->
+<!-- <!-- #| fig-height: 1.5 --> -->
+<!-- <!-- #| fig-cap: "Rulsif results for tag 308, step = 5 %." --> -->
+<!-- <!-- #| fig-subcap:  --> -->
+<!-- <!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." --> -->
+<!-- <!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." --> -->
+<!-- <!-- #| fig-pos: "H" --> -->
+
+<!-- <!-- p_308_ribbon_rulsif_5percent --> -->
+
+<!-- <!-- p_308_scores_rulsif_5percent --> -->
+
+<!-- <!-- ``` --> -->
+
+<!-- <!-- ```{r table-rulsif3085} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: tbl-tblrulsif3085 --> -->
+<!-- <!-- #| out-width: 40% --> -->
+<!-- <!-- #| tbl-cap-location: top --> -->
+<!-- <!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 308 (f)." --> -->
+
+<!-- <!-- knitr::kable(rulsif_308_table_5percent %>% dplyr::select(!c(CP_period, step)), --> -->
+<!-- <!--              booktabs = T, escape = F, --> -->
+<!-- <!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  --> -->
+<!-- <!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") --> -->
+<!-- <!-- ``` --> -->
+
+
+<!-- A step of 10 % of the time vector's length amounts to `r rulsif_308_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif30810 and @tbl-tblrulsif30810. -->
+
+<!-- ```{r rulsif30810} -->
+<!-- #| include: true -->
+<!-- #| label: fig-rulsif30810 -->
+<!-- #| layout-ncol: 1 -->
+<!-- #| out-width: 95% -->
+<!-- #| fig-height: 1.5 -->
+<!-- #| fig-cap: "Rulsif results for tag 308, step = 10 %." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." -->
+<!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- p_308_ribbon_rulsif_10percent -->
+
+<!-- p_308_scores_rulsif_10percent -->
+
 <!-- ``` -->
 
-#### Tag 321
 
-A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32125 and in @tbl-tblrulsif32125.
+<!-- ```{r table-rulsif30810} -->
+<!-- #| include: true -->
+<!-- #| label: tbl-tblrulsif30810 -->
+<!-- #| out-width: 40% -->
+<!-- #| tbl-cap-location: top -->
+<!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 308 (f)." -->
 
-```{r rulsif32125}
-#| include: true
-#| label: fig-rulsif32125
-#| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 321, step = 2.5 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
-
-p_321_ribbon_rulsif_2_5percent
-
-p_321_scores_rulsif_2_5percent
-
-```
+<!-- knitr::kable(rulsif_308_table_10percent %>% dplyr::select(!c(CP_period, step)), -->
+<!--              booktabs = T, escape = F, -->
+<!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") -->
+<!-- ``` -->
 
 
-```{r table-rulsif32125}
-#| include: true
-#| label: tbl-tblrulsif32125
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 321 (f)."
 
-knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+<!-- <!-- ```{r} --> -->
+<!-- <!-- #| layout-ncol: 2 --> -->
+<!-- <!-- #| layout-valign: bottom --> -->
+<!-- <!-- #| cap-location: bottom --> -->
+<!-- <!-- #| fig-cap: "A plot" --> -->
+<!-- <!-- #| tbl-cap: "A table" --> -->
 
-A step of 5 % of the time vector's length amounts to `r rulsif_321_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3215 and in @tbl-tblrulsif3215.
+<!-- <!-- library(knitr) --> -->
 
-```{r rulsif3215}
-#| include: true
-#| label: fig-rulsif3215
-#| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 321, step = 5 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
+<!-- <!-- # plot on the left --> -->
+<!-- <!-- plot(cars) --> -->
 
-p_321_ribbon_rulsif_5percent
+<!-- <!-- # table on the right --> -->
+<!-- <!-- kable(head(cars)) --> -->
+<!-- <!-- ``` --> -->
 
-p_321_scores_rulsif_5percent
+<!-- #### Tag 321 -->
 
-```
+<!-- <!-- A step of 2.5 % of the time vector's length amounts to `r rulsif_321_table_2_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32125 and in @tbl-tblrulsif32125. --> -->
 
-```{r table-rulsif3215}
-#| include: true
-#| label: tbl-tblrulsif3215
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 321 (f)."
+<!-- <!-- ```{r rulsif32125} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: fig-rulsif32125 --> -->
+<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- <!-- #| out-width: 95% --> -->
+<!-- <!-- #| fig-height: 1.5 --> -->
+<!-- <!-- #| fig-cap: "Rulsif results for tag 321, step = 2.5 %." --> -->
+<!-- <!-- #| fig-subcap:  --> -->
+<!-- <!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." --> -->
+<!-- <!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." --> -->
+<!-- <!-- #| fig-pos: "H" --> -->
 
-knitr::kable(rulsif_321_table_5percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+<!-- <!-- p_321_ribbon_rulsif_2_5percent --> -->
+
+<!-- <!-- p_321_scores_rulsif_2_5percent --> -->
+
+<!-- <!-- ``` --> -->
 
 
-A step of 10 % of the time vector's length amounts to `r rulsif_321_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32110 and @tbl-tblrulsif32110.
+<!-- <!-- ```{r table-rulsif32125} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: tbl-tblrulsif32125 --> -->
+<!-- <!-- #| out-width: 40% --> -->
+<!-- <!-- #| tbl-cap-location: top --> -->
+<!-- <!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 2.5 % for tag 321 (f)." --> -->
 
-```{r rulsif32110}
-#| include: true
-#| label: fig-rulsif32110
-#| layout-ncol: 1
-#| out-width: 95%
-#| fig-height: 1.5
-#| fig-cap: "Rulsif results for tag 321, step = 10 %."
-#| fig-subcap: 
-#| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.."
-#| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow."
-#| fig-pos: "H"
+<!-- <!-- knitr::kable(rulsif_321_table_2_5percent %>% dplyr::select(!c(CP_period, step)), --> -->
+<!-- <!--              booktabs = T, escape = F, --> -->
+<!-- <!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  --> -->
+<!-- <!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") --> -->
+<!-- <!-- ``` --> -->
 
-p_321_ribbon_rulsif_10percent
+<!-- <!-- A step of 5 % of the time vector's length amounts to `r rulsif_321_table_5percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif3215 and in @tbl-tblrulsif3215. --> -->
 
-p_321_scores_rulsif_10percent
+<!-- <!-- ```{r rulsif3215} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: fig-rulsif3215 --> -->
+<!-- <!-- #| layout-ncol: 1 --> -->
+<!-- <!-- #| out-width: 95% --> -->
+<!-- <!-- #| fig-height: 1.5 --> -->
+<!-- <!-- #| fig-cap: "Rulsif results for tag 321, step = 5 %." --> -->
+<!-- <!-- #| fig-subcap:  --> -->
+<!-- <!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." --> -->
+<!-- <!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." --> -->
+<!-- <!-- #| fig-pos: "H" --> -->
 
-```
+<!-- <!-- p_321_ribbon_rulsif_5percent --> -->
+
+<!-- <!-- p_321_scores_rulsif_5percent --> -->
+
+<!-- <!-- ``` --> -->
+
+<!-- <!-- ```{r table-rulsif3215} --> -->
+<!-- <!-- #| include: true --> -->
+<!-- <!-- #| label: tbl-tblrulsif3215 --> -->
+<!-- <!-- #| out-width: 40% --> -->
+<!-- <!-- #| tbl-cap-location: top --> -->
+<!-- <!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 5 % for tag 321 (f)." --> -->
+
+<!-- <!-- knitr::kable(rulsif_321_table_5percent %>% dplyr::select(!c(CP_period, step)), --> -->
+<!-- <!--              booktabs = T, escape = F, --> -->
+<!-- <!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  --> -->
+<!-- <!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") --> -->
+<!-- <!-- ``` --> -->
 
 
-```{r table-rulsif32110}
-#| include: true
-#| label: tbl-tblrulsif32110
-#| out-width: 40%
-#| tbl-cap-location: top
-#| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 321 (f)."
+<!-- A step of 10 % of the time vector's length amounts to `r rulsif_321_table_10percent$step %>% unique()` days. The identified change periods (CP) are shown in @fig-rulsif32110 and @tbl-tblrulsif32110. -->
 
-knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+<!-- ```{r rulsif32110} -->
+<!-- #| include: true -->
+<!-- #| label: fig-rulsif32110 -->
+<!-- #| layout-ncol: 1 -->
+<!-- #| out-width: 95% -->
+<!-- #| fig-height: 1.5 -->
+<!-- #| fig-cap: "Rulsif results for tag 321, step = 10 %." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Identified Change Periods (CP) together with daily median, maximum and minimum depth.." -->
+<!-- #| - "Scores of the dissimilarity measure, relative Pearson Divergence (rPE). Region of classification for a change point marked in yellow." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- p_321_ribbon_rulsif_10percent -->
+
+<!-- p_321_scores_rulsif_10percent -->
+
+<!-- ``` -->
+
+
+<!-- ```{r table-rulsif32110} -->
+<!-- #| include: true -->
+<!-- #| label: tbl-tblrulsif32110 -->
+<!-- #| out-width: 40% -->
+<!-- #| tbl-cap-location: top -->
+<!-- #| tbl-cap: "Identified Change Periods (CP) with a step of 10 % for tag 321 (f)." -->
+
+<!-- knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)), -->
+<!--              booktabs = T, escape = F, -->
+<!--              col.names = linebreak(c("Change\nPeriod (CP)", "start date", "end date", "CP duration\nin days"), align = "c")) %>%  -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") -->
+<!-- ``` -->
 
 
 
@@ -1586,45 +1682,66 @@ knitr::kable(rulsif_321_table_10percent %>% dplyr::select(!c(CP_period, step)),
 
 <!-- Put in where fitting!! -->
 
-- relate the DVM to change periods: can patterns be observed?
+<!-- - relate the DVM to change periods: can patterns be observed? -->
 <!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
 
-## Acoustic detections 
-###	Seasonality of starry smooth-hound presence
+<!-- ## Acoustic detections  -->
+##	Seasonality of starry smooth-hound presence in the Western Scheldt {#sec-disc-acousticdetections}
 
-- If the reason for not being detected is because of tagging mortality or because the individuals left the study area rapidly cannot be inferred at this point.
-- in/around Western Scheldt, according to ac. detections
--	Highly seasonal (only in summer)
-    Explanation: Abiotic water conditions (salinity and temperature) are often evoked as controls for seasonal patterns of species occurrence ( Thiel et al ., 1995 ), from @maes_1998
--	Sex-biased (mostly females)
--	Possible pupping area, but this dataset not sufficient to confirm
+There are no acoustic detections at all [cf. @fig-abacus] between November and April in all years with acoustic detections (2018-2020). This indicates a seasonal presence of *M. asterias* in the Western Scheldt between April and November. The months of May and October had the most acoustic detections while most individuals were detected in August. Therefore, it is difficult at this point to narrow down the time window of April until November and it is recommended to study the seasonal presence of *M. asterias* in the Western Scheldt with greater detail in the future.
 
-### Vertical space use analysis {#sec-discvertical}
+A hotspot of seasonal presence of mature *M. asterias* females seems to be the receiver OG10 (`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` % of detections, and 10 out of 14 detected females). According to fishermen, the area offshore from Zoetelande (north of Dishoek) is a *M. asterias* fishing hotspot, so the coastal waters between Diskoek and Zoetelande are suggested to be important for the species. Whether or not the potential aggregations of mature females is related to parturition cannot be said at this point. 
+There are several indications, however, that point towards the Westerschelde and/or its surrounding waters to be a pupping area for *M. asterias*. The Eastern Scheldt is a confirmed pupping ground [@breve_2016], and during the tagging for this study in August, 2018, two neonates [around 30 cm TL, @farrell_2010] were caught [^1].
+  
+  [^1]: Verhelst, Pieterjan (*personal communication*), April 25, 2023.
 
-The results show that for 10 out of 16 stations, deeper waters were utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons:
-1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely.
-2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper.
-3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths.
+Future studies could address the horizontal distribution of female *M. asterias* in summer by placing additional receivers along the coastline between Dishoek and Zoetelande. Currently, the receiver placement of the WS1 and WS2 array (which is in a gate-like manner from north to south) does
+not allow for detailed insights in the horizontal distribution. A grid-like receiver array could improve that (see also Section 5.7).
 
-The 3 stations with deeper maximum bathymetry values than maximum detection depth (4, 11, 13) all are located in the WS2 array, in a trough. It indicates that in this area the sharks don't use the seafloor around the receiver (which is at depths between 15 and 30 m, roughly) but instead are detected in depths between 2 and 7 m. 
+Another important fact to consider is the biannual reproductive cycle of *M. asterias* and whether that implies differing habitat use between years of pregnancy and years without a pregnancy.
+In the future, it could be helpful to assess if adult females are pregnant at the time of release, through ultrasonography or the use of sex steroid hormones, both of which have already been employed to determine pregnancy in sharks [@awruch_2014; @anderson_2018; @fujinami_2020; @fujinami_2021]. This would allow for further clarification if the Western Scheldt is used as a pupping ground, and if it might be a relevant area for non-pregnant females, too.
 
-Of the 10 stations that showed deeper detection depth than bathymetry, 8 are in the WS1 array.
+An area with little presence of the tagged *M. asterias* individuals is the Western Scheldt upstream past Vlissingen. Shallow and sheltered coastal habitats are thought to be suitable pupping grounds for sharks in general [@speed_2010] and for *M. asterias* in particular [@ellis_2004; @ ellis_2005]. The low number of acoustically detected sharks (38 detections across the whole study period) indicates that the waters past Vlissingen are not as frequently used as the waters around Dishoek. 
+The Scheldt Estuary is influenced by two water bodies from the North Sea, the Channel water and the Continental coastal water [@wolff_1973, see @ sec-mmscheldtBPNS]. The boundary between those bodies is approximately 30 km offshore from the Estuary, and in the Continental coastal waters nutrients are abundant (unlike in the Channel water). This, together with monthly water temperatures above 15 °C between June and September make the (Western) Scheldt Estuary a potentially suitable pupping habitat. The fact that few sharks were detected upstream past Vlissingen could be due to low salinities, or to anthropogenic influences like dredging. This, however, should be further investigated in follow-up studies.
+*M. asterias* might leave the area of the Western Scheldt during winter because of decreasing water temperature. Since water temperatures are a main predictor of both teleost and elasmobranch occurrence [@thiel_1995; @martin_2010]. The warmer waters in the Channel area might be favourable especially for gestating females since higher water temperatures increase metabolic rate and thereby improve embryo development [@hurst_1999].
+<!-- It was therefore unexpected to have only 38 acoustic detections in the WS2 array which can be considered more sheltered than the WS1 array, and no detection in the WS3 array. This, together with the high numbers of detections in the WS1 array indicates that the waters around the WS1 array are more utilized and thus more relevant for the species as compared to the Western Scheldt estuary upstream past Vlissingen. Possible reasons for the low presence of *M. asterias* can be salinity (the salinity tolerance of the species), limited availability of prey, or water quality. -->
 
-The 3 stations (PVTSS, GVWSP, W6) where deepest detection depth and deepest bathymetry value overlap all are kind of inside of the channel, not directly at the shoreline. This could mean that ships pass those points frequently. 
 
-For the receiver stations close to the shoreline (DL7, DL9, DL12, borssele, OG10, OGDL) the acoustic detection depth is much deeper than the depth in the bathymetry dataset. This could be because at the shoreline, the bathymetry dataset is less accurate.
+<!-- - If the reason for not being detected is because of tagging mortality or because the individuals left the study area rapidly cannot be inferred at this point. -->
+<!-- - in/around Western Scheldt, according to ac. detections -->
+<!-- -	Highly seasonal (only in summer) -->
+    <!-- Explanation: Abiotic water conditions (salinity and temperature) are often evoked as controls for seasonal patterns of species occurrence ( Thiel et al ., 1995 ), from @maes_1998 -->
+<!-- -	Sex-biased (mostly females) -->
+<!-- -	Possible pupping area, but this dataset not sufficient to confirm -->
 
-### The Western Scheldt as a tagging ground for *M. asterias*
+<!-- - interesting to note that temperatures experienced by M. asterias were ~5 degrees at minimum. Interestnig bc Breve 2016 suggested that 13 degree is a threshold for M. asterias presence in dutch coastal waters. -->
 
-It is surprising that only very few of the acoustic detections occurred in the WS2 array (`r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS2") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` %, or `r detections_tempdepth_daynight %>% filter(area == "WS2") %>% nrow()` detections in total), since literature suggests that sharks utilise sheltered estuarine habitats for pupping (*references*). 
-Instead, `r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` % of detections were at station *ws-OG10*, which is located at the coast of Dishoek [NL, see @fig-mapdetail].
-Judging from the differences in detections inside and outside the Western Scheldt the question arises if really the Western Scheldt is a pupping ground, or if the pupping ground might instead be located outside of the estuary. 
-In recent years, fishermen targeting *M. asterias* have focused their fishing activity off the coast of Zoetelande (NL), because catch rates apparently are very high (*ref to per. comm. with Pieterjan and Nico*). Furthermore, during the tagging of the 9 individuals just outside of the Western Scheldt (off the coast of Cadzand, NL), two neonates were caught [around 30 cm TL, @farrell_2010]. 
+<!-- ### Vertical space use analysis {#sec-discvertical} -->
 
-Potential explanations could be that either sharks do not pup in the estuary (anymore), due to increased pollution or less food resources, for example. Or that they stay outside of the estuary and then only go inside the estuary to give birth. 
-It would be interesting to investigate the horizontal distribution of female *M. asterias* in summer by placing additional receivers along the coastline of Dishoek and Zoetelande. Currently, the receiver placement of the WS1 and WS2 array (which is in a gate-like manner from north to south) does not allow for detailed insights in the spatial distribution. A grid-like receiver array could improve that (see also @sec-disclimitsacoustic).
+<!-- The results show that for 10 out of 16 stations, deeper waters were utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons: -->
+<!-- 1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely. -->
+<!-- 2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper. -->
+<!-- 3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths. -->
 
-Looking at the vertical space use of *M. asterias* females in the WS2 array in 2019, at station 4, 11 and 13, the sharks appear to use the water column instead of the seafloor (as discussed in @sec-discvertical). If this behaviour is related to parturition is not clear, since there is no knowledge about the vertical behaviour of an aplacentally viviparous shark during parturition. This could be a point of further investigation in future studies.
+<!-- The 3 stations with deeper maximum bathymetry values than maximum detection depth (4, 11, 13) all are located in the WS2 array, in a trough. It indicates that in this area the sharks don't use the seafloor around the receiver (which is at depths between 15 and 30 m, roughly) but instead are detected in depths between 2 and 7 m.  -->
+
+<!-- Of the 10 stations that showed deeper detection depth than bathymetry, 8 are in the WS1 array. -->
+
+<!-- The 3 stations (PVTSS, GVWSP, W6) where deepest detection depth and deepest bathymetry value overlap all are kind of inside of the channel, not directly at the shoreline. This could mean that ships pass those points frequently.  -->
+
+<!-- For the receiver stations close to the shoreline (DL7, DL9, DL12, borssele, OG10, OGDL) the acoustic detection depth is much deeper than the depth in the bathymetry dataset. This could be because at the shoreline, the bathymetry dataset is less accurate. -->
+
+<!-- ### The Western Scheldt as a pupping ground for *M. asterias* -->
+
+<!-- It is surprising that only very few of the acoustic detections occurred in the WS2 array (`r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS2") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` %, or `r detections_tempdepth_daynight %>% filter(area == "WS2") %>% nrow()` detections in total), since literature suggests that sharks utilise sheltered estuarine habitats for pupping (*references*). -->
+<!-- Instead, `r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` % of detections were at station *ws-OG10*, which is located at the coast of Dishoek [NL, see @fig-mapdetail]. -->
+<!-- Judging from the differences in detections inside and outside the Western Scheldt the question arises if really the Western Scheldt is a pupping ground, or if the pupping ground might instead be located outside of the estuary. -->
+<!-- In recent years, fishermen targeting *M. asterias* have focused their fishing activity off the coast of Zoetelande (NL), because catch rates apparently are very high (*ref to per. comm. with Pieterjan and Nico*). Furthermore, during the tagging of the 9 individuals just outside of the Western Scheldt (off the coast of Cadzand, NL), two neonates were caught [around 30 cm TL, @farrell_2010]. -->
+
+<!-- Potential explanations could be that either sharks do not pup in the estuary (anymore), due to increased pollution or less food resources, for example. Or that they stay outside of the estuary and then only go inside the estuary to give birth.  -->
+<!-- It would be interesting to investigate the horizontal distribution of female *M. asterias* in summer by placing additional receivers along the coastline of Dishoek and Zoetelande. Currently, the receiver placement of the WS1 and WS2 array (which is in a gate-like manner from north to south) does not allow for detailed insights in the spatial distribution. A grid-like receiver array could improve that (see also @sec-disclimitsacoustic). -->
+
+<!-- Looking at the vertical space use of *M. asterias* females in the WS2 array in 2019, at station 4, 11 and 13, the sharks appear to use the water column instead of the seafloor (as discussed in @sec-discvertical). If this behaviour is related to parturition is not clear, since there is no knowledge about the vertical behaviour of an aplacentally viviparous shark during parturition. This could be a point of further investigation in future studies. -->
 
 ##	Tag recoveries
 
@@ -1712,6 +1829,10 @@ It would be of interest to plot the autocorrelation of more depthlogs in the fut
 
 The periodogram of tag 308 (female, see @fig-fft-2) has more peaks than that of tag 321 (male, see @fig-fft-3). The male mostly shows tidal periods (6, 12 and 24 hours), suggesting selective tidal stream transport as a driver for movement (*ref*). The use of tidal currents is well-known in benthic species, especially flatfish, but might also occur in demersal species like *M. asterias* (*ref*). Tag 308 (f) shows more peaks outside of potentially tide-related vertical movement behaviour, i.e., also peaks at 8, 23 and 25 hours. Since all of those periods are very close to tidal periods and their spectral density not very high it is unclear at this point if these peaks are because of artefacts during implementation of the fft-algorithm, or because the female showed different vertical behaviour than the male. Another possible reason could be the depth use of the female beyond the sensor range, i.e., in waters deeper than 68 m and the resulting measurement errors in the signal of continuous periods of 68 m depth.
 
+### Continuous Wavelet Transform
+
+it is surprising that no significant tidal periodicities of 6, 12 or 24h were detected in the wavelet scalograms of the raw depthlog. This could be due to resolution limits in the time domain, or due to the downsampling of measurements (from a 2 minute time interval to a 30 minute time interval).
+
 ##	Limits of biologging/ fish tagging
 
 -	Geolocation modelling already leads to impressive results for comparatively well-studied species (e.g. cod (?), sea bass), but still limited in accuracy for not wellknown species
@@ -1795,6 +1916,8 @@ The dataset(s) supporting the conclusions of this article is(are) included withi
 
 # References {-}
 
+# Acknowledgements {-}
+
 # Annex {-}
 
 ***To Do: make annex numbering correct (Annex A, B, etc)***
@@ -1831,7 +1954,33 @@ p_dst_raw_310
 
 
 
-###	FFT plots for all tags
+###	Fast Fourier Transformation {#sec-annexfft}
+
+The resulting periodograms from the Fast Fourier Transform for tags 308 (*f*) and 321 (*m*) are depicted in @fig-fft.
+
+In @fig-fft-1, the highest spectral density is at 24 hours, with smaller peaks at 23, 12 and 6 hours.
+@fig-fft-2 shows spectral density peaks at about 12 hours (highest), 24 hours, and smaller peaks at 23, 26, 6 and 8 hours.
+Tag 321 has the highest spectral density at 24 hours, then 12 hours, and small peaks at 6, 23, 25 and 25 hours, see @fig-fft-3.
+
+
+```{r fft}
+#| include: true
+#| label: fig-fft
+#| out-width: 95%
+#| fig-height: 1.5
+#| layout-ncol: 1
+#| fig-cap: "Periodograms from the full depthlog of recovered data storage tags."
+#| fig-subcap: 
+#| - "Tag 308 (f), 366 days of liberty."
+#| - "Tag 321 (m), 485 days of liberty."
+#| fig-pos: "H"
+
+p_fft_308
+p_fft_321
+```
+
+<!-- ##| - "Tag 295 (m), 31 days of liberty" # p_fft_295 -->
+
 
 ###	Wavelet plots for all (in the k means clustering included) summary statistics
 

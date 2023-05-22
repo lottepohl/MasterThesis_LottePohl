@@ -77,7 +77,7 @@ wt_df_308_mindepth_sgolay <- load_data(filestring = "wt_df_308_mindepth_sgolay",
 wt_df_308_maxdepth_sgolay <- load_data(filestring = "wt_df_308_maxdepth_sgolay", folder = data_path)
 
 # raw wavelet results ####
-# ## tag 321 ####
+## tag 321 ####
 # wt_321_mediandepth_roll3 <- load_data(filestring = "wt_321_mediandepth_roll3", folder = data_path)
 # wt_321_mediandepth <- load_data(filestring = "wt_321_mediandepth", folder = data_path)
 # wt_321_mediandepth_change_roll3 <- load_data(filestring = "wt_321_mediandepth_change_roll3", folder = data_path)
@@ -97,7 +97,7 @@ wt_df_308_maxdepth_sgolay <- load_data(filestring = "wt_df_308_maxdepth_sgolay",
 # wt_321_mindepth <- load_data(filestring = "wt_321_mindepth", folder = data_path)
 # wt_321_meandepth <- load_data(filestring = "wt_321_meandepth", folder = data_path)
 # 
-# ## tag 308 ####
+ ## tag 308 ####
 # wt_308_mediandepth_roll3 <- load_data(filestring = "wt_308_mediandepth_roll3", folder = data_path)
 # wt_308_mediandepth <- load_data(filestring = "wt_308_mediandepth", folder = data_path)
 # wt_308_mediandepth_change_roll3 <- load_data(filestring = "wt_308_mediandepth_change_roll3", folder = data_path)
@@ -117,3 +117,7 @@ wt_df_308_maxdepth_sgolay <- load_data(filestring = "wt_df_308_maxdepth_sgolay",
 # wt_308_mindepth <- load_data(filestring = "wt_308_mindepth", folder = data_path)
 # wt_308_meandepth <- load_data(filestring = "wt_308_meandepth", folder = data_path)
 # 
+
+# hourly wavelet results ####
+wt_df_308_depth_hr <- load_data(filestring = "wt_df_308_depth_hr", folder = data_path)
+wt_df_321_depth_hr <- load_data(filestring = "wt_df_321_depth_hr", folder = data_path)
