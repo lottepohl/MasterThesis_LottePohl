@@ -100,21 +100,23 @@ data_lm_308_day <- long_dst_daynight %>%
                                      dplyr::select(date) %>% pull(),
                                    longitude = 2.45, latitude = 51)$illuminatedFraction)
 
+save_data(data = data_lm_308_day, folder = path_models)
+
 data_lm_308_day_sum <- data_lm_308_day %>% group_by(moonfraq) %>% #make summary per moonfraq
   summarise(depth_min_median = median(depth_min_sgolay),
             depth_min_mean = mean(depth_min_sgolay))
 
-## min depth
-
-lm_308_day_depthmin_moonfraq <- stats::lm(data = data_lm_308_day, formula = depth_min_sgolay ~ moonfraq)
-lm_308_day_depthmin_moonfraq %>% summary()
-
-save_data(data = lm_308_day_depthmin_moonfraq, folder = path_models)
+# ## min depth
+# 
+# lm_308_day_depthmin_moonfraq <- stats::lm(data = data_lm_308_day, formula = depth_min_sgolay ~ moonfraq)
+# lm_308_day_depthmin_moonfraq %>% summary()
+# 
+# save_data(data = lm_308_day_depthmin_moonfraq, folder = path_models)
 
 ## median depth
 
 lm_308_day_depthmedian_moonfraq <- stats::lm(data = data_lm_308_day, formula = depth_median_sgolay ~ moonfraq)
-lm_308_day_depthmedian_moonfraq %>% summary()
+lm_308_day_depthmedian_moonfraq <- lm_308_day_depthmedian_moonfraq %>% summary()
 
 save_data(data = lm_308_day_depthmedian_moonfraq, folder = path_models)
 
@@ -129,22 +131,23 @@ data_lm_308_night <- long_dst_daynight %>%
                                                    date %>% between(start_date, end_date)) %>% 
                                      dplyr::select(date) %>% pull(),
                                    longitude = 2.45, latitude = 51)$illuminatedFraction)
+save_data(data = data_lm_308_night, folder = path_models)
 
 data_lm_308_night_sum <- data_lm_308_night %>% group_by(moonfraq) %>% #make summary per moonfraq
   summarise(depth_min_median = median(depth_min_sgolay),
             depth_min_mean = mean(depth_min_sgolay))
 
-## min depth
-
-lm_308_night_depthmin_moonfraq <- stats::lm(data = data_lm_308_night, formula = depth_min_sgolay ~ moonfraq)
-lm_308_night_depthmin_moonfraq %>% summary()
-
-save_data(data = lm_308_night_depthmin_moonfraq, folder = path_models)
+# ## min depth
+# 
+# lm_308_night_depthmin_moonfraq <- stats::lm(data = data_lm_308_night, formula = depth_min_sgolay ~ moonfraq)
+# lm_308_night_depthmin_moonfraq <- lm_308_night_depthmin_moonfraq %>% summary()
+# 
+# save_data(data = lm_308_night_depthmin_moonfraq, folder = path_models)
 
 ## median depth
 
 lm_308_night_depthmedian_moonfraq <- stats::lm(data = data_lm_308_night, formula = depth_median_sgolay ~ moonfraq)
-lm_308_night_depthmedian_moonfraq %>% summary()
+lm_308_night_depthmedian_moonfraq <- lm_308_night_depthmedian_moonfraq %>% summary()
 
 save_data(data = lm_308_night_depthmedian_moonfraq, folder = path_models)
 
@@ -201,19 +204,19 @@ data_lm_321_sum <- data_lm_321 %>% group_by(moonfraq) %>% #make summary per moon
   summarise(depth_min_median = median(depth_min_sgolay),
             depth_min_mean = mean(depth_min_sgolay))
 
-## min depth
+# ## min depth
+# 
+# lm_321_depthmin_moonfraq <- stats::lm(data = data_lm_321, formula = depth_min_sgolay ~ moonfraq)
+# lm_321_depthmin_moonfraq %>% summary()
+# 
+# save_data(data = lm_321_depthmin_moonfraq, folder = path_models)
 
-lm_321_depthmin_moonfraq <- stats::lm(data = data_lm_321, formula = depth_min_sgolay ~ moonfraq)
-lm_321_depthmin_moonfraq %>% summary()
-
-save_data(data = lm_321_depthmin_moonfraq, folder = path_models)
-
-## median depth
-
-lm_321_depthmedian_moonfraq <- stats::lm(data = data_lm_321, formula = depth_median_sgolay ~ moonfraq)
-lm_321_depthmedian_moonfraq %>% summary()
-
-save_data(data = lm_321_depthmedian_moonfraq, folder = path_models)
+# ## median depth
+# 
+# lm_321_depthmedian_moonfraq <- stats::lm(data = data_lm_321, formula = depth_median_sgolay ~ moonfraq)
+# lm_321_depthmedian_moonfraq %>% summary()
+# 
+# save_data(data = lm_321_depthmedian_moonfraq, folder = path_models)
 
 ## day vs night ####
 
@@ -229,21 +232,23 @@ data_lm_321_day <- long_dst_daynight %>%
                                      dplyr::select(date) %>% pull(),
                                    longitude = 2.45, latitude = 51)$illuminatedFraction)
 
+save_data(data = data_lm_321_day, folder = path_models)
+
 data_lm_321_day_sum <- data_lm_321_day %>% group_by(moonfraq) %>% #make summary per moonfraq
   summarise(depth_min_median = median(depth_min_sgolay),
             depth_min_mean = mean(depth_min_sgolay))
 
-## min depth
-
-lm_321_day_depthmin_moonfraq <- stats::lm(data = data_lm_321_day, formula = depth_min_sgolay ~ moonfraq)
-lm_321_day_depthmin_moonfraq %>% summary()
-
-save_data(data = lm_321_day_depthmin_moonfraq, folder = path_models)
+# ## min depth
+# 
+# lm_321_day_depthmin_moonfraq <- stats::lm(data = data_lm_321_day, formula = depth_min_sgolay ~ moonfraq)
+# lm_321_day_depthmin_moonfraq <- lm_321_day_depthmin_moonfraq %>% summary()
+# 
+# save_data(data = lm_321_day_depthmin_moonfraq, folder = path_models)
 
 ## median depth
 
 lm_321_day_depthmedian_moonfraq <- stats::lm(data = data_lm_321_day, formula = depth_median_sgolay ~ moonfraq)
-lm_321_day_depthmedian_moonfraq %>% summary()
+lm_321_day_depthmedian_moonfraq <- lm_321_day_depthmedian_moonfraq %>% summary()
 
 save_data(data = lm_321_day_depthmedian_moonfraq, folder = path_models)
 
@@ -259,21 +264,24 @@ data_lm_321_night <- long_dst_daynight %>%
                                      dplyr::select(date) %>% pull(),
                                    longitude = 2.45, latitude = 51)$illuminatedFraction)
 
+save_data(data = data_lm_321_night, folder = path_models)
+
+
 data_lm_321_night_sum <- data_lm_321_night %>% group_by(moonfraq) %>% #make summary per moonfraq
   summarise(depth_min_median = median(depth_min_sgolay),
             depth_min_mean = mean(depth_min_sgolay))
 
-## min depth
-
-lm_321_night_depthmin_moonfraq <- stats::lm(data = data_lm_321_night, formula = depth_min_sgolay ~ moonfraq)
-lm_321_night_depthmin_moonfraq %>% summary()
-
-save_data(data = lm_321_night_depthmin_moonfraq, folder = path_models)
+# ## min depth
+# 
+# lm_321_night_depthmin_moonfraq <- stats::lm(data = data_lm_321_night, formula = depth_min_sgolay ~ moonfraq)
+# lm_321_night_depthmin_moonfraq %>% summary()
+# 
+# save_data(data = lm_321_night_depthmin_moonfraq, folder = path_models)
 
 ## median depth
 
 lm_321_night_depthmedian_moonfraq <- stats::lm(data = data_lm_321_night, formula = depth_median_sgolay ~ moonfraq)
-lm_321_night_depthmedian_moonfraq %>% summary()
+lm_321_night_depthmedian_moonfraq <- lm_321_night_depthmedian_moonfraq %>% summary()
 
 save_data(data = lm_321_night_depthmedian_moonfraq, folder = path_models)
 

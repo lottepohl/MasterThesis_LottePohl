@@ -1,0 +1,549 @@
+# intro CPD
+
+
+<!-- For marine animals equipped with data storage tags, several methods to identify behavioural states have been proposed. These inferred states can be used as additional input for the geolocation model. @pedersen_2008 used tidal patterns to identify resting periods in Atlantic cod *Gadus morhua*, and @heerah_2017 used a combination of spectral analysis (Short Term Fourier Transform STFT) and Hidden Markov Models (HMM) to identify behavioural switches in European seabass *Dicentrarchus labrax*.  -->
+
+<!-- <!-- ***reasons why I didn't use their methods*** -->
+
+<!-- The method by @pedersen_2008 requires the animal to rest on the seafloor for a certain time period such that a tidal signal is detectable in the depth-time series. @heerah_2017 used STFT which differs from regular Fourier Transformation (FT) by the use of a rolling window, within which the FT is computed.  -->
+
+<!-- The STFT result is then used as input for a HMM framework, which can detect underlying unknown (or *hidden*) behavioural states [@schliehediecks_2012].  -->
+
+<!-- *The choice of window size determines the scale of detected cyclical patterns by the FT, and as such also influence the nature and number of  hidden states detected by the HMM. HMM tend to overestimate the number of hidden states, making it challenging to interpret the detected states from an ecological standpoint. This is especially difficult when information on the behaviour of a species is lacking, or if the species has a large horizontal range of movement.* (***Either put in discussion or leave out, goes too much into detail***) -->
+
+<!-- Furthermore, the development of a robust HMM framework requires time and experience, and was beyond the scope of this study.  -->
+
+<!-- <!-- comparison between marine and terrestrial methods to infer behaviour -->
+
+<!-- The analysis and segmentation of behavioural states is much more explored for data in the horizontal dimension than in the vertical dimension (*ref*). -->
+
+<!-- Satellite-recorded movement of marine animals can be analysed with a hierarchical Switching State Space Model [SSSM, @francis_2019]. -->
+
+<!-- <!-- For terrestrial animals, the analysis and segmentation of behaviours is much more explored (**ref**).  -->
+
+<!-- Other commonly emplyed methods include Behaviural Change Point Analysis [BCPA, @gurarie_2009] or wavelet decomposition [@soleymani_2017]. Terrestrial animal movement data naturally come in a horizontal domain (i.e., with latitude and longitude) through the ability to use the satellite-based Global Positioning System (GPS). Data storage tags record water pressure (and other variables), and thus the data structure is vertical. The challenge for data storage tags is to infer the horizontal domain (the latitude and longitude over time) from the vertical data (the water pressure over time) as accurately as possible. Since terrestrial animal movement data lack this step, behavioural segmentation methods developed for terrestrial animals cannot directly be applied to marine animal movement data. -->
+
+<!-- ### Change Point Detection -->
+
+<!-- <!-- why I did CPD -->
+
+<!-- It can be insightful, however, to gather inspiration from terrestrial behaviour segmentation methods. A simpler version of BCPA, for instance, is Change Point Detection (CPD). -->
+
+<!-- <!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
+
+--\>
+<!-- CPD algorithms are designed to detect abrupt changes in signals. An abrupt change occurs very fast compared to the data sampling period, with somewhat constant properties before and after the change [@basseville_1993, pp.1-2]. CPD is a well-explored method in statistics which can also be employed on time series signals [@liu_2013]. -->
+<!-- Retrospective (i.e., not real-time) CPD algorithms compare the probability distributions of subsequent samples and a change point occurs when the probability distributions significantly differ.  -->
+<!-- CPD detection is an unsupervised machine learning technique that, in contrast to unsupervised clustering algorithms like k-means, compares subsequent samples, thus implementing the time aspect in the learning process. -->
+<!-- Details about the CPD algorithm chosen for the present study are explained in @sec-mm_migration. -->
+
+
+# Discussion
+
+<!-- figure 11 (fft 295): -->
+  
+  <!-- highest spectral density at 2h, peak at 12 and small peak at 6h.  -->
+  
+  <!-- Same spectral density peak at 23h as at 12h. Why?? -->
+  
+  <!-- figure 12: -->
+  
+  <!-- highest peak at 12h, then24h but about same sized peaks at 6,8, 23 and 26h. -->
+  
+  <!-- the tidal related peaks (6, 12, 24h) could lead to selective tidal stream transport. -->
+  
+  <!-- the other peaks? No idea what they could mean. -->
+  
+  <!-- fig 13: -->
+  
+  <!-- peaks at 6, 12 and 24h. and small peak at 35h -->
+  
+  <!-- Discussion:  -->
+  
+  <!-- - female 308 has more different spectral content than male. male: selective tidal  -->
+  
+  <!-- stream transport than male. -->
+  
+  <!-- - could mean that female shows different behaviour?? -->
+  
+  <!-- - CWT can show more which frequencies occur at what time -->
+  
+  <!-- figure 14: -->
+  
+  <!-- - until end september: daily max 20m, then, until beginning of october the daily -->
+  
+  <!-- median decreases and reaches 68m, the maximum of the tag sensor range. -->
+  
+  <!-- - until beginning of dec: deep depth, and minimum depth not shallower than 50m,  -->
+  
+  <!-- after that until mid march: daily depth between 40 and 68m and daily min between -->
+  
+  <!-- 5 and 50m. -->
+  
+  <!-- - after march 8 (?) the daily median is always less than 60m. then same median -->
+  
+  <!-- of 35m for about 10 days (depth range between 2m and 60m),  -->
+  
+  <!-- end april 15m depth with low depth range (5m and 20m),  -->
+  
+  <!-- then around 10m with depth ragnge bwtween 3m and 10m, -->
+  
+  <!-- after jul 10 median 15m again with range etween 0 and 20m. -->
+  
+  <!-- Discussion:  -->
+  
+  <!-- - there are some patterns in the diel vertical behaviour between end mai and -->
+  
+  <!-- mid june. Only a few days of nDVM but first 7(?) days with rDVM, then 3 days -->
+  
+  <!-- of DVM, then 5  days of rDVM and then 5 days of DVM. seems to switch every few days -->
+  
+  <!-- TODO: maybe look into model of shark and if days at borssele e.g. overlap with a -->
+  
+  <!-- certain behaviour. -->
+  
+  <!-- But together with the depths used around WS2 receivers (mainly water column) -->
+  
+  <!-- it might point to some behaviour that is different from behaviour normally known -->
+  
+  <!-- of. -->
+  
+  <!-- TODO: Check Diel patterns of detections in WS2 array. deeper at day than at night? -->
+  
+  <!-- maybe calc DVM. -->
+  
+  <!-- fig 15: -->
+  
+  <!-- depth between 0 and 20m until end september, then consistent drop to 45m within a week -->
+  
+  <!-- then about 3 weeks of median around 50m with depth range between 25 and 50m, -->
+  
+  <!-- then depth decrease to around 35-40m median, with range between 15 and 50m until -->
+  
+  <!-- may. Then depth drop but fast after also depth increase.  -->
+  
+  <!-- from end may until end september: median depth around 10-15m and range between 2m  -->
+  
+  <!-- and 25m. Then depth increase from median depth of 20 to 50m within a week. -->
+  
+  <!-- DVM: mostly DVM when lookin at graph, only rarely nVM. at End october in  -->
+  
+  <!-- both years, when depth increases fast: rDVM -->
+  
+  <!-- Discussion: rDVM (= shallower depth at day than at night) interesting, bc it  -->
+  
+  <!-- differs from commonly known behavioural patterns from M. asterias. Could indic -->
+  
+  <!-- ate different behavioural state such as migration. -->
+  
+  <!-- Between end may and end June rDVM dominant as well, but this cannot be linked -->
+  
+  <!-- to special depth patterns ocurring. Could still indicate the period that  -->
+  
+  <!-- the shark is migrating from winter to summer grounds. -->
+  
+  <!-- fig 16:  -->
+  
+  <!-- median: no period of 12 or 24h between end may and july (dis: could mean  -->
+                                                                  
+                                                                  <!-- different behavioural state, eg pupping or at least not feeding or travelling) -->
+  
+  <!-- Discussion: female putatively stops feeding as soon as the starts migrating to  -->
+  
+  <!-- her parturition grounds -->
+  
+  <!-- Put in where fitting!! -->
+  
+  <!-- - relate the DVM to change periods: can patterns be observed? -->
+  
+  <!-- Discuss working hypotheses, critical analysis of the interpretation of the data, compared to the available literature -->
+  
+  
+  
+  
+<!-- It was therefore unexpected to have only 38 acoustic detections in the WS2 array which can be considered more sheltered than the WS1 array, and no detection in the WS3 array. This, together with the high numbers of detections in the WS1 array indicates that the waters around the WS1 array are more utilized and thus more relevant for the species as compared to the Western Scheldt estuary upstream past Vlissingen. Possible reasons for the low presence of *M. asterias* can be salinity (the salinity tolerance of the species), limited availability of prey, or water quality. -->
+
+<!-- - If the reason for not being detected is because of tagging mortality or because the individuals left the study area rapidly cannot be inferred at this point. -->
+
+<!-- - in/around Western Scheldt, according to ac. detections -->
+
+<!-- -  Highly seasonal (only in summer) -->
+
+
+<!-- Explanation: Abiotic water conditions (salinity and temperature) are often evoked as controls for seasonal patterns of species occurrence ( Thiel et al ., 1995 ), from @maes_1998 -->
+
+
+<!-- -  Sex-biased (mostly females) -->
+
+<!-- -  Possible pupping area, but this dataset not sufficient to confirm -->
+
+<!-- - interesting to note that temperatures experienced by M. asterias were ~5 degrees at minimum. Interestnig bc Breve 2016 suggested that 13 degree is a threshold for M. asterias presence in dutch coastal waters. -->
+
+<!-- ### Vertical space use analysis {#sec-discvertical} -->
+
+<!-- The results show that for 10 out of 16 stations, deeper waters were utilised by *M. asterias* around a receiver than contained in the bathymetry grid used. This can have several reasons: -->
+
+<!-- 1. The depth per grid cell is the mean depth in that cell, thus deeper depths are present most likely. -->
+
+<!-- 2. The shark was detected within a radius more than 200m away from the receiver, where the water is deeper. -->
+
+<!-- 3. The bathymetry grid does not match the actual conditions in the water at the time of detection, both due to the resolution of the grid and the highly dynamic, sandy environment with high possibility of changing depths. -->
+
+<!-- The 3 stations with deeper maximum bathymetry values than maximum detection depth (4, 11, 13) all are located in the WS2 array, in a trough. It indicates that in this area the sharks don't use the seafloor around the receiver (which is at depths between 15 and 30 m, roughly) but instead are detected in depths between 2 and 7 m.  -->
+
+<!-- Of the 10 stations that showed deeper detection depth than bathymetry, 8 are in the WS1 array. -->
+
+<!-- The 3 stations (PVTSS, GVWSP, W6) where deepest detection depth and deepest bathymetry value overlap all are kind of inside of the channel, not directly at the shoreline. This could mean that ships pass those points frequently.  -->
+
+<!-- For the receiver stations close to the shoreline (DL7, DL9, DL12, borssele, OG10, OGDL) the acoustic detection depth is much deeper than the depth in the bathymetry dataset. This could be because at the shoreline, the bathymetry dataset is less accurate. -->
+
+<!-- ### The Western Scheldt as a pupping ground for *M. asterias* -->
+
+<!-- It is surprising that only very few of the acoustic detections occurred in the WS2 array (`r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS2") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` %, or `r detections_tempdepth_daynight %>% filter(area == "WS2") %>% nrow()` detections in total), since literature suggests that sharks utilise sheltered estuarine habitats for pupping (*references*). -->
+
+<!-- Instead, `r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` % of detections were at station *ws-OG10*, which is located at the coast of Dishoek [NL, see @fig-mapdetail]. -->
+
+<!-- Judging from the differences in detections inside and outside the Western Scheldt the question arises if really the Western Scheldt is a pupping ground, or if the pupping ground might instead be located outside of the estuary. -->
+
+<!-- In recent years, fishermen targeting *M. asterias* have focused their fishing activity off the coast of Zoetelande (NL), because catch rates apparently are very high (*ref to per. comm. with Pieterjan and Nico*). Furthermore, during the tagging of the 9 individuals just outside of the Western Scheldt (off the coast of Cadzand, NL), two neonates were caught [around 30 cm TL, @farrell_2010]. -->
+
+<!-- Potential explanations could be that either sharks do not pup in the estuary (anymore), due to increased pollution or less food resources, for example. Or that they stay outside of the estuary and then only go inside the estuary to give birth.  -->
+
+<!-- It would be interesting to investigate the horizontal distribution of female *M. asterias* in summer by placing additional receivers along the coastline of Dishoek and Zoetelande. Currently, the receiver placement of the WS1 and WS2 array (which is in a gate-like manner from north to south) does not allow for detailed insights in the spatial distribution. A grid-like receiver array could improve that (see also @sec-disclimitsacoustic). -->
+
+<!-- Looking at the vertical space use of *M. asterias* females in the WS2 array in 2019, at station 4, 11 and 13, the sharks appear to use the water column instead of the seafloor (as discussed in @sec-discvertical). If this behaviour is related to parturition is not clear, since there is no knowledge about the vertical behaviour of an aplacentally viviparous shark during parturition. This could be a point of further investigation in future studies. -->
+
+
+
+<!-- # Discussion old -->
+
+<!-- ## Seasonality of starry smooth-hound presence in the Western Scheldt {#sec-disc-acousticdetections} -->
+
+<!-- There are no acoustic detections at all (cf. @fig-abacus) between -->
+<!-- November and April in all years with acoustic detections (2018-2020). -->
+<!-- This indicates a seasonal presence of *M. asterias* in the Western -->
+<!-- Scheldt between April and November. The months of May and October had -->
+<!-- the most acoustic detections while most individuals were detected in -->
+<!-- August. Therefore, it is difficult at this point to narrow down the time -->
+<!-- window of April until November and it is recommended to study the -->
+<!-- seasonal presence of *M. asterias* in the Western Scheldt with greater -->
+<!-- detail in the future. -->
+
+<!-- A hotspot of seasonal presence of mature *M. asterias* females seems to -->
+<!-- be the receiver OG10 -->
+<!-- (`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` -->
+<!-- % of detections, and 10 out of 14 detected females). According to -->
+<!-- fishermen, the area offshore from Zoetelande (north of Dishoek) is a *M. -->
+<!-- asterias* fishing hotspot, so the coastal waters between Diskoek and -->
+<!-- Zoetelande are suggested to be important for the species. Whether or not -->
+<!-- the potential aggregations of mature females is related to parturition -->
+<!-- cannot be said at this point. There are several indications, however, -->
+<!-- that point towards the Westerschelde and/or its surrounding waters to be -->
+<!-- a pupping area for *M. asterias*. The Eastern Scheldt is a confirmed -->
+<!-- pupping ground [@breve_2016], and during the tagging for this study in -->
+<!-- August, 2018, two neonates [around 30 cm TL, @farrell_2010] were caught[^2]. -->
+
+<!-- [^2]: Verhelst, Pieterjan (*personal communication*), April 25, 2023. -->
+
+<!-- Future studies could address the horizontal distribution of female *M. -->
+<!-- asterias* in summer by placing additional receivers along the coastline -->
+<!-- between Dishoek and Zoetelande. Currently, the receiver placement of the -->
+<!-- WS1 and WS2 array (which is in a gate-like manner from north to south) -->
+<!-- does not allow for detailed insights in the horizontal distribution. A -->
+<!-- grid-like receiver array could improve that. -->
+<!-- <!-- (see also Section 5.7). --> -->
+
+<!-- Another important fact to consider is the biannual reproductive cycle of -->
+<!-- *M. asterias* and whether that implies differing habitat use between -->
+<!-- years of pregnancy and years without a pregnancy. In the future, it -->
+<!-- could be helpful to assess if adult females are pregnant at the time of -->
+<!-- release, through ultrasonography or the use of sex steroid hormones, -->
+<!-- both of which have already been employed to determine pregnancy in -->
+<!-- sharks [@awruch_2014; @anderson_2018; @fujinami_2020; @fujinami_2021]. -->
+<!-- This would allow for further clarification if the Western Scheldt is -->
+<!-- used as a pupping ground, and if it might be a relevant area for -->
+<!-- non-pregnant females, too. -->
+
+<!-- An area with little presence of the tagged *M. asterias* individuals is -->
+<!-- the Western Scheldt upstream past Vlissingen. Shallow and sheltered -->
+<!-- coastal habitats are thought to be suitable pupping grounds for sharks -->
+<!-- in general [@speed_2010] and for *M. asterias* in particular -->
+<!-- [@ellis_2004; @ellis_2005]. The low number of acoustically detected -->
+<!-- sharks (38 detections across the whole study period) indicates that the -->
+<!-- waters past Vlissingen are not as frequently used as the waters around -->
+<!-- Dishoek. The Scheldt Estuary is influenced by two water bodies from the -->
+<!-- North Sea, the Channel water and the Continental coastal water -->
+<!-- [@wolff_1973, see @sec-mmscheldtBPNS]. The boundary between those -->
+<!-- bodies is approximately 30 km offshore from the Estuary, and in the -->
+<!-- Continental coastal waters nutrients are abundant (unlike in the Channel -->
+<!-- water). This, together with monthly water temperatures above 15 °C -->
+<!-- between June and September make the (Western) Scheldt Estuary a -->
+<!-- potentially suitable pupping habitat. The fact that few sharks were -->
+<!-- detected upstream past Vlissingen could be due to low salinities, or to -->
+<!-- anthropogenic influences like dredging. This, however, should be further -->
+<!-- investigated in follow-up studies. *M. asterias* might leave the area of -->
+<!-- the Western Scheldt during winter because of decreasing water -->
+<!-- temperature. Since water temperatures are a main predictor of both -->
+<!-- teleost and elasmobranch occurrence [@thiel_1995; @martin_2010]. The -->
+<!-- warmer waters in the Channel area might be favourable especially for -->
+<!-- gestating females since higher water temperatures increase metabolic -->
+<!-- rate and thereby improve embryo development [@hurst_1999]. -->
+
+<!-- ## Tag recoveries -->
+
+<!-- ### Tag sensitivity -->
+
+<!-- 2% - 5% tag to body weight ratio. study by brown and japsen (or sth), -->
+<!-- eels and cyprinid are more robust pieterjan, here ratio max 1.4% so -->
+<!-- from the study's point of view, the sharks should it have taken alright -->
+
+<!-- effect: as soon as you do any observation on animals, you interfere -->
+<!-- with the system that means: all tagging has an effect: discuss -->
+
+<!-- ### Possible death reasons of short term dst's -->
+
+<!-- -   Tagging consequences -->
+<!-- -   High sensitivity (verhelst, pers. Comm.) -->
+<!-- -   Not likely: death bc of seals (no temp increase) -->
+<!-- -   Laying dead on seafloor (tidal signal) -->
+
+<!-- ## Ecological inferences from migration dataset analysis -->
+
+<!-- <!-- -   it is tricky to determine what you look for when you don't know that --> -->
+<!-- <!--     much about the behaviour of the species, e.g. what we woul call --> -->
+<!-- <!--     migration behaviour is the absence of resting behaviour (which is --> -->
+<!-- <!--     characterised by resting periods detected as tidal signal in the raw --> -->
+<!-- <!--     depthlog). --> -->
+
+<!-- -   intensity of dial patterns in different periods for tag 308 and 321 -->
+
+<!-- -   e.g. periods of 6 and 12 h stronger present in 308 than 321: -->
+<!--         what could that mean? different foraging strategy or diet? -->
+<!--         Literature on sex-specific diet? -->
+<!-- -   read about Selective tidal stream transport benthic fish species -->
+<!--         (Pieterjan): explanation for tidal patterns in periodograms? -->
+
+<!-- ### Vertical patterns during migration -->
+
+<!-- -   Yes, but eventually swimming inshore -->
+<!-- -   How strong are diel patterns in putative migration weeks? Check -->
+<!--     wavelet median depth -->
+
+<!-- #### lunar influences on winter residency behaviour of tag 308 -->
+
+<!-- -   english channel: among the strongest tidal currents in the world -->
+<!-- -   less activity during full and new moon: neap currents, ie. weaker -->
+<!--     tidal currents -->
+
+<!-- from chatCPT, umschreiben: -->
+
+<!-- The English Channel, including the waters around the Channel Islands, experiences some of the strongest tidal currents in the world due to its funnel-like shape and shallow depths. The tidal currents are primarily driven by the gravitational pull of the moon and to a lesser extent, the sun. -->
+
+<!-- Tidal currents in the English Channel and around the Channel Islands can reach speeds of up to 4-5 knots (2-2.5 m/s) during spring tides, when the gravitational pull of the moon and sun are aligned. During neap tides, when the gravitational pull of the moon and sun are perpendicular, the tidal currents are weaker and can reach speeds of around 1-2 knots (0.5-1 m/s). The difference in tidal current speeds between spring and neap tides is particularly pronounced in narrow channels and around islands, where the flow is constricted. -->
+
+<!-- The timing of high and low tides also varies with the lunar cycle, with high tides occurring during the new moon and full moon phases and low tides during the first and third quarter phases. This is because during the new and full moon phases, the gravitational pull of the moon and sun are aligned and reinforce each other, resulting in higher high tides and lower low tides. -->
+
+<!-- The English Channel and the waters around the Channel Islands are also influenced by other factors, such as wind and water temperature, which can affect the strength and direction of the tidal currents. However, the lunar cycle remains the primary driver of tidal currents in the region. -->
+
+<!-- ## Reflection on the analysis methods used -->
+
+<!-- ### Autocorrelation -->
+
+<!-- ***ueberarbeiten*** -->
+
+<!-- Test ref of code listing (@lst-customers). -->
+
+<!-- Autocorrelation analysis allows for a simplistic description of scales -->
+<!-- of patterns found in time series. It is a helpful tool to get an -->
+<!-- overview over the dataset. It does not allow for an in-depth -->
+<!-- investigation of behavioural switches and is generally regarded as a -->
+<!-- first-hand exploratory analysis. -->
+
+<!-- Autocorrelation is a very basic exploratory analysis method used, -->
+<!-- amongst others, to determine the scale of patterns in time series data. -->
+<!-- In the present study an annual pattern could be seen, as both for tag -->
+<!-- 308 and 321 the autocorrelation reached a local maximum at a lag of -->
+<!-- around 350 days. (*get exact lag and reference figures*) Going further, -->
+<!-- the minimum of the autocorrelation occurs in winter. Thus, -->
+<!-- autocorrelation is a useful method to check if the assumptions about -->
+<!-- general vertical patterns (in the present case, the same vertical -->
+<!-- behaviour (resulting in a local autocorrelation maximum) every summer -->
+<!-- and a different behaviour (resulting in a local minimum) in winter). -->
+<!-- Potentially interesting are the points at which the autocorrelation is -->
+<!-- 0. This is the case at a lag (*insert exact lags and dates here*). It -->
+<!-- might be indicative of a behavioural switch. But this would only hold -->
+<!-- true in the case of behaviours that can be distinguishable from the -->
+<!-- depthlog. While it might not be the most resultful exploratory analysis -->
+<!-- it can be a helpful auxiliary tool to 1) explore the depth time series -->
+<!-- data and 2) potentially confirm identified periods with occurring -->
+<!-- behavioural switches. -->
+
+<!-- Interpretation: The characteristics of the autocorrelations of the two -->
+<!-- depthlogs show similar patterns in time series between the female shark -->
+<!-- (tag 308) and the male shark (tag 321), indicating that their daily -->
+<!-- median depth is very similar in time periods of 3 - 5 weeks (that is, -->
+<!-- with lags below 24 to 35 days). Interestingly, both individuals show -->
+<!-- turning points in their autocorrelation (i.e., the autocorrelation goes -->
+<!-- from positive to negative values) at similar lag values, suggesting -->
+<!-- similar seasonal depth patterns. Furthermore, the local autocorrelation -->
+<!-- maximum is at similar lag days of about a year for both individuals, -->
+<!-- indicating an annual pattern in vertical behaviour. -->
+
+<!-- overlay identified change periods with diff. step percentages and do `rgrid.arrange(p_acf_308, p_308_ribbon_rulsif_allpercent, ncol = 1)` and see where autocorrelation = 0 and the identified change periods match. -->
+
+<!-- argue that the autocorrelation might even help deciding which step% should be right? -->
+
+```{r rulsifacf}
+#| include: false
+#| label: fig-rulsifacf
+#| layout-ncol: 1
+#| out-width: 95%
+#| fig-height: 3
+#| fig-cap: "Rulsif results and autocorrelograms"
+#| fig-subcap: 
+#| - "tag 308."
+#| - "tag 321."
+#| fig-pos: "H"
+
+gridExtra::grid.arrange(p_acf_308, p_308_rulsif_all, ncol = 1)
+
+gridExtra::grid.arrange(p_acf_321, p_321_rulsif_all, ncol = 1)
+
+```
+
+<!-- In the time periods where the autocorrelation equals 0 -->
+<!-- match the migration periods very well. This is less the case for -->
+<!-- @fig-rulsifacf-1, but still there is some overlap between putative -->
+<!-- migration periods and the autocorrelation equaling 0. An advantage of -->
+<!-- autocorrelation over machine learning algorithms is its simplicity. -->
+<!-- There are no model parameters to optimise, and the result is clear and -->
+<!-- unambiguous. It would be of interest to plot the autocorrelation of more -->
+<!-- depthlogs in the future and assess the overlap with potential migration -->
+<!-- periods. -->
+
+<!-- ### FFT -->
+
+<!-- The periodogram of tag 308 (female, see @fig-fft-) has more peaks than -->
+<!-- that of tag 321 (male, see @fig-fft-2). The male mostly shows tidal -->
+<!-- periods (6, 12 and 24 hours), suggesting selective tidal stream -->
+<!-- transport as a driver for movement (*ref*). The use of tidal currents is -->
+<!-- well-known in benthic species, especially flatfish, but might also occur -->
+<!-- in demersal species like *M. asterias* (*ref*). Tag 308 (f) shows more -->
+<!-- peaks outside of potentially tide-related vertical movement behaviour, -->
+<!-- i.e., also peaks at 8, 23 and 25 hours. Since all of those periods are -->
+<!-- very close to tidal periods and their spectral density not very high it -->
+<!-- is unclear at this point if these peaks are because of artefacts during -->
+<!-- implementation of the fft-algorithm, or because the female showed -->
+<!-- different vertical behaviour than the male. Another possible reason -->
+<!-- could be the depth use of the female beyond the sensor range, i.e., in -->
+<!-- waters deeper than 68 m and the resulting measurement errors in the -->
+<!-- signal of continuous periods of 68 m depth. -->
+
+<!-- ### Continuous Wavelet Transform -->
+
+<!-- it is surprising that no significant tidal periodicities of 6, 12 or 24h -->
+<!-- were detected in the wavelet scalograms of the raw depthlog. This could -->
+<!-- be due to resolution limits in the time domain, or due to the -->
+<!-- downsampling of measurements (from a 2 minute time interval to a 30 -->
+<!-- minute time interval). -->
+
+<!-- ## Limits of biologging/ fish tagging -->
+
+<!-- -   Geolocation modelling already leads to impressive results for -->
+<!--     comparatively well-studied species (e.g. cod (?), sea bass), but -->
+<!--     still limited in accuracy for not wellknown species -->
+
+<!-- ### Limits of geolocation modelling -->
+
+<!-- -   Boundary condition: max depth of fish per day == max depth of bathy -->
+<!--     for that day -->
+
+<!-- -   Behavioural switch: migration/non-migration or migration/winter -->
+<!--     resident/summer resident -->
+
+<!-- -   Resolution of bathymetry dataset -->
+
+<!-- -   Possible that shark was in certain area but bc bathymetry grid = -->
+<!--     summary (e.g. mean), geolocation model rules this location out (cf -->
+<!--     Woillez 2016) -->
+
+<!-- -   Behaviour incorrectly/not inferred -->
+
+<!-- -   E.g. active vs inactive behaviour: -->
+
+<!-- -   talk about the geolocation model of @goossens_2023 and its limits? -->
+
+<!--     -   there is one datapoint per day, masking daily location changes. -->
+<!--     -   knowing that M. asterias spends all its life on the seafloor, -->
+<!--         the maximum depth in the depthlog should not be shallower than -->
+<!--         the depth of the location for this day, since the opposite would -->
+<!--         imply that the animal swam in the water column -->
+<!--     -   it most likely exhibits a somewhat residential behaviour with -->
+<!--         small horizontal movement during both summer and winter, and -->
+<!--         migratory behaviour for a short period -->
+
+<!-- -   argue how the geolocation model could overall be improved -->
+
+<!-- ### current state of fish tagging -->
+
+<!-- -   It's kind of the best we can do today, but non-satellite tagging -->
+<!--     methodologies have huge drawbacks still -->
+<!-- -   Acoustic telemetry: high resolution on regional scale (i.e. where -->
+<!--     the receivers are placed) but outside of receiver networks: no -->
+<!--     knowledge at all -->
+
+<!-- ## Limits of the chosen analysis methods -->
+
+<!-- -   Wavelet analysis: no super fine scale analysis possible bc of -->
+<!--     limited res in both time and freq domain -->
+
+<!-- ## Limits of the acoustic detection dataset {#sec-disclimitsacoustic} -->
+
+<!-- -   There are \~10 000 detections within \~2 yrs but compared to other -->
+<!--     studies (ref to other studies!) this is not that much. -->
+<!-- -   the horiz resolution of receivers, esp in/around the WS is not good -->
+<!--     bc rather receiver gate than array to monitor species swimming -->
+<!--     into/out of the Scheldt river (= different use case scenario: -->
+<!--     receiver array needed to resolve locations of sharks better, and to -->
+<!--     e.g. enable triangulation) -->
+
+<!-- ## Limits of the data storage tag dataset -->
+
+<!-- -   Female shark: deeper than tag depth limit (68m): geolocation model -->
+<!--     inaccurate, shark putatively went into the Hurd deep (MRGID: 3321) -->
+<!--     in English channel -->
+<!-- -   Only one individual per sex: not reliable, no statistics possible -->
+
+<!-- # Conclusion -->
+
+<!-- *brief summary of the main findings (original data, lesson learned,...)* -->
+
+<!-- # Outlook -->
+
+<!-- <!-- *Alle kapitel aus der Einleitung wieder aufnehmen* --> -->
+
+<!-- -   maybe take hormone samples to infer if females pregnant or not -->
+<!--     during tagging? -->
+<!-- -   place acoustic receiver at red buouy at Zoetelande to assess shark -->
+<!--     "aggregation" in summer -->
+
+<!-- ## Acoustic detections additional analyses -->
+
+<!-- -   Vertical space use: resolve individuals to see if there are -->
+<!--     differences between ind. Sharks -->
+
+<!-- ## Improvements of geolocation model for M. asterias -->
+
+<!-- -   redo geolocation model with suggested changes and behavioural states -->
+
+<!-- -   compare and execute different analyses to infer behavioural states: -->
+<!--     retry STFT+HMM method by @heerah_2017, using the CWT outputs to -->
+<!--     segment the time series into different behaviours, like -->
+<!--     @soleymani_2017 -->
+
+<!-- ## Information tool -->
+
+<!-- - make into interactive application (RShiny) and do tests with some of the target groups to understand how well the information is taken in -->
+
+
+  

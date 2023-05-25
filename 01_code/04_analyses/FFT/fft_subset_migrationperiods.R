@@ -86,11 +86,11 @@ fft_calc_plot <- function(depth_log, tag_serial_num_short, start_date, end_date,
 ### potential winter mig ####
 
 p_308_wintermig <- ggplot(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
-                                                                 # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-20"), as.POSIXct("2018-10-15")),
+                                                                 lubridate::date(date_time) %>% between(as.POSIXct("2018-08-03"), as.POSIXct("2018-09-25")),
                                                                  # lubridate::date(date_time) %>% between(as.POSIXct("2018-09-21"), as.POSIXct("2018-09-25")),
                                                                  row_number() %% 1 == 0), aes(x = date_time, y = -depth_m)) +
-  # geom_point(colour = lubridate::hour(date_time)) +
-  geom_line() +
+  geom_point(aes(colour = lubridate::hour(date_time))) +
+  # geom_line() +
   labs(y = "depth in m", x = "date", colour = "hour of the day", title = "female (tag 308), potential winter migration")
 
 p_308_wintermig %>% ggplotly()

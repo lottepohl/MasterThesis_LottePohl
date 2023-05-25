@@ -61,21 +61,44 @@ ggplot2::theme_set(thesis_theme)
 
 ## 1. plot raw depthlogs ####
 plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
-  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num, 
+    row_number() %% 15 == 0)
   # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
   
   max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(10)) %>% as.POSIXct()
   min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
   
   plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
-    geom_line() +
+    geom_line(linewidth = 0.15) +
     scale_x_datetime(date_breaks = "1 month",
                      date_labels = "%b '%y",
                      expand = c(0,0),
                      limits = c(min_date, max_date)) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
-    scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "Depth in m") 
+    scale_y_continuous(expand = c(0,0), limits = c(-max(data$depth_m),0)) +
+    labs(x = "", y = "Depth in m") +
+    theme(legend.position = "none",
+          legend.box = "horizontal", legend.margin = margin(t = -15))
+}
+
+plot_raw_depth_short <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
+  # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
+  
+  max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(1)) %>% as.POSIXct()
+  min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(1)) %>% as.POSIXct()
+  
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+    geom_line(linewidth = 0.25) +
+    scale_x_datetime(date_breaks = "4 days",
+                     date_labels = "%d.%m.%y",
+                     expand = c(0,0),
+                     limits = c(min_date, max_date)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0,0), limits = c(-max(data$depth_m),0)) +
+    labs(x = "", y = "Depth in m") +
+    theme(legend.position = "none",
+          legend.box = "horizontal", legend.margin = margin(t = -15))
 }
 # p_test <- plot_raw_temp()
 
@@ -87,16 +110,37 @@ plot_raw_temp <- function(depthlog = masterias_depth_temp, tag_serial_num = "129
   min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
   
   plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = temp_c)) + 
-    geom_line() +
+    geom_line(linewidth = 0.15) +
     scale_x_datetime(date_breaks = "1 month",
                      date_labels = "%b '%y",
                      expand = c(0,0),
                      limits = c(min_date, max_date)) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
     scale_y_continuous(expand = c(0,0)) +
-    labs(x = "", y = "Temperature in °C") 
+    labs(x = "", y = "Temperature in °C") +
+    theme(legend.position = "none",
+          legend.box = "horizontal", legend.margin = margin(t = -15))
 }
 
+plot_raw_temp_short <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num)
+  # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
+  
+  max_date <- (max(data$date_time %>% lubridate::date()) + lubridate::days(1)) %>% as.POSIXct()
+  min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(1)) %>% as.POSIXct()
+  
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = temp_c)) + 
+    geom_line(linewidth = 0.25) +
+    scale_x_datetime(date_breaks = "4 days",
+                     date_labels = "%d.%m.%y",
+                     expand = c(0,0),
+                     limits = c(min_date, max_date)) +
+    theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
+    scale_y_continuous(expand = c(0,0)) +
+    labs(x = "", y = "Temperature in °C") +
+    theme(legend.position = "none",
+          legend.box = "horizontal", legend.margin = margin(t = -15))
+}
 
 plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
   if((data$date_time %>% lubridate::date() %>% unique() %>% length()) > 300){ # make different choices for longterm and short term dsts
@@ -129,9 +173,52 @@ plot_dst_raw_depthlog <- function(data, time_vector, tag_serial_number_short){
     scale_color_gradientn(colors = c("#003399", "#b30000", "#ff8c1a")) +
     labs(x = "Date", y = "Depth in m", color = "Temperature in °C") #+ #title = paste0("tag ", tag_serial_number_short), 
     # theme(legend.position = "bottom",
-    #       legend.box = "horizontal")
+    #       legend.box = "horizontal", legend.margin = margin(t = -15))
   return(dst_plot)
 }
+
+plot_depth_subset_summer <- function(depthlog = masterias_depth_temp, tag_serial_num, start_date_chr, end_date_chr){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num,
+                                     # lubridate::date(date_time) %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
+                                     date_time %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
+                                     row_number() %% 1 == 0)
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+    # geom_point(size = 1.5) + # aes(colour = lubridate::hour(date_time)),%>% as.factor()
+    geom_line(linewidth = 0.25) +
+    scale_x_datetime(date_breaks = "1 day",
+                     date_minor_breaks = "12 hours",
+                     date_labels = "%d.%m.%y", #'%y
+                     expand = c(0,0)
+                     # ,limits = c(min_date, max_date)
+    ) +
+    # theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+    scale_y_continuous(expand = c(0,0), limits = c(-21,0)) +
+    theme(legend.position = "bottom", legend.box = "horizontal") +
+    labs(x = "", y = "Depth in m", color = "Hour of the day") #+ #title = paste0("tag ", tag_serial_number_short), 
+  
+}
+
+plot_depth_subset_winter <- function(depthlog = masterias_depth_temp, tag_serial_num, start_date_chr, end_date_chr){
+  data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num,
+                                     lubridate::date(date_time) %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
+                                     row_number() %% 2 == 0)
+                                  
+  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+    # geom_point(size = 1.5) + # aes(colour = lubridate::hour(date_time)),%>% as.factor()
+    geom_line(321) +
+    scale_x_datetime(date_breaks = "1 week",
+                     date_minor_breaks = "1 day",
+                     date_labels = "%d.%m.%y", #'%y
+                     expand = c(0,0)
+                     # ,limits = c(min_date, max_date)
+    ) +
+    # theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+    scale_y_continuous(expand = c(0,0), limits = c(-round(max(data$depth_m)),0)) + #round to nearest multiple of 10 ceiling(max(data$depth_m)
+    theme(legend.position = "bottom", legend.box = "horizontal") +
+    labs(x = "", y = "Depth in m", color = "Hour of the day") #+ #title = paste0("tag ", tag_serial_number_short), 
+  
+}
+
 
 ## 2. plot autocorrelation ####
 
@@ -180,19 +267,19 @@ plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
   
   plot <- ggplot(data = data) +
     geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "daily depth range"), alpha = 0.75) +
-    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 1) +
+    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "daily median depth"), linewidth = 0.5) +
     theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
     scale_y_continuous(expand = c(0, 0)) + #, sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent())) +
     labs(x = "", y = "Depth in m") +
     scale_colour_manual(name = "", values = c("daily median depth" = "black", "daily depth range" = "lightgrey", "illuminated moon fraction" = "red")) +
     scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) +
-    theme(legend.position = "none", legend.box = "horizontal") + #"bottom"
+    theme(legend.position = "none", legend.box = "horizontal",   legend.margin = margin(t = -15)) + #"bottom"
     scale_x_datetime(date_breaks = "1 month", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
   
   if (isTRUE(moon)) {
     plot <- plot +
-      geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.5) +
+      geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.25) +
       geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.75) +
       scale_y_continuous(expand = c(0, 0), sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent()))
   }
@@ -226,7 +313,7 @@ plot_summary_stats <- function(data_depth, tag_serial_num, moon = TRUE){
   #   scale_fill_manual(name = "", values = c("daily depth range" = "lightgrey")) + #, "DVM" = "red", "rDVM" = "blue", "nVM" = "green", "range" = "grey", #"median" = "black", "change of range" = "black", "median change" = "darkblue",
   #   
   #   theme(legend.position = "bottom",
-  #         legend.box = "horizontal") +
+  #         legend.box = "horizontal",   legend.margin = margin(t = -15)) +
   #   scale_x_datetime(date_breaks = "1 month",
   #                    # date_minor_breaks = "1 month",
   #                    # date_breaks = "2 months",
@@ -251,7 +338,9 @@ plot_summary_daynight <- function(data_depth, tag_serial_num, moon = TRUE, dayti
     # mutate(day = as.numeric(day)) %>%
     dplyr::filter(tag_serial_number == tag_serial_num
            ,day == daytime
-           ) 
+           )
+  
+  
   # %>% mutate(t_days = t_days %>% as.numeric())
   max_date <- max(data$date) + lubridate::days(10)
   min_date <- min(data$date) - lubridate::days(10)
@@ -270,33 +359,40 @@ plot_summary_daynight <- function(data_depth, tag_serial_num, moon = TRUE, dayti
   #                              "depth range during day",
   #                              "depth range during night")
   
-  plot <- ggplot(data = data) + #data = data
-    geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 0.75) +
-    geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median depth"), linewidth = 1) +
+  plot <- ggplot() + #data = data
+    # geom_ribbon(aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), alpha = 0.75) +
+    # geom_line(aes(x = date, y = -depth_median_sgolay, colour = "median depth"), linewidth = 1) +
     
-    # geom_ribbon(data = data %>% dplyr::filter(day == 0), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range (N)"), colour = "darkblue", alpha = 0.75) +
-    # geom_ribbon(data = data %>% dplyr::filter(day == 1), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range (D)"), colour = "orange", alpha = 0.75) +
-    # geom_line(data = data %>% dplyr::filter(day == 1), aes(x = date, y = -depth_median_sgolay, colour = "median depth (D)"), linewidth = 1) +
-    # geom_line(data = data %>% dplyr::filter(day == 0), aes(x = date, y = -depth_median_sgolay, colour = "median depth (N)"), linewidth = 1) +
-    # 
+    geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 0.75, alpha = 0.75, linetype = "11") +
+    # geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled), colour = "darkblue", linewidth = 0.25, alpha = 0.75) +
+    
+    geom_ribbon(data = data %>% dplyr::filter(day == daytime), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range"), colour = "transparent", alpha = 0.65) + #
+    # geom_ribbon(data = data %>% dplyr::filter(day == 1), aes(x = date, ymin = -depth_max_sgolay, ymax = -depth_min_sgolay, fill = "depth range (D)"), colour = "transparent", alpha = 0.75) + #
+    geom_line(data = data %>% dplyr::filter(day == daytime), aes(x = date, y = -depth_median_sgolay, colour = "median depth"), linewidth = 0.5) +
+    # geom_line(data = data %>% dplyr::filter(day == 0), aes(x = date, y = -depth_median_sgolay, colour = "median depth (N)"), linewidth = 0.25) +
+
     theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
+    # scale_y_continuous(expand = c(0, 0)) +
+    geom_vline(aes(xintercept = max_date), colour = "gray70", alpha = 1, linewidth = 0.25) +
     scale_y_continuous(expand = c(0, 0), sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent())) +
     labs(x = "", y = "Depth in m") +
-    scale_colour_manual(name = "", values = c("median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = "black", "depth range" = "lightgrey", "illuminated moon fraction" = "red")) +
-    scale_fill_manual(name = "", values = c("depth range" = "lightgrey", "depth range (D)" = "yellow", "depth range (N)" = "lightblue")) +
-    theme(legend.position = "bottom", legend.box = "horizontal") + #"bottom"
+    scale_colour_manual(name = "", values = c("median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = ifelse(daytime == 1, "red", "darkblue"), "depth range" = ifelse(daytime == 1, "yellow", "darkblue"), "illuminated moon fraction" = "black")) +
+    scale_fill_manual(name = "", values = c("depth range" = ifelse(daytime == 1, "orange", "lightblue"), "depth range (D)" = "yellow", "depth range (N)" = "lightblue")) +
+    theme(legend.position = "none", legend.box = "horizontal",   legend.margin = margin(t = -15)) + #"bottom"
     scale_x_datetime(date_breaks = "1 month", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
-    geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.5) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
   
-  if (isTRUE(moon)) {
-    plot <- plot +
-      geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.75)
-  }
+  # if (isTRUE(moon)) {
+  #   plot <- plot +
+  #     geom_vline(aes(xintercept = max_date), colour = "black", alpha = 1, linewidth = 0.25) +
+  #     scale_y_continuous(expand = c(0, 0), sec.axis = sec_axis(trans = ~ (((. * (100/max(data$depth_max_sgolay))) + 100) * (.01)), name = "Illuminated Moon Fraction", labels = scales::label_percent())) +
+  #     geom_line(data = moonfraq_df, aes(x = dates, y = moonfraq_scaled, colour = "illuminated moon fraction"), linewidth = 1, alpha = 0.75)
+  # }
   
   plot
 
 }
+
 
 ## 4. plot fft ####
 
@@ -400,7 +496,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                 plot <- ggplot(data = wt_df) +
                   geom_tile(aes(x = date, y = period, fill = power_log),
                             position = "identity",
-                            alpha = 0.35) +
+                            alpha = 0.5) +
                   geom_tile(data = wt_df %>% dplyr::filter(sig == 1), aes(x = date, y = period, fill = power_log),
                             position = "identity") +
                   scale_y_continuous(trans = my_trans,
@@ -417,7 +513,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
                   labs(x = "", y = "Period in days", fill = "log2(Power)") +
                   theme(legend.position = "bottom", # "bottom",
-                        legend.box = "horizontal") +
+                        legend.box = "horizontal",   legend.margin = margin(t = -15)) +
                   theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
                 ,
                 
@@ -515,7 +611,7 @@ plot_wavelet <- function(wt_df, type = c("power", "significance", "power_log"),
 }
 
 plot_wavelet_hrperiod <- function(wt_df = wt_df, type = c("power", "significance", "power_log"),
-                                  date = TRUE, max_period = 72 #hours = 3 days
+                                  date = TRUE, max_period = 72 #hours = 4 days
 ){
   # transformation function for the y axis
   my_trans <- scales::trans_new("log2_reverse", function(x) -log2(x), function(x) 2^-x)
@@ -568,7 +664,8 @@ plot_wavelet_hrperiod <- function(wt_df = wt_df, type = c("power", "significance
                   scale_fill_viridis_c(direction = 1, option = "turbo") +
                   labs(x = "", y = "Period in hours", fill = "log2(Power)") +
                   theme(legend.position = "bottom", # "bottom",
-                        legend.box = "horizontal") +
+                        legend.box = "horizontal",
+                        legend.margin = margin(t = -15)) +
                   theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
                 ,
                 
@@ -774,7 +871,7 @@ plot_rulsif_scores <- function(rulsif_result, thresh = 0.95, all_data, tag_seria
 #     scale_y_continuous(expand = c(0,0)) +
 #     labs(x = "", y = "depth in m", fill = "CP period", colour = "CP period") +
 #     # theme(legend.position = "bottom",
-#     #       legend.box = "horizontal")
+#     #       legend.box = "horizontal",   legend.margin = margin(t = -15))
 #     theme(legend.position="bottom", legend.direction="horizontal", legend.box.margin = margin())
 # 
 #   p_data
@@ -840,7 +937,7 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
     distinct()%>%
     mutate(duration = base::difftime(end_date + lubridate::days(1), start_date, units = "days") %>% 
              as.numeric()) %>%
-    dplyr::filter(duration > 3) %>% #only keep the periods that last more than 3 days
+    dplyr::filter(duration > 3) %>% #only keep the periods that last more than 4 days
     ungroup() %>%
     mutate(CP_period_new = 1:n()) #make new CP_periods count
   
@@ -861,7 +958,7 @@ plot_rulsif_data_ribbon <- function(rulsif_result, var = var_list, tag_serial_nu
     scale_y_continuous(expand = c(0,0)) +
     labs(x = "Date", y = "Depth in m", fill = "CP period", colour = "CP period") +
     # theme(legend.position = "bottom",
-    #       legend.box = "horizontal")
+    #       legend.box = "horizontal",   legend.margin = margin(t = -15))
     theme(legend.position="none", legend.direction="horizontal") + #"bottom"
     scale_x_datetime(date_minor_breaks = "1 month",
                      date_breaks = "2 months",
@@ -915,7 +1012,7 @@ p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_numbe
              aes(x = release_date_time, y = tag_serial_number, shape = sex), stroke = 0.5, colour = "black", size = 1.5) +
   
   geom_point(data = detections_tempdepth_daynight,
-             aes(x = date_time, y = tag_serial_number, colour = area), size = 2) + #, pch = sex
+             aes(x = date_time, y = tag_serial_number, colour = area), size = 1) + #, pch = sex
   geom_point(data = masterias_info %>% dplyr::filter(n_detect > 1) %>% mutate(tag_serial_number = reorder(tag_serial_number, release_date_time, decreasing = T)),
              aes(x = release_date_time, y = tag_serial_number, shape = sex), stroke = 0.5, colour = "black", size = 1.5) +
   scale_x_datetime(date_breaks = "2 months",
@@ -937,7 +1034,7 @@ p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_numbe
   labs(x = "", y = "tag serial nr.", colour = "receiver array:", shape = "tagging date:") +
   theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
   theme(legend.position = "bottom", # "bottom",
-        legend.box = "horizontal") 
+        legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
 p_abacus
 save_data(data = p_abacus, folder = plot_path)
@@ -982,9 +1079,9 @@ p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!
                    ,expand = c(0,0)) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
-  labs(x = "", y = "receiver station", fill = "# detections", colour = "# detections")  +
+  labs(x = "", y = "receiver station", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
   theme(legend.position = "bottom", # "bottom",
-        legend.box = "horizontal") 
+        legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
 p_detections_heatmap #%>% ggplotly()
 
@@ -1031,7 +1128,7 @@ p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
   labs(x = "", y = "tag serial nr.", fill = "# detections", colour = "# detections")  +
   theme(legend.position = "bottom", # "bottom",
-        legend.box = "horizontal") 
+        legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
 p_detections_heatmap_OG10 #%>% ggplotly()
 
@@ -1090,7 +1187,7 @@ plot_depth_range <- ggplot(data = summary_all2 %>% dplyr::mutate(station_name = 
   # theme_minimal(base_size = 12) +
   scale_y_continuous(limits = c(-49,0)) +
   theme(axis.text.x = element_text(angle = 60, hjust = 0.5)) +
-  labs(x = "Receiver Station", y = "Depth in m", color = "")
+  labs(x = "Receiver Station:", y = "Depth in m", color = "")
 
 plot_depth_range #%>% ggplotly()
 save_data(data = plot_depth_range, folder = plot_path)
@@ -1098,7 +1195,7 @@ save_data(data = plot_depth_range, folder = plot_path)
 
 plot_depth_range_heatmap <- ggplot(data = summary_wide2 %>% dplyr::mutate(station_name = gsub("ws-", "", station_name)),
                                     aes(x = station_name, y = depth_range, fill = value)) + #, color = group
-  geom_tile(linewidth = 0.5) +
+  geom_tile(linewidth = 0.25) +
   facet_grid(vars(group), scales="free_y") +
   # theme_minimal(base_size = 12) +
   scale_fill_viridis_c(expand = c(0,0)) +
@@ -1115,14 +1212,14 @@ save_data(data = plot_depth_range_heatmap, folder = plot_path)
 p_308_DST_acoustic <- ggplot() +
   geom_line(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
                                                           lubridate::date(date_time) > as.POSIXct("2019-04-30", tz = "utc")), 
-            aes(x = date_time, y = -depth_m)) +
+            aes(x = date_time, y = -depth_m), linewidth = 0.35) +
   geom_point(data = detections_tempdepth_daynight %>%
                dplyr::mutate(station_name = gsub("ws-", "", station_name),
                              station_name = gsub("bpns-", "", station_name)) %>%
                dplyr::filter(tag_serial_number == "1293308",
                              lubridate::year(date_time) == "2019",
                              sensor_type == "pressure"),
-             aes(x = date_time, y = -parameter, colour = station_name), size = 2.5) +
+             aes(x = date_time, y = -parameter, colour = station_name), size = 1) +
   geom_point(data = detections_tempdepth_daynight %>%
                dplyr::mutate(station_name = gsub("ws-", "", station_name),
                              station_name = gsub("bpns-", "", station_name)) %>%
@@ -1130,14 +1227,16 @@ p_308_DST_acoustic <- ggplot() +
                              lubridate::year(date_time) == "2019",
                              station_name == "Birkenfels",
                              sensor_type == "pressure"),
-             aes(x = date_time, y = -parameter), colour ="red", size = 4) +
+             aes(x = date_time, y = -parameter), colour ="red", size = 2) +
   scale_x_datetime(date_breaks = "1 month",
                    # date_minor_breaks = "1 week",
                    date_labels = "%b'%y"
                    # ,expand = c(0,0)
   ) +
   scale_color_brewer(palette = "Set1") +
-  labs(x = "", y = "Depth in m", colour = "Receiver station")
+  labs(x = "", y = "Depth in m", colour = "Receiver station:") +
+  theme(legend.position = "bottom",
+        legend.box = "horizontal", legend.margin = margin(t = -15))
 
 p_308_DST_acoustic# %>% ggplotly()
 
@@ -1156,6 +1255,63 @@ p_308_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1
 save_data(data = p_308_temp, folder = plot_path)
 p_321_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1293321")
 save_data(data = p_321_temp, folder = plot_path)
+
+## subsets summer/winter ####
+
+
+p_308_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2018-09-21 14:00:00 UTC", end_date_chr = "2018-09-24 14:00:00 UTC")
+p_308_depth_summer
+save_data(data = p_308_depth_summer, folder = plot_path)
+
+p_308_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07")
+p_308_depth_winter
+save_data(data = p_308_depth_winter, folder = plot_path)
+
+p_321_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2018-09-15 14:00:00 UTC", end_date_chr = "2018-09-18 14:00:00 UTC")
+p_321_depth_summer
+save_data(data = p_321_depth_summer, folder = plot_path)
+
+p_321_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07")
+p_321_depth_winter #%>% ggplotly()
+save_data(data = p_321_depth_winter, folder = plot_path)
+
+### short term dsts
+
+p_319_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293319")
+save_data(data = p_319_depth, folder = plot_path)
+p_319_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293319")
+save_data(data = p_319_temp, folder = plot_path)
+gridExtra::grid.arrange(p_319_depth, p_319_temp, ncol = 1)
+
+p_322_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293322")
+save_data(data = p_322_depth, folder = plot_path)
+p_322_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293322")
+save_data(data = p_322_temp, folder = plot_path)
+gridExtra::grid.arrange(p_322_depth, p_322_temp, ncol = 1)
+
+p_295_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293295")
+save_data(data = p_295_depth, folder = plot_path)
+p_295_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293295")
+save_data(data = p_295_temp, folder = plot_path)
+gridExtra::grid.arrange(p_295_depth, p_295_temp, ncol = 1)
+
+p_304_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293304")
+save_data(data = p_304_depth, folder = plot_path)
+p_304_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293304")
+save_data(data = p_304_temp, folder = plot_path)
+gridExtra::grid.arrange(p_304_depth, p_304_temp, ncol = 1)
+
+p_310_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293310")
+save_data(data = p_310_depth, folder = plot_path)
+p_310_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293310")
+save_data(data = p_310_temp, folder = plot_path)
+gridExtra::grid.arrange(p_310_depth, p_310_temp, ncol = 1)
+
+p_312_depth <- plot_raw_depth_short(depthlog = masterias_depth_temp, tag_serial_num = "1293312")
+save_data(data = p_312_depth, folder = plot_path)
+p_312_temp <- plot_raw_temp_short(depthlog = masterias_depth_temp, tag_serial_num = "1293312")
+save_data(data = p_312_temp, folder = plot_path)
+gridExtra::grid.arrange(p_312_depth, p_312_temp, ncol = 1)
 
 ## temp points ####
 
@@ -1273,7 +1429,7 @@ p_308_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_num
   scale_y_continuous(expand = c(0,0)) +
   labs(x = "Date", y = "Depth in m", fill = "Step percent") +
   theme(legend.position = "bottom",
-        legend.box = "horizontal")
+        legend.box = "horizontal",   legend.margin = margin(t = -15))
 # p_308_rulsif_all 
 
 save_data(data = p_308_rulsif_all, folder = plot_path)
@@ -1297,7 +1453,7 @@ p_321_rulsif_all <- ggplot(data = long_dst_date %>% dplyr::filter(tag_serial_num
   scale_y_continuous(expand = c(0,0)) +
   labs(x = "Date", y = "Depth in m", fill = "Step percent") +
   theme(legend.position = "bottom",
-        legend.box = "horizontal")
+        legend.box = "horizontal",   legend.margin = margin(t = -15))
 # p_321_rulsif_all 
 
 save_data(data = p_321_rulsif_all, folder = plot_path)
@@ -1448,38 +1604,62 @@ p_321_sum_stats_moon <- plot_summary_stats(data_depth = long_dst_date,
 p_321_sum_stats_moon #%>% ggplotly()
 save_data(data = p_321_sum_stats_moon, folder = plot_path)
 
-### 4.1 night sum stats ####
+### 4.1 daynight sum stats ####
 
-#### night
 p_308_sum_night <- plot_summary_daynight(data_depth = long_dst_daynight,
-                                      tag_serial_num = "1293308", 
-                                      daytime = 0)
-p_308_sum_night #%>% ggplotly()
+                                         tag_serial_num = "1293308", 
+                                         daytime = 0)
+# p_308_sum_night #%>% ggplotly()
 save_data(data = p_308_sum_night, folder = plot_path)
 
+p_308_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                       tag_serial_num = "1293308", 
+                                       daytime = 1)
+# p_308_sum_day #%>% ggplotly()
+save_data(data = p_308_sum_day, folder = plot_path)
+
 p_321_sum_night <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                         tag_serial_num = "1293321", 
+                                         daytime = 0)
+# p_321_sum_night #%>% ggplotly()
+save_data(data = p_321_sum_night, folder = plot_path)
+
+p_321_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                       tag_serial_num = "1293321", 
+                                       daytime = 1)
+# p_321_sum_day #%>% ggplotly()
+save_data(data = p_321_sum_day, folder = plot_path)
+
+#### daynight
+p_308_sum_daynight <- plot_summary_daynight(data_depth = long_dst_daynight,
+                                      tag_serial_num = "1293308", 
+                                      daytime = 0)
+p_308_sum_daynight #%>% ggplotly()
+save_data(data = p_308_sum_daynight, folder = plot_path)
+
+p_321_sum_daynight <- plot_summary_daynight(data_depth = long_dst_daynight,
                                       tag_serial_num = "1293321", 
                                       moon = TRUE,
                                       daytime = 0)
-p_321_sum_night #%>% ggplotly()
-save_data(data = p_321_sum_night, folder = plot_path) 
-  
-#### day
-
-p_308_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
-                                      tag_serial_num = "1293308", daytime = 1)
-p_308_sum_day #%>% ggplotly()
-save_data(data = p_308_sum_day, folder = plot_path)
-
-p_321_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
-                                      tag_serial_num = "1293321", daytime = 1)
-p_321_sum_day #%>% ggplotly()
-save_data(data = p_321_sum_day, folder = plot_path) 
-
-gridExtra::grid.arrange(p_308_sum_stats + labs(title = "day + night, female"), p_321_sum_stats + labs(title = "day + night, male"),
-                        p_308_sum_night + labs(title = "day, female"), p_321_sum_night + labs(title = "day, male"),
-                        p_308_sum_day + labs(title = "night, female"), p_321_sum_day + labs(title = "night, male"),
-                        ncol = 2)
+p_321_sum_daynight #%>% ggplotly()
+save_data(data = p_321_sum_daynight, folder = plot_path) 
+#   
+# #### day
+# 
+# p_308_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+#                                       tag_serial_num = "1293308", daytime = 1)
+# p_308_sum_day #%>% ggplotly()
+# save_data(data = p_308_sum_day, folder = plot_path)
+# 
+# p_321_sum_day <- plot_summary_daynight(data_depth = long_dst_daynight,
+#                                       tag_serial_num = "1293321", daytime = 1)
+# p_321_sum_day #%>% ggplotly()
+# save_data(data = p_321_sum_day, folder = plot_path) 
+# 
+# gridExtra::grid.arrange(p_308_sum_stats + labs(title = "day + night, female"), p_321_sum_stats + labs(title = "day + night, male"),
+#                         p_308_sum_night + labs(title = "day, female"), p_321_sum_night + labs(title = "day, male"),
+#                         p_308_sum_day + labs(title = "night, female"), p_321_sum_day + labs(title = "night, male"),
+#                         ncol = 2)
 
 ## 5. wavelet results ####
 
@@ -1743,26 +1923,26 @@ save_data(data = p_321_ribbon_rulsif_10percent, folder = plot_path)
 
 ### plot lm 308 ####
 
-### min daily depth
-p_308_lm_min_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
-  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-  geom_point() +
-  labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
-save_data(data = p_308_lm_min_moonfraq_smooth, folder = plot_path)
-
-# plot residuals
-p_308_lm_min_moonfraq_residuals <- ggplot(lm_308_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0, linewidth = 0.75) +
-  labs(x = "fitted", y = "residuals")
-save_data(data = p_308_lm_min_moonfraq_residuals, folder = plot_path)
-
-# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-p_308_lm_min_moonfraq_qq <- ggplot(lm_308_depthmin_moonfraq, aes(sample = .resid)) +
-  stat_qq(size=2.5) + 
-  stat_qq_line() +
-  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-save_data(data = p_308_lm_min_moonfraq_qq, folder = plot_path)
+# ### min daily depth
+# p_308_lm_min_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
+# save_data(data = p_308_lm_min_moonfraq_smooth, folder = plot_path)
+# 
+# # plot residuals
+# p_308_lm_min_moonfraq_residuals <- ggplot(lm_308_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# save_data(data = p_308_lm_min_moonfraq_residuals, folder = plot_path)
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# p_308_lm_min_moonfraq_qq <- ggplot(lm_308_depthmin_moonfraq, aes(sample = .resid)) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# save_data(data = p_308_lm_min_moonfraq_qq, folder = plot_path)
 
 # ## log transformed -> does not look better
 # ggplot(data_lm_308, aes(sample=-log(depth_min_sgolay))) +
@@ -1770,141 +1950,170 @@ save_data(data = p_308_lm_min_moonfraq_qq, folder = plot_path)
 #   stat_qq_line() +
 #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
 
-
-# plot density (to assess normal distribution of residuals)
-p_308_lm_min_moonfraq_density <- ggplot(lm_308_depthmin_moonfraq, aes(x=.resid))+
-  geom_density(linewidth = 1) 
-save_data(data = p_308_lm_min_moonfraq_density, folder = plot_path)
+# 
+# # plot density (to assess normal distribution of residuals)
+# p_308_lm_min_moonfraq_density <- ggplot(lm_308_depthmin_moonfraq, aes(x=.resid))+
+#   geom_density(linewidth = 1) 
+# save_data(data = p_308_lm_min_moonfraq_density, folder = plot_path)
 
 
 ### median daily depth
-p_308_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
-  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-  geom_point() +
-  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+# p_308_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+# save_data(data = p_308_lm_median_moonfraq_smooth, folder = plot_path)
+
+p_308_lm_median_moonfraq_smooth <- ggplot(mapping = aes(x = moonfraq, y = -(depth_median_sgolay))) +
+  geom_point(data = data_lm_308_day, mapping = aes(colour = "median depth (D)"), fill = "transparent", alpha = 0.75, size = 1) +
+  geom_point(data = data_lm_308_night, mapping = aes(colour = "median depth (N)"), fill = "transparent", alpha = 0.75, size = 1) +
+  geom_smooth(data = data_lm_308_day, method = "lm", mapping = aes(fill = "lm with 95 % CI (D)"), colour = "orange", alpha = 0.6, linewidth = 0.25) +
+  geom_smooth(data = data_lm_308_night, method = "lm", mapping = aes(fill = "lm with 95 % CI (N)"), colour = "darkblue", alpha = 0.6, linewidth = 0.25) +
+  geom_text(data = lm_sum_308_depthmedian_day_night %>% dplyr::filter(daytime == "day"), aes(x = 0.125, y = -42, label = paste0("y (day) = ", intercept %>% round(digits = 2), " + ", slope %>% round(digits = 2), ", R squared (adj.) = ", adj.r.squared %>% round(digits = 4))), colour = "orange", hjust = "left", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  geom_text(data = lm_sum_308_depthmedian_day_night %>% dplyr::filter(daytime == "night"), aes(x = 0.125, y = -46, label = paste0("y (night) = ", intercept %>% round(digits = 2), " + ", slope %>% round(digits = 2), ", R squared (adj.) = ", adj.r.squared %>% round(digits = 4))), colour = "darkblue", hjust = "left", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  
+  scale_colour_manual(name = "", values = c("linear model" = "darkgrey", "median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = "black")) +
+  scale_fill_manual(name = "", values = c("lm with 95 % CI (D)" = "yellow", "lm with 95 % CI (N)" = "lightblue", "median depth (D)" = "orange", "median depth (N)" = "darkblue")) +
+  theme(legend.position = "bottom", legend.box = "horizontal",   legend.margin = margin(t = -15)) + #"bottom"
+  labs(x = "illuminated moon fraction of the moon", y = "median depth in m (Savitzky-Golay filtered)") #, title = 'daily median depth over moon fraq'
 save_data(data = p_308_lm_median_moonfraq_smooth, folder = plot_path)
 
-### median daily depth daynight
-p_308_daynight_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308_daynight, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
-  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-  geom_point() +
-  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
-save_data(data = p_308_daynight_lm_median_moonfraq_smooth, folder = plot_path)
-
-# plot residuals
-p_308_lm_median_moonfraq_residuals <- ggplot(lm_308_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0, linewidth = 0.75) +
-  labs(x = "fitted", y = "residuals")
-save_data(data = p_308_lm_median_moonfraq_residuals, folder = plot_path)
-
-# plot residuals daynight
-p_308_daynight_lm_median_moonfraq_residuals <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0, linewidth = 0.75) +
-  labs(x = "fitted", y = "residuals")
-save_data(data = p_308_daynight_lm_median_moonfraq_residuals, folder = plot_path)
-
-# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-p_308_lm_median_moonfraq_qq <- ggplot(lm_308_depthmedian_moonfraq, aes(sample = .resid)) +
-  stat_qq(size=2.5) + 
-  stat_qq_line() +
-  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-save_data(data = p_308_lm_median_moonfraq_qq, folder = plot_path)
-
-# plot qq daynight of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-p_308_daynight_lm_median_moonfraq_qq <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(sample = .resid)) +
-  stat_qq(size=2.5) + 
-  stat_qq_line() +
-  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-save_data(data = p_308_daynight_lm_median_moonfraq_qq, folder = plot_path)
+# ### median daily depth daynight
+# p_308_daynight_lm_median_moonfraq_smooth <- ggplot(data = data_lm_308_daynight, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+# save_data(data = p_308_daynight_lm_median_moonfraq_smooth, folder = plot_path)
+# 
+# # plot residuals
+# p_308_lm_median_moonfraq_residuals <- ggplot(lm_308_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# save_data(data = p_308_lm_median_moonfraq_residuals, folder = plot_path)
+# 
+# # plot residuals daynight
+# p_308_daynight_lm_median_moonfraq_residuals <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# save_data(data = p_308_daynight_lm_median_moonfraq_residuals, folder = plot_path)
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# p_308_lm_median_moonfraq_qq <- ggplot(lm_308_depthmedian_moonfraq, aes(sample = .resid)) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# save_data(data = p_308_lm_median_moonfraq_qq, folder = plot_path)
+# 
+# # plot qq daynight of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# p_308_daynight_lm_median_moonfraq_qq <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(sample = .resid)) +
+#   stat_qq(size=2.5) + 
+#   stat_qq_line() +
+#   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# save_data(data = p_308_daynight_lm_median_moonfraq_qq, folder = plot_path)
 
 # ## log transformed -> does not look better
 # ggplot(data_lm_308, aes(sample=-log(depth_median_sgolay))) +
 #   stat_qq(size=2.5) + 
 #   stat_qq_line() +
 #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-
-
-# plot density (to assess normal distribution of residuals)
-p_308_lm_median_moonfraq_density <- ggplot(lm_308_depthmedian_moonfraq, aes(x=.resid))+
-  geom_density(linewidth = 1) 
-save_data(data = p_308_lm_median_moonfraq_density, folder = plot_path)
-
-
-# plot density daynight (to assess normal distribution of residuals)
-p_308_daynight_lm_median_moonfraq_density <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x=.resid))+
-  geom_density(linewidth = 1) 
-save_data(data = p_308_daynight_lm_median_moonfraq_density, folder = plot_path)
+# 
+# 
+# # plot density (to assess normal distribution of residuals)
+# p_308_lm_median_moonfraq_density <- ggplot(lm_308_depthmedian_moonfraq, aes(x=.resid))+
+#   geom_density(linewidth = 1) 
+# save_data(data = p_308_lm_median_moonfraq_density, folder = plot_path)
+# 
+# 
+# # plot density daynight (to assess normal distribution of residuals)
+# p_308_daynight_lm_median_moonfraq_density <- ggplot(lm_308_daynight_depthmedian_moonfraq, aes(x=.resid))+
+#   geom_density(linewidth = 1) 
+# save_data(data = p_308_daynight_lm_median_moonfraq_density, folder = plot_path)
 
 ### plot lm 321 ####
 
-### min daily depth
-p_321_lm_min_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
-  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-  geom_point() +
-  labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
-save_data(data = p_321_lm_min_moonfraq_smooth, folder = plot_path)
-
-# plot residuals
-p_321_lm_min_moonfraq_residuals <- ggplot(lm_321_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0, linewidth = 0.75) +
-  labs(x = "fitted", y = "residuals")
-save_data(data = p_321_lm_min_moonfraq_residuals, folder = plot_path)
-
-# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-p_321_lm_min_moonfraq_qq <- ggplot(lm_321_depthmin_moonfraq, aes(sample = .resid)) +
-  stat_qq(size=2.5) + 
-  stat_qq_line() +
-  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-save_data(data = p_321_lm_min_moonfraq_qq, folder = plot_path)
-
-# ## log transformed -> does not look better
-# ggplot(data_lm_321, aes(sample=-log(depth_min_sgolay))) +
+# ### min daily depth
+# p_321_lm_min_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_min_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily minimum depth in m (Savitzky-Golay filter)") #, title = 'daily min depth over moon fraq'
+# save_data(data = p_321_lm_min_moonfraq_smooth, folder = plot_path)
+# 
+# # plot residuals
+# p_321_lm_min_moonfraq_residuals <- ggplot(lm_321_depthmin_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# save_data(data = p_321_lm_min_moonfraq_residuals, folder = plot_path)
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# p_321_lm_min_moonfraq_qq <- ggplot(lm_321_depthmin_moonfraq, aes(sample = .resid)) +
 #   stat_qq(size=2.5) + 
 #   stat_qq_line() +
 #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-
-
-# plot density (to assess normal distribution of residuals)
-p_321_lm_min_moonfraq_density <- ggplot(lm_321_depthmin_moonfraq, aes(x=.resid))+
-  geom_density(linewidth = 1) 
-save_data(data = p_321_lm_min_moonfraq_density, folder = plot_path)
+# save_data(data = p_321_lm_min_moonfraq_qq, folder = plot_path)
+# 
+# # ## log transformed -> does not look better
+# # ggplot(data_lm_321, aes(sample=-log(depth_min_sgolay))) +
+# #   stat_qq(size=2.5) + 
+# #   stat_qq_line() +
+# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# 
+# # plot density (to assess normal distribution of residuals)
+# p_321_lm_min_moonfraq_density <- ggplot(lm_321_depthmin_moonfraq, aes(x=.resid))+
+#   geom_density(linewidth = 1) 
+# save_data(data = p_321_lm_min_moonfraq_density, folder = plot_path)
 
 
 ### median daily depth
-p_321_lm_median_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
-  geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
-  geom_point() +
-  labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+
+p_321_lm_median_moonfraq_smooth <- ggplot(mapping = aes(x = moonfraq, y = -(depth_median_sgolay))) +
+  geom_point(data = data_lm_321_day, mapping = aes(colour = "median depth (D)"), fill = "transparent", alpha = 0.75) +
+  geom_point(data = data_lm_321_night, mapping = aes(colour = "median depth (N)"), fill = "transparent", alpha = 0.75) +
+  geom_smooth(data = data_lm_321_day, method = "lm", mapping = aes(fill = "lm with 95 % CI (D)"), colour = "orange", alpha = 0.4) +
+  geom_smooth(data = data_lm_321_night, method = "lm", mapping = aes(fill = "lm with 95 % CI (N)"), colour = "darkblue", alpha = 0.4) +
+  geom_text(data = lm_sum_321_depthmedian_day_night %>% dplyr::filter(daytime == "day"), aes(x = 0.125, y = -44, label = paste0("y (day) = ", intercept %>% round(digits = 2), " + ", slope %>% round(digits = 2), ", R squared (adj.) = ", adj.r.squared %>% round(digits = 4))), colour = "orange", hjust = "left", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  geom_text(data = lm_sum_321_depthmedian_day_night %>% dplyr::filter(daytime == "night"), aes(x = 0.125, y = -46, label = paste0("y (night) = ", intercept %>% round(digits = 2), " + ", slope %>% round(digits = 2), ", R squared (adj.) = ", adj.r.squared %>% round(digits = 4))), colour = "darkblue", hjust = "left", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+  
+  scale_colour_manual(name = "", values = c("linear model" = "darkgrey", "median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = "black")) +
+  scale_fill_manual(name = "", values = c("lm with 95 % CI (D)" = "yellow", "lm with 95 % CI (N)" = "lightblue", "median depth (D)" = "orange", "median depth (N)" = "darkblue")) +
+  theme(legend.position = "bottom", legend.box = "horizontal",   legend.margin = margin(t = -15)) + #"bottom"
+  labs(x = "illuminated fraction of the moon", y = "median depth in m (Savitzky-Golay filtered)") #, title = 'daily median depth over moon fraq'
 save_data(data = p_321_lm_median_moonfraq_smooth, folder = plot_path)
 
-# plot residuals
-p_321_lm_median_moonfraq_residuals <- ggplot(lm_321_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0, linewidth = 0.75) +
-  labs(x = "fitted", y = "residuals")
-save_data(data = p_321_lm_median_moonfraq_residuals, folder = plot_path)
-
-# plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
-p_321_lm_median_moonfraq_qq <- ggplot(lm_321_depthmedian_moonfraq, aes(sample = .resid)) +
-  stat_qq(size=2.5) + 
-  stat_qq_line() +
-  labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-save_data(data = p_321_lm_median_moonfraq_qq, folder = plot_path)
-
-# ## log transformed -> does not look better
-# ggplot(data_lm_321, aes(sample=-log(depth_median_sgolay))) +
+# p_321_lm_median_moonfraq_smooth <- ggplot(data = data_lm_321, aes(x = moonfraq, y = -log(depth_median_sgolay))) +
+#   geom_smooth(method = "lm", colour = "red", fill = "grey", alpha = 0.5) +
+#   geom_point() +
+#   labs(x = "fraction of the moon illuminated", y = "daily median depth in m (Savitzky-Golay filter)") #, title = 'daily median depth over moon fraq'
+# save_data(data = p_321_lm_median_moonfraq_smooth, folder = plot_path)
+# 
+# # plot residuals
+# p_321_lm_median_moonfraq_residuals <- ggplot(lm_321_depthmedian_moonfraq, aes(x = .fitted, y = .resid)) +
+#   geom_point(size = 3) +
+#   geom_hline(yintercept = 0, linewidth = 0.75) +
+#   labs(x = "fitted", y = "residuals")
+# save_data(data = p_321_lm_median_moonfraq_residuals, folder = plot_path)
+# 
+# # plot qq of residuals to asses normality of residuals (aka did we get 'everything' out of the data)
+# p_321_lm_median_moonfraq_qq <- ggplot(lm_321_depthmedian_moonfraq, aes(sample = .resid)) +
 #   stat_qq(size=2.5) + 
 #   stat_qq_line() +
 #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
-
-
-# plot density (to assess normal distribution of residuals)
-p_321_lm_median_moonfraq_density <- ggplot(lm_321_depthmedian_moonfraq, aes(x=.resid))+
-  geom_density(linewidth = 1) 
-save_data(data = p_321_lm_median_moonfraq_density, folder = plot_path)
+# save_data(data = p_321_lm_median_moonfraq_qq, folder = plot_path)
+# 
+# # ## log transformed -> does not look better
+# # ggplot(data_lm_321, aes(sample=-log(depth_median_sgolay))) +
+# #   stat_qq(size=2.5) + 
+# #   stat_qq_line() +
+# #   labs(x = "Theoretical quantiles", y = "Sample Quantiles")
+# 
+# 
+# # plot density (to assess normal distribution of residuals)
+# p_321_lm_median_moonfraq_density <- ggplot(lm_321_depthmedian_moonfraq, aes(x=.resid))+
+#   geom_density(linewidth = 1) 
+# save_data(data = p_321_lm_median_moonfraq_density, folder = plot_path)
 
 
 # save all plots as .pdf and .png ####

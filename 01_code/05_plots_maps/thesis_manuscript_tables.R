@@ -17,13 +17,19 @@ paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_dst_summarystatistics.R") %>% base::source()
 paste0(dir_path, "/01_code/02_load_data/load_cpd_results.R") %>% base::source()
+paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
 # table 1: list of abbreviations ####
 
-abbreviations_list <- tibble::tibble(Abbreviation = c("ADST", "DST", "DVM"),
+abbreviations_list <- tibble::tibble(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN"),
                          Explanation= c("Acoustic Data Storage Tag",
                                         "Data Storage Tag",
-                                        "Diel Vertical Migration"))
+                                        "Belgian Part of the North Sea",
+                                        "female",
+                                        "male",
+                                        "Continuous Wavelet Transform",
+                                        "European Tracking Network",
+                                        "Permanent Belgian Receiver Network"))
 
 # table 2: release locations ####
 
@@ -42,10 +48,12 @@ acoustic_days_liberty <- detections_tempdepth_daynight %>% group_by(tag_serial_n
 
 tagged_animal_info <- masterias_info %>% 
   mutate(release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "Western Scheldt")) %>%
-  dplyr::select(tag_serial_number, sex, length1, release_date_time, n_detect, release_loc) %>% #, capture_method
+  dplyr::select(tag_serial_number, sex, length1, weight, release_date_time, n_detect, release_loc) %>% #, capture_method
   mutate(release_date_time = lubridate::date(release_date_time)) %>%
   left_join(acoustic_days_liberty, by = "tag_serial_number") %>%
-  mutate(days_at_liberty = base::difftime(date_last_detected, release_date_time, tz = "UTC", units = "days") %>% as.numeric()) %>%
+  mutate(days_at_liberty = base::difftime(date_last_detected, release_date_time, tz = "UTC", units = "days") %>% as.numeric(),
+         days_at_liberty = ifelse(n_detect == 1,  1, days_at_liberty),
+         days_detected = ifelse(n_detect == 1, 1, days_detected)) %>%
   tidyr::replace_na(replace = list(n_detect = 0,
                                    days_detected = 0,
                                    hours_detected = 0,
@@ -55,6 +63,22 @@ tagged_animal_info <- masterias_info %>%
 
   
 # tagged_animal_info %>% View()
+
+# return rate
+
+# sharks_returned <- tagged_animal_info %>% #dplyr::filter(n_detect > 1) %>%
+#   mutate(returned = lubridate::year(tagged_animal_info$date_last_detected) - lubridate::year(tagged_animal_info$release_date_time)) %>%
+#   dplyr::filter(returned == 1) %>% nrow()
+# 
+# 
+# tagged_animal_info %>% dplyr::filter(!date_last_detected %>% is.na()) %>% nrow()
+# 
+#       
+           
+           # base::difftime(lubridate::year(release_date_time), lubridate::year(date_last_detected),))
+         
+         
+# unique(c(lubridate::year(release_date_time), lubridate::year(date_last_detected))) %>% nrow()) %>% View()
 
 # table 4: detections summary ####
 
@@ -101,6 +125,18 @@ dst_summary <- masterias_depth_date %>%
          death_date = death_date %>% as.Date(),
          recapture_date_time = recapture_date_time %>% as.Date())
 # include max and min depth, and max and min temp?
+
+# table 6: lm moonphase ####
+
+lm_sum_308_depthmedian_day_night <- tibble(daytime = c("day", "night"),
+                           intercept = c(-lm_308_day_depthmedian_moonfraq$coefficients[[1]], -lm_308_night_depthmedian_moonfraq$coefficients[[1]]),
+                           slope = c(-lm_308_day_depthmedian_moonfraq$coefficients[[2]], -lm_308_night_depthmedian_moonfraq$coefficients[[2]]),
+                           adj.r.squared = c(lm_308_day_depthmedian_moonfraq$adj.r.squared, lm_308_night_depthmedian_moonfraq$adj.r.squared))
+
+lm_sum_321_depthmedian_day_night <- tibble(daytime = c("day", "night"),
+                                       intercept = c(-lm_321_day_depthmedian_moonfraq$coefficients[[1]], -lm_321_night_depthmedian_moonfraq$coefficients[[1]]),
+                                       slope = c(-lm_321_day_depthmedian_moonfraq$coefficients[[2]], -lm_321_night_depthmedian_moonfraq$coefficients[[2]]),
+                                       adj.r.squared = c(lm_321_day_depthmedian_moonfraq$adj.r.squared, lm_321_night_depthmedian_moonfraq$adj.r.squared))
 
 # 6. change periods ####
 
@@ -200,12 +236,23 @@ rulsif_321_table_10percent <- get_change_periods(rulsif_result = rulsif_321_res_
                                                  tag_serial_num_short = "321",
                                                  all_data = long_dst_date)
 
+# check normality of depths
+# 
+# depth_308 <- masterias_depth_temp %>% ungroup() %>% filter(tag_serial_number == "1293308", ) %>% dplyr::select(depth_m) %>% pull()
+# depth_308_shapiro_normality <- shapiro.test(depth_308)$p.value
+
+
 # save tables #####
 save_data(data = dst_summary, folder = tables_path)
 save_data(data = tagged_animal_info, folder = tables_path)
 save_data(data = release_locations, folder = tables_path)
 save_data(data = abbreviations_list, folder = tables_path)
 save_data(data = detections_month, folder = tables_path)
+
+save_data(data = lm_sum_308_depthmedian_day_night, folder = tables_path)
+save_data(data = lm_sum_321_depthmedian_day_night, folder = tables_path)
+
+
 
 save_data(data = rulsif_308_table_2_5percent, folder = tables_path)
 save_data(data = rulsif_308_table_5percent, folder = tables_path)
