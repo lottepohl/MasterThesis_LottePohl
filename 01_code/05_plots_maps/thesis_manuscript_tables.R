@@ -138,6 +138,65 @@ lm_sum_321_depthmedian_day_night <- tibble(daytime = c("day", "night"),
                                        slope = c(-lm_321_day_depthmedian_moonfraq$coefficients[[2]], -lm_321_night_depthmedian_moonfraq$coefficients[[2]]),
                                        adj.r.squared = c(lm_321_day_depthmedian_moonfraq$adj.r.squared, lm_321_night_depthmedian_moonfraq$adj.r.squared))
 
+# table 7 and 8: acoustic detections summary ####
+
+detections_sum_station <- detections_tempdepth_daynight %>% 
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                station_name = gsub("bpns-", "", station_name),
+                station_name = factor(station_name, levels = station_names_order)) %>% 
+  mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-16')),
+         month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
+  group_by(station_name, month_year, sex) %>%
+  # group_by(area, month_year, sex) %>%
+  summarise(n_detect = n(),
+            area = area %>% unique(),
+            month_year_chr = month_year_chr %>% unique(), 
+            n_ind = tag_serial_number %>% unique() %>% length())
+
+
+detections_OG102019 <- detections_tempdepth_daynight %>% 
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                tag_serial_number = tag_serial_number %>%
+                  stringr::str_trunc(width = 3, side = "left", ellipsis = "")
+                # station_name = gsub("bpns-", "", station_name),
+                # station_name = factor(station_name, levels = station_names_order)
+  ) %>% 
+  # mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-17')),
+  #        month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
+  dplyr::filter(station_name == "OG10",
+                lubridate::year(date_time) == "2019") %>%
+  group_by(tag_serial_number, date) %>%
+  summarise(n_detect = n(),
+            depth_median = median(parameter[sensor_type == "pressure"]),
+            sex = sex %>% unique()) %>%
+  mutate(date = date %>% as.POSIXct(tz = "utc")) %>%
+  ungroup()
+
+# statistical tests ####
+
+## depth per day and night ####
+
+daynight_depth_308_ttest <- stats::t.test(x = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 1) %>% dplyr::select(depth_min_sgolay), 
+                                          y = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 0) %>% dplyr::select(depth_min_sgolay), 
+                                          alternative = "greater")
+
+daynight_depth_321_ttest <- stats::t.test(x = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 1) %>% dplyr::select(depth_min_sgolay), 
+                                          y = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 0) %>% dplyr::select(depth_min_sgolay), 
+                                          alternative = "greater")
+
+# ggplot(mapping = aes(x = date, y = -depth_median_sgolay)) +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 1), colour = "red") +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 0), colour = "blue") +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 1), colour = "orange", mapping = aes(x = date, y = -depth_min_sgolay)) +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293308", day == 0), colour = "lightblue", mapping = aes(x = date, y = -depth_min_sgolay))
+
+
+# ggplot(mapping = aes(x = date, y = -depth_median_sgolay)) +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 1), colour = "red") +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 0), colour = "blue") +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 1), colour = "orange", mapping = aes(x = date, y = -depth_min_sgolay)) +
+#   geom_line(data = long_dst_daynight %>% dplyr::filter(tag_serial_number == "1293321", day == 0), colour = "lightblue", mapping = aes(x = date, y = -depth_min_sgolay))
+
 # 6. change periods ####
 
 var_list <- c("depth_median_sgolay", "depth_max_sgolay", "depth_min_sgolay")
@@ -252,7 +311,8 @@ save_data(data = detections_month, folder = tables_path)
 save_data(data = lm_sum_308_depthmedian_day_night, folder = tables_path)
 save_data(data = lm_sum_321_depthmedian_day_night, folder = tables_path)
 
-
+save_data(data = detections_sum_station, folder = tables_path)
+save_data(data = detections_OG102019, folder = tables_path)
 
 save_data(data = rulsif_308_table_2_5percent, folder = tables_path)
 save_data(data = rulsif_308_table_5percent, folder = tables_path)
@@ -262,4 +322,7 @@ save_data(data = rulsif_321_table_2_5percent, folder = tables_path)
 save_data(data = rulsif_321_table_5percent, folder = tables_path)
 save_data(data = rulsif_321_table_10percent, folder = tables_path)
 
+# statistical tests
 
+save_data(data = daynight_depth_308_ttest, folder = tables_path)
+save_data(data = daynight_depth_321_ttest, folder = tables_path)

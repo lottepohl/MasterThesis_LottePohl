@@ -133,12 +133,12 @@ library(gridExtra)
 ```{r workspace}
 # load functions
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
 
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
@@ -176,120 +176,84 @@ thesis_theme <- ggplot2::theme(
 ggplot2::theme_set(thesis_theme)
 ```
 
+# img
+<!-- 10\thinspace m versus 10\thinmuskip m and 10 m (**check half space**)  -->
+10&nbsp;m or 10\vspace{20pt}m or 10\vspace{12pt}m or 10\vspace{50pt}m
 
-# figures
+<!-- ```{r mapgeolocation} -->
+<!-- #| include: true -->
+<!-- #| echo: false -->
+<!-- #| label: "fig-taggingpics" -->
+<!-- #| out-width: 150% -->
+<!-- #| layout-ncol: 3 -->
+<!-- #| fig-height: 3 -->
+<!-- #| fig-cap: "Images from the tagging of *M. asterias*. The white scale bars in the bottom left corners correspond to 5 cm. © Pieterjan Verhelst." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "A *M. asterias* individual after capture." -->
+<!-- #| - "Tag implantation surgery." -->
+<!-- #| - "Suture after the implantation of the ADST." -->
 
-```{r rawdepthlog}
-#| include: true
-#| label: fig-dst
-#| layout: "[[100], [50,50]]"
-#| out-width: 100%
-#| fig-height: 2
-#| fig-cap: "Depth and temperature log from the recovered tag 295. This male was tagged on August 2, 2018."
-#| fig-subcap: 
-#| - "Raw temperature log"
-#| - "Raw depthlog"
-#| - "subset in summer"
-#| - "subset in winter"
-#| fig-pos: "H"
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_scalebar.png", rel_path = FALSE) -->
 
-# p_308_temp
-p_308_depth
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_tagging_scalebar.png", rel_path = FALSE) -->
 
-p_308_depth_summer
-p_308_depth_winter
-```
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_suture_scalebar.png", rel_path = FALSE) -->
 
-
-```{r dstsum2}
-#| include: true
-#| label: fig-dst2
-#| layout: "[[100], [50,50]]"
-#| out-width: 100%
-#| fig-height: 2
-#| fig-cap: "Depth and temperature log from the recovered tag 295. This male was tagged on August 2, 2018."
-#| fig-subcap: 
-#| - "summary stats per date"
-#| - "sum stats day"
-#| - "sum stats night"
-#| fig-pos: "H"
-
-p_308_sum_stats 
-
-p_308_sum_day
-p_308_sum_night
-```
-
-
-```{r dstsum}
-#| include: false
-#| label: fig-dstsum
-#| layout: "[100], [50,50]]"
-#| out-width: 100%
-#| fig-height: 1.75
-#| fig-cap: "Daily median depth, maximum and minimum depth shaded in grey."
-#| fig-subcap: 
-#| - "summary stats per date"
-#| - "sum stats day"
-#| - "sum stats night"
-#| fig-pos: "H"
-
-p_308_sum_stats 
-
-p_308_sum_day
-p_308_sum_night
-```
+<!-- ``` -->
 
 
 
 
-```{r rawdepthlogsannex}
-#| include: true
-#| label: fig-dstannex
-#| out-width: 100%
-#| fig-height: 4
-#| layout-ncol: 2
-#| fig-cap: "Temperature and depth logs from the short term DST."
-#| fig-subcap: 
-#| - "Tag 295. This male was tagged on July 19, 2018."
-#| - "Tag 304. This female was tagged on July 11, 2019."
-#| - "Tag 310. This male was tagged on July 11, 2019."
-#| - "Tag 312. This female was tagged on July 12, 2019."
-#| - "Tag 319. This female was tagged on July 19, 2018."
-#| - "Tag 322. This female was tagged on July 19, 2018."
-#| fig-pos: "H"
+<!-- ```{r mapgeolocation2} -->
+<!-- #| include: true -->
+<!-- #| echo: false -->
+<!-- #| label: "fig-taggingpics2" -->
+<!-- #| out-width: 80% -->
+<!-- #| layout-ncol: 1 -->
+<!-- #| fig-height: 3 -->
+<!-- #| fig-cap: "Images from the tagging of *M. asterias*. The white scale bars in the bottom left corners correspond to 5 cm. © Pieterjan Verhelst." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "A *M. asterias* individual after capture." -->
+<!-- #| - "Tag implantation surgery." -->
+<!-- #| - "Suture after the implantation of the ADST." -->
 
-gridExtra::grid.arrange(p_295_depth, p_295_temp, ncol = 1)
-gridExtra::grid.arrange(p_304_depth, p_304_temp, ncol = 1)
-gridExtra::grid.arrange(p_310_depth, p_310_temp, ncol = 1)
-gridExtra::grid.arrange(p_312_depth, p_312_temp, ncol = 1)
-gridExtra::grid.arrange(p_319_depth, p_319_temp, ncol = 1)
-gridExtra::grid.arrange(p_322_depth, p_322_temp, ncol = 1)
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_scalebar.png", rel_path = FALSE) -->
 
-```
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_tagging_scalebar.png", rel_path = FALSE) -->
 
+<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_suture_scalebar.png", rel_path = FALSE) -->
 
+<!-- ``` -->
 
 
 # tables
 
 
-```{r table-animalinfo}
-#| include: false
-#| label: tbl-animalinfo
-#| out-width: 100%
-#| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt."
+<!-- ```{r table-animalinfo} -->
+<!-- #| include: true -->
+<!-- #| label: tbl-animalinfo -->
+<!-- #| out-width: 100% -->
+<!-- #| tbl-cap-location: top -->
+<!-- #| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt." -->
 
-knitr::kable(x = tagged_animal_info %>% 
-               #set column order & order rows
-               dplyr::select(tag_serial_number, sex, length1, weight,
-                             release_date_time, n_detect, days_detected,
-                             hours_detected, date_last_detected, 
-                             days_at_liberty, release_loc) %>%
-               arrange(release_date_time) %>%
-               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>%
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+<!-- table <- knitr::kable(x = tagged_animal_info %>%  -->
+<!--                #set column order & order rows -->
+<!--                dplyr::select(tag_serial_number, sex, length1, weight, -->
+<!--                              release_date_time, n_detect, days_detected, -->
+<!--                              hours_detected, date_last_detected,  -->
+<!--                              days_at_liberty, release_loc) %>% -->
+<!--                arrange(release_date_time) %>% -->
+<!--                mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)), -->
+<!--              booktabs = T, escape = F, -->
+<!--              col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>% -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = c("HOLD_position", "float_position=b")) -->
+
+<!-- # Add bold headers -->
+<!-- table <- add_header_above(table, bold = TRUE) -->
+
+<!-- # Apply table styling -->
+<!-- table <- kable_styling(table, position = "center", latex_options = c("hold_position", "float_position=b")) -->
+
+<!-- # Print the table -->
+<!-- print(table) -->
+<!-- ``` -->

@@ -1060,9 +1060,11 @@ detections_sum_station <- detections_tempdepth_daynight %>%
             month_year_chr = month_year_chr %>% unique(), 
             n_ind = tag_serial_number %>% unique() %>% length()) #%>%
 # mutate(n_detect = ifelse(n_detect > 1500, 1000, n_detect))
+# 
+# detections_sum_station_sum_ind <- detections_sum_station %>% group_by(n_ind) %>% summarise(n_ind_group = n(), ind_percent = 100 * ((n_ind_group)/ (detections_sum_station %>% nrow())))
 
 p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!area == "BPNS", sex == "f"), #
-                               aes(x = month_year, y = station_name, fill = n_detect, colour = n_detect)) + #, colour = n_detect
+                               aes(x = month_year, y = station_name, fill = n_detect, colour = "transparent")) + #, colour = n_detect
   # geom_tile(linewidth = 0.75) +
   geom_tile(linewidth = 1) +
   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
@@ -1109,7 +1111,7 @@ detections_OG102019 <- detections_tempdepth_daynight %>%
 
 
 p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
-                                    aes(x = date, y = tag_serial_number, fill = n_detect, colour = n_detect)) + #, colour = n_detect
+                                    aes(x = date, y = tag_serial_number, fill = n_detect, colour = "transparent")) + #, colour = n_detect
   # geom_tile(linewidth = 0.75) +
   geom_tile(linewidth = 1) +
   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
@@ -1126,13 +1128,20 @@ p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
                    ,expand = c(0,0)) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
-  labs(x = "", y = "tag serial nr.", fill = "# detections", colour = "# detections")  +
+  labs(x = "", y = "tag serial nr.", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
   theme(legend.position = "bottom", # "bottom",
         legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
-p_detections_heatmap_OG10 #%>% ggplotly()
+p_detections_heatmap_OG10 %>% ggplotly()
 
 save_data(data = p_detections_heatmap_OG10, folder = plot_path)
+
+
+# ggplot(data = detections_OG102019 %>% group_by(tag_serial_number) %>% summarise(days_detected = n())) + 
+#   geom_histogram(aes(x = days_detected), binwidth = 2)
+# 
+# ggplot(data = detections_OG102019) + 
+#   geom_histogram(aes(x = n_detect))
 
 ### 0.5. residency index OG10 2019 ####
 OG102019_residency <- detections_OG102019 %>% 
@@ -1211,7 +1220,8 @@ save_data(data = plot_depth_range_heatmap, folder = plot_path)
 
 p_308_DST_acoustic <- ggplot() +
   geom_line(data = masterias_depth_temp %>% dplyr::filter(tag_serial_number == "1293308",
-                                                          lubridate::date(date_time) > as.POSIXct("2019-04-30", tz = "utc")), 
+                                                          lubridate::date(date_time) > as.POSIXct("2019-04-30", tz = "utc"),
+                                                          row_number() %% 15 == 0), 
             aes(x = date_time, y = -depth_m), linewidth = 0.35) +
   geom_point(data = detections_tempdepth_daynight %>%
                dplyr::mutate(station_name = gsub("ws-", "", station_name),
@@ -1234,7 +1244,7 @@ p_308_DST_acoustic <- ggplot() +
                    # ,expand = c(0,0)
   ) +
   scale_color_brewer(palette = "Set1") +
-  labs(x = "", y = "Depth in m", colour = "Receiver station:") +
+  labs(x = "", y = "Depth in m", colour = "Receiver Station:") +
   theme(legend.position = "bottom",
         legend.box = "horizontal", legend.margin = margin(t = -15))
 

@@ -17,14 +17,19 @@ tagged_animal_info <- load_data(filestring = "tagged_animal_info", folder = tabl
 release_locations <- load_data(filestring = "release_locations", folder = tables_path)
 abbreviations_list <- load_data(filestring = "abbreviations_list", folder = tables_path)
 detections_month <- load_data(filestring = "detections_month", folder = tables_path)
+detections_sum_station <- load_data(filestring = "detections_sum_station", folder = tables_path)
+detections_OG102019 <- load_data(filestring = "detections_OG102019", folder = tables_path)
 
-lm_sum_308_depthmedian_day_night <- load_data(filestring = "lm_sum_308_depthmedian_day_night", folder = tables_path)
-lm_sum_321_depthmedian_day_night <- load_data(filestring = "lm_sum_321_depthmedian_day_night", folder = tables_path)
+daynight_depth_308_ttest <- load_data(filestring = "daynight_depth_308_ttest", folder = tables_path)
+daynight_depth_321_ttest <- load_data(filestring = "daynight_depth_321_ttest", folder = tables_path)
 
-rulsif_308_table_2_5percent <- load_data(filestring = "rulsif_308_table_2_5percent", folder = tables_path)
-rulsif_308_table_5percent <- load_data(filestring = "rulsif_308_table_5percent", folder = tables_path)
-rulsif_308_table_10percent <- load_data(filestring = "rulsif_308_table_10percent", folder = tables_path)
+# lm_sum_308_depthmedian_day_night <- load_data(filestring = "lm_sum_308_depthmedian_day_night", folder = tables_path)
+# lm_sum_321_depthmedian_day_night <- load_data(filestring = "lm_sum_321_depthmedian_day_night", folder = tables_path)
 
-rulsif_321_table_2_5percent <- load_data(filestring = "rulsif_321_table_2_5percent", folder = tables_path)
-rulsif_321_table_5percent <- load_data(filestring = "rulsif_321_table_5percent", folder = tables_path)
-rulsif_321_table_10percent <- load_data(filestring = "rulsif_321_table_10percent", folder = tables_path)
+# rulsif_308_table_2_5percent <- load_data(filestring = "rulsif_308_table_2_5percent", folder = tables_path)
+# rulsif_308_table_5percent <- load_data(filestring = "rulsif_308_table_5percent", folder = tables_path)
+# rulsif_308_table_10percent <- load_data(filestring = "rulsif_308_table_10percent", folder = tables_path)
+# 
+# rulsif_321_table_2_5percent <- load_data(filestring = "rulsif_321_table_2_5percent", folder = tables_path)
+# rulsif_321_table_5percent <- load_data(filestring = "rulsif_321_table_5percent", folder = tables_path)
+# rulsif_321_table_10percent <- load_data(filestring = "rulsif_321_table_10percent", folder = tables_path)

@@ -39,16 +39,26 @@ p_321_depth <- load_data(filestring = "p_321_depth", folder = plot_path)
 p_308_temp <- load_data(filestring = "p_308_temp", folder = plot_path)
 p_321_temp <- load_data(filestring = "p_321_temp", folder = plot_path)
 
-### points ####
+## subsets ####
+p_321_depth_winter <- load_data(filestring = "p_321_depth_winter", folder = plot_path)
+p_321_depth_summer <- load_data(filestring = "p_321_depth_summer", folder = plot_path)
+p_308_depth_winter <- load_data(filestring = "p_308_depth_winter", folder = plot_path)
+p_308_depth_summer <- load_data(filestring = "p_308_depth_summer", folder = plot_path)
 
-p_dst_raw_295 <- load_data(filestring = "p_dst_raw_295", folder = plot_path)
-p_dst_raw_308 <- load_data(filestring = "p_dst_raw_308", folder = plot_path)
-p_dst_raw_321 <- load_data(filestring = "p_dst_raw_321", folder = plot_path)
-p_dst_raw_322 <- load_data(filestring = "p_dst_raw_322", folder = plot_path)
-p_dst_raw_319 <- load_data(filestring = "p_dst_raw_319", folder = plot_path)
-p_dst_raw_304 <- load_data(filestring = "p_dst_raw_304", folder = plot_path)
-p_dst_raw_310 <- load_data(filestring = "p_dst_raw_310", folder = plot_path)
-p_dst_raw_312 <- load_data(filestring = "p_dst_raw_312", folder = plot_path)
+### points ####
+# ToDo: invlude temperature logs
+p_312_temp <- load_data(filestring = "p_312_temp", folder = plot_path)
+p_312_depth <- load_data(filestring = "p_312_depth", folder = plot_path)
+p_310_temp <- load_data(filestring = "p_310_temp", folder = plot_path)
+p_310_depth <- load_data(filestring = "p_310_depth", folder = plot_path)
+p_304_temp <- load_data(filestring = "p_304_temp", folder = plot_path)
+p_304_depth <- load_data(filestring = "p_304_depth", folder = plot_path)
+p_295_temp <- load_data(filestring = "p_295_temp", folder = plot_path)
+p_295_depth <- load_data(filestring = "p_295_depth", folder = plot_path)
+p_319_depth <- load_data(filestring = "p_319_depth", folder = plot_path)
+p_319_temp <- load_data(filestring = "p_319_temp", folder = plot_path)
+p_322_temp <- load_data(filestring = "p_322_temp", folder = plot_path)
+p_322_depth <- load_data(filestring = "p_322_depth", folder = plot_path)
 
 ## 2. autocorrelation ####
 
@@ -62,6 +72,9 @@ p_321_rulsif_all <- load_data(filestring = "p_321_rulsif_all", folder = plot_pat
 
 p_308_sum_stats <- load_data(filestring = "p_308_sum_stats", folder = plot_path)
 p_321_sum_stats <- load_data(filestring = "p_321_sum_stats", folder = plot_path)
+
+# p_308_sum_daynight <- load_data(filestring = "p_308_sum_daynight", folder = plot_path)
+# p_321_sum_daynight <- load_data(filestring = "p_321_sum_daynight", folder = plot_path)
 
 ### 3.1. daynight sum stats ####
 
@@ -80,13 +93,13 @@ p_fft_321 <- load_data(filestring = "p_fft_321", folder = plot_path)
 ## 5. wavelet results ####
 
 p_308_wavelet_depth_median_sgolay <- load_data(filestring = "p_308_wavelet_depth_median_sgolay", folder = plot_path)
-p_308_wavelet_depth_min_sgolay <- load_data(filestring = "p_308_wavelet_depth_min_sgolay", folder = plot_path)
-p_308_wavelet_depth_max_sgolay <- load_data(filestring = "p_308_wavelet_depth_max_sgolay", folder = plot_path)
+# p_308_wavelet_depth_min_sgolay <- load_data(filestring = "p_308_wavelet_depth_min_sgolay", folder = plot_path)
+# p_308_wavelet_depth_max_sgolay <- load_data(filestring = "p_308_wavelet_depth_max_sgolay", folder = plot_path)
 p_308_wavelet_depth_range_sgolay <- load_data(filestring = "p_308_wavelet_depth_range_sgolay", folder = plot_path)
 
 p_321_wavelet_depth_median_sgolay <- load_data(filestring = "p_321_wavelet_depth_median_sgolay", folder = plot_path)
-p_321_wavelet_depth_min_sgolay <- load_data(filestring = "p_321_wavelet_depth_min_sgolay", folder = plot_path)
-p_321_wavelet_depth_max_sgolay <- load_data(filestring = "p_321_wavelet_depth_max_sgolay", folder = plot_path)
+# p_321_wavelet_depth_min_sgolay <- load_data(filestring = "p_321_wavelet_depth_min_sgolay", folder = plot_path)
+# p_321_wavelet_depth_max_sgolay <- load_data(filestring = "p_321_wavelet_depth_max_sgolay", folder = plot_path)
 p_321_wavelet_depth_range_sgolay <- load_data(filestring = "p_321_wavelet_depth_range_sgolay", folder = plot_path)
 
 # p_308_wavelet_depth_median_roll3 <- load_data(filestring = "p_308_wavelet_depth_median_roll3", folder = plot_path)
@@ -111,33 +124,35 @@ p_321_wavelet_depth_hr <- load_data(filestring = "p_321_wavelet_depth_hr", folde
 
 ## 6. change point detection results ####
 
-p_308_scores_rulsif_2_5percent <- load_data(filestring = "p_308_scores_rulsif_2_5percent", folder = plot_path)
-p_308_ribbon_rulsif_2_5percent <- load_data(filestring = "p_308_ribbon_rulsif_2_5percent", folder = plot_path)
-
-p_308_scores_rulsif_5percent <- load_data(filestring = "p_308_scores_rulsif_5percent", folder = plot_path)
-p_308_ribbon_rulsif_5percent <- load_data(filestring = "p_308_ribbon_rulsif_5percent", folder = plot_path)
-
-p_308_scores_rulsif_10percent <- load_data(filestring = "p_308_scores_rulsif_10percent", folder = plot_path)
-p_308_ribbon_rulsif_10percent <- load_data(filestring = "p_308_ribbon_rulsif_10percent", folder = plot_path)
-
-p_321_scores_rulsif_2_5percent <- load_data(filestring = "p_321_scores_rulsif_2_5percent", folder = plot_path)
-p_321_ribbon_rulsif_2_5percent <- load_data(filestring = "p_321_ribbon_rulsif_2_5percent", folder = plot_path)
-
-p_321_scores_rulsif_5percent <- load_data(filestring = "p_321_scores_rulsif_5percent", folder = plot_path)
-p_321_ribbon_rulsif_5percent <- load_data(filestring = "p_321_ribbon_rulsif_5percent", folder = plot_path)
-
-p_321_scores_rulsif_10percent <- load_data(filestring = "p_321_scores_rulsif_10percent", folder = plot_path)
-p_321_ribbon_rulsif_10percent <- load_data(filestring = "p_321_ribbon_rulsif_10percent", folder = plot_path)
+# p_308_scores_rulsif_2_5percent <- load_data(filestring = "p_308_scores_rulsif_2_5percent", folder = plot_path)
+# p_308_ribbon_rulsif_2_5percent <- load_data(filestring = "p_308_ribbon_rulsif_2_5percent", folder = plot_path)
+# 
+# p_308_scores_rulsif_5percent <- load_data(filestring = "p_308_scores_rulsif_5percent", folder = plot_path)
+# p_308_ribbon_rulsif_5percent <- load_data(filestring = "p_308_ribbon_rulsif_5percent", folder = plot_path)
+# 
+# p_308_scores_rulsif_10percent <- load_data(filestring = "p_308_scores_rulsif_10percent", folder = plot_path)
+# p_308_ribbon_rulsif_10percent <- load_data(filestring = "p_308_ribbon_rulsif_10percent", folder = plot_path)
+# 
+# p_321_scores_rulsif_2_5percent <- load_data(filestring = "p_321_scores_rulsif_2_5percent", folder = plot_path)
+# p_321_ribbon_rulsif_2_5percent <- load_data(filestring = "p_321_ribbon_rulsif_2_5percent", folder = plot_path)
+# 
+# p_321_scores_rulsif_5percent <- load_data(filestring = "p_321_scores_rulsif_5percent", folder = plot_path)
+# p_321_ribbon_rulsif_5percent <- load_data(filestring = "p_321_ribbon_rulsif_5percent", folder = plot_path)
+# 
+# p_321_scores_rulsif_10percent <- load_data(filestring = "p_321_scores_rulsif_10percent", folder = plot_path)
+# p_321_ribbon_rulsif_10percent <- load_data(filestring = "p_321_ribbon_rulsif_10percent", folder = plot_path)
 
 ## 7. lm moon illumination plots ####
 
-p_308_lm_min_moonfraq_smooth <- load_data(filestring = "p_308_lm_min_moonfraq_smooth", folder = plot_path)
-p_308_lm_min_moonfraq_residuals <- load_data(filestring = "p_308_lm_min_moonfraq_residuals", folder = plot_path)
-p_308_lm_min_moonfraq_qq <- load_data(filestring = "p_308_lm_min_moonfraq_qq", folder = plot_path)
-p_308_lm_min_moonfraq_density <- load_data(filestring = "p_308_lm_min_moonfraq_density", folder = plot_path)
+p_308_lm_median_moonfraq_smooth <- load_data(filestring = "p_308_lm_median_moonfraq_smooth", folder = plot_path)
+p_321_lm_median_moonfraq_smooth <- load_data(filestring = "p_321_lm_median_moonfraq_smooth", folder = plot_path)
 
-p_321_lm_min_moonfraq_smooth <- load_data(filestring = "p_321_lm_min_moonfraq_smooth", folder = plot_path)
-p_321_lm_min_moonfraq_residuals <- load_data(filestring = "p_321_lm_min_moonfraq_residuals", folder = plot_path)
-p_321_lm_min_moonfraq_qq <- load_data(filestring = "p_321_lm_min_moonfraq_qq", folder = plot_path)
-p_321_lm_min_moonfraq_density <- load_data(filestring = "p_321_lm_min_moonfraq_density", folder = plot_path)
+# p_308_lm_min_moonfraq_residuals <- load_data(filestring = "p_308_lm_min_moonfraq_residuals", folder = plot_path)
+# p_308_lm_min_moonfraq_qq <- load_data(filestring = "p_308_lm_min_moonfraq_qq", folder = plot_path)
+# p_308_lm_min_moonfraq_density <- load_data(filestring = "p_308_lm_min_moonfraq_density", folder = plot_path)
+# 
+# p_321_lm_min_moonfraq_smooth <- load_data(filestring = "p_321_lm_min_moonfraq_smooth", folder = plot_path)
+# p_321_lm_min_moonfraq_residuals <- load_data(filestring = "p_321_lm_min_moonfraq_residuals", folder = plot_path)
+# p_321_lm_min_moonfraq_qq <- load_data(filestring = "p_321_lm_min_moonfraq_qq", folder = plot_path)
+# p_321_lm_min_moonfraq_density <- load_data(filestring = "p_321_lm_min_moonfraq_density", folder = plot_path)
 
