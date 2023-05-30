@@ -52,7 +52,7 @@ author:
         - ref: VLIZ
     note: Promotor
 abstract: 
- Still to be written.
+ tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua
 keywords: 
   - acoustic telemetry
   - geolocation modelling
@@ -142,7 +142,7 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
@@ -157,6 +157,9 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 ```
 
 ```{r setplottheme}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
 thesis_theme <- ggplot2::theme(
   plot.title = element_text(family = "serif", size = 9, face = "bold"),
   plot.subtitle = element_text(family = "serif", size = 9),
@@ -174,11 +177,179 @@ thesis_theme <- ggplot2::theme(
 
 # Set the theme as the default for all plots
 ggplot2::theme_set(thesis_theme)
+
+
+thesis_theme_halfpage <- ggplot2::theme(
+  plot.title = element_text(family = "serif", size = 11.5, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 11.5),
+  axis.title = element_text(family = "serif", size = 11.5),
+  axis.text = element_text(family = "serif", size = 9.5),
+  legend.title = element_text(family = "serif", size = 11.5),
+  legend.text = element_text(family = "serif", size = 9.5),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # plot.background = element_blank()#,
+  panel.background = element_blank(),
+  # panel.background = element_rect(fill = "transparent"),
+  panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+  panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+)
 ```
 
-# img
-<!-- 10\thinspace m versus 10\thinmuskip m and 10 m (**check half space**)  -->
-10&nbsp;m or 10\vspace{20pt}m or 10\vspace{12pt}m or 10\vspace{50pt}m
+<!-- {{< pagebreak >}} -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- This thesis follows the manuscript guidelines of the **Journal of Animal Biotelemetry (ISSN: 2050-3385)**. -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- \ -->
+<!-- No data can be taken out of this work without prior approval of the thesis promoter. -->
+
+<!-- I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board. -->
+
+<!-- \ -->
+<!-- \ -->
+
+<!-- Date: -->
+
+<!-- Signature: -->
+
+{{< pagebreak >}}
+
+
+```{r abacus}
+#| include: true
+#| label: fig-maps
+#| out-width: 120%
+#| fig-height: 4
+#| layout-ncol: 2
+#| fig-cap: "Results of geolocation modelling on the raw DST depthlogs."
+#| fig-pos: "H"
+
+map_dst_308 + thesis_theme_halfpage
+map_dst_321 + thesis_theme_halfpage
+```
+
+
+
+```{r abacus34}
+#| include: true
+#| label: fig-maps5
+#| out-width: 120%
+#| fig-height: 3
+#| layout-ncol: 2
+#| fig-cap: "Results of geolocation modelling on the raw DST depthlogs."
+#| fig-pos: "H"
+
+map_dst_308 + theme(legend.text = element_text(size = 7))
+map_dst_321 + theme(legend.text = element_text(size = 7))
+```
+
+
+```{r abacus7}
+#| include: true
+#| label: fig-maps6
+#| out-width: 100%
+#| fig-height: 3.5
+#| fig-cap: "Geolocation Model outputs"
+#| fig-pos: "H"
+
+map_geolocation_ggplot + theme(legend.text = element_text(size = 7))
+```
+
+
+
+
+
+```{r abacus2}
+#| include: true
+#| label: fig-maps3
+#| out-width: 100%
+#| fig-height: 2.5
+#| fig-cap: "Overview of the study area of focus point 2."
+#| fig-pos: "H"
+
+map_overview_ggplot + theme(legend.text = element_text(size = 7))
+```
+
+
+
+```{r map}
+#| include: true
+#| label: fig-maps2
+#| out-width: 100%
+#| fig-height: 3
+#| fig-cap: "Overview of the study area of focus point 2."
+#| fig-pos: "H"
+
+map_overview_ggplot + theme(legend.text = element_text(size = 7))
+```
+
+
+```{r map346}
+#| include: true
+#| label: fig-maps765
+#| out-width: 100%
+#| fig-height: 3
+#| fig-cap: "Overview of the study area of focus point 2."
+#| fig-pos: "H"
+
+map_detail_ggplot + theme(legend.text = element_text(size = 7))
+```
+
+
+<!-- # List of Abbreviations {-} -->
+
+<!-- ```{r table-abbreviations} -->
+<!-- #| include: true -->
+<!-- ##| echo: false -->
+<!-- #| label: tbl-abbreviations -->
+<!-- #| out-width: 100% -->
+
+<!-- table <- knitr::kable(abbreviations_list) -->
+
+<!-- # Add bold headers -->
+<!-- table <- kableExtra::add_header_above(table, bold = TRUE) -->
+
+<!-- # Apply table styling -->
+<!-- table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position") -->
+
+<!-- table -->
+<!-- # knitr::kable(abbreviations_list) %>% -->
+<!-- #   kableExtra::add_header_above(table, bold = TRUE) %>% -->
+<!-- #   kableExtra::kable_styling(position = "center", -->
+<!-- #                             latex_options = "hold_position") -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r dstsum308} -->
+<!-- #| include: true -->
+<!-- #| label: fig-dstsum308 -->
+<!-- #| layout: "[[100], [50,50]]" -->
+<!-- #| out-width: 110% -->
+<!-- #| fig-height: 2.5 -->
+<!-- #| fig-cap: "Summary statistics, per date, day and night. Median depth as a solid line, maximum and minimum depth as shaded ribbon. All depth summaries were Savitzky-Golay filtered. Illuminated fraction of the moon as a dotted line." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Median, maximum and minimum depth per date." -->
+<!-- #| - "Summary statistics per day. " -->
+<!-- #| - "Summary statistics per night." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- p_308_sum_stats  -->
+
+<!-- p_308_sum_day + thesis_theme_halfpage -->
+<!-- p_308_sum_night + thesis_theme_halfpage -->
+<!-- ``` -->
+
+
 
 <!-- ```{r mapgeolocation} -->
 <!-- #| include: true -->

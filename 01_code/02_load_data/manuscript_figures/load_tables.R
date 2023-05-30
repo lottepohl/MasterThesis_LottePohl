@@ -19,6 +19,7 @@ abbreviations_list <- load_data(filestring = "abbreviations_list", folder = tabl
 detections_month <- load_data(filestring = "detections_month", folder = tables_path)
 detections_sum_station <- load_data(filestring = "detections_sum_station", folder = tables_path)
 detections_OG102019 <- load_data(filestring = "detections_OG102019", folder = tables_path)
+OG10_2019_RI <- load_data(filestring = "OG10_2019_RI", folder = tables_path)
 
 daynight_depth_308_ttest <- load_data(filestring = "daynight_depth_308_ttest", folder = tables_path)
 daynight_depth_321_ttest <- load_data(filestring = "daynight_depth_321_ttest", folder = tables_path)

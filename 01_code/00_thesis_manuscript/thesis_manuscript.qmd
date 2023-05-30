@@ -188,6 +188,21 @@ thesis_theme <- ggplot2::theme(
 
 # Set the theme as the default for all plots
 ggplot2::theme_set(thesis_theme)
+
+thesis_theme_halfpage <- ggplot2::theme(
+  plot.title = element_text(family = "serif", size = 13, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 13),
+  axis.title = element_text(family = "serif", size = 13),
+  axis.text = element_text(family = "serif", size = 11),
+  legend.title = element_text(family = "serif", size = 13),
+  legend.text = element_text(family = "serif", size = 11),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # plot.background = element_blank()#,
+  panel.background = element_blank(),
+  # panel.background = element_rect(fill = "transparent"),
+  panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+  panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+)
 ```
 
 # Guidelines {-}
@@ -335,15 +350,23 @@ ggplot2::theme_set(thesis_theme)
 
 {{< pagebreak >}}
 
-<!-- No data can be taken out of this work without prior approval of the thesis promoter.      -->
+This thesis follows the guidelines of the **Journal of Animal Biotelemetry (ISSN: 2050-3385)**.
 
-<!-- I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board.  -->
+<br>
+<br>
+<\br>
+<\br>
 
-<!-- Date: -->
 
-<!-- Signature: -->
+No data can be taken out of this work without prior approval of the thesis promoter.
 
-<!-- {{< pagebreak >}} -->
+I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board.
+
+Date:
+
+Signature:
+
+{{< pagebreak >}}
 
 # List of Abbreviations {-}
 
@@ -1129,10 +1152,13 @@ gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
 #| include: true
 #| echo: false
 #| label: "fig-mapoverview"
-#| out-width: 120%
+#| out-width: 100%
 #| fig-cap: "Overview map of the study area. To do: make sure to include the locations where tag 321 went on the overview map, input all the places mentioned in the description of the north sea and the english channel."
+#| fig-pos: "H"
 
-knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
+map_overview_ggplot
+
+# knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
 
 ```
 
@@ -1275,9 +1301,8 @@ excluded from all analyses to remove potential bias resulting from the
 tagging procedure [as suggested by @flavio_2021]. The date of death, used to
 calculate the time at liberty for the recovered tags, was visually extracted from plots of the
 raw depth series, and marks the date after which only a tidal signal
-remains in the depthlog (characterised by cyclically rising and
-falling depths within a rough 2 m interval). **refer to tidal range of the area from https://www.researchgate.net/publication/228491104_The_origin_of_neap-spring_tidal_cycles**
-<!-- Potentially automate this -->
+remains in the depthlog [characterised by cyclically rising and
+falling depths within a rough 2 m depth range, @kvale_2006]. 
 
 The analyses described in the following were only performed for tags that logged for $\geq$ 365 days. 
 Those will be referred to as *long term DST* in the following, tags logging for less than a year will be
@@ -1292,8 +1317,8 @@ The illuminated fraction of the moon was extracted using the
 `moonAngle()`-function from the `oce` package [@oce]. 
 
 <!-- On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. -->
-On all summaries a Savitzky-Golay smoothing filter [@press_1990,
-filter order *p = 1*, filter length *n = 5*] was applied using the
+A Savitzky-Golay smoothing filter [@press_1990,
+filter order *p = 1*, filter length *n = 5*] was applied on all summaries using the
 `sgolayfilt()`-function from the `signal`-package [@signal]. This particular
 filter smoothes the data but retains spikes in the data better than
 other smoothing filters like butterworth or averaging filters [like
@@ -1319,7 +1344,7 @@ domain (which is a combination of multiple sine waves with different
 frequencies) into its components in the frequency domain. Dominant
 frequencies (or rather periods, which is the inverse of the frequency)
 give insights about the scale of periodicity of a signal [in the present
-case the signal is the depth-timeseries, @cochran_1967].
+case the signal is the depth-timeseries of the sharks, @cochran_1967].
 
 <!-- Then, the daily -->
 <!-- summary statistics were subset with the dates that each individual most -->
@@ -1422,16 +1447,14 @@ CWT was performed on both the raw depthlog and the median depth per date, result
 
 ## Tagged animals
 
-Tagging of 30 *M. asterias* individuals occured in July and August, 2018
+Tagging of 30 *M. asterias* individuals occurred in July and August, 2018
 (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`,
 `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n =
 `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and
 12, n = `r tagging_info$n[4]` for both dates). Details on the tagged
 individuals are listed in @tbl-animalinfo. Of the
 `r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()` males
-that were tagged and detected \>1 times, only
-`r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()`
-were detected at all. 3 of the detected males were detected in the year
+that were tagged, `r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()` were detected more than once. 3 of the detected males were detected in the year
 following their tagging. Of the
 `r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()` tagged
 females,
@@ -1458,7 +1481,7 @@ knitr::kable(x = tagged_animal_info %>%
                arrange(release_date_time) %>%
                mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
              booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in cm", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>%
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>%
   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
 
@@ -1587,7 +1610,7 @@ while most individuals (n = 10) were detected in August.
 ```{r abacus}
 #| include: true
 #| label: fig-abacus
-#| out-width: 120%
+#| out-width: 100%
 #| fig-height: 3
 #| fig-cap: "Acoustic detections of the tagged starry smooth-hounds, the colour responds to the receiver area. The shapes with black outlines refer to the tagging date and the sex of the individual."
 #| fig-pos: "H"
@@ -1600,7 +1623,7 @@ The acoustic detections at each receiver station of female *M. asterias* within 
 ```{r heatmapdetections}
 #| include: true
 #| label: fig-heatmapdetections
-#| out-width: 120%
+#| out-width: 100%
 #| fig-height: 3
 #| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Westerschelde (receiver arrays *WS1*, *WS2* and *WS3*). "
 #| fig-pos: "H"
@@ -1633,7 +1656,7 @@ The number of days detected between individuals above the median of `r detection
 ```{r heatmapOG10}
 #| include: true
 #| label: fig-heatmapOG10
-#| out-width: 120%
+#| out-width: 100%
 #| fig-height: 3
 #| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10."
 #| fig-pos: "H"
@@ -1727,7 +1750,7 @@ available raw data is listed in @tbl-dstsum.
 #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date. The tag recapture date was not recorded for tag 1293321, 1293308 and 1293304."
 
 knitr::kable(dst_summary %>% 
-               dplyr::select(tag_serial_number, sex, release_date, death_date, time_at_liberty, recapture_date_time) %>%
+               dplyr::select(tag_serial_number, sex, release_date, death_date, days_at_liberty, recapture_date_time) %>%
                arrange(release_date),
              booktabs = T, escape = F,
              col.names = linebreak(c("tag serial no.", "sex", "release date", "death date", "days at liberty", "recapture date"), align = "c")) %>% 
@@ -1770,7 +1793,17 @@ will be referred to as short term DST.
 
 The depth and temperature logs of tag 308 and 321 (the two long term
 DST) are shown in @fig-dst308-1 and @fig-dst321-1, respectively. Exemplary subsets from summer and winter are also shown.
-The temperature logs and all raw depth and temperature logs of the short term DST are included in Annex B.
+The temperature logs and all raw depth and temperature logs of the short term DST are included in **Annex A**.
+
+The full depthlog of tag 308 (@fig-dst308-1), comprising 366 days, shows depth between 0 and 20 m between the time of tagging in August, 2018, and the beginning of October. Then the depth gets deeper over a period of about two weeks, and between mid-November and mid-December the sensor recorded depths between 50 and 75 m. From December, 2018 until March, 2019, the depth ranges between 75 m and close to the water surface. From mid-March on, the depth remains shallower than 60 m. From May to June, 2019, depth is relatively constant around 17 m, from mid-June to mid-July it is relatively constant around 10 m and until the sensor stops recording the depth goes back to just under 20 m.
+@fig-dst308-2 shows an exemplary subset of the depthlog of tag 308 in September, 2018. Roughly, the depth alternates between 12  - 14 and 16 - 20 m in a sinusoidal pattern with a wavelength of about 12 hours.
+The subset in @fig-dst308-3 shows a period of a month between Febuary and March, 2019. Here, periods of smaller depth ranges from 40 to 60 m (between Febuary 11 and 18 and between Febuary 25 and March 3) can be observed with periods of larger depth ranges from 5 to 75 m (between Febuary 18 and 24) in between, can be observed.
+
+
+The full depthlog of tag 321 (@fig-dst321-1) is 485 days long and shows depth ranges between 0 and 30 m from tagging until the end of October, 2018. Then, depth gets deeper over a period of roughly 10 days, stays at 35 to 50 m until December, 2018 and then ranges from 5 m to 50 m until March, 2019. Until May, 2019 depth ranges between 10 and 35 m, then the sensor recorded depth values of 60 m on May 03, 2019. After that, depth gets shallower with ranges from 0 to mostly 20 m until mid-September. Until the end of the depthlog November 15, 2019, depth gets deeper to around 35 m and then to around 40 m.
+The exemplary depthlog of September, 2018 in @fig-dst321-2 shows a depth range between 10 and 15 m during daytime (a sinusoidal pattern similar to the one in @fig-dst308-2), and during night minimum depths of around 2 m during night time.
+The subset from February to March, 2019 (@fig-dst321-3) shows depth ranges from 5 to 55m with no observable pattern of larger or smaller depth ranges on a weekly scale.
+
 <!-- The raw depth and temperature logs of the short term DST are depicted in @sec-annexdst_raw. -->
 
 <!-- Tag 295 (@fig-dst-1) shows regular up- and downward movements with minimum depths per day of around 2 m and maximum daily depths between 18 and 35 m. After August 20, 2018, only a tidal signal and no up and down movements were recorded. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`°C was recorded on the same day. -->
@@ -2341,7 +2374,7 @@ While autocorrelation might not be the most resultful exploratory analysis it ca
 
 Conducting a continuous wavelet transform (CWT) and thereby resolving prevalent periodicities in the time domain proved to be a main analysis tool in this study. Furthermore, performing CWT both on the raw depthlog and the daily summary statistics allowed for different scales of periodicities and was able to provide further proof of patterns that could already been seen in the daily summary statistics in @fig-dstsum308-1 and @fig-dstsum321-1. Wavelet analysis is no ubiquitous analysis tool in movement ecology but has been employed in the past [@wittemyer_2008; @zhang_2020].
 CWT was preferred over Fourier Transformation (FT) due to its ability to resolve periodicities in the time domain. While FT can also be performed on subsets of the depthlog, this manual separation introduces a bias and within that subset, the periodicities are not resolved in the time domain.
-The resolution in the time domain of CWT comes at the cost of a lower resolution both in the time and frequency domain. Thus, FT provides a first step of spectral analysis and can give insights into generally existing patterns of periodicity (as shown in **Annex B**), but CWT allows for unbiased assessment of change of prevalent periodicities in time of time series data.
+The resolution in the time domain of CWT comes at the cost of a lower resolution both in the time and frequency domain. Thus, FT provides a first step of spectral analysis and can give insights into generally existing patterns of periodicity (as shown in **Annex A**), but CWT allows for unbiased assessment of change of prevalent periodicities in time of time series data.
 In the wavelet scalograms on the hourly scale, only periods in winter were significantly present and are shown as fully opaque in the plots (@fig-waveletresults308-1 and @fig-waveletresults321-1). In summer, periodicities of 12 h for the female shark and 24 h of the male shark have a high prevalence (indicated by a high power value and an orange/red colour in the scalogram), albeit these are not significant. This is thought to be due to the difference in magnitude of the periodicity during summer compared to the winter period, for example, where overall vertical activity is much higher. 
 
 <!-- So, although not unmistakeably discriminable from white noise, -->
@@ -2415,11 +2448,11 @@ included within the article (and its additional file(s)).
 
 <!-- *All the raw data have to be added in annex* -->
 
-## **Annex A**: Acoustic detections {-}
+<!-- ## **Annex A**: Acoustic detections {-} -->
 
-## **Annex B**: DST data {-}
+## **Annex A**: DST data {-}
 
-### Raw depth and temperature logs {-}
+### **A1**: Raw depth and temperature logs {-}
 
 @fig-dsttempannex shows the raw depth and temperature logs of tags 308 and 321. Tag 308 experienced the maximum temperature of 22.9°C on August 06, 2018 and its minimum temperature of 8.65°C on March 23, 2019.
 Tag 321 experienced its maximum temperature of 22.1°C on August 07, 2018 and its minimum temperature of 5.98°C on February 04, 2019.
@@ -2466,7 +2499,7 @@ gridExtra::grid.arrange(p_322_depth, p_322_temp, ncol = 1)
 
 ```
 
-### Fast Fourier Transformation {-}
+### **A2**: Fast Fourier Transformation {-}
 
 The resulting periodograms from the Fast Fourier Transform for tags 308
 (*f*) and 321 (*m*) are depicted in @fig-fft.

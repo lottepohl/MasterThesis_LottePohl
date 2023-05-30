@@ -21,7 +21,7 @@ paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% b
 
 # table 1: list of abbreviations ####
 
-abbreviations_list <- tibble::tibble(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN"),
+abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT"),
                          Explanation= c("Acoustic Data Storage Tag",
                                         "Data Storage Tag",
                                         "Belgian Part of the North Sea",
@@ -29,7 +29,12 @@ abbreviations_list <- tibble::tibble(Abbreviation = c("ADST", "DST", "BPNS", "f"
                                         "male",
                                         "Continuous Wavelet Transform",
                                         "European Tracking Network",
-                                        "Permanent Belgian Receiver Network"))
+                                        "Permanent Belgian Receiver Network",
+                                        "Hidden Markov Model",
+                                        "Total Length",
+                                        "Fourier Transformation",
+                                        "Fast Fourier Transform")) %>%
+  dplyr::arrange(Abbreviation)
 
 # table 2: release locations ####
 
@@ -38,6 +43,37 @@ release_locations <- masterias_info %>% mutate(date = release_date_time %>% lubr
   group_by(release_loc) %>% reframe(lat = release_latitude %>% mean(),
                                     lng = release_longitude %>% mean()) #%>%
   # mutate(label = c(1,2))
+
+# table 5: dst summary ####
+
+dst_summary <- masterias_depth_date %>% 
+  dplyr::group_by(tag_serial_number) %>%
+  summarise(release_date = min(date) - lubridate::days(8),
+            death_date = date %>% max(),
+            days_at_liberty = base::difftime(release_date, death_date, units = "days")%>% abs() %>% as.numeric(),
+            depth_min_total = min(depth_min),
+            depth_max_total = max(depth_max),
+            temp_min_total = min(temp_min),
+            temp_max_total = min(temp_max),
+            date_depth_max = date[which.max(depth_max)],
+            date_depth_min = date[which.min(depth_min)],
+            date_temp_max = date[which.max(temp_max)],
+            date_temp_min = date[which.min(temp_min)]) %>%
+  arrange(days_at_liberty) %>%
+  left_join(masterias_info %>%
+              dplyr::select(tag_serial_number, sex, recapture_date_time), 
+            by = "tag_serial_number") %>%
+  mutate(release_date = release_date %>% as.Date(),
+         death_date = death_date %>% as.Date(),
+         recapture_date_time = recapture_date_time %>% as.Date())
+# include max and min depth, and max and min temp?
+
+# tagged_animal_info <- tagged_animal_info %>% dplyr::full_join(
+#   dst_summary %>% 
+#     dplyr::select(tag_serial_number, days_at_liberty) %>%
+#     dplyr::rename(days_at_liberty = days_at_liberty)) %>% View()
+
+
 
 # table 3: tagged animal summary ####
 
@@ -49,11 +85,19 @@ acoustic_days_liberty <- detections_tempdepth_daynight %>% group_by(tag_serial_n
 tagged_animal_info <- masterias_info %>% 
   mutate(release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "Western Scheldt")) %>%
   dplyr::select(tag_serial_number, sex, length1, weight, release_date_time, n_detect, release_loc) %>% #, capture_method
-  mutate(release_date_time = lubridate::date(release_date_time)) %>%
+  mutate(release_date_time = lubridate::date(release_date_time)
+         # ,days_at_liberty = 0
+         ) %>%
   left_join(acoustic_days_liberty, by = "tag_serial_number") %>%
-  mutate(days_at_liberty = base::difftime(date_last_detected, release_date_time, tz = "UTC", units = "days") %>% as.numeric(),
+  # left_join(dst_summary %>% dplyr::select(tag_serial_number, days_at_liberty)) #%>%
+  mutate(
+    # days_at_liberty = ifelse(days_at_liberty == 0, 
+    #                               base::difftime(date_last_detected, release_date_time, tz = "UTC", units = "days") %>% as.numeric(), 
+    #                               days_at_liberty),
+         days_at_liberty = base::difftime(date_last_detected, release_date_time, tz = "UTC", units = "days") %>% as.numeric(),
          days_at_liberty = ifelse(n_detect == 1,  1, days_at_liberty),
-         days_detected = ifelse(n_detect == 1, 1, days_detected)) %>%
+         days_detected = ifelse(n_detect == 1, 1, days_detected),
+         length1 = length1 / 100) %>%
   tidyr::replace_na(replace = list(n_detect = 0,
                                    days_detected = 0,
                                    hours_detected = 0,
@@ -61,7 +105,12 @@ tagged_animal_info <- masterias_info %>%
                                    days_at_liberty = 0)) %>% #look for solution to replace all columns but one with NA
   relocate(release_loc, .after = days_at_liberty)
 
-  
+for(i in 1:nrow(tagged_animal_info)){
+  tag_serial_num <- tagged_animal_info$tag_serial_number[i]
+  tagged_animal_info$days_at_liberty[i] <- max(tagged_animal_info$days_at_liberty[i],
+                                               dst_summary$days_at_liberty[dst_summary$tag_serial_number == tag_serial_num])
+}
+
 # tagged_animal_info %>% View()
 
 # return rate
@@ -101,30 +150,6 @@ detections_month <- detections_tempdepth_daynight %>%
   pivot_wider(names_from = sex, values_from = c(n_detect, n_ind), values_fill = 0)
 
 # include capture method y or n?
-
-# table 5: dst summary ####
-
-dst_summary <- masterias_depth_date %>% 
-  dplyr::group_by(tag_serial_number) %>%
-  summarise(release_date = min(date) - lubridate::days(8),
-            death_date = date %>% max(),
-            time_at_liberty = base::difftime(release_date, death_date, units = "days")%>% abs() %>% as.numeric(),
-            depth_min_total = min(depth_min),
-            depth_max_total = max(depth_max),
-            temp_min_total = min(temp_min),
-            temp_max_total = min(temp_max),
-            date_depth_max = date[which.max(depth_max)],
-            date_depth_min = date[which.min(depth_min)],
-            date_temp_max = date[which.max(temp_max)],
-            date_temp_min = date[which.min(temp_min)]) %>%
-  arrange(time_at_liberty) %>%
-  left_join(masterias_info %>%
-              dplyr::select(tag_serial_number, sex, recapture_date_time), 
-            by = "tag_serial_number") %>%
-  mutate(release_date = release_date %>% as.Date(),
-         death_date = death_date %>% as.Date(),
-         recapture_date_time = recapture_date_time %>% as.Date())
-# include max and min depth, and max and min temp?
 
 # table 6: lm moonphase ####
 
@@ -171,6 +196,32 @@ detections_OG102019 <- detections_tempdepth_daynight %>%
             sex = sex %>% unique()) %>%
   mutate(date = date %>% as.POSIXct(tz = "utc")) %>%
   ungroup()
+
+# table 9: RI of females in OG10 in 2019 ####
+
+detections_OG102019 <- detections_tempdepth_daynight %>% 
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                tag_serial_number = tag_serial_number %>%
+                  stringr::str_trunc(width = 3, side = "left", ellipsis = "")
+                # station_name = gsub("bpns-", "", station_name),
+                # station_name = factor(station_name, levels = station_names_order)
+  ) %>% 
+  # mutate(month_year = as.POSIXct(paste0(lubridate::year(date_time), '-', lubridate::month(date_time), '-17')),
+  #        month_year_chr = paste0(lubridate::year(date_time), '-', date_time %>% format("%b"))) %>%
+  dplyr::filter(station_name == "OG10",
+                lubridate::year(date_time) == "2019") %>%
+  group_by(tag_serial_number, date) %>%
+  summarise(n_detect = n(),
+            depth_median = median(parameter[sensor_type == "pressure"]),
+            sex = sex %>% unique()) %>%
+  mutate(date = date %>% as.POSIXct(tz = "utc")) %>%
+  ungroup()
+
+OG10_2019_RI <- detections_OG102019 %>% group_by(tag_serial_number) %>%
+  summarise(RI = n() / (base::difftime(detections_OG102019$date %>% max(), detections_OG102019$date %>% min(), unit = "days") %>% as.numeric))
+
+# ggplot(data = OG10_2019_RI, aes(x = tag_serial_number, y = RI)) +
+#   geom_point()
 
 # statistical tests ####
 
@@ -313,6 +364,7 @@ save_data(data = lm_sum_321_depthmedian_day_night, folder = tables_path)
 
 save_data(data = detections_sum_station, folder = tables_path)
 save_data(data = detections_OG102019, folder = tables_path)
+save_data(data = OG10_2019_RI, folder = tables_path)
 
 save_data(data = rulsif_308_table_2_5percent, folder = tables_path)
 save_data(data = rulsif_308_table_5percent, folder = tables_path)
