@@ -50,7 +50,7 @@ author:
         - ref: VLIZ
     note: Promotor
 abstract: 
- Still to be written.
+  tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua
 keywords: 
   - acoustic telemetry
   - geolocation modelling
@@ -138,7 +138,7 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 # 
-# # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 # 
 # dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
 # 
@@ -171,16 +171,20 @@ path_figures <- paste0(getwd(), "/01_code/00_thesis_manuscript/figures/")
 ```
 
 ```{r setplottheme}
+
 thesis_theme <- ggplot2::theme(
   plot.title = element_text(family = "serif", size = 9, face = "bold"),
   plot.subtitle = element_text(family = "serif", size = 9),
   axis.title = element_text(family = "serif", size = 9),
   axis.text = element_text(family = "serif", size = 7),
-  legend.title = element_text(family = "serif", size = 9),
+  legend.title = element_text(family = "serif", size = 8),
   legend.text = element_text(family = "serif", size = 7),
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # legend.key.width = unit(2, "cm"),
+  legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
+  panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
   # panel.background = element_rect(fill = "transparent"),
   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
@@ -189,13 +193,14 @@ thesis_theme <- ggplot2::theme(
 # Set the theme as the default for all plots
 ggplot2::theme_set(thesis_theme)
 
+
 thesis_theme_halfpage <- ggplot2::theme(
-  plot.title = element_text(family = "serif", size = 13, face = "bold"),
-  plot.subtitle = element_text(family = "serif", size = 13),
-  axis.title = element_text(family = "serif", size = 13),
-  axis.text = element_text(family = "serif", size = 11),
-  legend.title = element_text(family = "serif", size = 13),
-  legend.text = element_text(family = "serif", size = 11),
+  plot.title = element_text(family = "serif", size = 11.5, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 11.5),
+  axis.title = element_text(family = "serif", size = 11.5),
+  axis.text = element_text(family = "serif", size = 9.5),
+  legend.title = element_text(family = "serif", size = 11.5),
+  legend.text = element_text(family = "serif", size = 9.5),
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
@@ -350,47 +355,32 @@ thesis_theme_halfpage <- ggplot2::theme(
 
 {{< pagebreak >}}
 
-This thesis follows the guidelines of the **Journal of Animal Biotelemetry (ISSN: 2050-3385)**.
-
-<br>
-<br>
-<\br>
-<\br>
-
-
-No data can be taken out of this work without prior approval of the thesis promoter.
-
-I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board.
-
-Date:
-
-Signature:
-
-{{< pagebreak >}}
-
 # List of Abbreviations {-}
 
-```{r table-abbreviations}
-#| include: true
-##| echo: false
-#| label: tbl-abbreviations
-#| out-width: 100%
+<!-- ```{r table-abbreviations} -->
+<!-- #| include: true -->
+<!-- ##| echo: false -->
+<!-- #| label: tbl-abbreviations -->
+<!-- #| out-width: 100% -->
 
-table <- knitr::kable(abbreviations_list)
+<!-- knitr::kable(abbreviations_list) %>% kableExtra::kable_styling(position = "center", -->
+<!--                                                    latex_options = "hold_position") -->
+<!-- #  -->
+<!-- # table <- knitr::kable(abbreviations_list) -->
+<!-- #  -->
+<!-- # # Add bold headers -->
+<!-- # table <- kableExtra::add_header_above(table, bold = TRUE) -->
+<!-- #  -->
+<!-- # # Apply table styling -->
+<!-- # table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position") -->
+<!-- #  -->
+<!-- # table -->
+<!-- # # knitr::kable(abbreviations_list) %>% -->
+<!-- # #   kableExtra::add_header_above(table, bold = TRUE) %>% -->
+<!-- # #   kableExtra::kable_styling(position = "center", -->
+<!-- # #                             latex_options = "hold_position") -->
 
-# Add bold headers
-table <- kableExtra::add_header_above(table, bold = TRUE)
-
-# Apply table styling
-table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position")
-
-table
-# knitr::kable(abbreviations_list) %>%
-#   kableExtra::add_header_above(table, bold = TRUE) %>%
-#   kableExtra::kable_styling(position = "center",
-#                             latex_options = "hold_position")
-
-```
+<!-- ``` -->
 
 
 # Table of figures
@@ -401,8 +391,34 @@ table
 
 # Executive Summary
 
+*executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion), discuss/mention hypotheses*
+
+**currently: 365 words**
+
+The starry smooth-hound *Mustelus asterias* is a widely distributed demersal shark in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
+The movement of fish is commonly studied with electronic tags. A novel technology is the Acoustic Data Storage Tag (ADST), which can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals. To access the data logs the tag needs to be recovered.
+This study employs ADST to characterise the migration and residency of *M. asterias* in the North Sea regarding seasonality and sex.
+160 acoustic receivers that can detect ADST are currently installed in the Scheldt Estuary and the Belgian Part of the North Sea (BPNS) as part of the European Tracking Network. 
+
+In 2018 and 2019, 30 adult *M. asterias* (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. 18 individuals (14 females and 4 males) were detected 10940 times by the acoustic receivers between July 2018 and July 2020. 
+All detections were between April and November, suggesting seasonal presence of *M. asterias* in the receiver area. 96.7% of detections were at receivers just outside the Western Scheldt, and 97.4% of detections were from females. This indicates that the outer part of the Scheldt Estuary is a relevant habitat for females between April and November.
+
+8 ADST were recovered, with two individuals (1 female, 1 male) logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and depths between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter months. Continuous Wavelet Transform displays differences in periodic patterns between seasons and the two individuals, linking to resting or feeding behaviour. The results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and the male is continuously feeding.
+This study provides first details about seasonality in vertical movement behaviour of *M. asterias* and confirms its seasonal presence in the Western Scheldt.
+
+
 # Abstract
 
+*abstract (200 words) is conform with the summary but without detailed information about Methods and Results*
+
+**currently: 198 words**
+
+The starry smooth-hound *Mustelus asterias* is widely distributed in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
+Fish movement is commonly studied with electronic tags, one novel technology being  the Acoustic Data Storage Tag (ADST). It can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals.
+This study characterises the migration and residency of *M. asterias* in the North Sea regarding season and sex. 30 *M. asterias* were equipped with ADST in the Scheldt Estuary in 2018 and 2019. 
+Acoustic detections of 18 individuals in the Western Scheldt estuary between July 2018 and July 2020 suggest seasonal presence of females just outside of the Western Scheldt between April and October.
+Spectral analysis of the depth logs of two individuals logging for over a year reveals feeding behaviour of the male throughout most of the year. The female shark primarily rests on the seafloor during summer and feeds in a biweekly rhythm during winter.
+This study presents the first detailed insights into vertical movement behaviour differences between seasons and individuals of *M. asterias*.
 
 
 # Introduction {#sec-intro}
@@ -516,12 +532,17 @@ estimate the most likely path that was taken by the animal
 
 ```{r mapgeolocation}
 #| include: true
-#| echo: false
 #| label: "fig-mapgeolocation"
-#| out-width: 55%
-#| fig-cap: "Placeholder for a map of the geolocation output for tags 308 and 321. ***But I kind of cannot put the raw dst depthlog in there right? bc that kind of is a result? Have to check with J/C/N.***"
+#| out-width: 90%
+#| layout-ncol: 1
+#| fig-cap: "Results of geolocation modelling (without behavioural states) on the raw DST depthlogs."
+#| fig-subcap:
+#| - "Female *M. asterias* (tag 308)."
+#| - "Male *M. asterias* (tag 321)."
+#| fig-pos: "H"
 
-knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map_geolocation_output_placeholder.png", rel_path = FALSE)
+map_dst_308 #+ thesis_theme_halfpage
+map_dst_321 #+ thesis_theme_halfpage
 
 ```
 
@@ -980,13 +1001,12 @@ Tidal currents are strongest at 1.3 $\frac{m}{s}$ during new and full moon [@arn
 
 ```{r mapdetail}
 #| include: true
-#| echo: false
 #| label: "fig-mapdetail"
-#| out-width: 85%
-#| fig-cap: "Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt."
+#| out-width: 90%
+#| fig-cap: "Overview of the study area of focus point 1: The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. ES = Eastern Scheldt, WS = Western Scheldt."
+#| fig-pos: "H"
 
-knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png", rel_path = FALSE)
-
+map_detail_ggplot
 ```
 
 <!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
@@ -1150,16 +1170,12 @@ gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
 
 ```{r mapoverview}
 #| include: true
-#| echo: false
 #| label: "fig-mapoverview"
-#| out-width: 100%
-#| fig-cap: "Overview map of the study area. To do: make sure to include the locations where tag 321 went on the overview map, input all the places mentioned in the description of the north sea and the english channel."
+#| out-width: 90%
+#| fig-cap: "Overview of the study area of focus point 2: The Southern North Sea and the English Channel. "
 #| fig-pos: "H"
 
 map_overview_ggplot
-
-# knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png", rel_path = FALSE)
-
 ```
 
 <!-- ***See @sec-questionsmaps, could you say what you would change about the -->
@@ -1205,11 +1221,19 @@ Network (ETN), which was established in 2017 as a pan-european aquatic
 telemetry network. As of 2019, the PBARN consisted of
 160 permanently installed and monitored acoustic receivers within the
 BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse
-River [@reubens_2018]. A detection probability of \>50 % was estimated
-for a radius of 500-700 m around the receiver [@goossens_2022], and \>70
+River [@reubens_2018]. @fig-mapWSdetail displays an overview of the acoustic receivers in the estuary of the Western Scheldt. A detection probability of \>50 % was estimated for a radius of 500-700 m around the receiver [@goossens_2022], and \>70
 % for 200 m radius [@reubens_2018].
 
-**include detail map with receivers in Western Scheldt**
+```{r mapWSdetail}
+#| include: true
+#| label: "fig-mapWSdetail"
+#| out-width: 90%
+#| fig-cap: "Overview of the acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN) in the Western Scheldt Estuary. The receivers are categorised into three different arrays: Western Scheldt 1 (WS1), Western Scheldt 2 (WS2) and Western Scheldt 3 (WS3). "
+#| fig-pos: "H"
+
+map_WS_ggplot
+```
+
 
 <!-- rewrite, from goossens 2016 -->
 
@@ -1625,7 +1649,7 @@ The acoustic detections at each receiver station of female *M. asterias* within 
 #| label: fig-heatmapdetections
 #| out-width: 100%
 #| fig-height: 3
-#| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Westerschelde (receiver arrays *WS1*, *WS2* and *WS3*). "
+#| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Westerschelde (receiver arrays *WS1*, *WS2* and *WS3*). The Residency Index (RI, i.e. the number of days detected divided by the period between the first and last detection among all individuals at station OG10 in 2019) is displayed next to the tag serial number. "
 #| fig-pos: "H"
 
 p_detections_heatmap
@@ -1656,7 +1680,7 @@ The number of days detected between individuals above the median of `r detection
 ```{r heatmapOG10}
 #| include: true
 #| label: fig-heatmapOG10
-#| out-width: 100%
+#| out-width: 90%
 #| fig-height: 3
 #| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10."
 #| fig-pos: "H"
@@ -2197,7 +2221,7 @@ August, 2018, two neonates [around 30 cm TL, @farrell_2010] were caught[^3].
 [^3]: Verhelst, Pieterjan (*personal communication*), April 25, 2023.
 
 Another important fact to consider is the biannual reproductive cycle of *M. asterias* and whether that implies differing seasonal habitat use between years of pregnancy and years without a pregnancy. 
-Females were either detected at a lot of days (20 - 40) or few (5 - 10) days during summer 2019 (see @fig-heatmapOG10). This could indicate different behaviourial states between the females with many and few acoustically detected days. (**Residency index**)
+Females were either detected at a lot of days (20 - 40) or few (5 - 10) days during summer 2019 (see @fig-heatmapOG10). This could indicate different behaviourial states between the females with many and few acoustically detected days, further supported by the wide dispersion in Residency Indices which are shown in the figure.
 
 The high dispersion of days of acoustic detections of female sharks at station OG10 in 2019 show 
 In the future, it could be helpful to assess if adult females are pregnant at the time of release, through ultrasonography or the use of sex steroid hormones, both of which have already been employed to determine pregnancy in sharks [@awruch_2014; @smukall_2019; @anderson_2018; @fujinami_2020; @fujinami_2021]. This would allow for further clarification if the Western Scheldt is used as a pupping ground, and if it might be a relevant area for non-pregnant females, too.

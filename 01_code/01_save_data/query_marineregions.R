@@ -23,6 +23,7 @@ Belgium <- mregions2::gaz_search(14) %>% mregions2::gaz_geometry()
 Netherlands <- mregions2::gaz_search(15) %>% mregions2::gaz_geometry()
 Europe <- mregions2::gaz_search(1920) %>% mregions2::gaz_geometry()
 France <- mregions2::gaz_search(17) %>% mregions2::gaz_geometry()
+UK <- mregions2::gaz_search(2208) %>% mregions2::gaz_geometry()
 
 # marine boundaries
 Schelde_boundaries <- mregions2::gaz_search(4812) %>% mregions2::gaz_geometry()
@@ -45,6 +46,7 @@ Vlissingen <- mregions2::gaz_search(9105) %>% mregions2::gaz_geometry()
 Bergen_op_Zoom <- mregions2::gaz_search(23137) %>% mregions2::gaz_geometry()
 
 save_data(data = Norwich, folder = path_boundaries)
+save_data(data = UK, folder = path_boundaries)
 save_data(data = Cap_de_la_Hague, folder = path_boundaries)
 save_data(data = Bergen_op_Zoom, folder = path_boundaries)
 save_data(data = Neeltje_Jans, folder = path_boundaries)

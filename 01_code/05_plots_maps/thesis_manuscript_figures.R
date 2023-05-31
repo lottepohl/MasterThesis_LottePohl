@@ -1028,7 +1028,7 @@ p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_numbe
                      pull() %>%
                      stringr::str_trunc(width = 3, side = "left", ellipsis = "")
   ) +
-  scale_color_manual(values = c("black", "#ed7d31","#3483ac")) + #, "#34b3bb"
+  scale_color_manual(values = c("black", "#ed7d31","#49E8E3")) + #, "#34b3bb"
   # scale_shape_manual(values = c(2, 4)) +
   scale_shape_manual(values = c(0,2)) + #c("\u2640", "\u2642") # unicode symbols for female and male
   labs(x = "", y = "tag serial nr.", colour = "receiver array:", shape = "tagging date:") +
@@ -1110,29 +1110,56 @@ detections_OG102019 <- detections_tempdepth_daynight %>%
   ungroup()
 
 
-p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
-                                    aes(x = date, y = tag_serial_number, fill = n_detect, colour = "transparent")) + #, colour = n_detect
+p_detections_heatmap_OG10 <- ggplot() + #, colour = n_detect
   # geom_tile(linewidth = 0.75) +
-  geom_tile(linewidth = 1) +
+  geom_tile(data = detections_OG102019, #
+            mapping = aes(x = date, y = tag_serial_number, fill = n_detect, colour = n_detect), linewidth = 0) +
   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
   # facet_grid(vars(sex), scales="free_y") +
   scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
   scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
-  # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
-  # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
-  #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+  geom_label(data = OG10_2019_RI, mapping = aes(y = tag_serial_number , label = paste0("RI = ", RI %>% round(digits = 3)), x = detections_OG102019$date %>% min() - lubridate::days(12)), family = "serif", fill = "white", label.r = unit(0, "lines"), label.padding = unit(0.175, "lines"), size = 2) +
   scale_x_datetime(date_breaks = "1 month",
                    # date_minor_breaks = "1 day",
                    date_labels = "%b'%y"
-                   ,expand = c(0,0)) +
+                   ,expand = c(0,0),
+                   limits = c(detections_OG102019$date %>% min() - lubridate::days(24), detections_OG102019$date %>% max() + lubridate::days(7))) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
   labs(x = "", y = "tag serial nr.", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
   theme(legend.position = "bottom", # "bottom",
         legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
-p_detections_heatmap_OG10 %>% ggplotly()
+p_detections_heatmap_OG10 #%>% ggplotly()
+
+# 
+# # old version
+# 
+# p_detections_heatmap_OG10 <- ggplot(data = detections_OG102019, #
+#                                     aes(x = date, y = tag_serial_number, fill = n_detect, colour = "transparent")) + #, colour = n_detect
+#   # geom_tile(linewidth = 0.75) +
+#   geom_tile(linewidth = 1) +
+#   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
+#   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 4) + #, colour = "grey"
+#   # facet_grid(vars(sex), scales="free_y") +
+#   scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+#   scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+#   # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
+#   # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
+#   #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
+#   scale_x_datetime(date_breaks = "1 month",
+#                    # date_minor_breaks = "1 day",
+#                    date_labels = "%b'%y"
+#                    ,expand = c(0,0)) +
+#   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
+#   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
+#   labs(x = "", y = "tag serial nr.", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
+#   theme(legend.position = "bottom", # "bottom",
+#         legend.box = "horizontal",   legend.margin = margin(t = -15)) 
+# 
+# p_detections_heatmap_OG10 #%>% ggplotly()
+
 
 save_data(data = p_detections_heatmap_OG10, folder = plot_path)
 

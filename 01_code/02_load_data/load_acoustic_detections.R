@@ -10,15 +10,6 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% source()
 # source(paste0(dir_path, "/02_scripts/03_wrangle_data/wrangle_acoustic_data.R"))
 # source(paste0(dir_path, "/02_scripts/03_wrangle_data/get_depth_from_sensorval_acousticdetections.R"))
 
-receiver_stations <- deployments %>% 
-  group_by(station_name) %>% 
-  summarise(deploy_latitude = mean(deploy_latitude),
-            deploy_longitude = mean(deploy_longitude)) %>%
-  dplyr::mutate(station_name = gsub("ws-", "", station_name),
-                station_name = gsub("bpns-", "", station_name)) %>%
-  dplyr::filter(deploy_latitude %>% between(50, 52),
-                deploy_longitude %>% between(1.5, 4.5))
-
 
 masterias_station_month_sex <- load_data("masterias_station_month_sex", data_path)
 close_stations <- load_data("close_stations", data_path)
@@ -36,3 +27,12 @@ detections_tempdepth_daynight <- load_data("detections_tempdepth_daynight", data
 
 masterias_detections_clean <- masterias_detections_clean %>% dplyr::select(!sensor_unit) %>% left_join(detections_tempdepth_daynight %>% dplyr::select(!c(date_time, tag_serial_number, acoustic_tag_id, station_name, deploy_latitude, deploy_longitude, sensor_value, sex)), 
                                                                          by = join_by(detection_id))
+
+receiver_stations <- deployments %>% 
+  group_by(station_name) %>% 
+  summarise(deploy_latitude = mean(deploy_latitude),
+            deploy_longitude = mean(deploy_longitude)) %>%
+  dplyr::mutate(station_name = gsub("ws-", "", station_name),
+                station_name = gsub("bpns-", "", station_name)) %>%
+  dplyr::filter(deploy_latitude %>% between(50, 52),
+                deploy_longitude %>% between(1.5, 4.5))
