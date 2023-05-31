@@ -21,7 +21,7 @@ paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% b
 
 # table 1: list of abbreviations ####
 
-abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT"),
+abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT", "UTC"),
                          Explanation= c("Acoustic Data Storage Tag",
                                         "Data Storage Tag",
                                         "Belgian Part of the North Sea",
@@ -33,7 +33,8 @@ abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "
                                         "Hidden Markov Model",
                                         "Total Length",
                                         "Fourier Transformation",
-                                        "Fast Fourier Transform")) %>%
+                                        "Fast Fourier Transform",
+                                        "Coordinated Universal Time")) %>%
   dplyr::arrange(Abbreviation)
 
 # table 2: release locations ####
@@ -80,7 +81,8 @@ dst_summary <- masterias_depth_date %>%
 acoustic_days_liberty <- detections_tempdepth_daynight %>% group_by(tag_serial_number) %>%
   summarise(days_detected = date_time %>% lubridate::date() %>% unique() %>% length(),
             hours_detected = paste0(date_time %>% lubridate::date(), '-', date_time %>% lubridate::hour()) %>% unique() %>% length(),
-            date_last_detected = date_time %>% lubridate::date() %>% max())
+            date_last_detected = date_time %>% lubridate::date() %>% max(),
+            residency_index = (days_detected / 518) %>% round(digits = 3)) #518 days == tag battery lifetime
 
 tagged_animal_info <- masterias_info %>% 
   mutate(release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "Western Scheldt")) %>%
@@ -378,3 +380,7 @@ save_data(data = rulsif_321_table_10percent, folder = tables_path)
 
 save_data(data = daynight_depth_308_ttest, folder = tables_path)
 save_data(data = daynight_depth_321_ttest, folder = tables_path)
+
+
+
+# detections_tempdepth_daynight %>% dplyr::filter(area %in% c("WS1", "WS2"), sex == "f") %>% dplyr::select(tag_serial_number) %>% unique() %>% nrow()

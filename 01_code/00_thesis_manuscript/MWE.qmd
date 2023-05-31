@@ -59,8 +59,6 @@ keywords:
   - Mustelus asterias
 date: last-modified
 bibliography: bibliography.bib
-  # main: bibliography.bib
-  # software: software.bib
 execute:
   echo: false
   include: false
@@ -133,7 +131,7 @@ library(gridExtra)
 ```{r workspace}
 # load functions
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
@@ -142,7 +140,7 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
@@ -165,11 +163,14 @@ thesis_theme <- ggplot2::theme(
   plot.subtitle = element_text(family = "serif", size = 9),
   axis.title = element_text(family = "serif", size = 9),
   axis.text = element_text(family = "serif", size = 7),
-  legend.title = element_text(family = "serif", size = 9),
+  legend.title = element_text(family = "serif", size = 8),
   legend.text = element_text(family = "serif", size = 7),
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # legend.key.width = unit(2, "cm"),
+  legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
+  panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
   # panel.background = element_rect(fill = "transparent"),
   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
@@ -195,236 +196,38 @@ thesis_theme_halfpage <- ggplot2::theme(
 )
 ```
 
-<!-- {{< pagebreak >}} -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- This thesis follows the manuscript guidelines of the **Journal of Animal Biotelemetry (ISSN: 2050-3385)**. -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- \ -->
-<!-- No data can be taken out of this work without prior approval of the thesis promoter. -->
 
-<!-- I  hereby  confirm  that  I  have  independently  composed  this  Master thesis  and  that  no  other  than  the indicated aid and sources have been used. This work has not been presented to any other examination  board. -->
+Considering these knowledge gaps, the present study aims to characterise the seasonal habitat use of *M. asterias* among sexes on a vertical and horizontal scale. Consequently, the study is structured into two points of focus:
 
-<!-- \ -->
-<!-- \ -->
+<!-- aims to assess seasonal and sex-related differences in movement patterns of *M. asterias* with two different points of focus:  -->
 
-<!-- Date: -->
-
-<!-- Signature: -->
-
-{{< pagebreak >}}
+ 1. The presence of *M. asterias* in the Western Scheldt estuary.
+  - Hypothesis: Females show higher residency in the area of the PBARN receivers than males.
+ 2. The vertical movement of *M. asterias* on an annual scale.
+  - Hypothesis: The vertical movement differs between seasons for both males and females.
+  
+  
 
 
-```{r abacus}
+```{r table-animalinfo}
 #| include: true
-#| label: fig-maps
-#| out-width: 120%
-#| fig-height: 4
-#| layout-ncol: 2
-#| fig-cap: "Results of geolocation modelling on the raw DST depthlogs."
-#| fig-pos: "H"
-
-map_dst_308 + thesis_theme_halfpage
-map_dst_321 + thesis_theme_halfpage
-```
-
-
-
-```{r abacus34}
-#| include: true
-#| label: fig-maps5
-#| out-width: 120%
-#| fig-height: 3
-#| layout-ncol: 2
-#| fig-cap: "Results of geolocation modelling on the raw DST depthlogs."
-#| fig-pos: "H"
-
-map_dst_308 + theme(legend.text = element_text(size = 7))
-map_dst_321 + theme(legend.text = element_text(size = 7))
-```
-
-
-```{r abacus7}
-#| include: true
-#| label: fig-maps6
+#| label: tbl-animalinfo
 #| out-width: 100%
-#| fig-height: 3.5
-#| fig-cap: "Geolocation Model outputs"
-#| fig-pos: "H"
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected."
 
-map_geolocation_ggplot + theme(legend.text = element_text(size = 7))
+knitr::kable(x = tagged_animal_info %>% 
+               #set column order & order rows
+               dplyr::select(tag_serial_number, sex, length1, weight,
+                             release_date_time, n_detect, days_detected,
+                             hours_detected, date_last_detected, 
+                             days_at_liberty, residency_index, release_loc) %>%
+               arrange(release_date_time) %>%
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
 
 
-
-
-
-```{r abacus2}
-#| include: true
-#| label: fig-maps3
-#| out-width: 100%
-#| fig-height: 2.5
-#| fig-cap: "Overview of the study area of focus point 2."
-#| fig-pos: "H"
-
-map_overview_ggplot + theme(legend.text = element_text(size = 7))
-```
-
-
-
-```{r map}
-#| include: true
-#| label: fig-maps2
-#| out-width: 100%
-#| fig-height: 3
-#| fig-cap: "Overview of the study area of focus point 2."
-#| fig-pos: "H"
-
-map_overview_ggplot + theme(legend.text = element_text(size = 7))
-```
-
-
-```{r map346}
-#| include: true
-#| label: fig-maps765
-#| out-width: 100%
-#| fig-height: 3
-#| fig-cap: "Overview of the study area of focus point 2."
-#| fig-pos: "H"
-
-map_detail_ggplot + theme(legend.text = element_text(size = 7))
-```
-
-
-<!-- # List of Abbreviations {-} -->
-
-<!-- ```{r table-abbreviations} -->
-<!-- #| include: true -->
-<!-- ##| echo: false -->
-<!-- #| label: tbl-abbreviations -->
-<!-- #| out-width: 100% -->
-
-<!-- table <- knitr::kable(abbreviations_list) -->
-
-<!-- # Add bold headers -->
-<!-- table <- kableExtra::add_header_above(table, bold = TRUE) -->
-
-<!-- # Apply table styling -->
-<!-- table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position") -->
-
-<!-- table -->
-<!-- # knitr::kable(abbreviations_list) %>% -->
-<!-- #   kableExtra::add_header_above(table, bold = TRUE) %>% -->
-<!-- #   kableExtra::kable_styling(position = "center", -->
-<!-- #                             latex_options = "hold_position") -->
-
-<!-- ``` -->
-
-
-
-<!-- ```{r dstsum308} -->
-<!-- #| include: true -->
-<!-- #| label: fig-dstsum308 -->
-<!-- #| layout: "[[100], [50,50]]" -->
-<!-- #| out-width: 110% -->
-<!-- #| fig-height: 2.5 -->
-<!-- #| fig-cap: "Summary statistics, per date, day and night. Median depth as a solid line, maximum and minimum depth as shaded ribbon. All depth summaries were Savitzky-Golay filtered. Illuminated fraction of the moon as a dotted line." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "Median, maximum and minimum depth per date." -->
-<!-- #| - "Summary statistics per day. " -->
-<!-- #| - "Summary statistics per night." -->
-<!-- #| fig-pos: "H" -->
-
-<!-- p_308_sum_stats  -->
-
-<!-- p_308_sum_day + thesis_theme_halfpage -->
-<!-- p_308_sum_night + thesis_theme_halfpage -->
-<!-- ``` -->
-
-
-
-<!-- ```{r mapgeolocation} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| label: "fig-taggingpics" -->
-<!-- #| out-width: 150% -->
-<!-- #| layout-ncol: 3 -->
-<!-- #| fig-height: 3 -->
-<!-- #| fig-cap: "Images from the tagging of *M. asterias*. The white scale bars in the bottom left corners correspond to 5 cm. © Pieterjan Verhelst." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "A *M. asterias* individual after capture." -->
-<!-- #| - "Tag implantation surgery." -->
-<!-- #| - "Suture after the implantation of the ADST." -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_scalebar.png", rel_path = FALSE) -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_tagging_scalebar.png", rel_path = FALSE) -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_suture_scalebar.png", rel_path = FALSE) -->
-
-<!-- ``` -->
-
-
-
-
-<!-- ```{r mapgeolocation2} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| label: "fig-taggingpics2" -->
-<!-- #| out-width: 80% -->
-<!-- #| layout-ncol: 1 -->
-<!-- #| fig-height: 3 -->
-<!-- #| fig-cap: "Images from the tagging of *M. asterias*. The white scale bars in the bottom left corners correspond to 5 cm. © Pieterjan Verhelst." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "A *M. asterias* individual after capture." -->
-<!-- #| - "Tag implantation surgery." -->
-<!-- #| - "Suture after the implantation of the ADST." -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_scalebar.png", rel_path = FALSE) -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_tagging_scalebar.png", rel_path = FALSE) -->
-
-<!-- knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/00_data/MustelusAsterias_suture_scalebar.png", rel_path = FALSE) -->
-
-<!-- ``` -->
-
-
-# tables
-
-
-<!-- ```{r table-animalinfo} -->
-<!-- #| include: true -->
-<!-- #| label: tbl-animalinfo -->
-<!-- #| out-width: 100% -->
-<!-- #| tbl-cap-location: top -->
-<!-- #| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt." -->
-
-<!-- table <- knitr::kable(x = tagged_animal_info %>%  -->
-<!--                #set column order & order rows -->
-<!--                dplyr::select(tag_serial_number, sex, length1, weight, -->
-<!--                              release_date_time, n_detect, days_detected, -->
-<!--                              hours_detected, date_last_detected,  -->
-<!--                              days_at_liberty, release_loc) %>% -->
-<!--                arrange(release_date_time) %>% -->
-<!--                mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)), -->
-<!--              booktabs = T, escape = F, -->
-<!--              col.names = linebreak(c("tag serial\nnr.", "sex", "TL\n in cm", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>% -->
-<!--   kableExtra::kable_styling(position = "center", latex_options = c("HOLD_position", "float_position=b")) -->
-
-<!-- # Add bold headers -->
-<!-- table <- add_header_above(table, bold = TRUE) -->
-
-<!-- # Apply table styling -->
-<!-- table <- kable_styling(table, position = "center", latex_options = c("hold_position", "float_position=b")) -->
-
-<!-- # Print the table -->
-<!-- print(table) -->
-<!-- ``` -->
+ 
