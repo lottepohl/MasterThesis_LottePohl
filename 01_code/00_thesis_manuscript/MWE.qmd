@@ -138,13 +138,13 @@ paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% ba
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
@@ -208,26 +208,87 @@ Considering these knowledge gaps, the present study aims to characterise the sea
   
   
 
-
-```{r table-animalinfo}
-#| include: true
-#| label: tbl-animalinfo
-#| out-width: 100%
-#| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected."
-
-knitr::kable(x = tagged_animal_info %>% 
-               #set column order & order rows
-               dplyr::select(tag_serial_number, sex, length1, weight,
-                             release_date_time, n_detect, days_detected,
-                             hours_detected, date_last_detected, 
-                             days_at_liberty, residency_index, release_loc) %>%
-               arrange(release_date_time) %>%
-               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+# Materials and Methods
 
 
+### Acoustic Detections
+
+Detections were accessed from the ETN database (*https://www.lifewatch.be/etn/*). Tags with only a single detection were omitted from all further analyses. Acoustic detections were visualised on an individual and acoustic receiver station level.
  
+It was hypothesised that females display higher residency within the area of the PBARN receivers than males. To test this, the residency index was calculated for each individual, dividing the number of days with a detection by one of the receivers by the estimated battery life of 518 days. Then, the residency index was compared between sexes.
+
+### Data Storage Tags {#sec-mm_dsts}
+Depth and temperature logs from the recovered tags were accessed via the
+Marine Data Archive (MDA) **create DOI**. <!-- TODO: link URL --> The temperature log
+was not included in any analysis. The first week of depth values was
+excluded from all analyses to remove potential bias resulting from the
+tagging procedure [as suggested by @flavio_2021]. The date of death, used to
+calculate the time at liberty for the recovered tags, was visually extracted from plots of the
+raw depth series, and marks the date after which only a tidal signal
+remains in the depthlog [characterised by cyclically rising and
+falling depths within a rough 2 m depth range, @kvale_2006]. 
+
+The analyses described in the following were only performed for tags that logged for $\geq$ 365 days. 
+Those will be referred to as *long term DST* in the following, tags logging for less than a year will be
+referred to as *short term DST*.
+<!-- maybe rephrase: "excluded from all analyses" --> Summary statistics
+,i.e., median (since depth did not follow a normal distribution), maximum and 
+minimum depth were calculated per date, day and night.
+<!-- For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~).  -->
+For the day/night summaries, sunrise and sunset times were extracted
+using the `getSunlightTimes()`-function from the `suncalc`-package [@suncalc].
+The illuminated fraction of the moon was extracted using the
+`moonAngle()`-function from the `oce` package [@oce]. 
+
+To test the hypothesis about difference in depth use between seasons, start dates of summer and winter as defined by solstices were extracted from the Astronomical Applications Department
+of the U.S. Naval Observatory [@USNO_2023] for the years of 2018 and 2019.
+Next, the daily median depths for each tag and season (summer/winter) were compared.
+
+<!-- the daily median depth was categorised regarding the season (start dates of summer and winter as defined  -->
+
+A Savitzky-Golay smoothing filter [@press_1990,
+filter order *p = 1*, filter length *n = 5*] was applied on all summaries using the
+`sgolayfilt()`-function from the `signal`-package [@signal]. This particular
+filter smoothes the data but retains spikes in the data better than
+other smoothing filters like butterworth or averaging filters [like
+rolling mean, @schafer_2011].
+
+# Results
+
+## Acoustic detections
+
+<!-- Two tags only had a single detection (serial number -->
+<!-- `r tag_serial_number_omit[1,] %>% dplyr::pull()` and -->
+<!-- `r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted -->
+<!-- from all further analyses. The acoustic detections of the remaining tags -->
+<!-- over time are shown in @fig-abacus. -->
+<!-- Within the study period from July, 2018 to August, 2020, there are no -->
+<!-- acoustic detections between November and April in either year. -->
+<!-- `r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)`% of detections are in the WS1 area, and of those, -->
+<!-- `r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow()) * 100, digits = 2)`% are at station OG10 (see @fig-mapdetail). Of the -->
+<!-- `r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()` -->
+<!-- detected males, 3 were detected inside the BPNS and one in the WS1 -->
+<!-- array. -->
+<!-- Across all years, most detections (n = 2484) were in the month of May, -->
+<!-- while most individuals (n = 10) were detected in August. -->
+
+
+To test the hypothesis of focus point 1, the residency indices among sexes was tested for normality (shapiro test, $\alpha$ = 0.05, *p~females~* = `r hyp1_results %>% dplyr::filter(test_aim == "normality_f") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`, *p~males~* = `r hyp1_results %>% dplyr::filter(test_aim == "normality_m") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`), and the residency indices of the females do not follow a normal distribution. Due to high robustness of Welch's t-test regarding non-normality [@rasch_2004], this method was preferred over its non-parametric counterpart, the Wilcoxon rank-sum test. A one-sided Welch two-sample t-test with unequal variances was conducted ($\alpha$ = 0.05, *p* = `r hyp1_results %>% dplyr::filter(test_aim == "equality_of_means") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`), showing that the residency index of females is significantly higher than the residency index of males.
+
+
+## Data Storage Tags {#sec-results-dst}
+
+**(...)**
+
+
+6 out of 8 recovered tags logged for a month or less, only the tags with
+the serial numbers 1293308 (f) and 1293321 (m) logged for a year,
+allowing for the analysis of migration behaviour. These two tags will be
+referred to as long term DST in the following, and their tag serial
+numbers will be abbreviated to `308` and `321`. The rest of the tags
+will be referred to as short term DST. 
+
+To test the hypothesis of focus point 2, the daily median depth was used, since the `stats::t.test()`-function does not allow samples larger than n = 3000. The daily median depth per season (summer/winter) and tag were tested for normality (Kolmogorov-Smirnoff-test;  *p~tag308,summer~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308", big_season == "summer") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag308,winter~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308", big_season == "winter") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag321,summer~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293321", big_season == "summer") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag321,winter~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293321", big_season == "winter") %>% dplyr::select(ks_test_pval) %>% pull()`). A Wilcoxon rank sum test with continuity correction shows a significant difference in daily median depth between summer and winter for both tags (*p~308~* = `r hypothesis2.2_testresults %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(wilcox.test_pval) %>% pull()`, *p~321~* = `r hypothesis2.2_testresults %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(wilcox.test_pval) %>% pull()`).
+
+
+

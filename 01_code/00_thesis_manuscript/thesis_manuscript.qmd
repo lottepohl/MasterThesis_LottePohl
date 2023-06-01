@@ -393,18 +393,19 @@ thesis_theme_halfpage <- ggplot2::theme(
 
 *executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion), discuss/mention hypotheses*
 
-**currently: 365 words**
+**currently: 397 words**
 
-The starry smooth-hound *Mustelus asterias* is a widely distributed demersal shark in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
+The starry smooth-hound Mustelus asterias (Cloquet, 1819) is a widely distributed demersal shark in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
 The movement of fish is commonly studied with electronic tags. A novel technology is the Acoustic Data Storage Tag (ADST), which can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals. To access the data logs the tag needs to be recovered.
-This study employs ADST to characterise the migration and residency of *M. asterias* in the North Sea regarding seasonality and sex.
-160 acoustic receivers that can detect ADST are currently installed in the Scheldt Estuary and the Belgian Part of the North Sea (BPNS) as part of the European Tracking Network. 
+This study employed ADST to characterise the migration and residency of M. asterias in the North Sea regarding seasonality and sex.
+Exploratory and spectral analyses were performed using an ADST dataset spanning from July 2018 to July 2020. 
 
-In 2018 and 2019, 30 adult *M. asterias* (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. 18 individuals (14 females and 4 males) were detected 10940 times by the acoustic receivers between July 2018 and July 2020. 
-All detections were between April and November, suggesting seasonal presence of *M. asterias* in the receiver area. 96.7% of detections were at receivers just outside the Western Scheldt, and 97.4% of detections were from females. This indicates that the outer part of the Scheldt Estuary is a relevant habitat for females between April and November.
+In 2018 and 2019, 30 adult M. asterias (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. The Permanent Belgian Receiver Network (PBARN) spans the Belgian Part of the North Sea (BPNS) and the Scheldt Estuary with 160 active receivers during the study period. 14 females and 4 males were detected 10940 times by 27 acoustic receivers. 
+All detections were between April and November, suggesting seasonal presence of M. asterias in the receiver area. 96.7% of detections were at receivers just outside the Western Scheldt, and 97.4% of detections were from females. This indicates that the outer part of the Scheldt Estuary is a relevant habitat for females between April and November.
 
-8 ADST were recovered, with two individuals (1 female, 1 male) logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and depths between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter months. Continuous Wavelet Transform displays differences in periodic patterns between seasons and the two individuals, linking to resting or feeding behaviour. The results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and the male is continuously feeding.
-This study provides first details about seasonality in vertical movement behaviour of *M. asterias* and confirms its seasonal presence in the Western Scheldt.
+8 ADST were recovered, one female and one male logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and depths between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter months. Continuous Wavelet Transform (CWT) resolves periodic patterns in the time domain and displays differences in periodic patterns between seasons and the two individuals. The CWT results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and that the male is continuously feeding.
+
+This study provides first details about seasonality in vertical movement behaviour of M. asterias and confirms its seasonal presence in the Western Scheldt. Data on the vertical movement of more individuals is needed to determine if the patterns observed here are related to sex.
 
 
 # Abstract
@@ -417,7 +418,7 @@ The starry smooth-hound *Mustelus asterias* is widely distributed in the Northea
 Fish movement is commonly studied with electronic tags, one novel technology being  the Acoustic Data Storage Tag (ADST). It can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals.
 This study characterises the migration and residency of *M. asterias* in the North Sea regarding season and sex. 30 *M. asterias* were equipped with ADST in the Scheldt Estuary in 2018 and 2019. 
 Acoustic detections of 18 individuals in the Western Scheldt estuary between July 2018 and July 2020 suggest seasonal presence of females just outside of the Western Scheldt between April and October.
-Spectral analysis of the depth logs of two individuals logging for over a year reveals feeding behaviour of the male throughout most of the year. The female shark primarily rests on the seafloor during summer and feeds in a biweekly rhythm during winter.
+Spectral analysis of the depth logs of two individuals logging for over a year indicates feeding behaviour of the male throughout most of the year. The female shark primarily rests on the seafloor during summer and feeds in a biweekly rhythm during winter.
 This study presents the first detailed insights into vertical movement behaviour differences between seasons and individuals of *M. asterias*.
 
 
@@ -707,11 +708,18 @@ seasonal grounds.
 
 Detailed information on potential differences  in vertical movement regarding seasonality and sex, including the timing and duration of migrations, are currently missing. Such information can improve geolocation models through the implementation of behavioural states [@pedersen_2008]. Moreover, the seasonal presence of *M. asterias* in the Western Scheldt estuary, a presumed summer habitat of the species, has not been studied yet. The confirmation of seasonal presence of *M. asterias* would be relevant to species management. This could involve stock assessments or seasonal restrictions for commercial fishing  in the future [@benot_2003].
 
-Considering these knowledge gaps, the present study aims to assess seasonal and sex-related differences in movement patterns of *M. asterias* with two different points of focus: 
+characterize the seasonal habitat use (vertical and horizontal) among sexes.
+
+Considering these knowledge gaps, the present study aims to characterise the seasonal habitat use of *M. asterias* among sexes on a vertical and horizontal scale. Consequently, the study is structured into two points of focus:
+
+<!-- aims to assess seasonal and sex-related differences in movement patterns of *M. asterias* with two different points of focus:  -->
 
  1. The presence of *M. asterias* in the Western Scheldt estuary.
+  - Hypothesis: Females show higher residency in the area of the PBARN receivers than males.
  2. The vertical movement of *M. asterias* on an annual scale.
- 
+  - Hypothesis: The vertical movement differs between seasons for both males and females.
+  
+  
 Due to its ability to collect and produce data in smaller and larger scales, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these topics.
 As such, an ADST dataset of *M. asterias* will be used to describe and characterise both focus points of this study, followed by the investigation of patterns linked to season and sex.
 
@@ -988,7 +996,7 @@ fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus
 sprattus*) or Whiting (*Merlangius merlangus*), and abundant crustacean
 species include the common shrimp (*Crangon crangon*) and the palaemonid
 shrimp [*Palaemon varians*, @maes_1998].
-The lower part of the Scheldt Estuary from Vlissingen (The Netherlands)
+The lower part of the Scheldt Estuary from Flushing (Dutch: Vlissingen)
 55-60 km upstream is referred to as Western Scheldt
 Estuary[@baeyens_1998; @ouboter_1998]. Between Bergen op Zoom and the
 island Neeltje Jans (both Netherlands), the Estuary is referred to as
@@ -1494,18 +1502,18 @@ year following their tagging.
 #| label: tbl-animalinfo
 #| out-width: 120%
 #| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt."
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected, loc. = location, RI = residency index (days detected / 518 days). The 518 days correspond to the estimated battery life by the tag manufacturer."
 
 knitr::kable(x = tagged_animal_info %>% 
                #set column order & order rows
                dplyr::select(tag_serial_number, sex, length1, weight,
                              release_date_time, n_detect, days_detected,
                              hours_detected, date_last_detected, 
-                             days_at_liberty, release_loc) %>%
+                             days_at_liberty, residency_index, release_loc) %>%
                arrange(release_date_time) %>%
                mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
              booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release date", "times\ndet.", "days\ndet.","hours\ndet.", "date last\ndet.", "days at\nliberty", "release\nlocation"), align = "c")) %>%
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
 
@@ -2225,14 +2233,14 @@ Females were either detected at a lot of days (20 - 40) or few (5 - 10) days dur
 
 The high dispersion of days of acoustic detections of female sharks at station OG10 in 2019 show 
 In the future, it could be helpful to assess if adult females are pregnant at the time of release, through ultrasonography or the use of sex steroid hormones, both of which have already been employed to determine pregnancy in sharks [@awruch_2014; @smukall_2019; @anderson_2018; @fujinami_2020; @fujinami_2021]. This would allow for further clarification if the Western Scheldt is used as a pupping ground, and if it might be a relevant area for non-pregnant females, too.
-An area with little presence of the tagged *M. asterias* individuals is the Western Scheldt upstream past Vlissingen. Shallow and sheltered coastal habitats are thought to be suitable pupping grounds for sharks in general [@speed_2010] and for *M. asterias* in particular [@ellis_2004; @ellis_2005]. The low number of acoustically detected sharks (38 detections in the WS2 array throughout the whole study period from 2018 to 2020) indicates that the waters past Vlissingen are not as frequently used as the waters around Dishoek. 
-The Scheldt Estuary is influenced by two water bodies from the North Sea, the Channel water and the Continental coastal water [@wolff_1973, see @sec-mmscheldtBPNS]. The boundary between those bodies is approximately 30 km offshore from the Estuary, and in the Continental coastal waters nutrients are abundant (unlike in the Channel water). This, together with monthly water temperatures above 15 °C between June and September make the (Western) Scheldt Estuary a potentially suitable pupping habitat. The fact that few sharks were detected upstream past Vlissingen could be due to low salinities, or to anthropogenic influences like dredging. This, however, should be further investigated in follow-up studies.
+An area with little presence of the tagged *M. asterias* individuals is the Western Scheldt upstream past Flushing. Shallow and sheltered coastal habitats are thought to be suitable pupping grounds for sharks in general [@speed_2010] and for *M. asterias* in particular [@ellis_2004; @ellis_2005]. The low number of acoustically detected sharks (38 detections in the WS2 array throughout the whole study period from 2018 to 2020) indicates that the waters past Flushing are not as frequently used as the waters around Dishoek. 
+The Scheldt Estuary is influenced by two water bodies from the North Sea, the Channel water and the Continental coastal water [@wolff_1973, see @sec-mmscheldtBPNS]. The boundary between those bodies is approximately 30 km offshore from the Estuary, and in the Continental coastal waters nutrients are abundant (unlike in the Channel water). This, together with monthly water temperatures above 15 °C between June and September make the (Western) Scheldt Estuary a potentially suitable pupping habitat. The fact that few sharks were detected upstream past Flushing could be due to low salinities, or to anthropogenic influences like dredging. This, however, should be further investigated in follow-up studies.
 *M. asterias* might leave the area of the Western Scheldt during winter because of decreasing water temperature [@breve_2016], a main predictor of elasmobranch occurrence [@martin_2010]. The warmer waters in the Channel area might be favourable especially for gestating females since higher water temperatures increase metabolic rate and thereby improve embryo development [@hurst_1999].
 
-<!--which was also. Substantially decreased presence of *M. asterias* in the Dutch delta was linked to water temperature < 13 °C [@breve_2016]. Since water temperatures are a main predictor of elasmobranch occurrence [@martin_2010].  It was therefore unexpected to have only 38 acoustic detections in the WS2 array which can be considered more sheltered than the WS1 array, and no detection in the WS3 array. This, together with the high numbers of detections in the WS1 array indicates that the waters around the WS1 array are more utilized and thus more relevant for the species as compared to the Western Scheldt estuary upstream past Vlissingen. Possible reasons for the low presence of *M. asterias* can be salinity (the salinity tolerance of the species), limited availability of prey, or water quality.  -->
+<!--which was also. Substantially decreased presence of *M. asterias* in the Dutch delta was linked to water temperature < 13 °C [@breve_2016]. Since water temperatures are a main predictor of elasmobranch occurrence [@martin_2010].  It was therefore unexpected to have only 38 acoustic detections in the WS2 array which can be considered more sheltered than the WS1 array, and no detection in the WS3 array. This, together with the high numbers of detections in the WS1 array indicates that the waters around the WS1 array are more utilized and thus more relevant for the species as compared to the Western Scheldt estuary upstream past Flushing. Possible reasons for the low presence of *M. asterias* can be salinity (the salinity tolerance of the species), limited availability of prey, or water quality.  -->
 
 <!-- Season of peak presence of adult females: April – September -->
-<!-- Area around dishoek and zoetelande = hotspot, estuary upstream past Vlissingen: not so important -->
+<!-- Area around dishoek and zoetelande = hotspot, estuary upstream past Flushing: not so important -->
 <!-- Only some tagged females are very present in the area, indicating that there could be differences in habitat use between pregnant and non-pregnant females. -->
 <!-- Whether that implies that non-pregnant females use other parts of the estuary (e.g. receiver WN2 that also saw many detections in 2018) or that they use completely different areas cannot be said at this moment -->
 <!-- No direct evidence of pupping, (more investigation needed), but presence of females in summer (somewhat sheltered area, warm temperatures, i.e. good conditions for pupping) suggest it -->
@@ -2459,24 +2467,30 @@ identifier and hyperlink to dataset(s) in http:// format\].
 The dataset(s) supporting the conclusions of this article is(are)
 included within the article (and its additional file(s)).
 
+The metadata that support the raw data for this study can be found in Annex B.
+
 # References {-}
 
 # Acknowledgements {-}
 
--   funding agencies, field workers
+This work was supported by the Research Foundation Flanders (FWO) as part of the Belgian contribution to LifeWatch. I am indebted to everyone involved in the tagging of the 30 starry smooth-hounds in 2018 and 2019 without whom this study would not have been possible. My gratitude extends to everyone involved in the maintenance of the acoustic receiver network involved in this study. Furthermore, I appreciate the effort by everyone involved in the return of the tags, enabling me to study the annual vertical movement of the starry smooth-hounds in the first place. I am thankful to the Flemish Marine Institute (VLIZ) for having granted me the opportunity to conduct my master thesis with them, and the IMBRSea coordinators for their continuous effort to make this study programme happen.
 
--   Question: Who provided the money for the tags? What project was that
-    under?
+I wish to express my heartfelt thanks to my promotors Jan Reubens and Niels Brevé, and my supervisor Carlota Muñiz. Thank you Jan, for providing me with constructive and valuable feedback, thank you Niels for your invaluable input on the starry smooth-hound, and thank you Carlota for guiding me and looking after me when I was a bit stuck.
+Furthermore, I am grateful for having been able to go out into the Belgian Part of the North Sea for receiver maintenance work, this experience gave me valuable insights into the practicalities behind the receiver network.
+My sincere appreciation goes to Pieterjan Verhelst, for taking me along the Twaite Shad tagging campaign and the car conversations about fish migrations and fishermen’s knowledge. Thank you to Jolien Goossens for carrying out the geolocation modelling of the returned tags which provided an important base for me to follow up on.
+
+I furthermore wish to thank my IMBRSea study mates for productive co-working sessions and emotional support throughout the thesis. My thesis would not have been the same without all the warmhearted colleagues at VLIZ, thank you all for this extraordinary time in Gent and Ostend. 
+My eternal gratitude goes to the people that I deeply care for, especially Silvi and Tobi, for emotional support and understanding during this intense period.
+And lastly, endless thanks to my parents for being there and supporting me no matter what. 
+
 
 # Annex {-}
 
-<!-- *All the raw data have to be added in annex* -->
-
 <!-- ## **Annex A**: Acoustic detections {-} -->
 
-## **Annex A**: DST data {-}
+## **Annex A.** DST data {-}
 
-### **A1**: Raw depth and temperature logs {-}
+### **A.1** Raw depth and temperature logs {-}
 
 @fig-dsttempannex shows the raw depth and temperature logs of tags 308 and 321. Tag 308 experienced the maximum temperature of 22.9°C on August 06, 2018 and its minimum temperature of 8.65°C on March 23, 2019.
 Tag 321 experienced its maximum temperature of 22.1°C on August 07, 2018 and its minimum temperature of 5.98°C on February 04, 2019.
@@ -2523,7 +2537,7 @@ gridExtra::grid.arrange(p_322_depth, p_322_temp, ncol = 1)
 
 ```
 
-### **A2**: Fast Fourier Transformation {-}
+### **A.2** Fast Fourier Transformation {-}
 
 The resulting periodograms from the Fast Fourier Transform for tags 308
 (*f*) and 321 (*m*) are depicted in @fig-fft.
@@ -2566,124 +2580,89 @@ p_fft_308
 p_fft_321
 ```
 
-<!-- ##| - "Tag 295 (m), 31 days of liberty" # p_fft_295 -->
 
-<!-- ### Day/night summaries for tag 321 {#sec-annexmoonphase} -->
+## **Annex B.** Metadata {-}
 
-<!-- The chosen period of investigation for tag 321 is from December 09, 2018 to April 30, 2019 and was visually determined to be the period with the most prevalent biweekly vertical patterns. Median depth during the day was significantly deeper than at night for the chosen period (One-sided Wilcoxon rank sum test, *p* = `r wilcox_321_depth_median_daynight$p.value`). -->
+Four sets of tabular data form the basis of this study. These can be found in the additional files of this study. A brief description of the dataset and its variables is given below. Where available, the variable descriptions were obtained from the ETN database (https://www.lifewatch.be/etn/).
 
+### **B.1** Information on tagged individuals {-}
 
-<!-- ```{r sum321daynight} -->
-<!-- #| include: true -->
-<!-- #| label: fig-sum321daynight -->
-<!-- #| out-width: 120% -->
-<!-- #| fig-height: 1.5 -->
-<!-- #| fig-cap: "Daily summary statistics for day and night for tag 321 (male)." -->
-<!-- #| fig-pos: "H" -->
-
-<!-- p_321_sum_daynight -->
-<!-- ``` -->
+The dataset includes information on the 30 *M. asterias* individuals that were subject of this study (filename: `tagged_individuals_raw_data.csv`). The metadata linked to this dataset is displayed in @tbl-taggedindividualsmetadata.
 
 
-<!-- ### Linear Model results -->
+```{r table-taggedindividualsmetadata}
+#| include: true
+#| label: tbl-taggedindividualsmetadata
+#| out-width: 100%
+#| tbl-cap-location: top
+#| tbl-cap: "Metadata supporting the dataset `tagged_individuals_raw_data.csv`."
+#| tbl-colwidths: [20,80]
 
-<!-- #### Median depth per day -->
-
-<!-- *Tag 308:* -->
-<!-- ```{r lm308day-sum} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| output: true -->
-
-<!-- lm_308_day_depthmedian_moonfraq -->
-
-<!-- ``` -->
-
-
-<!-- *Tag 321:* -->
-<!-- ```{r lm321day-sum} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| output: true -->
-
-<!-- lm_321_day_depthmedian_moonfraq  -->
-
-<!-- ``` -->
+knitr::kable(tagged_individuals_metadata %>%
+               dplyr::select(variable, explanation),
+             booktabs = T, escape = F, format = "markdown") %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
 
 
-<!-- #### Median depth per night -->
+### **B.2** Acoustic detections {-}
 
-<!-- *Tag 308:* -->
-<!-- ```{r lm308night-sum} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| output: true -->
-
-<!-- lm_308_night_depthmedian_moonfraq -->
-
-<!-- ``` -->
+The dataset includes the acoustic detections of the 30 *M. asterias* individuals by the acoustic receivers that are part of the Permanent Belgian Acoustic Receiver Network (filename: `acoustic_detections_raw_data.csv`). The metadata linked to this dataset is displayed in @tbl-detectionsmetadata.
 
 
-<!-- *Tag 321:* -->
-<!-- ```{r lm321night-sum} -->
-<!-- #| include: true -->
-<!-- #| echo: false -->
-<!-- #| output: true -->
-
-<!-- lm_321_night_depthmedian_moonfraq -->
-
-<!-- ``` -->
+```{r table-detectionsmetadata}
+#| include: true
+#| label: tbl-detectionsmetadata
+#| out-width: 100%
+#| tbl-cap-location: top
+#| tbl-cap: "Metadata supporting the dataset `acoustic_detections_raw_data.csv`."
+#| tbl-colwidths: [20,80]
 
 
-<!-- ```{r lm321daynight} -->
-<!-- #| include: true -->
-<!-- #| label: fig-lm321daynight -->
-<!-- #| out-width: 120% -->
-<!-- #| fig-height: 3.5 -->
-<!-- #| fig-cap: "Savitzky-filtered median depth per day and night for tag 321 between  December 12, 2018 and March 11, 2019." -->
-<!-- #| fig-pos: "H" -->
+knitr::kable(acoustic_detections_metadata %>%
+               dplyr::select(variable, explanation),
+             booktabs = T, escape = F, format = "markdown") %>%
+  # kableExtra::column_spec(column = 1, width = "4cm") %>%
+  # kableExtra::column_spec(column = 2, width = "9cm") %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
 
-<!-- p_321_lm_median_moonfraq_smooth -->
-<!-- ``` -->
+### **B.3** Data Storage Tag logs {-}
+
+The dataset includes the depth and temperature logs of all recovered data storage tags (filename: `DST_logs_raw_data.csv`). The metadata linked to this dataset is displayed in @tbl-dstlogmetadata.
 
 
+```{r table-dstlogmetadata}
+#| include: true
+#| label: tbl-dstlogmetadata
+#| out-width: 100%
+#| tbl-cap-location: top
+#| tbl-cap: "Metadata supporting the dataset `DST_logs_raw_data.csv`."
+#| tbl-colwidths: [20,80]
 
-<!-- Old -->
+knitr::kable(DST_logs_metadata %>%
+               dplyr::select(variable, explanation),
+             booktabs = T, escape = F, format = "markdown") %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
 
-<!-- ```{r fig-dstsummary308} -->
+### **B.4** Geolocation modelling output {-}
 
-<!-- #| layout: [[40,-20,40], [100]] -->
+The dataset includes the most probable tracks calculated by the geolocation model [the reader is referred to @goossens_2023 for further explanation of the model, filename: `geolocation_output_raw_data.csv`]. The metadata linked to this dataset is displayed in @tbl-geolocationmetadata. The geolocation modelling was carried out by Jolien Goossens (ORCID: [0000-0002-0853-9153](https://orcid.org/0000-0002-0853-9153)).
 
-<!-- #| include: true -->
 
-<!-- #| label: fig-dstsummary308 -->
+```{r table-geolocationmetadata}
+#| include: true
+#| label: tbl-geolocationmetadata
+#| out-width: 100%
+#| tbl-cap-location: top
+#| tbl-cap: "Metadata supporting the dataset `geolocation_output_raw_data.csv`."
+#| tbl-colwidths: [20,80]
 
-<!-- #| fig-cap: "Summary statistics for tag 308." -->
+knitr::kable(geolocation_output_metadata %>%
+               dplyr::select(variable, explanation),
+             booktabs = T, escape = F, format = "markdown") %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
 
-<!-- #| fig-subcap: -->
 
-<!-- #|   - "Daily median depth and depth range of tag 308." -->
-
-<!-- #|   - "Autocorrelation of the daily median depth." -->
-
-<!-- #|   - "Wavelet transform result." -->
-
-<!-- ## | column: body-outset -->
-
-<!-- ## | out-width: 50% -->
-
-<!-- #| fig.align: "center" -->
-
-<!-- p_308_depth_median_range_change_ribbon -->
-
-<!-- p_acf_308 -->
-
-<!-- par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1) -->
-
-<!-- # the general plots you cannot save, I would have to call the function in the thesis manuscript -->
-
-<!-- biwavelet::plot.biwavelet(wt_308_depthrange, -->
-
-<!--      type = "power.corr.norm", main = "", xlab = "Time in days", ylab = "Period", plot.cb = T) -->
-
-<!-- ``` -->

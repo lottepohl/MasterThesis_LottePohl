@@ -21,13 +21,18 @@ data_lm_321_day <- load_data(filestring = "data_lm_321_day", folder = models_pat
 data_lm_321_night <- load_data(filestring = "data_lm_321_night", folder = models_path)
 
 # load models
+# 
+# lm_308_day_depthmedian_moonfraq <- load_data(filestring = "lm_308_day_depthmedian_moonfraq", folder = models_path)
+# lm_308_night_depthmedian_moonfraq <- load_data(filestring = "lm_308_night_depthmedian_moonfraq", folder = models_path)
+# 
+# lm_321_day_depthmedian_moonfraq <- load_data(filestring = "lm_321_day_depthmedian_moonfraq", folder = models_path)
+# lm_321_night_depthmedian_moonfraq <- load_data(filestring = "lm_321_night_depthmedian_moonfraq", folder = models_path)
+# 
+# wilcox_308_depth_median_daynight <- load_data(filestring = "wilcox_308_depth_median_daynight", folder = models_path)
+# wilcox_321_depth_median_daynight <- load_data(filestring = "wilcox_321_depth_median_daynight", folder = models_path)
 
-lm_308_day_depthmedian_moonfraq <- load_data(filestring = "lm_308_day_depthmedian_moonfraq", folder = models_path)
-lm_308_night_depthmedian_moonfraq <- load_data(filestring = "lm_308_night_depthmedian_moonfraq", folder = models_path)
+# load hypothesis results
 
-lm_321_day_depthmedian_moonfraq <- load_data(filestring = "lm_321_day_depthmedian_moonfraq", folder = models_path)
-lm_321_night_depthmedian_moonfraq <- load_data(filestring = "lm_321_night_depthmedian_moonfraq", folder = models_path)
-
-wilcox_308_depth_median_daynight <- load_data(filestring = "wilcox_308_depth_median_daynight", folder = models_path)
-wilcox_321_depth_median_daynight <- load_data(filestring = "wilcox_321_depth_median_daynight", folder = models_path)
-
+hyp1_results <- load_data(filestring = "hyp1_results", folder = models_path)
+hypothesis2.2_testresults <- load_data(filestring = "hypothesis2.2_testresults", folder = models_path)
+ks_results_hyp2.2 <- load_data(filestring = "ks_results_hyp2.2", folder = models_path)

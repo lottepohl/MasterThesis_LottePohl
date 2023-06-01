@@ -6,6 +6,7 @@
 
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 tables_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/tables/")
+metadata_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/raw_metadata/")
 
 paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 
@@ -34,3 +35,10 @@ daynight_depth_321_ttest <- load_data(filestring = "daynight_depth_321_ttest", f
 # rulsif_321_table_2_5percent <- load_data(filestring = "rulsif_321_table_2_5percent", folder = tables_path)
 # rulsif_321_table_5percent <- load_data(filestring = "rulsif_321_table_5percent", folder = tables_path)
 # rulsif_321_table_10percent <- load_data(filestring = "rulsif_321_table_10percent", folder = tables_path)
+
+# load metadata tables ####
+
+acoustic_detections_metadata <- load_data(filestring = "acoustic_detections_metadata", folder = metadata_path)
+DST_logs_metadata <- load_data(filestring = "DST_logs_metadata", folder = metadata_path)
+geolocation_output_metadata <- load_data(filestring = "geolocation_output_metadata", folder = metadata_path)
+tagged_individuals_metadata <- load_data(filestring = "tagged_individuals_metadata", folder = metadata_path)
