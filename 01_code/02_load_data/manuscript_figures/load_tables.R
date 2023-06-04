@@ -6,7 +6,7 @@
 
 dir_path <- "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl"
 tables_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/tables/")
-metadata_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/raw_metadata/")
+metadata_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/raw_metadata2/")
 
 paste0(dir_path, "/01_code/06_functions/functions.R") %>% base::source()
 

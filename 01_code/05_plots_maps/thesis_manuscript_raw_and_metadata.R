@@ -39,7 +39,7 @@ paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% b
 # paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
 ## set path were all figures are saved ####
-data_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/raw_metadata/")
+data_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/raw_metadata2/")
 
 
 # 1. acoustic detections ####
