@@ -1,0 +1,345 @@
+---
+title: Vertical movement behaviour of the starry smooth-hound shark *Mustelus asterias* in the North Sea
+subtitle: Master Thesis
+author:
+  - name: Lotte Pohl
+    email: lotte.pohl@imbrsea.eu
+    affiliations: 
+        - id: VLIZ
+          name: Flemish Marine Institute
+          department: Marine Observation Centre
+          address: Slipwaykaai 2
+          city: Ostend
+          state: Belgium
+          postal-code: 8400
+        - id: UGent
+          name: Ghent University
+          department: Marine Biology research group
+          address: Krijgslaan 281/S8
+          city: Ghent
+          state: Belgium
+          postal-code: 9000
+    attributes:
+        corresponding: true
+  - name: Niels Brevé
+    email: breve@sportvisserijnederland.nl
+    affiliations:
+      - id: WUR
+        name: Wageningen University and Research
+        department: Marine Ecology Group
+        address: Droevendaalsesteeg 1
+        city: Wageningen
+        state: The Netherlands
+        postal-code: 6700
+      - id: Sportvisserij
+        name: Sportvisserij Nederlands
+        address: Leyenseweg 115
+        city: Bilthoven
+        state: The Netherlands
+        postal-code: 3721
+  - name: Carlota Muñiz
+    email: carlota.muniz@vliz.be
+    affiliations:
+        - ref: VLIZ
+  - name: Jan Reubens
+    email: jan.reubens@vliz.be
+    affiliations:
+        - ref: VLIZ
+abstract: 
+ tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.
+keywords: 
+  - acoustic telemetry
+  - geolocation modelling
+  - Mustelus asterias
+date: last-modified
+bibliography: bibliography.bib
+execute:
+  echo: false
+  include: false
+knitr:
+  opts_knit:
+    root.dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/"
+    verbose: TRUE
+# output:
+#   pdf_document:
+#     css: custom.css
+#     output_dir: "C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/test"
+#     base_url: "http://localhost:3478/01_code/00_thesis_manuscript/test"
+format:
+  #     - title.tex
+  # pdf: default
+  # pdf: # bmc template
+  #   template: bmc_template/bmc_article.tex
+  #   template-partials:
+  elsevier-pdf:
+    keep-tex: true
+    toc: true
+    journal:
+      #   - Highlight 1
+      #   - Highlight 2
+      #   - Highlight 3
+      # - top=2 0mm
+      # - left=20mm
+      # - heightrounded
+      name: Journal of Animal Biotelemetry
+      formatting: review # or preprint, or doubleblind
+      linestretch: 2
+      model: 3p
+      cite-style: authoryear
+      # graphical-abstract: "![](abstract.png)"
+      # highlights:
+        
+      # fig-width: 6.7
+      # fig-height: 4.5
+      # geometry:
+      # tbl-cap-location: top
+editor_options: 
+  chunk_output_type: console
+header-includes:
+  - \newcommand{\mycommand}[1]{\textbf{#1}}
+# crossref:
+#   fig-title: '**Figure**'
+#   fig-labels: arabic
+#   title-delim: "**.**"
+# quarto:
+#   figure:
+#     caption:
+#       format: "<b>Figure %s.</b> %s"
+---
+
+```{r packages}
+library(dplyr)
+# library(tidyverse)
+# library(leaflet)
+# library(ggplot2)
+library(tibble)
+# library(magrittr)
+library(knitr)
+library(usethis)
+library(kableExtra)
+library(gridExtra)
+# library(biwavelet)
+# rm(list = ls())
+```
+
+```{r workspace}
+# load functions
+paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+
+# load plots, data and maps
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
+# 
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
+
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
+
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+
+# paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
+
+# paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
+
+# paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
+
+# paste0(getwd(), "/01_code/05_plots_maps/thesis_manuscript_figures.R") %>% base::source()
+
+# dst_summary <- load_data(filestring = "dst_summary", folder = paste0(getwd(), "/02_results/dst_summary/"))
+
+```
+
+```{r setplottheme}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+thesis_theme <- ggplot2::theme(
+  plot.title = element_text(family = "serif", size = 9, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 9),
+  axis.title = element_text(family = "serif", size = 9),
+  axis.text = element_text(family = "serif", size = 7),
+  legend.title = element_text(family = "serif", size = 8),
+  legend.text = element_text(family = "serif", size = 7),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # legend.key.width = unit(2, "cm"),
+  legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
+  # plot.background = element_blank()#,
+  panel.background = element_blank(),
+  panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+  # panel.background = element_rect(fill = "transparent"),
+  panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+  panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+)
+
+# Set the theme as the default for all plots
+ggplot2::theme_set(thesis_theme)
+
+
+thesis_theme_halfpage <- ggplot2::theme(
+  plot.title = element_text(family = "serif", size = 11.5, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 11.5),
+  axis.title = element_text(family = "serif", size = 11.5),
+  axis.text = element_text(family = "serif", size = 9.5),
+  legend.title = element_text(family = "serif", size = 11.5),
+  legend.text = element_text(family = "serif", size = 9.5),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # plot.background = element_blank()#,
+  panel.background = element_blank(),
+  # panel.background = element_rect(fill = "transparent"),
+  panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+  panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+)
+```
+
+
+<!-- {{< pagebreak >}} -->
+
+# Introduction
+
+## Aims of this work {#sec-intro-aims}
+
+The seasonal presence of *M. asterias* in the Western Scheldt estuary, a presumed summer habitat of the species, has not been studied yet. The confirmation of seasonal presence of *M. asterias* would be relevant to species management. This could involve stock assessments or seasonal restrictions for commercial fishing  in the future [@benot_2003]. Moreover, detailed information on potential differences in vertical movement regarding seasonality and sex, including the timing and duration of migrations, are currently missing. Such information can improve geolocation models through the implementation of behavioural states [@pedersen_2008].
+With the aim of addressing these knowledge gaps, this study pursues two lines of research.
+
+### Research Line 1: Presence of *M. asterias* in the Western Scheldt Estuary and the BPNS {-}
+
+*M. asterias* was rarely caught at the Dutch and Belgian North Sea coast before 2009 [@breve_2016]. These waters are influenced by the outflows of the rivers Rhine, Meuse and Scheldt. *M. asterias* is not known to move into brackish or freshwater but instead potentially remains in the saline parts of the Scheldt Estuary [@dewysiecki_2017]. However, no study has yet been conducted on the presence of this species in the Western Scheldt. The Eastern Scheldt, located adjacent to the Western Scheldt, is a confirmed pupping ground with presence of adult females in summer months [@breve_2016; @breve_2020].
+This study intends to fill the knowledge gap about seasonal presence of *M. asterias* in the Western Scheldt and the BPNS, and thus aims to answer the following questions:
+
+<!-- |   The first line of research involves the presence of *M. asterias* in the Western Scheldt Estuary and the  -->
+<!-- |   Belgian Part of the North Sea (BPNS). -->
+<!-- |   The following aspects will be investigated in this work: -->
+
+ -    Research Question 1: What seasonal patterns of presence does *M. asterias* display in the Western Scheldt and the BPNS?
+ -    Research Question 2: Are there differences in seasonal presence between males and females?
+ -    Research Question 3: How do the spatial preferences of *M. asterias* vary within the Western Scheldt and the BPNS?
+ 
+
+### Research Line 2: Depth utilisation of *M. asterias* on a seasonal scale {-}
+ 
+<!-- | **Research line 2**: Depth utilisation of *M. asterias* on a seasonal scale -->
+<!-- |   The second line of research involves depth utilisation of *M. asterias* on a seasonal scale.  -->
+<!-- |   In this work, the following aspects will be explored:  -->
+
+Information on depth use of *M. asterias* is scarce, yet vital for the investigation of behavioural patterns such as feeding, resting, and migrating. @griffiths_2020 reported a maximum depth of 118 m from one data storage tag implanted in a female *M. asterias*. This further suggests *M. asterias* using waters deeper than previously thought [depths <100 m, @ices_2019]. A study focusing on seasonal depth utilisation patterns of *M. asterias* has not been conducted yet, and this work aims to contribute to filling this knowledge gap. Therefore, the following research questions will be assessed:
+
+ - Research Question 4: What seasonal patterns of vertical behaviour does *M. asterias* show?
+ - Research Question 5: Are there differences in depth utilisation between males and females?
+
+
+
+<!-- | **Research line 1**: -->
+<!-- |   The first line of research involves the presence of *M. asterias* in the Western Scheldt Estuary and the  -->
+<!-- |   Belgian Part of the North Sea (BPNS). -->
+<!-- |   The following aspects will be investigated in this work: -->
+
+<!--  -    Research Question 1: What seasonal patterns of presence does *M. asterias* display in the Western Scheldt and the BPNS? -->
+<!--  -    Research Question 2: Are there differences in seasonal presence between males and females? -->
+<!--  -    Research Question 3: How do the spatial preferences of *M. asterias* vary within the Western Scheldt and the BPNS? -->
+
+
+<!-- | **Research line 2**:  -->
+<!-- |   The second line of research involves depth utilisation of *M. asterias* on a seasonal scale.  -->
+<!-- |   In this work, the following aspects will be explored:  -->
+
+<!--  - Research Question 1: What seasonal patterns of vertical behaviour does *M. asterias* show? -->
+<!--  - Research Question 2: Are there differences in depth utilisation between males and females? -->
+
+<!--  1. The presence of *M. asterias* in the Western Scheldt estuary. -->
+<!--   - Hypothesis: Females show higher residency in the area of the PBARN receivers than males. -->
+<!--  2. The vertical movement of *M. asterias* on an annual scale. -->
+<!--   - Hypothesis: The vertical movement differs between seasons for both males and females. -->
+  
+
+Due to its ability to collect information both within the area of acoustic receiver networks and beyond those by locally storing data, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these questions.
+
+
+# Materials and Methods
+
+
+
+```{r mapgeolocation}
+#| include: true
+#| label: "fig-mapgeolocation"
+#| out-width: 90%
+#| layout-ncol: 1
+#| fig-cap: "Results of geolocation modelling (without behavioural states) on the raw DST depthlogs. The estimated trajectory of the male shark is shown in panel a), the estimated trajectory of the female shark is shown in panel b)."
+#| fig-pos: "H"
+
+map_dst_321 #+ thesis_theme_halfpage
+map_dst_308 #+ thesis_theme_halfpage
+```
+
+```{r mapstudyarea}
+#| include: false
+#| label: "fig-mapstudyarea"
+#| out-width: 90%
+#| layout-ncol: 1
+#| fig-cap: "Overview maps of the study area. **a)** The Southern North Sea and the English Channel, **b)** The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. ES = Eastern Scheldt, WS = Western Scheldt. Each black circle marks one acoustic receiver station. **c)** Acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN) in the Western Scheldt Estuary. The receiver stations (circles) are categorised into three different arrays: Western Scheldt 1 (WS1), Western Scheldt 2 (WS2) and Western Scheldt 3 (WS3)."
+#| fig-pos: "H"
+
+map_overview_ggplot
+map_detail_ggplot
+map_WS_ggplot
+```
+
+
+
+
+# Results
+
+Here is an inline note.^[Inlines notes are easier to write,
+since you don't have to pick an identifier and move down to
+type the note.]
+
+
+Here is an inline note.^[another inline foootnote]
+
+
+Due to its ability to collect information both within the area of acoustic receiver networks and beyond those by locally storing data, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these questions. ^[nlabla]
+
+Here is an inline note.^[blabla]
+
+
+
+<!-- ```{r rawdepthlog308} -->
+<!-- #| include: true -->
+<!-- #| label: fig-dst308 -->
+<!-- #| layout: "[[100], [50,50]]" -->
+<!-- #| out-width: 120% -->
+<!-- #| fig-height: 2.5 -->
+<!-- #| fig-cap: "Data from the recovered tag 308. This female shark was tagged on August 2, 2018." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Depthlog, subsampled to one value every 30 minutes." -->
+<!-- #| - "Example subset from September 2018." -->
+<!-- #| - "Example subset from February and March 2019." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- # p_308_temp -->
+<!-- p_308_depth -->
+
+<!-- p_308_depth_summer -->
+<!-- p_308_depth_winter -->
+<!-- ``` -->
+
+
+<!-- ```{r rawdepthlog321} -->
+<!-- #| include: true -->
+<!-- #| label: fig-dst321 -->
+<!-- #| layout: "[[100], [50,50]]" -->
+<!-- #| out-width: 120% -->
+<!-- #| fig-height: 2.5 -->
+<!-- #| fig-cap: "Data from the recovered tag 321. This female shark was tagged on August 2, 2018." -->
+<!-- #| fig-subcap:  -->
+<!-- #| - "Depthlog, subsampled to one value every 30 minutes." -->
+<!-- #| - "Example subset from September 2018." -->
+<!-- #| - "Example subset from February and March 2019." -->
+<!-- #| fig-pos: "H" -->
+
+<!-- # p_321_temp -->
+<!-- p_321_depth -->
+
+<!-- p_321_depth_summer -->
+<!-- p_321_depth_winter -->
+<!-- ``` -->
+
+

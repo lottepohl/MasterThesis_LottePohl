@@ -129,12 +129,12 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
-
+# 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_plots.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
