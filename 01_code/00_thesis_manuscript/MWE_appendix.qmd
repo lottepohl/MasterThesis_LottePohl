@@ -257,42 +257,7 @@ Due to its ability to collect information both within the area of acoustic recei
 
 # Materials and Methods
 
-
-```{r mapgeolocation}
-#| include: true
-#| label: "fig-mapgeolocation"
-#| out-width: 90%
-#| layout-ncol: 1
-#| fig-cap: "Results of geolocation modelling (without behavioural states) on the raw DST depthlogs. The estimated trajectory of the male shark is shown in panel **a)**, the estimated trajectory of the female shark is shown in panel **b)**."
-#| fig-subcap:
-#| - "Male shark, tag 321."
-#| - "Female shark, tag 308."
-#| fig-pos: "H"
-
-map_dst_321
-map_dst_308
-```
-
-<!-- This can be seen in @fig-mapgeolocation-1 and @fig-mapgeolocation a), and @fig-mapgeolocation-2.   -->
-
-<!-- @fig-mapgeolocation-cap, @fig-mapgeolocation-cap-1, @fig-mapgeolocation-cap-2. -->
-<!-- out-width: 75% -->
-```{r mapstudyarea}
-#| include: true
-#| label: "fig-mapstudyarea"
-#| fig-height: 2.5
-#| layout-ncol: 1
-#| fig-cap: "Overview maps of the study area. **a)** The Southern North Sea and the English Channel, **b)** The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. ES = Eastern Scheldt, WS = Western Scheldt. Each black circle marks one acoustic receiver station. **c)** Acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN) in the Western Scheldt Estuary. The receiver stations (circles) are categorised into three different arrays: Western Scheldt 1 (WS1), Western Scheldt 2 (WS2) and Western Scheldt 3 (WS3)."
-#| fig-subcap:
-#| - "The Southern North Sea and the English Channel."
-#| - "The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary."
-#| - "Acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN)."
-#| fig-pos: "b"
-
-map_overview_ggplot
-map_detail_ggplot
-map_WS_ggplot
-```
+@griffiths_2020.
 
 
 
@@ -302,54 +267,21 @@ Here is an inline note.^[Inlines notes are easier to write,
 since you don't have to pick an identifier and move down to
 type the note.]
 
+# Conclusion
 
-Here is an inline note.^[another inline foootnote]
-
-
-Due to its ability to collect information both within the area of acoustic receiver networks and beyond those by locally storing data, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these questions. ^[nlabla]
-
-Here is an inline note.^[blabla]
+ref to normal annex @sec-annex. and @sec-annex2
 
 
+# Acknowledgements {-}
 
-<!-- ```{r rawdepthlog308} -->
-<!-- #| include: true -->
-<!-- #| label: fig-dst308 -->
-<!-- #| layout: "[[100], [50,50]]" -->
-<!-- #| out-width: 120% -->
-<!-- #| fig-height: 2.5 -->
-<!-- #| fig-cap: "Data from the recovered tag 308. This female shark was tagged on August 2, 2018." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "Depthlog, subsampled to one value every 30 minutes." -->
-<!-- #| - "Example subset from September 2018." -->
-<!-- #| - "Example subset from February and March 2019." -->
-<!-- #| fig-pos: "H" -->
+bliblablub
 
-<!-- # p_308_temp -->
-<!-- p_308_depth -->
+# References {-}
 
-<!-- p_308_depth_summer -->
-<!-- p_308_depth_winter -->
-<!-- ``` -->
+<div id="refs"></div>
 
+# Annex normal chapter {-}
 
-<!-- ```{r rawdepthlog321} -->
-<!-- #| include: true -->
-<!-- #| label: fig-dst321 -->
-<!-- #| layout: "[[100], [50,50]]" -->
-<!-- #| out-width: 120% -->
-<!-- #| fig-height: 2.5 -->
-<!-- #| fig-cap: "Data from the recovered tag 321. This female shark was tagged on August 2, 2018." -->
-<!-- #| fig-subcap:  -->
-<!-- #| - "Depthlog, subsampled to one value every 30 minutes." -->
-<!-- #| - "Example subset from September 2018." -->
-<!-- #| - "Example subset from February and March 2019." -->
-<!-- #| fig-pos: "H" -->
+hello
 
-<!-- # p_321_temp -->
-<!-- p_321_depth -->
-
-<!-- p_321_depth_summer -->
-<!-- p_321_depth_winter -->
-<!-- ``` -->
-
+## Annex normal 2 {-}

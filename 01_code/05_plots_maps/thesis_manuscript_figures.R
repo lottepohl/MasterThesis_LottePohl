@@ -38,7 +38,6 @@ plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
 
 
 # set plot theme ####
-
 thesis_theme <- ggplot2::theme(
   plot.title = element_text(family = "serif", size = 9, face = "bold"),
   plot.subtitle = element_text(family = "serif", size = 9),
@@ -49,13 +48,37 @@ thesis_theme <- ggplot2::theme(
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
   # legend.key.width = unit(2, "cm"),
   legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
+  plot.tag = element_text(face = "bold", family = "serif", size = 12),
+  # plot.tag.position =  c(0.065, 0.96), #"topleft", 
+  plot.tag.position =  c(0.01, 0.98), #"topleft", 
   # plot.background = element_blank()#,
   panel.background = element_blank(),
   panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
   # panel.background = element_rect(fill = "transparent"),
   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+  strip.background = element_rect(fill = "white"),
+  strip.text = element_text(face = "bold", family = "serif")
 )
+
+
+# thesis_theme <- ggplot2::theme(
+#   plot.title = element_text(family = "serif", size = 9, face = "bold"),
+#   plot.subtitle = element_text(family = "serif", size = 9),
+#   axis.title = element_text(family = "serif", size = 9),
+#   axis.text = element_text(family = "serif", size = 7),
+#   legend.title = element_text(family = "serif", size = 8),
+#   legend.text = element_text(family = "serif", size = 7),
+#   legend.key = element_rect(fill = "transparent", colour = "transparent"),
+#   # legend.key.width = unit(2, "cm"),
+#   legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
+#   # plot.background = element_blank()#,
+#   panel.background = element_blank(),
+#   panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+#   # panel.background = element_rect(fill = "transparent"),
+#   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+#   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+# )
 # 
 # thesis_theme <- ggplot2::theme(
 #   plot.title = element_text(family = "serif", size = 11, face = "bold"),
@@ -1101,15 +1124,16 @@ detections_sum_station <- detections_tempdepth_daynight %>%
 # 
 # detections_sum_station_sum_ind <- detections_sum_station %>% group_by(n_ind) %>% summarise(n_ind_group = n(), ind_percent = 100 * ((n_ind_group)/ (detections_sum_station %>% nrow())))
 
+
 p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!area == "BPNS", sex == "f"), #
-                               aes(x = month_year, y = station_name, fill = n_detect, colour = "transparent")) + #, colour = n_detect
+                               aes(x = month_year, y = station_name, fill = n_detect %>% as.numeric())) + #, colour = n_detect
   # geom_tile(linewidth = 0.75) +
-  geom_tile(linewidth = 1) +
+  geom_tile() + #linewidth = 1
   # geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "black", angle = 0, family = "sans", fontface = "bold", size = 5) + #, colour = "grey"
   geom_text(aes(x = month_year, y = station_name, label = paste0(n_ind)), colour = "white", angle = 0, family = "serif", fontface = "bold", size = 3) + #, colour = "grey"
   # facet_grid(vars(sex), scales="free_y") +
   scale_fill_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
-  scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
+  # scale_colour_viridis_c(expand = c(0,0), option = "turbo", direction = 1) +
   # scale_colour_manual(name = "", values = c("# individuals" = "grey")) +
   # scale_colour_manual(name = "", values = c("median" = "black", "depth range" = "lightgrey", "change of range" = "black", "median change" = "purple",
   #                                           "DVM" = "red", "rDVM" = "blue", "nVM" = "green"))  +
@@ -1119,9 +1143,10 @@ p_detections_heatmap <- ggplot(data = detections_sum_station %>% dplyr::filter(!
                    ,expand = c(0,0)) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
-  labs(x = "", y = "receiver station", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
+  labs(x = "", y = "Receiver Station", fill = "No. of Acoustic Detections", colour = "No. of Acoustic Detections")  +
   theme(legend.position = "bottom", # "bottom",
-        legend.box = "horizontal",   legend.margin = margin(t = -15)) 
+        legend.box = "horizontal",   legend.margin = margin(t = -15)) +
+  facet_grid(area ~ ., scales = "free_y", space = "free_y") 
 
 p_detections_heatmap #%>% ggplotly()
 

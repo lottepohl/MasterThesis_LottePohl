@@ -118,11 +118,11 @@ map_overview_ggplot <- ggplot() +
                                     pad_x = unit(0.15, "in"), pad_y = unit(0.3, "in"),
                                     style = north_arrow_fancy_orienteering) +
   geom_label(data = English_channel, aes(label = preferredGazetteerName, geometry = the_geom),
-            stat = "sf_coordinates", size = 1.8, nudge_y = 0.25, nudge_x = 0, family = "serif", fontface = "bold", fill = "transparent") +
+            stat = "sf_coordinates", size = 1.8, nudge_y = 0.25, nudge_x = 0, family = "serif", fontface = "bold", fill = "white") +
   geom_label(data = east_anglia, aes(label = preferredGazetteerName, geometry = geometry),
              stat = "sf_coordinates", size = 1.8, nudge_y = -0.1, nudge_x = 0, family = "serif", fontface = "bold", fill = "transparent") +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
-            stat = "sf_coordinates", size = 1.8, nudge_y = -0.15, nudge_x = -0.85, family = "serif", fontface = "bold", fill = "transparent") +
+            stat = "sf_coordinates", size = 1.8, nudge_y = -0.15, nudge_x = -0.85, family = "serif", fontface = "bold", fill = "white") +
   geom_text_repel(data = Hurd_deep, aes(label = preferredGazetteerName, geometry = geometry),
             stat = "sf_coordinates", size = 2, nudge_y = -0.35, nudge_x = -2, family = "serif") +
   geom_text_repel(data = Cap_de_la_Hague, aes(label = preferredGazetteerName, geometry = geometry),
@@ -195,13 +195,13 @@ map_dst_321 <- ggplot() +
   geom_point(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), 
              x = 3.631849, y = 51.61220, shape = 23, colour = "black", size = 3, fill = "yellow", alpha = 1) + #mapping = aes(shape = "tag 321 (m)" )
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
-             stat = "sf_coordinates", size = 2, nudge_y = -0.9, nudge_x = -0.45, family = "serif", fontface = "bold", fill = "transparent") +
+             stat = "sf_coordinates", size = 2, nudge_y = -0.9, nudge_x = -0.45, family = "serif", fontface = "bold", fill = "white") +
   geom_label(data = east_anglia, aes(label = preferredGazetteerName, geometry = geometry),
              stat = "sf_coordinates", size = 1.8, nudge_y = -0.1, nudge_x = 0, family = "serif", fontface = "bold", fill = "transparent") +
   coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(50.5, 53), xlim = c(-1, 4.5)) +
   # geom_label(label = "male (tag 321)", x = -0.5, y = 52.75,
   #                 size = 2, nudge_y = 0.07, nudge_x = -0.35, family = "serif", label.r = unit(0, "lines")) +
-  annotate(geom = "text", label = "\u2642", x = -0.6, y = 52.75, fontface = "bold", family = "serif", size = 5) +
+  annotate(geom = "text", label = "male", x = -0.65, y = 52.85, fontface = "bold", family = "serif", size = 2.75) +
   ggspatial::annotation_scale(location = "br", width_hint = 0.15, bar_cols = c("gray0", "white"), text_family = "serif",
                               pad_x = unit(0.25, "cm"),
                               pad_y = unit(0.25, "cm"),) +
@@ -212,7 +212,6 @@ map_dst_321 <- ggplot() +
   # scale_shape_manual(name = "Tagging Location", values = c("tag 321 (m)" = 3)) #+
   theme(legend.position = "bottom",
         legend.box = "horizontal", legend.margin = margin(t = -5))
-
 
 map_dst_321
 
@@ -271,11 +270,11 @@ map_dst_308 <- ggplot() +
   geom_text_repel(data = Cap_de_la_Hague, aes(label = preferredGazetteerName, geometry = geometry),
                   stat = "sf_coordinates", size = 2, nudge_y = -0.55, nudge_x = 1.3, family = "serif") +
   geom_label(data = English_channel, aes(label = preferredGazetteerName, geometry = the_geom),
-             stat = "sf_coordinates", size = 2, nudge_y = 0.2, nudge_x = 2.8, family = "serif", fontface = "bold", fill = "transparent") +
+             stat = "sf_coordinates", size = 2, nudge_y = 0.2, nudge_x = 2.8, family = "serif", fontface = "bold", fill = "white") +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
-             stat = "sf_coordinates", size = 2, nudge_y = -1.5, nudge_x = -0.75, family = "serif", fontface = "bold", fill = "transparent") +
+             stat = "sf_coordinates", size = 2, nudge_y = -1.5, nudge_x = -0.75, family = "serif", fontface = "bold", fill = "white") +
   coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(49, 52.5), xlim = c(-3.5, 4.5)) +
-  annotate(geom = "text", label = "\u2640", x = -0.6, y = 52.75, fontface = "bold", family = "serif", size = 5) +
+  annotate(geom = "text", label = "female", x = -2.85, y = 52.25, fontface = "bold", family = "serif", size = 2.75) +
   ggspatial::annotation_scale(location = "br", width_hint = 0.15, bar_cols = c("gray0", "white"), text_family = "serif") +
   ggspatial::annotation_north_arrow(location = "br", which_north = "true", 
                                     height =  unit(0.75, "cm"), width = unit(0.75, "cm"),
