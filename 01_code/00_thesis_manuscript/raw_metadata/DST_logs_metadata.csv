@@ -1,5 +1,0 @@
-"","variable","explanation"
-"1","date\_time","Date and time in YYYY-MM-DD HH:MM:SS format. In UTC time."
-"2","tag\_serial\_number","The serial number that is unique to the Acoustic Data Storage Tag."
-"3","depth\_m","The recorded depth of the depth sensor in Metres."
-"4","temp\_c","The recorded temperature of the temperature sensor in degrees Celcius."

@@ -1,5 +1,0 @@
-"","variable","explanation"
-"1","date\_time","Date and time in YYYY-MM-DD format. In UTC time."
-"2","tag\_serial\_number","The serial number that is unique to the Acoustic Data Storage Tag."
-"3","detection\_latitude","Latitude that was calculated as the 'most probable track' in the geolocation model. See Goossens et al., (2023) and Woillez et al., (2016) for details."
-"4","detection\_longitude","Longitude that was calculated as the 'most probable track' in the geolocation model. See Goossens et al., (2023) and Woillez et al., (2016) for details."
