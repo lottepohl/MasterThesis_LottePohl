@@ -40,19 +40,37 @@ plot_path <- paste0(dir_path, "/01_code/00_thesis_manuscript/figures/")
 # set plot theme ####
 
 thesis_theme <- ggplot2::theme(
-  plot.title = element_text(family = "serif", size = 11, face = "bold"),
-  plot.subtitle = element_text(family = "serif", size = 11),
-  axis.title = element_text(family = "serif", size = 11),
-  axis.text = element_text(family = "serif", size = 9),
-  legend.title = element_text(family = "serif", size = 11),
-  legend.text = element_text(family = "serif", size = 9),
+  plot.title = element_text(family = "serif", size = 9, face = "bold"),
+  plot.subtitle = element_text(family = "serif", size = 9),
+  axis.title = element_text(family = "serif", size = 9),
+  axis.text = element_text(family = "serif", size = 7),
+  legend.title = element_text(family = "serif", size = 8),
+  legend.text = element_text(family = "serif", size = 7),
+  legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  # legend.key.width = unit(2, "cm"),
+  legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
-  legend.key = element_rect(fill = "transparent", colour = "transparent"), # Add this line
+  panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
   # panel.background = element_rect(fill = "transparent"),
   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
 )
+# 
+# thesis_theme <- ggplot2::theme(
+#   plot.title = element_text(family = "serif", size = 11, face = "bold"),
+#   plot.subtitle = element_text(family = "serif", size = 11),
+#   axis.title = element_text(family = "serif", size = 11),
+#   axis.text = element_text(family = "serif", size = 9),
+#   legend.title = element_text(family = "serif", size = 11),
+#   legend.text = element_text(family = "serif", size = 9),
+#   # plot.background = element_blank()#,
+#   panel.background = element_blank(),
+#   legend.key = element_rect(fill = "transparent", colour = "transparent"), # Add this line
+#   # panel.background = element_rect(fill = "transparent"),
+#   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
+#   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
+# )
 
 # Set the theme as the default for all plots
 ggplot2::theme_set(thesis_theme)
@@ -60,7 +78,9 @@ ggplot2::theme_set(thesis_theme)
 # plot functions ####
 
 ## 1. plot raw depthlogs ####
-plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308"){
+plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "1293308",
+                           start_date_summer_chr, end_date_summer_chr, ymin_summer, ymax_summer, colour_summer,
+                           start_date_winter_chr, end_date_winter_chr, ymin_winter, ymax_winter, colour_winter){
   data <- depthlog %>% dplyr::filter(tag_serial_number == tag_serial_num, 
     row_number() %% 15 == 0)
   # , date > (min(wt_df$date) + lubridate::days(7))) # cut first week of data off to avoid looking at tagging effect
@@ -69,7 +89,25 @@ plot_raw_depth <- function(depthlog = masterias_depth_temp, tag_serial_num = "12
   min_date <- (min(data$date_time %>% lubridate::date()) -lubridate::days(10)) %>% as.POSIXct()
   
   plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+    # panel background
+    # annotate(geom = "rect", xmin = -2, xmax = 2, ymin = -2, ymax = 2,
+    #          fill = "palegreen", colour = "black", alpha = 0.5) +
+    annotate(geom = "rect", xmin = start_date_summer_chr %>% as.POSIXct(), xmax = end_date_summer_chr %>% as.POSIXct(),
+              ymin = ymin_summer, ymax = ymax_summer, fill = colour_summer, alpha = 0.5) +
+    annotate(geom = "rect", xmin = start_date_winter_chr %>% as.POSIXct(), xmax = end_date_winter_chr %>% as.POSIXct(),
+              ymin = ymin_winter, ymax = ymax_winter, fill = colour_winter, alpha = 0.5) +
+    # geom_rect(xmin = start_date_summer_chr %>% as.POSIXct(), xmax = end_date_summer_chr %>% as.POSIXct(),
+    #           ymin = ymin_summer, ymax = ymax_summer, fill = colour_summer, alpha = 0.25) +
+    # geom_rect(xmin = start_date_winter_chr %>% as.POSIXct(), xmax = end_date_winter_chr %>% as.POSIXct(),
+    #           ymin = ymin_winter, ymax = ymax_winter, fill = colour_winter, alpha = 0.05) +
+   # depth line
     geom_line(linewidth = 0.15) +
+   # panel outline
+    geom_rect(xmin = start_date_summer_chr %>% as.POSIXct(), xmax = end_date_summer_chr %>% as.POSIXct(),
+              ymin = ymin_summer, ymax = ymax_summer, colour = colour_summer, linewidth = 0.25, fill = "transparent") +
+    geom_rect(xmin = start_date_winter_chr %>% as.POSIXct(), xmax = end_date_winter_chr %>% as.POSIXct(),
+              ymin = ymin_winter, ymax = ymax_winter, colour = colour_winter, linewidth = 0.5, fill = "transparent") +
+    # settings
     scale_x_datetime(date_breaks = "1 month",
                      date_labels = "%b '%y",
                      expand = c(0,0),
@@ -182,7 +220,7 @@ plot_depth_subset_summer <- function(depthlog = masterias_depth_temp, tag_serial
                                      # lubridate::date(date_time) %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
                                      date_time %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
                                      row_number() %% 1 == 0)
-  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+  plot <- ggplot2::ggplot(data = data, mapping = aes(x = date_time, y = -depth_m)) + 
     # geom_point(size = 1.5) + # aes(colour = lubridate::hour(date_time)),%>% as.factor()
     geom_line(linewidth = 0.25) +
     scale_x_datetime(date_breaks = "1 day",
@@ -203,9 +241,9 @@ plot_depth_subset_winter <- function(depthlog = masterias_depth_temp, tag_serial
                                      lubridate::date(date_time) %>% between(as.POSIXct(start_date_chr), as.POSIXct(end_date_chr)),
                                      row_number() %% 2 == 0)
                                   
-  plot <- ggplot2::ggplot(data = data, aes(x = date_time, y = -depth_m)) + 
+  plot <- ggplot2::ggplot(data = data, mapping = aes(x = date_time, y = -depth_m)) + 
     # geom_point(size = 1.5) + # aes(colour = lubridate::hour(date_time)),%>% as.factor()
-    geom_line(321) +
+    geom_line(linewidth = 0.25) +
     scale_x_datetime(date_breaks = "1 week",
                      date_minor_breaks = "1 day",
                      date_labels = "%d.%m.%y", #'%y
@@ -1031,7 +1069,7 @@ p_abacus <- ggplot() + # %>% mutate(tag_serial_number = reorder(tag_serial_numbe
   scale_color_manual(values = c("black", "#ed7d31","#49E8E3")) + #, "#34b3bb"
   # scale_shape_manual(values = c(2, 4)) +
   scale_shape_manual(values = c(0,2)) + #c("\u2640", "\u2642") # unicode symbols for female and male
-  labs(x = "", y = "tag serial nr.", colour = "receiver array:", shape = "tagging date:") +
+  labs(x = "", y = "Tag Serial No.", colour = "Receiver Array:", shape = "Tagging Date and Sex:") +
   theme(axis.text.x = element_text(angle = 15, hjust = 0.5)) +
   theme(legend.position = "bottom", # "bottom",
         legend.box = "horizontal",   legend.margin = margin(t = -15)) 
@@ -1283,9 +1321,15 @@ save_data(data = p_308_DST_acoustic, folder = plot_path)
 
 ## temp & depth lines ####
 
-p_308_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293308")
+p_308_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293308",
+                              start_date_summer_chr = "2018-09-21 14:00:00 UTC", end_date_summer_chr = "2018-09-24 14:00:00 UTC", ymin_summer = -20, ymax_summer = 0, colour_summer = "#4AB643",
+                              start_date_winter_chr = "2019-02-08", end_date_winter_chr = "2019-03-07", ymin_winter = -75.52, ymax_winter = 0, colour_winter = "#198125")
+
 save_data(data = p_308_depth, folder = plot_path)
-p_321_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293321")
+
+p_321_depth <- plot_raw_depth(depthlog = masterias_depth_temp, tag_serial_num = "1293321",
+                              start_date_summer_chr = "2018-09-15 14:00:00 UTC", end_date_summer_chr = "2018-09-18 14:00:00 UTC", ymin_summer = -20, ymax_summer = 0, colour_summer = "#84BBF0",
+                              start_date_winter_chr = "2019-02-08", end_date_winter_chr = "2019-03-07", ymin_winter = -60, ymax_winter = 0, colour_winter = "#0F50BC")
 save_data(data = p_321_depth, folder = plot_path)
 
 p_308_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1293308")
@@ -1293,22 +1337,29 @@ save_data(data = p_308_temp, folder = plot_path)
 p_321_temp <- plot_raw_temp(depthlog = masterias_depth_temp, tag_serial_num = "1293321")
 save_data(data = p_321_temp, folder = plot_path)
 
+p_321_depth
+# p_321_temp %>% ggplotly()
+
 ## subsets summer/winter ####
 
 
-p_308_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2018-09-21 14:00:00 UTC", end_date_chr = "2018-09-24 14:00:00 UTC")
-p_308_depth_summer
+p_308_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2018-09-21 14:00:00 UTC", end_date_chr = "2018-09-24 14:00:00 UTC") +
+  theme(panel.border = element_rect(color = "#4AB643", fill = NA, linewidth = 3))
+# p_308_depth_summer 
 save_data(data = p_308_depth_summer, folder = plot_path)
 
-p_308_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07")
+p_308_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07") +
+  theme(panel.border = element_rect(color = "#198125", fill = NA, linewidth = 3))
 p_308_depth_winter
 save_data(data = p_308_depth_winter, folder = plot_path)
 
-p_321_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2018-09-15 14:00:00 UTC", end_date_chr = "2018-09-18 14:00:00 UTC")
+p_321_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2018-09-15 14:00:00 UTC", end_date_chr = "2018-09-18 14:00:00 UTC") +
+  theme(panel.border = element_rect(color = "#84BBF0", fill = NA, linewidth = 3))
 p_321_depth_summer
 save_data(data = p_321_depth_summer, folder = plot_path)
 
-p_321_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07")
+p_321_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07") +
+  theme(panel.border = element_rect(color = "#0F50BC", fill = NA, linewidth = 3))
 p_321_depth_winter #%>% ggplotly()
 save_data(data = p_321_depth_winter, folder = plot_path)
 

@@ -61,12 +61,13 @@ median(sample2, na.rm = T)
 # if p > 0.05: samples are normally distributed
 shapiro.test(sample1)
 shapiro.test(sample2)
-# not both samples are normally distributed, thus: wilcoxon test
+# both samples are normally distributed!
 
 # check for equaloty of variances 
-
+# if p > 0.05: variances are equal
 levene_hyp1 <- car::leveneTest(residency_index ~ sex, data = tagged_animal_info %>% drop_na(residency_index))
 levene_hyp1$`Pr(>F)`[1]
+
 # if p < 0.05: median of samples is different
 hypothesis1_result <- wilcox.test(sample1, sample2)
 hypothesis1_result$p.value
@@ -151,6 +152,9 @@ levene_hyp1$`Pr(>F)`[1]
 hypothesis1_result <- wilcox.test(sample1, sample2)
 hypothesis1_result$p.value
 
+hypothesis1_wilcox_greater <- wilcox.test(sample2, sample1, alternative = "greater")
+hypothesis1_wilcox_greater$p.value
+
 # if p < 0.05: median of samples is different
 hypothesis1d_result <- t.test(females, males, alternative = "greater", var.equal = F)
 hypothesis1d_result$p.value
@@ -162,10 +166,10 @@ hypothesis1d_result_varequal$p.value
 # hypothesis1d_nonparam_result <- wilcox.test(sample1, sample2) # with non parametric alternative: not significant
 # hypothesis1d_nonparam_result$p.value
 
-hyp1_results <- tibble(test_aim = c("normality_m", "normality_f", "equality_of_variances", "equality_of_variances", "equality_of_means"),
-                       stat_test = c("shapiro", "shapiro", "bartlett", "levene", "t.test (var.equal = F, alternative = greater)"),
-                       p_val = c(shapiro_males_hyp1$p.value, shapiro_females_hyp1$p.value, bartlett_hyp1$p.value, levene_hyp1$`Pr(>F)`[1], hypothesis1d_result$p.value),
-                       interpretation = c("if p>0.05: normal dist", "if p>0.05: normal dist", "if p>0.05: vars are equal", "if p>0.05: vars are equal", "if p<0.05: means differ"))
+hyp1_results <- tibble(test_aim = c("normality_m", "normality_f", "equality_of_variances", "equality_of_variances", "equality_of_means", "equality_of_medians"),
+                       stat_test = c("shapiro", "shapiro", "bartlett", "levene", "t.test (var.equal = F, alternative = greater)", "wilcoxon rank sum"),
+                       p_val = c(shapiro_males_hyp1$p.value, shapiro_females_hyp1$p.value, bartlett_hyp1$p.value, levene_hyp1$`Pr(>F)`[1], hypothesis1d_result$p.value, hypothesis1_result$p.value),
+                       interpretation = c("if p>0.05: normal dist", "if p>0.05: normal dist", "if p>0.05: vars are equal", "if p>0.05: vars are equal", "if p<0.05: means differ", "if p<0.05: medians differ"))
 
 save_data(data = hyp1_results, folder = models_path)
 
@@ -377,9 +381,9 @@ ggplot(data = tag321_depth_median_boxcox, aes(x = season_year, y = depth_median_
 aov(depth_median_transformed~factor(season)+Error(factor(year)), data = tag321_depth_median_boxcox)
 
 
-# new approach: t test
+# 2. new approach: t test ####
 
-data_hyp2 <- long_dst_date %>% left_join(seasons_startdates, by = join_by(between(date, start_date, end_date))) %>%
+data_hyp2.2 <- long_dst_date %>% left_join(seasons_startdates, by = join_by(between(date, start_date, end_date))) %>%
   mutate(season_year = paste0(lubridate::year(date), "-", season),
          season_year = ifelse(lubridate::month(date) < 6 & season_year == "2019-winter", "2018-winter", season_year),
          year = lubridate::year(date),
@@ -389,11 +393,27 @@ data_hyp2 <- long_dst_date %>% left_join(seasons_startdates, by = join_by(betwee
   )
 
 # check for normality of depths for winter and summer
-ks_results_hyp2 <- data_hyp2 %>% group_by(tag_serial_number, big_season_year) %>%
+# ks_results_hyp2.2 <- data_hyp2.2 %>% group_by(tag_serial_number, big_season_year) %>%
+#   summarise(ks_test_pval = ks.test(depth_median %>% unique(), "pnorm")$p.value)
+ks_results_hyp2.2 <- data_hyp2.2 %>% group_by(tag_serial_number, big_season) %>%
   summarise(ks_test_pval = ks.test(depth_median %>% unique(), "pnorm")$p.value)
 # not normally distributed
 
+save_data(data = ks_results_hyp2.2, folder = models_path)
 
+# check equality of variances
+# if p > 0.05: variances are NOT different, i.e. equal
+bartlett_hyp2 <- bartlett.test(depth_median ~ big_season, data = data_hyp2.2) # if samples = normally distributed: bartlett test
+bartlett_hyp2$p.value
+# p < 0.05: variances are not equal
+
+# do t test (although not normally distributed and no equal variances)
+hypothesis2.2_testresults <- data_hyp2.2 %>% group_by(tag_serial_number) %>% 
+  summarise(t.test_pval = t.test(depth_median[big_season == "summer"], depth_median[big_season == "winter"], var.equal = F)$p.value,
+            wilcox.test_pval = wilcox.test(depth_median[big_season == "summer"], depth_median[big_season == "winter"], var.equal = F)$p.value)
+# if p < 0.05: median of samples is different
+
+save_data(data = hypothesis2.2_testresults, folder = models_path)
 
 # old ####
 

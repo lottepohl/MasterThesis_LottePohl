@@ -29,6 +29,7 @@ Western_Scheldt_boundaries <- load_data(filestring = "Western_Scheldt_boundaries
 Schelde_boundaries <- load_data(filestring = "Schelde_boundaries", folder = path_boundaries)
 Zoetelande <- load_data(filestring = "Zoetelande", folder = path_boundaries)
 Dishoek <- load_data(filestring = "Dishoek", folder = path_boundaries)
+east_anglia <- load_data(filestring = "east_anglia", folder = path_boundaries)
 
 # save_data(data = Dutch_EEZ, folder = path_boundaries)
 # save_data(data = Europe, folder = path_boundaries)

@@ -21,7 +21,7 @@ paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% b
 
 # table 1: list of abbreviations ####
 
-abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT", "UTC"),
+abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT", "UTC", "RQ"),
                          Explanation= c("Acoustic Data Storage Tag",
                                         "Data Storage Tag",
                                         "Belgian Part of the North Sea",
@@ -34,7 +34,8 @@ abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "
                                         "Total Length",
                                         "Fourier Transformation",
                                         "Fast Fourier Transform",
-                                        "Coordinated Universal Time")) %>%
+                                        "Coordinated Universal Time",
+                                        "Research Question")) %>%
   dplyr::arrange(Abbreviation)
 
 # table 2: release locations ####
@@ -151,6 +152,13 @@ detections_month <- detections_tempdepth_daynight %>%
             n_ind = tag_serial_number %>% unique() %>% length()) %>%
   pivot_wider(names_from = sex, values_from = c(n_detect, n_ind), values_fill = 0)
 
+# to check how many females and males are detected in which month and area
+detections_month_area <- detections_tempdepth_daynight %>% 
+  group_by(month_name, sex, area) %>%
+  summarise(n_detect = n(),
+            n_ind = tag_serial_number %>% unique() %>% length()) %>%
+  pivot_wider(names_from = sex, values_from = c(n_detect, n_ind), values_fill = 0)
+
 # include capture method y or n?
 
 # table 6: lm moonphase ####
@@ -224,6 +232,22 @@ OG10_2019_RI <- detections_OG102019 %>% group_by(tag_serial_number) %>%
 
 # ggplot(data = OG10_2019_RI, aes(x = tag_serial_number, y = RI)) +
 #   geom_point()
+
+# table 10. short term DST summary ####
+
+short_DST_summary <- masterias_depth_temp %>% 
+  dplyr::filter(!tag_serial_number %in% c("1293308", "1293321")) %>% 
+  group_by(tag_serial_number) %>%
+  summarise(depth_max = depth_m %>% max(na.rm = T),
+            depth_min = depth_m %>% min(na.rm = T)) %>%
+  left_join(tagged_animal_info %>% dplyr::select(tag_serial_number, days_at_liberty), by = "tag_serial_number") %>%
+  ungroup() %>%
+  summarise(mean_max_depth = depth_max %>% mean(na.rm = T),
+            sd_max_depth = depth_max %>% sd(na.rm = T),
+            mean_days_at_liberty = days_at_liberty %>% mean(na.rm = T),
+            sd_days_at_liberty = days_at_liberty %>% sd(na.rm = T))
+
+short_DST_summary %>% View()
 
 # statistical tests ####
 
@@ -360,6 +384,7 @@ save_data(data = tagged_animal_info, folder = tables_path)
 save_data(data = release_locations, folder = tables_path)
 save_data(data = abbreviations_list, folder = tables_path)
 save_data(data = detections_month, folder = tables_path)
+save_data(data = short_DST_summary, folder = tables_path)
 
 save_data(data = lm_sum_308_depthmedian_day_night, folder = tables_path)
 save_data(data = lm_sum_321_depthmedian_day_night, folder = tables_path)

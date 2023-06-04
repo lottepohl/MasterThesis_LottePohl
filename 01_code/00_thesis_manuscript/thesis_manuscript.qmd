@@ -21,7 +21,6 @@ author:
           postal-code: 9000
     attributes:
         corresponding: true
-    note: Msc Student
   - name: Niels Brevé
     email: breve@sportvisserijnederland.nl
     affiliations:
@@ -38,19 +37,16 @@ author:
         city: Bilthoven
         state: The Netherlands
         postal-code: 3721
-    note: Second Promotor
   - name: Carlota Muñiz
     email: carlota.muniz@vliz.be
     affiliations:
         - ref: VLIZ
-    note: Supervisor
   - name: Jan Reubens
     email: jan.reubens@vliz.be
     affiliations:
         - ref: VLIZ
-    note: Promotor
 abstract: 
-  tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua
+ tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff ffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff fffffffffffff ffffffffff fffffffff ffffffffffffffffffff fffffffff fffffffffffffffffffffff fffffffffffffffffff fffffffff ffffffffffffffff ffffffff fffffff f fffffffffffffff ffffff fffffffffffffffffff  fffffffffffffff ffffffffffffffffffff fffffffffffff fffffffffffff fffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffff ffffffffffffffffffff ffffffffffffffffffffff ffffffffffffffffff fffffffffffff ffffffffffffffffff fffffffffffffffff ffffffffffffffffffffffffffffff fffffffffffffff ffffffffff fffffffffffffff fffffffffffffffffff fffffffffffff fffffffffffffffffffffffff fffffffffffffffffffffffffffftempor incididunt ut labore et dolore magna aliqua.fffffffffffffff ffffffffffffffffffffffff ffffffffffffffff fffffffffffffffffffffff fffffffffffffffff ffffffffffffffffff fffffffffffffffffff ffffffffffffff fffff ffffffffffffffffffff fffff fffffffffffffffffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffftempor incididunt ut labore et dolore magna aliqua tempor incididunt ut labore et dolore magna  aliqua.ffffffff ffffffffffffffffffffff fffffffffffffffffff ffffffffffffffffffffffffff fffffffffffffffffffffff fffffffffffffffffffff ffffffffff ffffffffffffffff ffffffffffffffff fffffffffffffffffff fffffffffffffffffffffffff fffffffffffffff ffffffffffffffffff fffffffffffffff fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff tempor incididunt ut labore et dolore magna aliqua.ffffff ffffffffffffffffffffffff fffffff ffffffffffffffff ffffffffffffffffff fffff ffffffffffffffffff fffffffffffffffffffff ffffffffffffffffff fffffffffffffffff fffffffffffffffffffff ffffffffffffffff  ffffffffffffff ffffffffffffffffffffffff fffffffffffffffffffffffffffffffff fffffffffffffffff  fffffffffffffffffffffff.tempor incididunt ut labore et dolore magna aliqua.
 keywords: 
   - acoustic telemetry
   - geolocation modelling
@@ -182,6 +178,9 @@ thesis_theme <- ggplot2::theme(
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
   # legend.key.width = unit(2, "cm"),
   legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
+  plot.tag = element_text(face = "bold", family = "serif", size = 12),
+  # plot.tag.position =  c(0.065, 0.96), #"topleft", 
+  plot.tag.position =  c(0.01, 0.98), #"topleft", 
   # plot.background = element_blank()#,
   panel.background = element_blank(),
   panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
@@ -202,83 +201,86 @@ thesis_theme_halfpage <- ggplot2::theme(
   legend.title = element_text(family = "serif", size = 11.5),
   legend.text = element_text(family = "serif", size = 9.5),
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
+  plot.tag = element_text(face = "bold", family = "serif", size = 12),
+  plot.tag.position = c(0.065, 0.94),
   # plot.background = element_blank()#,
   panel.background = element_blank(),
+  panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
   # panel.background = element_rect(fill = "transparent"),
   panel.grid.major = element_line(color = "gray70", linetype = "solid"),
   panel.grid.minor = element_line(color = "gray90", linetype = "dashed"),
 )
 ```
 
-# Guidelines {-}
+<!-- # Guidelines {-} -->
 
-## IMBRSea thesis guidelines {-}
+<!-- ## IMBRSea thesis guidelines {-} -->
 
--   indicate in the back cover of your thesis which journal guidelines
-    you have followed in addition to the thesis guidelines. You should
-    indicate the journals' name followed by its ISSN number.
--   Each thesis should contain the following phrase on the inside of the
-    front page: 'No data can be taken out of this work without prior
-    approval of the thesis promoter / supervisor ( this has to be
-    discussed beforehand by the promoter/co-promoter and the thesis
-    supervisor)'
--   defense: oral presentation (15 minutes) followed by a defense before
-    a Jury and a debate including the public present (15 minutes).
--   submission details: By June 6, 2023, at 4pm CET (first session exam
-    period - the exact date may change yearly) students submit the
-    thesis manuscript (PDF-file) and the raw data (preferably as
-    ZIP-file) in electronic format on the thesis platform
-    (https://matix.imbrsea.eu). Raw data (or at least the metadata) must
-    also be included in the thesis manuscript as an annex. Thesis
-    manuscripts up to 50 MB can be uploaded, while the maximum size for
-    the raw data is 10 GB. In case of confidential raw data, students
-    must provide at least the metadata and indicate how to retrieve the
-    data in case this would be necessary. Upon submission, students
-    receive an email of confirmation.
+<!-- -   indicate in the back cover of your thesis which journal guidelines -->
+<!--     you have followed in addition to the thesis guidelines. You should -->
+<!--     indicate the journals' name followed by its ISSN number. -->
+<!-- -   Each thesis should contain the following phrase on the inside of the -->
+<!--     front page: 'No data can be taken out of this work without prior -->
+<!--     approval of the thesis promoter / supervisor ( this has to be -->
+<!--     discussed beforehand by the promoter/co-promoter and the thesis -->
+<!--     supervisor)' -->
+<!-- -   defense: oral presentation (15 minutes) followed by a defense before -->
+<!--     a Jury and a debate including the public present (15 minutes). -->
+<!-- -   submission details: By June 6, 2023, at 4pm CET (first session exam -->
+<!--     period - the exact date may change yearly) students submit the -->
+<!--     thesis manuscript (PDF-file) and the raw data (preferably as -->
+<!--     ZIP-file) in electronic format on the thesis platform -->
+<!--     (https://matix.imbrsea.eu). Raw data (or at least the metadata) must -->
+<!--     also be included in the thesis manuscript as an annex. Thesis -->
+<!--     manuscripts up to 50 MB can be uploaded, while the maximum size for -->
+<!--     the raw data is 10 GB. In case of confidential raw data, students -->
+<!--     must provide at least the metadata and indicate how to retrieve the -->
+<!--     data in case this would be necessary. Upon submission, students -->
+<!--     receive an email of confirmation. -->
 
-### Structure {-}
+<!-- ### Structure {-} -->
 
--   executive summary (400 words): contains a summary of all relevant
-    information documented in the thesis (Introduction, M&M, Results,
-    Conclusion), discuss/mention hypotheses
--   abstract (200 words) is conform with the summary but without
-    detailed information about Methods and Results
--   Intro: state of the art, if applicable: project context
-    -   Aims: + working hypotheses
--   Materials & Methods
--   Results
--   Discussion
--   Conclusion
--   Acknowledgements
--   References
+<!-- -   executive summary (400 words): contains a summary of all relevant -->
+<!--     information documented in the thesis (Introduction, M&M, Results, -->
+<!--     Conclusion), discuss/mention hypotheses -->
+<!-- -   abstract (200 words) is conform with the summary but without -->
+<!--     detailed information about Methods and Results -->
+<!-- -   Intro: state of the art, if applicable: project context -->
+<!--     -   Aims: + working hypotheses -->
+<!-- -   Materials & Methods -->
+<!-- -   Results -->
+<!-- -   Discussion -->
+<!-- -   Conclusion -->
+<!-- -   Acknowledgements -->
+<!-- -   References -->
 
-## Journal of Animal Biotelemetry {-}
+<!-- ## Journal of Animal Biotelemetry {-} -->
 
--   Use double line spacing
--   Include line and page numbering
--   Use SI units: Please ensure that all special characters used are
-    embedded in the text, otherwise they will be lost during conversion
-    to PDF
--   Do not use page breaks in your manuscript
--   Figure titles (max 15 words) and legends (max 300 words)
--   width of 85 mm for half page width figure, width of 170 mm for full
-    page width figure, maximum height of 225 mm for figure and legend\_
-    Formatting the 'Availability of data and materials' section of your
-    manuscript
--   The following format for the 'Availability of data and materials
-    section of your manuscript should be used ; "The dataset(s)
-    supporting the conclusions of this article is(are) available in the
-    \[repository name\] repository, \[unique persistent identifier and
-    hyperlink to dataset(s) in http:// format\]." The following format
-    is required when data are included as additional files: "The
-    dataset(s) supporting the conclusions of this article is(are)
-    included within the article (and its additional file(s))."
--   unpublished data and personal communication shall not be cited but
-    included as footnotes.
--   reference style:
-    https://paperpile.com/s/animal-biotelemetry-citation-style/
-    1.  Meyer E. Physics. Controlling friction atom by atom. Science.
-        2015;348:1089.
+<!-- -   Use double line spacing -->
+<!-- -   Include line and page numbering -->
+<!-- -   Use SI units: Please ensure that all special characters used are -->
+<!--     embedded in the text, otherwise they will be lost during conversion -->
+<!--     to PDF -->
+<!-- -   Do not use page breaks in your manuscript -->
+<!-- -   Figure titles (max 15 words) and legends (max 300 words) -->
+<!-- -   width of 85 mm for half page width figure, width of 170 mm for full -->
+<!--     page width figure, maximum height of 225 mm for figure and legend\_ -->
+<!--     Formatting the 'Availability of data and materials' section of your -->
+<!--     manuscript -->
+<!-- -   The following format for the 'Availability of data and materials -->
+<!--     section of your manuscript should be used ; "The dataset(s) -->
+<!--     supporting the conclusions of this article is(are) available in the -->
+<!--     \[repository name\] repository, \[unique persistent identifier and -->
+<!--     hyperlink to dataset(s) in http:// format\]." The following format -->
+<!--     is required when data are included as additional files: "The -->
+<!--     dataset(s) supporting the conclusions of this article is(are) -->
+<!--     included within the article (and its additional file(s))." -->
+<!-- -   unpublished data and personal communication shall not be cited but -->
+<!--     included as footnotes. -->
+<!-- -   reference style: -->
+<!--     https://paperpile.com/s/animal-biotelemetry-citation-style/ -->
+<!--     1.  Meyer E. Physics. Controlling friction atom by atom. Science. -->
+<!--         2015;348:1089. -->
 
 <!-- # Questions to Jan, Niels and Carlota {#sec-questions} -->
 
@@ -357,85 +359,95 @@ thesis_theme_halfpage <- ggplot2::theme(
 
 # List of Abbreviations {-}
 
-<!-- ```{r table-abbreviations} -->
-<!-- #| include: true -->
-<!-- ##| echo: false -->
-<!-- #| label: tbl-abbreviations -->
-<!-- #| out-width: 100% -->
+```{r table-abbreviations}
+#| include: true
+##| echo: false
+#| label: tbl-abbreviations
+#| out-width: 100%
 
-<!-- knitr::kable(abbreviations_list) %>% kableExtra::kable_styling(position = "center", -->
-<!--                                                    latex_options = "hold_position") -->
-<!-- #  -->
-<!-- # table <- knitr::kable(abbreviations_list) -->
-<!-- #  -->
-<!-- # # Add bold headers -->
-<!-- # table <- kableExtra::add_header_above(table, bold = TRUE) -->
-<!-- #  -->
-<!-- # # Apply table styling -->
-<!-- # table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position") -->
-<!-- #  -->
-<!-- # table -->
-<!-- # # knitr::kable(abbreviations_list) %>% -->
-<!-- # #   kableExtra::add_header_above(table, bold = TRUE) %>% -->
-<!-- # #   kableExtra::kable_styling(position = "center", -->
-<!-- # #                             latex_options = "hold_position") -->
+knitr::kable(abbreviations_list) %>% kableExtra::kable_styling(position = "center",
+                                                   latex_options = "hold_position")
+#
+# table <- knitr::kable(abbreviations_list)
+#
+# # Add bold headers
+# table <- kableExtra::add_header_above(table, bold = TRUE)
+#
+# # Apply table styling
+# table <- kableExtra::kable_styling(table, position = "center", latex_options = "hold_position")
+#
+# table
+# # knitr::kable(abbreviations_list) %>%
+# #   kableExtra::add_header_above(table, bold = TRUE) %>%
+# #   kableExtra::kable_styling(position = "center",
+# #                             latex_options = "hold_position")
 
-<!-- ``` -->
+```
 
 
-# Table of figures
+<!-- # Table of figures -->
 
-# Table of tables
+<!-- # Table of tables -->
 
 {{< pagebreak >}}
 
 # Executive Summary
 
-*executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion), discuss/mention hypotheses*
+<!-- *executive summary (400 words): contains a summary of all relevant information documented in the thesis (Introduction, M&M, Results, Conclusion), discuss/mention hypotheses* -->
 
-**currently: 397 words**
+<!-- **currently: 397 words** -->
 
 The starry smooth-hound Mustelus asterias (Cloquet, 1819) is a widely distributed demersal shark in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
-The movement of fish is commonly studied with electronic tags. A novel technology is the Acoustic Data Storage Tag (ADST), which can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals. To access the data logs the tag needs to be recovered.
-This study employed ADST to characterise the migration and residency of M. asterias in the North Sea regarding seasonality and sex.
-Exploratory and spectral analyses were performed using an ADST dataset spanning from July 2018 to July 2020. 
+The movement of fish is commonly studied with electronic tags. A novel technology is the Acoustic Data Storage Tag (ADST), which can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals (access requires the tag’s retrieval).
+This study employed ADST to characterise the migration and residency of M. asterias in the North Sea regarding seasonality and sex. Exploratory and spectral analyses were conducted on a July 2018 to July 2020 ADST dataset.
+In 2018 and 2019, 30 adult M. asterias (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. The Permanent Belgian Receiver Network (PBARN) encompasses 160 active receivers distributed across the Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. 14 females and 4 males were detected 10940 times by 27 acoustic receivers. 
+All detections were between April and November, suggesting seasonal presence of M. asterias in the receiver area. 96% of detections were in the outer Western Scheldt, and 97% of detections were from females. This suggests the outer Western Scheldt to be a relevant habitat for females between April and November.
+8 ADST were recovered, one female and one male logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter. Continuous Wavelet Transform (CWT) resolves periodic patterns in the time domain and displays differences in periodicities between seasons and individuals. The CWT results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and that the male feeds continuously.
 
-In 2018 and 2019, 30 adult M. asterias (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. The Permanent Belgian Receiver Network (PBARN) spans the Belgian Part of the North Sea (BPNS) and the Scheldt Estuary with 160 active receivers during the study period. 14 females and 4 males were detected 10940 times by 27 acoustic receivers. 
-All detections were between April and November, suggesting seasonal presence of M. asterias in the receiver area. 96.7% of detections were at receivers just outside the Western Scheldt, and 97.4% of detections were from females. This indicates that the outer part of the Scheldt Estuary is a relevant habitat for females between April and November.
+This study provides first details about seasonality in spatiotemporal movement behaviour of M. asterias and confirms its seasonal presence in the Western Scheldt. Data on the vertical movement of more individuals is needed to determine if the patterns observed here are related to sex. The findings on the spatiotemporal presence of *M. asterias* in the BPNS and the Scheldt Estuary establish the primary groundwork for future species management plans.
 
-8 ADST were recovered, one female and one male logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and depths between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter months. Continuous Wavelet Transform (CWT) resolves periodic patterns in the time domain and displays differences in periodic patterns between seasons and the two individuals. The CWT results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and that the male is continuously feeding.
 
-This study provides first details about seasonality in vertical movement behaviour of M. asterias and confirms its seasonal presence in the Western Scheldt. Data on the vertical movement of more individuals is needed to determine if the patterns observed here are related to sex.
+<!-- The starry smooth-hound Mustelus asterias (Cloquet, 1819) is a widely distributed demersal shark in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed.  -->
+<!-- The movement of fish is commonly studied with electronic tags. A novel technology is the Acoustic Data Storage Tag (ADST), which can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals. To access the data logs the tag needs to be recovered. -->
+<!-- This study employed ADST to characterise the migration and residency of M. asterias in the North Sea regarding seasonality and sex. -->
+<!-- Exploratory and spectral analyses were performed using an ADST dataset spanning from July 2018 to July 2020.  -->
+
+<!-- In 2018 and 2019, 30 adult M. asterias (19 females, 11 males) were equipped with ADST-V13TP (Innovasea, 518 days estimated battery life) in the Scheldt Estuary. The Permanent Belgian Receiver Network (PBARN) spans the Belgian Part of the North Sea (BPNS) and the Scheldt Estuary with 160 active receivers during the study period. 14 females and 4 males were detected 10940 times by 27 acoustic receivers.  -->
+<!-- All detections were between April and November, suggesting seasonal presence of M. asterias in the receiver area. 96.7% of detections were at receivers just outside the Western Scheldt, and 97.4% of detections were from females. This indicates that the outer part of the Scheldt Estuary is a relevant habitat for females between April and November. -->
+
+<!-- 8 ADST were recovered, one female and one male logging data for over a year. Both tags logged depths between 0 and 20 m between June and October, and depths between 10 and 75 m between October and June. The changing depth range reflects the migration of the sharks into deeper waters during winter months. Continuous Wavelet Transform (CWT) resolves periodic patterns in the time domain and displays differences in periodic patterns between seasons and the two individuals. The CWT results suggest that the female is resting during summer and feeding in a biweekly pattern in winter, and that the male is continuously feeding. -->
+
+<!-- This study provides first details about seasonality in vertical movement behaviour of M. asterias and confirms its seasonal presence in the Western Scheldt. Data on the vertical movement of more individuals is needed to determine if the patterns observed here are related to sex. -->
 
 
 # Abstract
 
-*abstract (200 words) is conform with the summary but without detailed information about Methods and Results*
+<!-- *abstract (200 words) is conform with the summary but without detailed information about Methods and Results* -->
 
-**currently: 198 words**
+<!-- **currently: 198 words** -->
 
 The starry smooth-hound *Mustelus asterias* is widely distributed in the Northeast Atlantic, yet under increasing fishing pressure. To lay the grounds for future species management plans, information on its complex annual migration and residency behaviour is needed. 
 Fish movement is commonly studied with electronic tags, one novel technology being  the Acoustic Data Storage Tag (ADST). It can be detected by acoustic receivers and additionally logs temperature and water depth in predefined intervals.
 This study characterises the migration and residency of *M. asterias* in the North Sea regarding season and sex. 30 *M. asterias* were equipped with ADST in the Scheldt Estuary in 2018 and 2019. 
 Acoustic detections of 18 individuals in the Western Scheldt estuary between July 2018 and July 2020 suggest seasonal presence of females just outside of the Western Scheldt between April and October.
-Spectral analysis of the depth logs of two individuals logging for over a year indicates feeding behaviour of the male throughout most of the year. The female shark primarily rests on the seafloor during summer and feeds in a biweekly rhythm during winter.
+Spectral analysis of the depth logs of two individuals logging for over a year indicates feeding behaviour of the male throughout most of the year. The female shark primarily rests on the bottom during summer and feeds in a biweekly rhythm during winter.
 This study presents the first detailed insights into vertical movement behaviour differences between seasons and individuals of *M. asterias*.
 
 
 # Introduction {#sec-intro}
 
-Gathering knowledge on migratory fish species with complex life cycles
+Gathering knowledge on non-commercial, migratory fish species with complex life cycles
 is challenging, yet necessary to improve management of such species in
 the future [@brownscombe_2022]. Fish with late reproduction and low
 offspring numbers such as elasmobranchs are especially vulnerable to
-anthropogenic effects and require special attention [@stevens_2000].
+overfishing and require special attention in fisheries management [@stevens_2000].
 
 <!-- ***problem statement: migratory fish, large migrations, management and conservation needed, sharks especially vulnerable, lead to M. asterias.*** -->
 
 An elasmobranch with a complex life cycle involving biannual
 reproduction and a sex-specific annual migration is the starry
 smooth-hound *Mustelus asterias* (Cloquet, 1819), a demersal
-triakid shark widely distributed in the Northeast Atlantic and Mediterranean Sea [@breve_2016; @griffiths_2020]. In the past decade, both commercial landings [@ices_2022; @bitonporsmoguer_2022] and abundance in the North Sea [@mccullyphillips_2015] have increased. The International Council for the Exploration of the Sea (ICES) classified the species to be *Near Threatened* [@ices_2022].
+triakid shark widely distributed in the Northeast Atlantic and Mediterranean Sea [@breve_2016; @griffiths_2020]. In the past decades, both commercial landings [@ices_2022; @bitonporsmoguer_2022] and abundance in the North Sea [@mccullyphillips_2015] have increased. The International Council for the Exploration of the Sea (ICES) classified the species to be *Near Threatened* [@ices_2022].
 <!-- have shifted from the -->
 <!-- recently protected *Squalus acanthias* to *M. asterias* [@ices_2022; @bitonporsmoguer_2022], but also abundance in the North Sea has increased [@mccullyphillips_2015]. -->
 <!-- [@ices_2022, status: *Near Threatened*]. -->
@@ -469,10 +481,12 @@ acoustic telemetry and archival telemetry [@thorstad_2013].
 Telemetry furthermore enables the quantification of animal migrations and (vertical and horizontal) habitat use [@hussey_2015], which informs species management and conservation spanning marine, freshwater and terrestrial ecosystems [@beger_2010].
 
 <!-- Satellite telemetry involves satellites that receive signals from a tag attached to animal, requiring the tag to breach the water surface for signal transmission (**ref**). -->
-
-Acoustic telemetry refers to the use of acoustic receivers that are
-placed in the water column. These can detect acoustic signals emitted
-from a tag within a certain range. Such networks exist primarily in
+<!-- Acoustic telemetry refers to the use of acoustic receivers that are -->
+<!-- placed in the water column.  -->
+In acoustic telemetry, animals are internally or externally equipped with electronic tags that emit acoustic signals unique to each tag. Acoustic receivers are able to detect these acoustic signals within a certain range of the device and identify the individual tag. 
+<!-- These can detect acoustic signals emitted -->
+<!-- from a tag within a certain range.  -->
+Such networks exist primarily in
 shallow, coastal areas [@hussey_2015] such as 
 <!-- of countries with sufficient financial resources -->
 <!-- to maintain the receivers [@hussey_2015]. Examples include  -->
@@ -480,17 +494,18 @@ the Acoustic Tracking Array Platform (ATAP) in South Africa [@cowley_2017] and t
 
 <!-- maybe include: Recently,    a  shift    from    mobile  tracking    towards     using   fixed   receiving  stations    that    automatically   log detections  has led to  a   large   number   of tagged  animals and extensive   receiver    coverage    crossing    geopolitical    boundaries   (Donaldson  et al.,    2014). from whoriskey 2017 -->
 
-Archival telemetry uses tags or biologgers that record and locally store water pressure, temperature and other environmental
-variables. Popup Satellite Archival Tags (PSAT) disattach from the
-animal and float to the surface, transmitting recorded data to
-satellites, while Data Storage Tags (DST) require the retrieval of the
+Archival telemetry uses tags or biologgers that record and locally store environmental variables such as water pressure and temperature.
+<!-- Popup Satellite Archival Tags (PSAT) disattach from the -->
+<!-- animal and float to the surface, transmitting recorded data to -->
+<!-- satellites, while  -->
+Data Storage Tags (DST) require the retrieval of the
 tag for downloading data [@thorstad_2013].
 
 Acoustic data storage tags (ADST) are a combination tag, merging
 acoustic and data storage tags [@goossens_2023]. As such, the tag emits
 unique acoustic signals that can be detected by an acoustic receiver
 within a certain range, and additionally records water pressure and temperature in
-predefined intervals.
+predefined intervals. Per detection, one value of either temperature or water depth gets transmitted. 
 <!-- The advantage of ADST lies in the combination of  --> ADST gather
 data on horizontal fish movement inside acoustic receiver networks while
 simultaneously collecting fine-scale vertical movement data that can be
@@ -502,12 +517,12 @@ telemetry, recorded data contains the time that a specific tag was
 detected by a specific receiver (with a known location).
 <!-- , resulting in an irregular time series (i.e., a time series with irregularly spaced observations).  -->
 These datasets come in a horizontal dimension, i.e., with
-a latitude and longitude position.
+the latitude and longitude position of the acoustic receiver.
 Archival telemetry (using DST, for example) generates regular time series in pre-defined
 intervals, logging water depth and other
 environmental variables. These data come in a vertical dimension,
 spanning the range of the animal's depth use.
-ADST datasets contain time stamps of the tag's detection at a specific
+Datasets resulting from ADST contain time stamps of the tag's detection at a specific
 acoustic receiver, and, in case the tag was recovered, logs of water
 depth and other environmental variables.
 
@@ -515,10 +530,12 @@ depth and other environmental variables.
 
 <!-- ***see @sec-questiongeolocation.*** -->
 
-To infer the latitude and longitude (i.e., the horizontal dimension) of a DST log (which is in a vertical dimension), stochastic geolocation models are used [@gatti_2021]. These models use the seafloor bathymetry in
-combination with other environmental variables such as water temperature to
-estimate the most likely path that was taken by the animal
-[@nielsen_2004; @gatti_2021]. Common geolocation modelling approaches use Hidden Markov Models [HMM, @pedersen_2008; @woillez_2016]. For certain species with high economic importance (Atlantic cod *Gadus morhua* and European seabass *Dicentrarchus labrax*, for example), those models have been improved by including different behavioural states of the animals [@pedersen_2008; @heerah_2017]. Behavioural states (such as low or high activity) are driven by the animal's environment and internal ecophysiological processes [@gurarie_2016]. Geolocation modelling has been employed for *M. asterias* with the implementation of behavioural states [following the approach by @pedersen_2008] and without [@goossens_2023]. Geolocation model outputs for one female and one male *M. asterias* are shown in @fig-mapgeolocation.
+To determine the approximate location (i.e., latitude and longitude), of a DST log (which represents the vertical dimension), stochastic geolocation models are commonly used [@gatti_2021]. These models involve bottom bathymetry and other environmental factors, including water temperature, to estimate the trajectory followed by the fish [@nielsen_2004].
+<!-- To infer the latitude and longitude (i.e., the horizontal dimension) of a DST log (which is in a vertical dimension), stochastic geolocation models are used [@gatti_2021]. These models use the bottom bathymetry in -->
+<!-- combination with other environmental variables such as water temperature to -->
+<!-- estimate the most likely path that was taken by the animal -->
+<!-- [@nielsen_2004; @gatti_2021].  -->
+Common geolocation modelling approaches use Hidden Markov Models [HMM, @pedersen_2008; @woillez_2016]. For certain species with high economic value (Atlantic cod *Gadus morhua* and European seabass *Dicentrarchus labrax*, for example), those models have been improved by including different behavioural states of the animals [@pedersen_2008; @heerah_2017]. Behavioural states (such as low or high activity) are driven by the animal's environment and internal ecophysiological processes [@gurarie_2016]. Geolocation modelling has been employed for *M. asterias* with the implementation of behavioural states [following the approach by @pedersen_2008] and without [@goossens_2023]. Geolocation model outputs for one female and one male *M. asterias* are shown in @fig-mapgeolocation.
 
 <!-- @pedersen_2008 introduced a geolocation model for a demersal fish -->
 <!-- species using Hidden Markov Models (HMM), which was refined by -->
@@ -590,40 +607,39 @@ map_dst_321 #+ thesis_theme_halfpage
 
 ## The starry smooth-hound shark *Mustelus asterias*
 
+The starry smooth-hound shark (Mustelus asterias, Family: Triakidae) inhabits waters of the Northeast Atlantic and the Mediterranean Sea, spanning from the Irish Sea and Northern North Sea in the North to an unknown limit in the south [@ices_2022]. This species typically measures around 30 cm in total length (TL) at birth and can grow up to 140 cm TL [@mccullyphillips_2015]. Sexual maturity is attained at 100 cm TL for males and 120 cm TL for females [@farrell_2010], which usually occurs at 4-5 years for males and 6 years for females. The average lifespan of starry smooth-hound sharks is around 13 years for males and 18 years for females [@farrell_2010].
 
-The starry smooth-hound shark (*Mustelus asterias*, Family: Triakidae)
-inhabits waters of the Northeast Atlantic and the Mediterranean Sea,
-stretching from the Irish Sea and Northern North Sea in the North, to an
-unknown limit in the south [@ices_2022]. 
+<!-- The starry smooth-hound shark (*Mustelus asterias*, Family: Triakidae) -->
+<!-- inhabits waters of the Northeast Atlantic and the Mediterranean Sea, -->
+<!-- stretching from the Irish Sea and Northern North Sea in the North, to an -->
+<!-- unknown limit in the south [@ices_2022].  -->
 <!-- @farrell_2009 confirmed *M. asterias* as the -->
 <!-- only occurring *Mustelus* species in the Northeast Atlantic following -->
 <!-- decades of partial misidentification of *M. asterias* as the common -->
 <!-- smooth-hound *Mustelus mustelus*, which occupies warmer waters in the -->
 <!-- central eastern Atlantic and the Mediterranean Sea [@farrell_2015]. -->
-The species measures around 30 cm in total length (TL) at birth, 100
-cm (males) and 120 cm (females) when reaching sexual maturity
-[@farrell_2010], and can attain up to 140 cm TL [@mccullyphillips_2015].
-Sexual maturity is reached at 4-5 and 6 years of age for males and
-females, respectively, and longevity is 13 years and 18 years for males
-and females, respectively [@farrell_2010].
+<!-- The species measures around 30 cm in total length (TL) at birth, 100 -->
+<!-- cm (males) and 120 cm (females) when reaching sexual maturity -->
+<!-- [@farrell_2010], and can attain up to 140 cm TL [@mccullyphillips_2015]. -->
+<!-- Sexual maturity is reached at 4-5 and 6 years of age for males and -->
+<!-- females, respectively, and longevity is 13 years and 18 years for males -->
+<!-- and females, respectively [@farrell_2010]. -->
 <!-- Decreasing trends in mean density over the period 1988 to 2008 were perceptible for  Raja montagui and Galeorhinus galeus , while increasing trends were apparent for  Scyliorhinus canicula ,  Scyliorhinus stellaris and Mustelus asterias . Given the taxonomic confusion between  Mustelus spp., a combined trend was also examined, which also indicated an increasing trend, although this trend was driven by  M. asterias , the more abundant of the two. Due to low catch rates over the duration of the surveys, further (i.e. quantitative) investigations into the significance of these observed temporal trends were not carried out. from Martin, C. S., Vaz, S., Ellis, J. R., Coppin, F., Le Roy, D., & Carpentier, A. (2010). Spatio-temporal patterns in demersal elasmobranchs from trawl surveys in the eastern English Channel (1988–2008). Marine Ecology Progress Series, 417, 211–228. -->
 <!-- The relative abundance of M . asterias appears to have increased in the waters around the British Isles, as indicated by increasing catch rates in several fishery-independent surveys over the first decade of the 2000s, and increased reported landings by the commercial fleet (ICES, 2014). -->
 <!-- from mccullyphilipps 2015 -->
-
 <!-- ### Reproductive behaviour -->
 <!-- *M. asterias* has a complex reproduction behaviour. -->
 The species is matrotrophic aplacentally viviparous [i.e., embryos absorb
-nutrients from a yolk sack that is used up during gestation, @farrell_2010a; @mccullyphillips_2015]. It furthmore displays polyandry (i.e., one female mating with several males within
-one breeding season) and multiple paternity [i.e., pups within one
-litter originate from several males, @farrell_2014]. Moreover, it has
+nutrients from a yolk sack that is used up during gestation, @farrell_2010a; @mccullyphillips_2015]. @farrell_2014 found *M. asterias* to display polyandry (i.e., one female mating with several males within
+one breeding season) and multiple paternity (i.e., pups within one
+litter originate from several males). Moreover, it has
 a biannual reproduction cycle with a gestation period of about 12
 months, followed by a 12-month resting period. *M. asterias* females can
 store sperm for up to 12 months [@farrell_2010a]. The same study found
 embryos from different developmental stages in gestating females (termed
-embryo asynchronism). @griffiths_2020 reported philopatric behaviour
-(i.e., females returning to the same area for parturition) for the first
-time. Identified parturition grounds for *M. asterias* include the
-estaury of the Eastern Scheldt and, more generally, the Bristol Channel, Southern North
+embryo asynchronism). @breve_2016 and @griffiths_2020 reported philopatric behaviour
+(i.e., females returning to the same area for parturition). Identified parturition grounds for *M. asterias* include the
+estuary of the Eastern Scheldt and, more generally, the Bristol Channel, Southern North
 Sea and the English Channel [@dureuil_2013; @mccullyphillips_2015;
 @breve_2016]. Pupping possibly takes place between April and September
 [@farrell_2010a; @mccullyphillips_2015].
@@ -634,15 +650,15 @@ Sea and the English Channel [@dureuil_2013; @mccullyphillips_2015;
 <!-- IMAGE: starry smooth-hound -->
 *M. asterias* is morphologically adapted to a demersal life style, exhibiting a ventrally located snout
 that enables it to feed on prey on the
-seafloor.
-<!-- , indicating that it swims closely above the seafloor during -->
+bottom.
+<!-- , indicating that it swims closely above the bottom during -->
 <!-- foraging and preying. -->
 <!-- <!-- [^2]. --> 
 <!--   [^2]: Brevé, Niels (*personal communication*), March 27, 2023. -->
 It is a specialist feeder on benthic and suprabenthic
 crustaceans [@mccullyphillips_2020; @bitonporsmoguer_2022]. Common prey include the hermit crab (*Pagurus bernhardus*),
 the flying crab (*Liocarcinus holsatus*), the common shore crab
-(*Carcinus maenas*) and the edible crab [*Cancer pagurus*, @mccullyphillips_2015; @mccullyphillips_2020]. Potential predators of
+(*Carcinus maenas*) and the edible crab (*Cancer pagurus*) [@mccullyphillips_2015; @mccullyphillips_2020]. Potential predators of
 *M. asterias* are the grey seal (*Halichoerus grypus*) which occurs in
 the North Sea, the blue shark (*Prionace glauca*) and the common dolphin
 (*Delphinus delphis*), both of which occur in the Western English
@@ -654,12 +670,12 @@ Channel [@griffiths_2020].
 
 <!-- ### Daily behaviour -->
 
-<!-- - daily vertical migration: present (find source), but also (most likely) horizontal movement associated with the vertical movement, i.e. the animal stays on the seafloor and swims shorewards during the night, feeding on crustaceans (?) -->
+<!-- - daily vertical migration: present (find source), but also (most likely) horizontal movement associated with the vertical movement, i.e. the animal stays on the bottom and swims shorewards during the night, feeding on crustaceans (?) -->
 
 *M. asterias* shows higher vertical activity during night than during
 the day [@griffiths_2020]. This indicates foraging and preying behaviour at night,
 a commonly observed behaviour in elasmobranchs [@sims_2006]. During the day, *M. asterias*
-potentially avoids predation by resting on the seafloor [@griffiths_2020].
+potentially avoids predation by resting on the bottom [@griffiths_2020].
 <!-- ### Migration -->
 <!-- - 1 sentence about the potential of two populations in the greater north sea, and one population going into the Scheldt Estuary in summer [@breve_2016]. -->
 The species displays annual, potentially sex-specific
@@ -706,22 +722,76 @@ seasonal grounds.
 
 ## Aims of this work {#sec-intro-aims}
 
-Detailed information on potential differences  in vertical movement regarding seasonality and sex, including the timing and duration of migrations, are currently missing. Such information can improve geolocation models through the implementation of behavioural states [@pedersen_2008]. Moreover, the seasonal presence of *M. asterias* in the Western Scheldt estuary, a presumed summer habitat of the species, has not been studied yet. The confirmation of seasonal presence of *M. asterias* would be relevant to species management. This could involve stock assessments or seasonal restrictions for commercial fishing  in the future [@benot_2003].
+The seasonal presence of *M. asterias* in the Western Scheldt estuary, a presumed summer habitat of the species, has not been studied yet. The confirmation of seasonal presence of *M. asterias* would be relevant to species management. This could involve stock assessments or seasonal restrictions for commercial fishing  in the future [@benot_2003]. Moreover, detailed information on potential differences in vertical movement regarding seasonality and sex, including the timing and duration of migrations, are currently missing. Such information can improve geolocation models through the implementation of behavioural states [@pedersen_2008].
+With the aim of addressing these knowledge gaps, this study pursues two lines of research.
 
-characterize the seasonal habitat use (vertical and horizontal) among sexes.
+### Research Line 1: Presence of *M. asterias* in the Western Scheldt Estuary and the BPNS {-}
 
-Considering these knowledge gaps, the present study aims to characterise the seasonal habitat use of *M. asterias* among sexes on a vertical and horizontal scale. Consequently, the study is structured into two points of focus:
+*M. asterias* was rarely caught at the Dutch and Belgian North Sea coast before 2009 [@breve_2016]. These waters are influenced by the outflows of the rivers Rhine, Meuse and Scheldt. *M. asterias* is not known to move into brackish or freshwater but instead potentially remains in the saline parts of the Scheldt Estuary [@dewysiecki_2017]. However, no study has yet been conducted on the presence of this species in the Western Scheldt. The Eastern Scheldt, located adjacent to the Western Scheldt, is a confirmed pupping ground with presence of adult females in summer months [@breve_2016; @breve_2020].
+This study intends to fill the knowledge gap about seasonal presence of *M. asterias* in the Western Scheldt and the BPNS, and thus aims to answer the following questions:
+
+<!-- |   The first line of research involves the presence of *M. asterias* in the Western Scheldt Estuary and the  -->
+<!-- |   Belgian Part of the North Sea (BPNS). -->
+<!-- |   The following aspects will be investigated in this work: -->
+
+ -    Research Question 1: What seasonal patterns of presence does *M. asterias* display in the Western Scheldt and the BPNS?
+ -    Research Question 2: Are there differences in seasonal presence between males and females?
+ -    Research Question 3: How do the spatial preferences of *M. asterias* vary within the Western Scheldt and the BPNS?
+ 
+
+### Research Line 2: Depth utilisation of *M. asterias* on a seasonal scale {-}
+ 
+<!-- | **Research line 2**: Depth utilisation of *M. asterias* on a seasonal scale -->
+<!-- |   The second line of research involves depth utilisation of *M. asterias* on a seasonal scale.  -->
+<!-- |   In this work, the following aspects will be explored:  -->
+
+Information on depth use of *M. asterias* is scarce, yet vital for the investigation of behavioural patterns such as feeding, resting, and migrating. @griffiths_2020 reported a maximum depth of 118 m from one data storage tag implanted in a female *M. asterias*. This further suggests *M. asterias* using waters deeper than previously thought [depths <100 m, @ices_2019]. A study focusing on seasonal depth utilisation patterns of *M. asterias* has not been conducted yet, and this work aims to contribute to filling this knowledge gap. Therefore, the following research questions will be assessed:
+
+ - Research Question 4: What seasonal patterns of vertical behaviour does *M. asterias* show?
+ - Research Question 5: Are there differences in depth utilisation between males and females?
+
+
+
+<!-- | **Research line 1**: -->
+<!-- |   The first line of research involves the presence of *M. asterias* in the Western Scheldt Estuary and the  -->
+<!-- |   Belgian Part of the North Sea (BPNS). -->
+<!-- |   The following aspects will be investigated in this work: -->
+
+<!--  -    Research Question 1: What seasonal patterns of presence does *M. asterias* display in the Western Scheldt and the BPNS? -->
+<!--  -    Research Question 2: Are there differences in seasonal presence between males and females? -->
+<!--  -    Research Question 3: How do the spatial preferences of *M. asterias* vary within the Western Scheldt and the BPNS? -->
+
+
+<!-- | **Research line 2**:  -->
+<!-- |   The second line of research involves depth utilisation of *M. asterias* on a seasonal scale.  -->
+<!-- |   In this work, the following aspects will be explored:  -->
+
+<!--  - Research Question 1: What seasonal patterns of vertical behaviour does *M. asterias* show? -->
+<!--  - Research Question 2: Are there differences in depth utilisation between males and females? -->
+
+<!--  1. The presence of *M. asterias* in the Western Scheldt estuary. -->
+<!--   - Hypothesis: Females show higher residency in the area of the PBARN receivers than males. -->
+<!--  2. The vertical movement of *M. asterias* on an annual scale. -->
+<!--   - Hypothesis: The vertical movement differs between seasons for both males and females. -->
+  
+
+Due to its ability to collect information both within the area of acoustic receiver networks and beyond those by locally storing data, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these questions.
+<!-- Detailed information on potential differences  in vertical movement regarding seasonality and sex, including the timing and duration of migrations, are currently missing. Such information can improve geolocation models through the implementation of behavioural states [@pedersen_2008]. Moreover, the seasonal presence of *M. asterias* in the Western Scheldt estuary, a presumed summer habitat of the species, has not been studied yet. The confirmation of seasonal presence of *M. asterias* would be relevant to species management. This could involve stock assessments or seasonal restrictions for commercial fishing  in the future [@benot_2003]. -->
+
+<!-- characterize the seasonal habitat use (vertical and horizontal) among sexes. -->
+
+<!-- Considering these knowledge gaps, the present study aims to characterise the seasonal habitat use of *M. asterias* among sexes on a vertical and horizontal scale. Consequently, the study is structured into two points of focus: -->
 
 <!-- aims to assess seasonal and sex-related differences in movement patterns of *M. asterias* with two different points of focus:  -->
 
- 1. The presence of *M. asterias* in the Western Scheldt estuary.
-  - Hypothesis: Females show higher residency in the area of the PBARN receivers than males.
- 2. The vertical movement of *M. asterias* on an annual scale.
-  - Hypothesis: The vertical movement differs between seasons for both males and females.
-  
-  
-Due to its ability to collect and produce data in smaller and larger scales, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these topics.
-As such, an ADST dataset of *M. asterias* will be used to describe and characterise both focus points of this study, followed by the investigation of patterns linked to season and sex.
+<!--  1. The presence of *M. asterias* in the Western Scheldt estuary. -->
+<!--   - Hypothesis: Females show higher residency in the area of the PBARN receivers than males. -->
+<!--  2. The vertical movement of *M. asterias* on an annual scale. -->
+<!--   - Hypothesis: The vertical movement differs between seasons for both males and females. -->
+
+
+<!-- Due to its ability to collect and produce data in smaller and larger scales, Acoustic Data Storage Tags (ADST) are a suitable technology to assess these topics. -->
+<!-- As such, an ADST dataset of *M. asterias* will be used to describe and characterise both focus points of this study, followed by the investigation of patterns linked to season and sex. -->
 
 <!--  - Aim 1: Describe and characterise the presence of *M. asterias* in the Western Scheldt estuary, and determine patterns of presence linked to season and sex. -->
 <!--  - Aim 2: Describe and characterise the annual vertical movement of *M. asterias* focusing on the following questions: -->
@@ -828,11 +898,11 @@ As such, an ADST dataset of *M. asterias* will be used to describe and character
 
 <!-- ####   Working hypothesis -->
 
-<!-- 2.  During summer, sharks predominantly use the seafloor section of the -->
+<!-- 2.  During summer, sharks predominantly use the bottom section of the -->
 <!--     space around a receiver -->
 
 <!-- -   predominantly = xx% (or result of chi2?) -->
-<!-- -   seafloor section = the deepest 75% around a receiver -->
+<!-- -   bottom section = the deepest 75% around a receiver -->
 
 <!-- ####   Working hypotheses about the acoustic dataset in general -->
 
@@ -867,7 +937,21 @@ As such, an ADST dataset of *M. asterias* will be used to describe and character
 
 # Materials and Methods {#sec-mm}
 
-<!-- contains the design of the research: e.g. experimental design, area description, sampling methods, analysis methods, statistical design and methods -->
+
+## Acoustic tags and tagging procedure
+
+```{r sum-tagging}
+tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate::date(),                        release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "outside WS")) %>% group_by(date) %>% reframe(n = n(), release_loc = release_loc %>% unique()) %>% mutate(date2 = date %>% format(format = "%B %d"))
+
+# tagging_info %>% View()
+```
+
+Tagging of 30 *M. asterias* individuals occurred in July and August, 2018
+(`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`,
+`r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n =
+`r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and
+12, n = `r tagging_info$n[4]` for both dates). Details on the tagged
+individuals are listed in @tbl-animalinfo.
 
 <!-- ## Acoustic Tags -->
 <!-- Acoustic Data Storage Tags (ADST) were used for this study, -->
@@ -879,31 +963,26 @@ pressure or temperature value was transmitted with a ratio of 1:3
 the Supporting Information of @goossens_2023.
 <!-- reference to innovasea product manual --> The pressure sensors
 recorded with a resolution of 0.3 m and an accuracy of $\pm$ 3.4 m until
-the depth of 68 m, according to the manufacturer [@Innovasea_ADST].
+the depth of 68 m, according to the manufacturer [@Innovasea_ADST]. The maximum depth value recorded in this study is 75.2 m. Since this is deeper than the maximum depth measurable according to the manufacturers, measurements around the limit of 68 m have to be interpreted with caution.
 
-## Tagging Procedure
 
-```{r sum-tagging}
-tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate::date(),                        release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "outside WS")) %>% group_by(date) %>% reframe(n = n(), release_loc = release_loc %>% unique()) %>% mutate(date2 = date %>% format(format = "%B %d"))
 
-# tagging_info %>% View()
-```
+<!-- ```{r prepare-releaseloc} -->
+<!-- release_locations  <- release_locations  %>%  -->
+<!--   rename(`release location` = release_loc, -->
+<!--          `Latitude` = lat, -->
+<!--          `Longitude` = lng) -->
+<!-- ``` -->
 
 Tagged animals were both caught and released in two locations, just west
-of *Neeltje Jans* (all individuals tagged in July, both 2018 and 2019),
-and outside the mouth of the Western Scheldt (all individuals tagged in
-August 2018). The tagging locations are listed in @tbl-releaseloc.
+of *Neeltje Jans* (an artificial island in the Dutch province of Zeeland, individuals tagged in July, both 2018 and 2019, Latitude: `r release_locations %>% dplyr::filter(release_loc == "Neeltje Jans") %>% dplyr::select(lat) %>% dplyr::pull()`, Longitude: `r release_locations %>% dplyr::filter(release_loc == "Neeltje Jans") %>% dplyr::select(lng) %>% dplyr::pull()`),
+and outside the mouth of the Western Scheldt (individuals tagged in
+August 2018, Latitude: `r release_locations %>% dplyr::filter(release_loc == "Western Scheldt") %>% dplyr::select(lat) %>% dplyr::pull()`, Longitude: `r release_locations %>% dplyr::filter(release_loc == "Western Scheldt") %>% dplyr::select(lng) %>% dplyr::pull()`). The tagging locations are marked in @fig-mapstudyarea-3.
+<!-- The tagging locations are listed in @tbl-releaseloc. -->
 <!-- The two locations are shown in @fig-map_detail. -->
 
-```{r prepare-releaseloc}
-release_locations  <- release_locations  %>% 
-  rename(`release location` = release_loc,
-         `Latitude` = lat,
-         `Longitude` = lng)
-```
-
 ```{r table-animalinfo}
-#| include: true
+#| include: false
 #| label: tbl-releaseloc
 #| out-width: 90%
 #| tbl-cap-location: top
@@ -912,14 +991,64 @@ release_locations  <- release_locations  %>%
 knitr::kable(release_locations) %>% kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
 ```
 
+
 Animals were caught using line fishing or handline. After capture, each
 animal was placed in a holding tank filled with sea water. Before the
 surgery the animals were turned with the ventral side facing upwards to
 induce tonic immobility [@kessel_2015] and the midventral line was
 incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was
 inserted into the abdominal cavity with forceps, and the incision was
-closed with 2-3 stitches of non-absorbable mono-filament
-[@goossens_2023]. Photos of the capture and tagging of *M. asterias* are shown in @fig-taggingpics.
+closed with 2-3 stitches of mono-filament [@goossens_2023]. Photos of the capture and tagging of *M. asterias* are shown in @fig-taggingpics.
+
+
+```{r ttestlength}
+length_ttest <- t.test(x = tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1), y = tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1), alternative = "greater")
+```
+
+Females (n =
+`r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()`, mean TL
+=
+`r tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)` cm)
+were significantly larger than males (n =
+`r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()`, mean TL
+=
+`r tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)` cm,
+one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* =
+`r length_ttest$p.value`). <!-- , see @fig-lengthboxplot. -->
+
+```{r lengthboxplot}
+#| include: false
+#| label: fig-lengthboxplot
+#| out-width: 75%
+#| fig-cap: "Total Length of all tagged sharks (n~total~ = 30), per sex."
+#| fig-pos: "H"
+
+p_length_sex
+```
+
+
+
+```{r table-animalinfo}
+#| include: true
+#| label: tbl-animalinfo
+#| out-width: 120%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected, loc. = location, RI = residency index (days detected / 518 days). The 518 days correspond to the estimated battery life by the tag manufacturer."
+
+knitr::kable(x = tagged_animal_info %>% 
+               #set column order & order rows
+               dplyr::select(tag_serial_number, sex, length1, weight,
+                             release_date_time, n_detect, days_detected,
+                             hours_detected, date_last_detected, 
+                             days_at_liberty, residency_index, release_loc) %>%
+               arrange(release_date_time) %>%
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+
 
 ```{r imgtagging}
 #| include: true
@@ -942,10 +1071,52 @@ knitr::include_graphics(path = "C:/Users/lotte.pohl/Documents/github_repos/Maste
 
 ```
 
+### Tag recoveries 
+
+Upon writing (June, 2023), eight tags were recovered. Information about the tags with
+available raw data is listed in @tbl-dstsum.
+
+```{r prepare-dstsummary}
+
+# dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial no.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty, `tag recapture date` = recapture_date_time)
+```
+
+```{r table-dstsummary}
+#| include: true
+#| label: tbl-dstsum
+#| out-width: 90%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date. The tag recapture date was not recorded for tags 1293321, 1293308 and 1293304."
+
+knitr::kable(dst_summary %>% 
+               dplyr::select(tag_serial_number, sex, release_date, death_date, days_at_liberty, recapture_date_time) %>%
+               arrange(release_date),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("tag serial no.", "sex", "release date", "death date", "days at liberty", "recapture date"), align = "c")) %>% 
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
+```
+
+6 out of 8 recovered tags logged for a month or less, only the tags with
+the serial numbers 1293308 (f) and 1293321 (m) logged for a year,
+allowing for the analysis of migration behaviour. These two tags will be
+referred to as long term DST in the following, and their tag serial
+numbers will be abbreviated to `308` and `321`. The rest of the tags
+will be referred to as short term DST. 
+
+## Ethics statement
+
+The care and use of the animals complied with the Belgian Animal Welfare
+Act, guidelines and policies as approved by the *Ethische Commissie
+Dierproeven* (project reference EC2017-080). All animal treatments were
+undertaken in 2018 and 2019, and all tagging procedures were carried out
+by competent and trained personal license holders.
 
 ## Study Area {#sec-mm_studyarea}
 
-The points of focus of this work are twofold (@sec-intro-aims). Consequently, the study area encompasses two scales. The first point of focus focuses on the Belgian Part of the North Sea (BPNS) and the estuary of the Western Scheldt. The second focus point includes year-round behaviour and thus, the study area is more broad and less defined. Since the species is thought to move both into the English Channel and into the North Sea north of the BPNS, both regions constitute the study area for the second point of focus.
+The study area encompasses two scales, reflecting the two lines of research of this study. The first research line focuses on the Belgian Part of the North Sea (BPNS) and the estuary of the Western Scheldt. It also encompasses the tagging location *Neeltje Jans*, which is not part of the Western Scheldt or the BPNS but lies within the Eastern Scheldt.
+
+The second research line includes year-round behaviour and thus, the study area is broader and less defined. Since the species is thought to move both into the English Channel and into the North Sea north of the BPNS, both regions constitute the study area for the second research line. An overview on the different study areas is displayed in @fig-mapstudyarea.
+
 
 <!-- Lennox et al. 2022 referenced EMODnet Bathymetry in their figure caption:  -->
 
@@ -975,12 +1146,12 @@ shallow water depths below 40 m [@thierry_2019], sandy or muddy sediment
 The river Scheldt meets the North Sea
 north of the border between the Netherlands and Belgium, forming an
 Estuary with a complex regime of sandflats and channels
-[@claessens_1988]. Both the BPNS and the Scheldt Estuary are highly
-mixed due to strong currents and tides [@otto_1990], introducing saline
+[@claessens_1988]. Both the BPNS and the Scheldt Estuary are a highly
+dynamic environment due to strong currents and tides [@otto_1990], introducing saline
 waters well into the Scheldt Estuary [@ouboter_1998]. The Scheldt
 Estuary is characterised by medium to coarse sand and salinity between
 ranges 2 and 33.5 ppt [@baeyens_1998], peaking in summer [@maes_1998].
-The seafloor depth averages around 11 m with occasional troughs of up to
+The bottom depth averages around 11 m with occasional troughs of up to
 20 or 30 m [@thierry_2019]. The BPNS and the Scheldt Estuary are
 influenced by two water bodies: The Channel water and the
 Continental coastal water, meeting about 30 km off the Belgian coast [@wolff_1973]. The former is characterised by high salinity
@@ -989,7 +1160,7 @@ Continental coastal water, meeting about 30 km off the Belgian coast [@wolff_197
 high nutrient levels and a larger temperature range than the Channel
 water averaging between 3°C in winter and 17°C in summer.
 An overview map of the BPNS and the Scheldt
-Estuary is provided in @fig-mapdetail. Fish and crustacean species
+Estuary is provided in @fig-mapstudyarea-2. Fish and crustacean species
 composition and abundance underlies strong seasonal patterns, peaking in
 summer [@maes_1998; @maes_2005]. Seasonally occuring species are marine
 fish like Atlantic herring (*Clupea harengus*), Sprat (*Sprattus
@@ -1004,154 +1175,14 @@ the Eastern Scheldt Estuary.
 
 ### The East Anglian coast
 
-The east Anglian coast lies within the Southern North Sea and is characterised by shallow coastal waters between 20 and 25 m water depth, fast tidal streams and sandy and muddy seafloor sediments [@harrison_1990]. 
+The east Anglian coast lies within the Southern North Sea and is characterised by shallow coastal waters between 20 and 25 m water depth, fast tidal streams and sandy and muddy bottom sediments [@harrison_1990]. 
 Tidal currents are strongest at 1.3 $\frac{m}{s}$ during new and full moon [@arnold_1994]. Abundant crustacea include *Hyas coarctatus* [@dyer_1985], *Pandalus montagui*, *Carcinus spp.* and *Eupagurus spp.* [@sergeant_1951]. 
-
-```{r mapdetail}
-#| include: true
-#| label: "fig-mapdetail"
-#| out-width: 90%
-#| fig-cap: "Overview of the study area of focus point 1: The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. ES = Eastern Scheldt, WS = Western Scheldt."
-#| fig-pos: "H"
-
-map_detail_ggplot
-```
-
-<!-- Environmental variables such as temperature and salinity are mixed due to strong mixing resulting from currents and tides (**ref**). -->
-
-<!-- Test map cross reference @fig-map. -->
-
-<!-- #| out-width: 80% -->
-
-<!-- ##| layout-ncol: 1 -->
-
-<!-- ##| column: body #page -->
-
-<!-- ##| fig-width: 6 -->
-
-<!-- ::: {#fig-map} -->
-
-<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
-
-<!-- ::: -->
-
-<!-- ####   Human activities -->
-
-<!-- -  Windfarms -->
-
-<!-- -  Shipwrecks -->
-
-<!-- -  Submarine power and telecommunication cables -->
-
-<!-- MAP: BPNS with cables, windfarms and shipwrecks -->
-
-<!-- Maybe 2 maps next to each other, one with acoustic receivers (+ sub areas/receiver arrays, and 2 tagging locations) and one with the human activities (bc 1 map will be too full?) -->
-
-<!-- Mention that for the windfarms and cables, the years are filtered to be <= 2020 -->
-
-<!-- ```{r map1overview} -->
-
-<!-- #| include: false -->
-
-<!-- #| label: fig-map1overview -->
-
-<!-- #| fig-cap: "Map of the study area." -->
-
-<!-- # map1_overview -->
-
-<!-- ``` -->
-
-<!-- ```{r map2detail} -->
-
-<!-- #| include: false -->
-
-<!-- #| label: fig-map2detail -->
-
-<!-- #| fig-cap: "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
-
-<!-- # map2_detail -->
-
-<!-- ``` -->
-
-<!-- ```{r} -->
-
-<!-- #| include: false -->
-
-<!-- #| label: fig-map2 -->
-
-<!-- #| layout-ncol: 1 -->
-
-<!-- #| column: body #page -->
-
-<!-- #| fig-width: 6 -->
-
-<!-- #| fig-subcap:  -->
-
-<!-- #| - "Map of the study area." -->
-
-<!-- #| - "Map of the BPNS and the Western Scheldt, depicting the locations of acoustic recevers and of the release of tagged animals." -->
-
-<!-- # knitr::include_graphics(paste0(path_maps, "map1_overview_manual.png")) -->
-
-<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map1_overview_manual.png") -->
-
-<!-- knitr::include_graphics("map1_overview_manual.png") -->
-
-<!-- knitr::include_graphics("map2_detail_manual.png") -->
-
-<!-- # knitr::include_graphics("01_code/00_thesis_manuscript/maps/map2_detail_manual.png") -->
-
-<!-- # knitr::include_graphics(paste0(path_maps, "maps/map2_detail_manual.png")) -->
-
-<!-- ``` -->
-
-<!-- ```{r} -->
-
-<!-- #| include: true -->
-
-<!-- #| label: fig-map -->
-
-<!-- knitr::include_graphics("C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/map1_overview_manual.png", auto_pdf = FALSE) -->
-
-<!-- ``` -->
-
-<!-- **MAP** -->
-
-<!-- ::: {#fig-map} -->
-
-<!-- ![Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png) -->
-
-<!-- ::: -->
-
-<!-- ::: {#fig-map layout-ncol=2} -->
-
-<!-- ![Overview Map of the study area.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map1_overview_manual.png){#fig-mapoverview} -->
-
-<!-- Maps of the study area. -->
-
-<!-- ::: -->
-
-<!-- ###    The Scheldt Estuary -->
-
-<!-- ####   The Western Scheldt -->
-
-<!-- MAP: Schelde with bathymetry raster or contour lines -->
-
-<!-- -  Acoustic receiver arrays in WS -->
-
-<!-- -  Mixing -->
-
-<!-- -  Salinity -->
-
-<!-- -  Food abundance for the sharks -->
-
-<!-- -  Biodiversity and most prominent species -->
 
 ### The English channel {#sec-mmstudyareaec}
 
 The English Channel (EC) extends from the Dover Strait to England's
 southwestern tip, spanning 77 000 km^2^ [@dauvin_2012]. The mean
-seafloor depth increases from around 25 m in the east to 75 m in the
+bottom depth increases from around 25 m in the east to 75 m in the
 west [@dauvin_2012], except for the 174 m deep *Hurd deep*, a trench
 located close to the channel island Guernsey. An overview of the English
 Channel and the North Sea is provided in @fig-mapoverview.
@@ -1163,124 +1194,66 @@ which are higher on the French than on the English coast due to Coriolis
 force, reaching maximum values of 4 $\frac{m}{s}$ at the Cap de la Hague
 [@salomon_1993].
 <!-- Tidal circulation influences the composition of -->
-<!-- superficial seafloor sediments with coarse sediments dominating in areas -->
+<!-- superficial bottom sediments with coarse sediments dominating in areas -->
 <!-- of strong tidal currents and fine and muddy sediments dominating in bays -->
 <!-- and estuaries with weaker tidal currents as well as on the English Coast -->
 <!-- [@larsonneur_1982]. From the western end up to Guernsey and the Hurd -->
 <!-- Deep, stratification occurs in summer, which is broken down as water -->
 <!-- progresses towards the east, resulting no vertical temperature gradient -->
 <!-- to be present in the eastern EC [@holme_1966].  -->
-Seafloor temperatures vary less in the western EC (range: 9°C to 14°C) than in
+Bottom temperatures vary less in the western EC (range: 9°C to 14°C) than in
 the eastern EC (8°C and 16°C). Species living on the
-seafloor include Crustacea like the edible crab (*Cancer pagurus*), the
+bottom include Crustacea like the edible crab (*Cancer pagurus*), the
 common spider crab (*Maja squinado*), the European lobster (*Homarus
 gammarus*) and *Upogebia spp.* [@holme_1966; @vaz_2007].
 
-```{r mapoverview}
-#| include: true
-#| label: "fig-mapoverview"
-#| out-width: 90%
-#| fig-cap: "Overview of the study area of focus point 2: The Southern North Sea and the English Channel. "
-#| fig-pos: "H"
+<!-- ```{r mapoverview} -->
+<!-- #| include: true -->
+<!-- #| label: "fig-mapoverview" -->
+<!-- #| out-width: 90% -->
+<!-- #| fig-cap: "Overview of the study area of focus point 2: The Southern North Sea and the English Channel. " -->
+<!-- #| fig-pos: "H" -->
 
-map_overview_ggplot
-```
-
-<!-- ***See @sec-questionsmaps, could you say what you would change about the -->
-<!-- maps, i.e. what things you would put in/leave out?*** -->
-
-<!-- *To Do Map:* -->
-
-<!-- -   put all receiver stations in map (also those further up the river) -->
-
-<!-- -   label Dishoek, and station ws-OG10. -->
-
-<!-- -   include outlines of the Western and Eastern Scheldt -->
-
-<!-- -   include outlines of the French and Dutch EEZ and make one colour for -->
-<!--     EEZ -->
-
-<!-- -   indicate the WS1 and the WS2 array (esp. for vertical space use -->
-<!--     analysis for acoustic detections) -->
-
-<!-- -   in ggplotmap: make depth contours to avoid having so many colours. -->
-
-<!-- -   should I include shipwrecks at all? I'm probably not mentioning them -->
-<!--     really, but it still is interesting to get an idea about the vast -->
-<!--     amount of shipwrecks in the BPNS and around... -->
-
-<!-- from dauvin 2015 -->
-
-<!-- in holme 1966 it says that temp in western channel drop below 10 degrees in winter...how does that fit together with the 13 deg temp limit of masterias? -->
-
-<!-- -  Bathymetry -->
-
-<!-- -  Maybe map with bathy contour lines? -->
-
-<!-- -  Food abundancDivergence -->
-
-<!-- -  Temperature seasonality -->
 
 ## The Permanent Belgian Receiver Network
 
 The acoustic receivers of the Permanent Belgian Receiver Network (PBARN)
-were used in this study. The PBARN is part of the European Tracking
+were used in this study [@reubens_2018]. The PBARN is part of the European Tracking
 Network (ETN), which was established in 2017 as a pan-european aquatic
 telemetry network. As of 2019, the PBARN consisted of
 160 permanently installed and monitored acoustic receivers within the
 BPNS, the Scheldt Estuary, the Dijle, Rupel, Albert Canal and the Meuse
-River [@reubens_2018]. @fig-mapWSdetail displays an overview of the acoustic receivers in the estuary of the Western Scheldt. A detection probability of \>50 % was estimated for a radius of 500-700 m around the receiver [@goossens_2022], and \>70
+River. @fig-mapstudyarea-3 displays an overview of the acoustic receivers in the estuary of the Western Scheldt. A detection probability of \>50 % was estimated for a radius of 500-700 m around the receiver [@goossens_2022], and \>70
 % for 200 m radius [@reubens_2018].
 
-```{r mapWSdetail}
-#| include: true
-#| label: "fig-mapWSdetail"
+
+```{r mapstudyarea}
+#| include: false
+#| label: "fig-mapstudyarea"
 #| out-width: 90%
-#| fig-cap: "Overview of the acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN) in the Western Scheldt Estuary. The receivers are categorised into three different arrays: Western Scheldt 1 (WS1), Western Scheldt 2 (WS2) and Western Scheldt 3 (WS3). "
+#| layout-ncol: 1
+#| fig-cap: "Overview maps of the study area."
+#| fig-subcap: 
+#| - "Overview of the study area of focus point 2: The Southern North Sea and the English Channel."
+#| - "Overview of the study area of focus point 1: The Belgian Part of the North Sea (BPNS) and the Scheldt Estuary. ES = Eastern Scheldt, WS = Western Scheldt. Each black circle marks one acoustic receiver station."
+#| - "Overview of the acoustic receivers of the Permanent Belgian Acoustic Receiver Network (PBARN) in the Western Scheldt Estuary. The receiver stations (circles) are categorised into three different arrays: Western Scheldt 1 (WS1), Western Scheldt 2 (WS2) and Western Scheldt 3 (WS3)."
 #| fig-pos: "H"
 
+map_overview_ggplot
+map_detail_ggplot
 map_WS_ggplot
 ```
 
 
-<!-- rewrite, from goossens 2016 -->
 
-<!-- The  data  originated  from   6  2     self  -  contained,  single  channe  l  (69  kHz),  submersible     Vemco     acoustic   receivers  . These receivers were attached to buoys and/or   bottom moorings     and were removed either   manually, either with an acoustic release system.   23     acoustic receivers were   deployed     in the BPNS at   spread out position  s and 39 were set up in the Scheldt Estuary in three receiver   array  s. These receivers   were  categorized  into  four  locations,  based  on  their  positions:  offshore,  coast,  Western  and  Eastern   Scheldt  Estuary.  From  July  2014   until   July  2015,  36  fish  were     caught   by  hand  -  line  and     tagged  with  a   Vemco V9  -  1L transmitter with a unique ID, emitting a signal every 110 to 250 seconds     (Vemco 2016)  .   Tagged  cod  were  released  at  their  capture  location  after  recovery  of  the  sedation  and  surgery.   -->
-
-<!-- ::: {#fig-mapdetail} -->
-
-<!-- ![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png) -->
-
-<!-- ::: -->
-
-<!-- ![Map of the Scheldt Estuary. The yellow rectangle marks the boundaries of the Scheldt Estuary. Release station 1 refers to Neeltje Jans, release station 2 refers to the Western Scheldt. To Do: describe what is eastern and what is western scheldt.](C:/Users/lotte.pohl/Documents/github_repos/MasterThesis_LottePohl/01_code/00_thesis_manuscript/maps/map2_detail_manual.png){#fig-mapdetail} -->
-
-<!-- ### Data Management -->
-
-<!-- <!-- *change title* --> 
-
-<!-- The database of the European Tracking Network (https://lifewatch.be/etn) -->
-<!-- stores the acoustic detections, and metadata connected to the animal -->
-<!-- individuals and the tags used. <!-- make etn link into citation The -->
-<!-- data storage log files and the outputs of the geolocation models were -->
-<!-- accessed and management via the Marine Data Archive (MDA, *ref*). -->
-
-<!-- - *Question: TABLE with lat lon & names of receiver stations?* noooo right? -->
-
-## Ethics statement
-
-The care and use of the animals complied with the Belgian Animal Welfare
-Act, guidelines and policies as approved by the *Ethische Commissie
-Dierproeven* (project reference EC2017-080). All animal treatments were
-undertaken in 2018 and 2019, and all tagging procedures were carried out
-by competent and trained personal license holders.
+<!-- contains the design of the research: e.g. experimental design, area description, sampling methods, analysis methods, statistical design and methods -->
 
 ## Data Analysis and visualisation
 
 All data analyses were carried out using R [@R_2022], primarily using
 the packages `dplyr` [@dplyr] and `lubridate` [@lubridate].
 <!-- All maps were created using the *'leaflet'*-package.  -->
-Geospatial data, where not otherwise indicated, was queried from
+Geospatial data was queried from
 the marineregions database [@claus_2014] in the case of (marine) boundaries [with the
 `mregions2`-package, @mregions2], and EMODnet Human Activities [@solaun_2021] data [with
 the `EMODnetWFS`-package, @EMODnetWFS]. All plots were generated using the
@@ -1290,8 +1263,10 @@ indicated in the respective section.
 
 ### Acoustic Detections
 
-Detections were accessed from the ETN database (*https://www.lifewatch.be/etn/*). Tags with only a single
-detection were omitted from all further analyses. Acoustic detections were visualised on an individual and acoustic receiver station level.
+Detections were accessed from the ETN database (https://www.lifewatch.be/etn/)[https://www.lifewatch.be/etn/] using the package `etn` [@etn]. Tags with only a single
+detection were omitted from all further analyses. Acoustic detections were visualised on an individual and acoustic receiver station level. Residency Indices were calculated, following the two definitions provided by @kraft_2023. Firstly, the overall RI was calculated for all individuals, dividing the number of days with a detection by the estimated battery life of 518 days. Secondly, a subset RI was calculated for the station with most individuals detected and most detections overall. This calculation involved dividing the number of days detected at this receiver by the time period between the first and last detection of any individual at that receiver. 
+
+<!-- It was hypothesised that females display higher residency within the area of the PBARN receivers than males. To test this, the residency index was calculated for each individual, dividing the number of days with a detection by the estimated battery life of 518 days. Then, the residency index was compared between sexes. -->
 
 <!-- ***I'm not sure yet which calculations I will include yet. Maybe something concerned with monthly summary statistics. But maybe this also is too much and I should just put the vertical space use analysis and leave out the rest. With the rest I mean things I show here: (https://lottepohl.github.io/thesis_docs/20230227_acoustic_data_month_sex/)*** -->
 
@@ -1313,11 +1288,11 @@ detection were omitted from all further analyses. Acoustic detections were visua
 <!-- from 2019 and in the WS1 and WS2 area were used. A bathymetry dataset -->
 <!-- from the Flemish government (publication date: November 18, 2019, *ref*) -->
 <!-- was used. The dataset has a 1m x 1m resolution and contains the mean -->
-<!-- depth per grid cell. The seafloor depth within a radius of 200 m around -->
+<!-- depth per grid cell. The bottom depth within a radius of 200 m around -->
 <!-- each receiver was extracted using the *'sf'*-package in R. The 200 m -->
 <!-- refer to the probability of >70% of an acoustic detection [@reubens_2019]. The following was done both for the bathymetry subsets -->
 <!-- and the acoustic detections for each receiver station in the WS1 array: -->
-<!-- Firstly, the maximum and minimum depth (of seafloor depth and acoustic -->
+<!-- Firstly, the maximum and minimum depth (of bottom depth and acoustic -->
 <!-- detections) around each receiver were extracted, and the percentage of -->
 <!-- grid cells/detections that contained a depth value within a 10 m depth -->
 <!-- bin (spanning from 0 m to -50 m) was computed. -->
@@ -1327,26 +1302,28 @@ detection were omitted from all further analyses. Acoustic detections were visua
 ### Data Storage Tags {#sec-mm_dsts}
 
 Depth and temperature logs from the recovered tags were accessed via the
-Marine Data Archive (MDA) **create DOI**. <!-- TODO: link URL --> The temperature log
+Marine Data Archive (MDA, dataset DOI: (https://doi.org/10.14284/605)[https://doi.org/10.14284/605]). The temperature log
 was not included in any analysis. The first week of depth values was
 excluded from all analyses to remove potential bias resulting from the
-tagging procedure [as suggested by @flavio_2021]. The date of death, used to
-calculate the time at liberty for the recovered tags, was visually extracted from plots of the
+tagging procedure [following @flavio_2021].
+The date of death, used to calculate the time at liberty for the recovered tags, was visually extracted from plots of the
 raw depth series, and marks the date after which only a tidal signal
 remains in the depthlog [characterised by cyclically rising and
 falling depths within a rough 2 m depth range, @kvale_2006]. 
 
-The analyses described in the following were only performed for tags that logged for $\geq$ 365 days. 
-Those will be referred to as *long term DST* in the following, tags logging for less than a year will be
+The analyses described in the following were only performed for tags that logged for $\geq$ 365 days, i.e., tag 308 (female) and tag 321 (male). 
+Those will be referred to as *long term DST* in the following, returned tags logging for less than a year will be
 referred to as *short term DST*.
-<!-- maybe rephrase: "excluded from all analyses" --> Summary statistics
-,i.e., median (since depth did not follow a normal distribution), maximum and 
+<!-- maybe rephrase: "excluded from all analyses" --> Summary statistics, i.e., median (since depth did not follow a normal distribution), maximum and 
 minimum depth were calculated per date, day and night.
 <!-- For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~).  -->
 For the day/night summaries, sunrise and sunset times were extracted
 using the `getSunlightTimes()`-function from the `suncalc`-package [@suncalc].
 The illuminated fraction of the moon was extracted using the
 `moonAngle()`-function from the `oce` package [@oce]. 
+<!-- To test the hypothesis about difference in depth use between seasons, start dates of summer and winter as defined by solstices were extracted from the Astronomical Applications Department -->
+<!-- of the U.S. Naval Observatory [@USNO_2023] for the years of 2018 and 2019. -->
+<!-- Next, the daily median depths for each tag and season (summer/winter) were compared. -->
 
 <!-- On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. -->
 A Savitzky-Golay smoothing filter [@press_1990,
@@ -1402,19 +1379,24 @@ case the signal is the depth-timeseries of the sharks, @cochran_1967].
 
 <!-- include function settings for CWT: dt = 1, factor_smallest_scale = 2) -->
 
-Next, Continuous Wavelet Transform (CWT) was performed on the daily summary
+Next, Continuous Wavelet Transform (CWT) was performed the daily summary statistics of the long-term DST depthlogs were subjected to the Continuous Wavelet Transform (CWT) using the wt() function from the biwavelet-package (Gouhier et al., 2021). In contrast to the Fast Fourier Transform (FFT), the CWT reveals not only the dominant frequencies but also the specific time intervals when these frequencies occur. Thus, the frequency composition of the time series in the time domain can be examined. To achieve this, the resolution of both the frequency and time domains was minimized. However, to ensure reliable and accurate results despite the reduced resolution, the frequencies were compared against white noise using a 𝜒2 test (Grinsted et al., 2004). The CWT was performed on both the raw depthlog data and the median depth per date, resulting in hourly and daily resolution of periodicities, respectively. The wavelet scalograms of the raw depthlog display the maximum power per day in the scalogram.
+
+Next, Continuous Wavelet Transform (CWT, a specific type of Wavelet Analysis) was performed on the daily summary
 statistics of the longterm DST depthlogs, using the `wt()`-function from the
-`biwavelet`-package [@biwavelet]. In contrast to FFT, this method gives insights
-into the occurrence of certain frequencies within the time domain. Thus,
-not only information about the dominant frequencies is gathered, but
-also the time that those frequencies appear. In order to
-resolve the components of the frequency domain within the time domain,
-however, the resolution of both is minimised.
-<!-- (following Heisenberg's uncertainty principle).  -->
-To obtain robust and valid results despite the
-resolution loss, frequencies were compared against white noise using a
-$\chi^2$ test [@grinsted_2004]. 
-CWT was performed on both the raw depthlog and the median depth per date, resulting in an hourly and a daily resolution of periodicities. For the wavelet scalograms of the raw depthlog the maximum power per day was included in the scalogram.
+`biwavelet`-package [@biwavelet]. In contrast to Fourier Transformation, Wavelet Analysis reveals not only the dominant frequencies but also the specific time intervals when these frequencies occur. Thus, the frequency composition of the time series in the time domain can be examined. This, however, comes at the cost of minimised resolution of both the frequency and time domain. To obtain robust and valid results despite the
+resolution loss, frequencies were compared against white noise using a $\chi^2$ test [@grinsted_2004]. CWT was performed on both the raw depthlog data and the median depth per date, resulting in hourly and daily resolution of periodicities, respectively. The wavelet scalograms of the raw depthlog display the maximum power per day in the scalogram.
+
+<!-- FFT, this method gives insights -->
+<!-- into the occurrence of certain frequencies within the time domain. Thus, -->
+<!-- not only information about the dominant frequencies is gathered, but -->
+<!-- also the time that those frequencies appear. In order to -->
+<!-- resolve the components of the frequency domain within the time domain, -->
+<!-- however, the resolution of both is minimised. -->
+<!-- <!-- (following Heisenberg's uncertainty principle).  --> -->
+<!-- To obtain robust and valid results despite the -->
+<!-- resolution loss, frequencies were compared against white noise using a -->
+<!-- $\chi^2$ test [@grinsted_2004].  -->
+<!-- CWT was performed on both the raw depthlog and the median depth per date, resulting in an hourly and a daily resolution of periodicities. For the wavelet scalograms of the raw depthlog the maximum power per day was included in the scalogram. -->
 <!-- For the present study, a basic version of BCPA was applied to a vertical movement dataset from a demersal shark: Change Point Detection (CPD).  -->
 
 <!-- Finally, daily summary statistics were used to detect abrupt changes in -->
@@ -1477,139 +1459,54 @@ CWT was performed on both the raw depthlog and the median depth per date, result
 
 # Results {#sec-results}
 
-## Tagged animals
+<!-- ## Tagged animals -->
 
-Tagging of 30 *M. asterias* individuals occurred in July and August, 2018
-(`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`,
-`r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n =
-`r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and
-12, n = `r tagging_info$n[4]` for both dates). Details on the tagged
-individuals are listed in @tbl-animalinfo. Of the
-`r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()` males
+
+## Acoustic detections {#sec-res-acoustic}
+
+Two tags only had a single detection (serial numbers
+`r tag_serial_number_omit[1,] %>% dplyr::pull()` and
+`r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted
+from all further analyses. The acoustic detections of the remaining tags
+over time are shown in @fig-abacus.
+Within the study period from July, 2018 to August, 2020, there are no
+acoustic detections between November and April in either year.
+`r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)`% of detections are in the WS1 area, and of those,
+`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow()) * 100, digits = 2)`% are at station OG10 (see @fig-mapstudyarea-3).
+<!-- Tagging of 30 *M. asterias* individuals occurred in July and August, 2018 -->
+<!-- (`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`, -->
+<!-- `r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n = -->
+<!-- `r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and -->
+<!-- 12, n = `r tagging_info$n[4]` for both dates). Details on the tagged -->
+<!-- individuals are listed in @tbl-animalinfo.  -->
+Of the `r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()` males
 that were tagged, `r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()` were detected more than once. 3 of the detected males were detected in the year
 following their tagging. Of the
 `r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()` tagged
 females,
 `r tagged_animal_info %>% dplyr::filter(sex == "f", n_detect > 1) %>% nrow()`
 were detected more than once and 11 individuals were detected in the
-year following their tagging.
-
-<!-- say sth about the tagging locations and refer to  (see @tbl-releaseloc and @fig-mapdetail) (doesn't work in table caption) -->
-
-
-```{r table-animalinfo}
-#| include: true
-#| label: tbl-animalinfo
-#| out-width: 120%
-#| tbl-cap-location: top
-#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected, loc. = location, RI = residency index (days detected / 518 days). The 518 days correspond to the estimated battery life by the tag manufacturer."
-
-knitr::kable(x = tagged_animal_info %>% 
-               #set column order & order rows
-               dplyr::select(tag_serial_number, sex, length1, weight,
-                             release_date_time, n_detect, days_detected,
-                             hours_detected, date_last_detected, 
-                             days_at_liberty, residency_index, release_loc) %>%
-               arrange(release_date_time) %>%
-               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
-
+year following their tagging (@fig-abacus).
 
 <!-- ```{r table-animalinfo} -->
-
 <!-- #| include: true -->
-
 <!-- #| label: tbl-animalinfo -->
-
 <!-- #| out-width: 120% -->
-
 <!-- #| tbl-cap-location: top -->
-
-<!-- #| tbl-cap: "Information on the tagged individuals. # = times, h = hours, d = days detected. To do: exclude animals without detection, put those in Annex (maybe that's a bad idea), fix col width for table." -->
-
-<!-- # dt2$Item <- linebreak(dt2$Item) -->
-
-<!-- # dt2 %>% -->
-
-<!-- # kable("latex", booktabs = T, escape = F, -->
-
-<!-- # caption = "Main Title\\\\Subtitle", -->
-
-<!-- # col.names = linebreak(c("Item\n(Name)", "Value\n(Number)"), align = "c")) -->
-
-<!-- #  -->
-
-<!-- # tagged_animal_info  <- tagged_animal_info  %>%  -->
-
-<!-- #   arrange(release_date_time) %>% -->
-
-<!-- #   rename(`tag serial no.` = tag_serial_number,  -->
-
-<!-- #          `TL (cm)` = length1, -->
-
-<!-- #          `release date` = release_date_time,  -->
-
-<!-- #          `# detected` = n_detect,  -->
-
-<!-- #          `h detected` = hours_detected, -->
-
-<!-- #          `d detected` = days_detected, -->
-
-<!-- #          `days at liberty` = days_at_liberty, -->
-
-<!-- #          `release location` = release_loc, -->
-
-<!-- #          `date last detected` = date_last_detected) -->
+<!-- #| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected, loc. = location, RI = residency index (days detected / 518 days). The 518 days correspond to the estimated battery life by the tag manufacturer." -->
 
 <!-- knitr::kable(x = tagged_animal_info %>%  -->
-
 <!--                #set column order & order rows -->
-
-<!--                dplyr::select(tag_serial_number, sex, length1, -->
-
+<!--                dplyr::select(tag_serial_number, sex, length1, weight, -->
 <!--                              release_date_time, n_detect, days_detected, -->
-
 <!--                              hours_detected, date_last_detected,  -->
-
-<!--                              days_at_liberty, release_loc) %>% -->
-
-<!--                arrange(release_date_time), -->
-
+<!--                              days_at_liberty, residency_index, release_loc) %>% -->
+<!--                arrange(release_date_time) %>% -->
+<!--                mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)), -->
 <!--              booktabs = T, escape = F, -->
-
-<!--              col.names = linebreak(c("tag serial no.", "sex", "TL (cm)", "release date", "times\ndetected", "days\ndetected","hours\ndetected", "date last\ndetected", "days at\nliberty", "release\nlocation"), align = "c")) %>% -->
-
-<!--   kableExtra::kable_styling(position = "center", latex_options = "hold_position") -->
-
+<!--              col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>% -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") -->
 <!-- ``` -->
-
-```{r ttestlength}
-length_ttest <- t.test(x = tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1), y = tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1), alternative = "greater")
-```
-
-Females (n =
-`r tagged_animal_info %>% dplyr::filter(sex == "f") %>% nrow()`, mean TL
-=
-`r tagged_animal_info %>% dplyr::filter(sex == "f") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)` cm)
-were significantly larger than males (n =
-`r tagged_animal_info %>% dplyr::filter(sex == "m") %>% nrow()`, mean TL
-=
-`r tagged_animal_info %>% dplyr::filter(sex == "m") %>% dplyr::select(length1) %>% pull() %>% mean() %>% round(digits = 2)` cm,
-one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* =
-`r length_ttest$p.value`). <!-- , see @fig-lengthboxplot. -->
-
-```{r lengthboxplot}
-#| include: false
-#| label: fig-lengthboxplot
-#| out-width: 75%
-#| fig-cap: "Total Length of all tagged sharks (n~total~ = 30), per sex."
-#| fig-pos: "H"
-
-p_length_sex
-```
 
 
 ```{r returnrate}
@@ -1620,24 +1517,18 @@ sharks_returned <- tagged_animal_info %>% #dplyr::filter(n_detect > 1) %>%
 sharks_detected <- tagged_animal_info %>% dplyr::filter(!date_last_detected %>% is.na()) %>% nrow()
 ```
 
-
-## Acoustic detections
-
-Two tags only had a single detection (serial number
-`r tag_serial_number_omit[1,] %>% dplyr::pull()` and
-`r tag_serial_number_omit[2,] %>% dplyr::pull()`) and were thus omitted
-from all further analyses. The acoustic detections of the remaining tags
-over time are shown in @fig-abacus.
-Within the study period from July, 2018 to August, 2020, there are no
-acoustic detections between November and April in either year.
-`r round((detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow() / detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)`% of detections are in the WS1 area, and of those,
-`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% dplyr::filter(area == "WS1") %>% nrow()) * 100, digits = 2)`% are at station OG10 (see @fig-mapdetail). Of the
+ Of the
 `r tagged_animal_info %>% dplyr::filter(sex == "m", n_detect > 1) %>% nrow()`
 detected males, 3 were detected inside the BPNS and one in the WS1
 array.
 Across all years, most detections (n = 2484) were in the month of May,
 while most individuals (n = 10) were detected in August.
-`r sharks_returned` out of `r sharks_detected` (`r round((sharks_returned / sharks_detected) * 100)` %) individuals were acoustically detected in the year following their release.
+`r sharks_returned` out of `r sharks_detected` individuals (`r round((sharks_returned / sharks_detected) * 100)` %) were detected in the year following their release.
+
+<!-- To test the first hypothesis, the residency indices among sexes were tested for normality (Shapiro-Wilk normality test, $\alpha$ = 0.05, *p~females~* = `r hyp1_results %>% dplyr::filter(test_aim == "normality_f") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`, *p~males~* = `r hyp1_results %>% dplyr::filter(test_aim == "normality_m") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`), and since *p~females~* < 0.05 it has to be assumed that the residency indices of the females do not follow a normal distribution. -->
+<!-- <!-- and since both *p*-values are above the significance level of 0.05, it has to be assumed that the residency indices do not follow a normal distribution.  --> -->
+<!-- Due to high robustness of Welch's t-test regarding non-normality [@rasch_2004], however, this method was preferred over its non-parametric counterpart, the Wilcoxon rank-sum test. A one-sided Welch two-sample t-test with unequal variances was conducted ($\alpha$ = 0.05, *p* = `r hyp1_results %>% dplyr::filter(test_aim == "equality_of_means") %>% dplyr::select(p_val) %>% dplyr::pull() %>% round(digits = 4)`), showing that the residency index of females is significantly higher than the residency index of males. -->
+
 
 ```{r abacus}
 #| include: true
@@ -1650,14 +1541,16 @@ while most individuals (n = 10) were detected in August.
 p_abacus
 ```
 
-The acoustic detections at each receiver station of female *M. asterias* within the Westerschelde are shown in @fig-heatmapdetections. The receiver stations are ordered by latitude (from north to south), and by receiver array (station OG10 to W7 are in the WS1 array, and station borssele to 4 are in the WS2 array). The number of acoustic detections has a high dispersion (excluding months without detections, `r detections_sum_station$n_detect %>% mean()` $\pm$ `r detections_sum_station$n_detect %>% sd()`, median = `r detections_sum_station$n_detect %>% median()`). Most detections (n = 2103) were at station OG10 in October, 2019. This is almost twice as much as the second most detections (n = 1097 at the same station in May, 2020). Most individuals (n = 6) were detected at station WN2 in August and September, 2018. 
+The acoustic detections at each receiver station of female *M. asterias* within the Western Scheldt are shown in @fig-heatmapdetections. The receiver stations are ordered by latitude (from north to south), and by receiver array (station OG10 to W7 are in the WS1 array, and station borssele to 4 are in the WS2 array).
+<!-- The number of acoustic detections has a high dispersion (excluding months without detections, `r detections_sum_station$n_detect %>% mean()` $\pm$ `r detections_sum_station$n_detect %>% sd()`, median = `r detections_sum_station$n_detect %>% median()`).  -->
+Most detections (n = 2103) were at station OG10 in October, 2019. This is almost twice as much as the second most detections (n = 1097 at the same station in May, 2020). Most individuals (n = 6) were detected at station WN2 in August and September, 2018. 
 
 ```{r heatmapdetections}
 #| include: true
 #| label: fig-heatmapdetections
 #| out-width: 100%
 #| fig-height: 3
-#| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Westerschelde (receiver arrays *WS1*, *WS2* and *WS3*). The Residency Index (RI, i.e. the number of days detected divided by the period between the first and last detection among all individuals at station OG10 in 2019) is displayed next to the tag serial number. "
+#| fig-cap: "Heatmap of the acoustic detections per acoustic receiver of female *M. asterias* in the Western Scheldt (receiver arrays *WS1*, *WS2* and *WS3*)."
 #| fig-pos: "H"
 
 p_detections_heatmap
@@ -1679,10 +1572,10 @@ detections_OG10_ttest <- t.test(x = detections_OG102019_sum %>% dplyr::filter(gr
 
 
 Acoustic detections of female *M. asterias* at receiver station OG10 in 2019 are shown in @fig-heatmapOG10. 
-The acoustic detections of an individual at a day (`r round(detections_OG102019$n_detect %>% mean(), digits = 2)` $\pm$ `r round(detections_OG102019$n_detect %>% sd(), digits = 2)`, median = `r detections_OG102019$n_detect %>% median()`) are maximal for tag 299 with n = 232 detections on October 13, 2019.
-The number of days that an individual was detected at station OG10 are highly dispersed (`r detections_OG102019_sum$days_detected %>% mean()` $\pm$ `r round(detections_OG102019_sum$days_detected %>% sd(), digits = 2)` days, median = `r detections_OG102019_sum$days_detected %>% median()` days). 
+The acoustic detections of an individual at a day (`r round(detections_OG102019$n_detect %>% mean(), digits = 2)` $\pm$ `r round(detections_OG102019$n_detect %>% sd(), digits = 2)`, median = `r detections_OG102019$n_detect %>% median()`) are maximal for tag 299 with n = 232 detections on October 13, 2019. Tags 313, 308, 299 and 297 show a cluster of about 14 - 21 days with consecutive detections. Tag 308 has two clusters of subsequent detections, between May 13 and June 09, and between July 16 and August 12, 2019.
+<!-- The number of days that an individual was detected at station OG10 are highly dispersed (`r detections_OG102019_sum$days_detected %>% mean()` $\pm$ `r round(detections_OG102019_sum$days_detected %>% sd(), digits = 2)` days, median = `r detections_OG102019_sum$days_detected %>% median()` days).  -->
 <!-- Tag 308, 299 and 297 show periods  -->
-The number of days detected between individuals above the median of `r detections_OG102019_sum$days_detected %>% median()` days is significantly greater than that of individuals at or below the median (one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* = `r detections_OG10_ttest$p.value`).
+<!-- The number of days detected between individuals above the median of `r detections_OG102019_sum$days_detected %>% median()` days is significantly greater than that of individuals at or below the median (one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* = `r detections_OG10_ttest$p.value`). -->
 <!-- , indicating bimodality in the distribution of detected days. -->
 
 ```{r heatmapOG10}
@@ -1690,7 +1583,7 @@ The number of days detected between individuals above the median of `r detection
 #| label: fig-heatmapOG10
 #| out-width: 90%
 #| fig-height: 3
-#| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10."
+#| fig-cap: "Heatmap of the acoustic detections in 2019 of female *M. asterias* individuals at receiver station OG10. The Residency Index (RI, i.e. the number of days detected divided by the period between the first and last detection among all individuals at station OG10 in 2019) is displayed next to the tag serial number."
 #| fig-pos: "H"
 
 p_detections_heatmap_OG10
@@ -1765,36 +1658,39 @@ p_OG10_boxplot
 
 ## Data Storage Tags {#sec-results-dst}
 
-Upon writing, nine tags were recovered, one of which still is at the
-manufacturer to extract the raw data. Information about the tags with
-available raw data is listed in @tbl-dstsum.
+<!-- Upon writing (June, 2023), eight tags were recovered. Information about the tags with -->
+<!-- available raw data is listed in @tbl-dstsum. -->
 
-```{r prepare-dstsummary}
+<!-- ```{r prepare-dstsummary} -->
 
-# dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial no.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty, `tag recapture date` = recapture_date_time)
-```
+<!-- # dst_summary <- dst_summary %>% relocate(sex, .after = tag_serial_number)  %>% rename(`tag serial no.` = tag_serial_number, `release date` = release_date, `death date` = death_date, `days at liberty` = time_at_liberty, `tag recapture date` = recapture_date_time) -->
+<!-- ``` -->
 
-```{r table-dstsummary}
-#| include: true
-#| label: tbl-dstsum
-#| out-width: 90%
-#| tbl-cap-location: top
-#| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date. The tag recapture date was not recorded for tag 1293321, 1293308 and 1293304."
+<!-- ```{r table-dstsummary} -->
+<!-- #| include: true -->
+<!-- #| label: tbl-dstsum -->
+<!-- #| out-width: 90% -->
+<!-- #| tbl-cap-location: top -->
+<!-- #| tbl-cap: "Information on the recovered tags. The death date was visually determined from the raw dephlog and marks the date after which only a tidal signal remains in the depth timeseries. The time at liberty is the time period between the release and death date. The tag recapture date was not recorded for tags 1293321, 1293308 and 1293304." -->
 
-knitr::kable(dst_summary %>% 
-               dplyr::select(tag_serial_number, sex, release_date, death_date, days_at_liberty, recapture_date_time) %>%
-               arrange(release_date),
-             booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial no.", "sex", "release date", "death date", "days at liberty", "recapture date"), align = "c")) %>% 
-  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position")
-```
+<!-- knitr::kable(dst_summary %>%  -->
+<!--                dplyr::select(tag_serial_number, sex, release_date, death_date, days_at_liberty, recapture_date_time) %>% -->
+<!--                arrange(release_date), -->
+<!--              booktabs = T, escape = F, -->
+<!--              col.names = linebreak(c("tag serial no.", "sex", "release date", "death date", "days at liberty", "recapture date"), align = "c")) %>%  -->
+<!--   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") -->
+<!-- ``` -->
 
-6 out of 8 recovered tags logged for a month or less, only the tags with
-the serial numbers 1293308 (f) and 1293321 (m) logged for a year,
-allowing for the analysis of migration behaviour. These two tags will be
-referred to as long term DST in the following, and their tag serial
-numbers will be abbreviated to `308` and `321`. The rest of the tags
-will be referred to as short term DST. 
+<!-- 6 out of 8 recovered tags logged for a month or less, only the tags with -->
+<!-- the serial numbers 1293308 (f) and 1293321 (m) logged for a year, -->
+<!-- allowing for the analysis of migration behaviour. These two tags will be -->
+<!-- referred to as long term DST in the following, and their tag serial -->
+<!-- numbers will be abbreviated to `308` and `321`. The rest of the tags -->
+<!-- will be referred to as short term DST.  -->
+
+<!-- To test the second hypothesis, the daily median depth was used, since the `stats::t.test()`-function does not allow samples larger than n = 3000 (which would have been the case for the raw depth data). The daily median depth per season (summer/winter) and tag were tested for normality (Kolmogorov-Smirnoff-test;  *p~tag308,summer~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308", big_season == "summer") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag308,winter~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293308", big_season == "winter") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag321,summer~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293321", big_season == "summer") %>% dplyr::select(ks_test_pval) %>% pull()`, *p~tag321,winter~* = `r ks_results_hyp2.2 %>% ungroup() %>% dplyr::filter(tag_serial_number == "1293321", big_season == "winter") %>% dplyr::select(ks_test_pval) %>% pull()`). Since all *p*-values are below the significance level $\alpha$, a Wilcoxon rank sum test with continuity correction was performed. It shows a significant difference in daily median depth between summer and winter for both tags (*p~308~* = `r hypothesis2.2_testresults %>% dplyr::filter(tag_serial_number == "1293308") %>% dplyr::select(wilcox.test_pval) %>% pull()`, *p~321~* = `r hypothesis2.2_testresults %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(wilcox.test_pval) %>% pull()`). -->
+
+
 <!-- Raw depth and temperature logs for the short term DST can be found in  -->
 <!-- For the short term DST logs, tag 295 will be further discussed. All figures of the tags not included herecan be found in @sec-annexdst. ***change style of cross referencing: -->
 <!-- Annex A.2 e.g.*** -->
@@ -1823,19 +1719,20 @@ will be referred to as short term DST.
 
 ### Raw depth and temperature logs
 
-The depth and temperature logs of tag 308 and 321 (the two long term
-DST) are shown in @fig-dst308-1 and @fig-dst321-1, respectively. Exemplary subsets from summer and winter are also shown.
-The temperature logs and all raw depth and temperature logs of the short term DST are included in **Annex A**.
+The depth and temperature logs of tags 308 and 321 (the two long term
+DST) are shown in @fig-dst308-1 and @fig-dst321-1, respectively. Example subsets from summer and winter are also shown.
 
-The full depthlog of tag 308 (@fig-dst308-1), comprising 366 days, shows depth between 0 and 20 m between the time of tagging in August, 2018, and the beginning of October. Then the depth gets deeper over a period of about two weeks, and between mid-November and mid-December the sensor recorded depths between 50 and 75 m. From December, 2018 until March, 2019, the depth ranges between 75 m and close to the water surface. From mid-March on, the depth remains shallower than 60 m. From May to June, 2019, depth is relatively constant around 17 m, from mid-June to mid-July it is relatively constant around 10 m and until the sensor stops recording the depth goes back to just under 20 m.
-@fig-dst308-2 shows an exemplary subset of the depthlog of tag 308 in September, 2018. Roughly, the depth alternates between 12  - 14 and 16 - 20 m in a sinusoidal pattern with a wavelength of about 12 hours.
-The subset in @fig-dst308-3 shows a period of a month between Febuary and March, 2019. Here, periods of smaller depth ranges from 40 to 60 m (between Febuary 11 and 18 and between Febuary 25 and March 3) can be observed with periods of larger depth ranges from 5 to 75 m (between Febuary 18 and 24) in between, can be observed.
+The full depthlog of tag 308 (female, @fig-dst308-1), comprising 366 days, shows depth between 0 and 20 m from the time of tagging in August, 2018, to the beginning of October. Then the depth gets deeper over a period of about two weeks, and between mid-November and mid-December the sensor recorded depths between 50 and 75 m. From December, 2018 until March, 2019, the depth ranges between 75 m and close to the water surface. From mid-March on, the depth remains shallower than 60 m. From May to June, 2019, depth is relatively constant around 17 m, from mid-June to mid-July it is relatively constant around 10 m and until the sensor stops recording the depth goes back to just under 20 m.
+@fig-dst308-2 shows an example subset of the depthlog of tag 308 in September, 2018. Roughly, the depth alternates between 12  - 14 and 16 - 20 m in a sinusoidal pattern with a wavelength of about 12 hours.
+The subset in @fig-dst308-3 shows a period of a month between February and March, 2019. Here, periods of smaller depth ranges from 40 to 60 m (between February 11 and 18 and between February 25 and March 3) can be observed with periods of larger depth ranges from 5 to 75 m (between February 18 and 24) in between, can be observed.
 
 
-The full depthlog of tag 321 (@fig-dst321-1) is 485 days long and shows depth ranges between 0 and 30 m from tagging until the end of October, 2018. Then, depth gets deeper over a period of roughly 10 days, stays at 35 to 50 m until December, 2018 and then ranges from 5 m to 50 m until March, 2019. Until May, 2019 depth ranges between 10 and 35 m, then the sensor recorded depth values of 60 m on May 03, 2019. After that, depth gets shallower with ranges from 0 to mostly 20 m until mid-September. Until the end of the depthlog November 15, 2019, depth gets deeper to around 35 m and then to around 40 m.
-The exemplary depthlog of September, 2018 in @fig-dst321-2 shows a depth range between 10 and 15 m during daytime (a sinusoidal pattern similar to the one in @fig-dst308-2), and during night minimum depths of around 2 m during night time.
+The full depthlog of tag 321 (male, @fig-dst321-1) is 485 days long and shows depth ranges between 0 and 30 m from tagging until the end of October, 2018. Then, depth gets deeper over a period of roughly 10 days, stays at 35 to 50 m until December, 2018 and then ranges from 5 m to 50 m until March, 2019. Until May, 2019 depth ranges between 10 and 35 m, then the sensor recorded depth values of 60 m on May 03, 2019. After that, depth gets shallower with ranges from 0 to mostly 20 m until mid-September. Until the end of the depthlog November 15, 2019, depth gets deeper to around 35 m and then to around 40 m.
+The example depthlog of September, 2018 in @fig-dst321-2 shows a depth range between 10 and 15 m during daytime (a sinusoidal pattern similar to the one in @fig-dst308-2), and minimum depths of around 2 m during night time.
 The subset from February to March, 2019 (@fig-dst321-3) shows depth ranges from 5 to 55m with no observable pattern of larger or smaller depth ranges on a weekly scale.
 
+
+The raw depth and temperature logs of the short term DST are included in **Annex A**. The short term DST logged depth and temperature data for `r short_DST_summary$mean_days_at_liberty %>% round(digits = 0)` $\pm$ `r short_DST_summary$sd_days_at_liberty %>% round(digits = 0)` days, reaching maximum water depths of `r short_DST_summary$mean_max_depth %>% round(digits = 2)` m $\pm$ `r short_DST_summary$sd_max_depth %>% round(digits = 2)` m.
 <!-- The raw depth and temperature logs of the short term DST are depicted in @sec-annexdst_raw. -->
 
 <!-- Tag 295 (@fig-dst-1) shows regular up- and downward movements with minimum depths per day of around 2 m and maximum daily depths between 18 and 35 m. After August 20, 2018, only a tidal signal and no up and down movements were recorded. The maximum depth of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(depth_max_total) %>% dplyr::pull()` m was recorded on `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(date_depth_max) %>% dplyr::pull() %>% format("%B %d %Y")`, the maximum temperature of `r dst_summary %>% dplyr::filter(tag_serial_number == "1293295") %>% dplyr::select(temp_max_total) %>% dplyr::pull()`°C was recorded on the same day. -->
@@ -1866,6 +1763,19 @@ The subset from February to March, 2019 (@fig-dst321-3) shows depth ranges from 
 <!-- `r dst_summary %>% dplyr::filter(tag_serial_number == "1293321") %>% dplyr::select(date_temp_min) %>% dplyr::pull() %>% format("%B %d, %Y")`. -->
 <!-- Between the tagging on August 2, 2018 and the end of September -->
 
+### Autocorrelation {#sec-resacf}
+
+The autocorrelograms of the two long term DST logs (computed using the Savitztky-Golay filtered daily median depth) are shown in
+@fig-acf. An autocorrelation value of -1 refers to perfect anti-correlation, 1
+referring to perfect correlation, and 0 refers to no correlation at all. Autocorrelation is above
+0.5 at lags below 35 days for tag 308 (f), reaching 0 at lags of 81 and
+264 days. The minimum is at 170 days and the local maximum at 300 days,
+see @fig-acf-1. Autocorrelation above 0.5 is attained below lags
+of 24 days for tag 321 (m). Autocorrelation is 0 at 75, 256 and 383 days
+and is minimal at a lag of 138 days. A local maximum occurs at 345 days,
+see @fig-acf-2.
+
+
 
 ```{r rawdepthlog308}
 #| include: true
@@ -1875,9 +1785,9 @@ The subset from February to March, 2019 (@fig-dst321-3) shows depth ranges from 
 #| fig-height: 2.5
 #| fig-cap: "Data from the recovered tag 308. This female shark was tagged on August 2, 2018."
 #| fig-subcap: 
-#| - "Raw depthlog, subsampled to one value every 30 minutes."
+#| - "Depthlog, subsampled to one value every 30 minutes."
 #| - "Example subset from September 2018."
-#| - "Example subset from Febuary and March 2019."
+#| - "Example subset from February and March 2019."
 #| fig-pos: "H"
 
 # p_308_temp
@@ -1896,9 +1806,9 @@ p_308_depth_winter
 #| fig-height: 2.5
 #| fig-cap: "Data from the recovered tag 321. This female shark was tagged on August 2, 2018."
 #| fig-subcap: 
-#| - "Raw depthlog, subsampled to one value every 30 minutes."
+#| - "Depthlog, subsampled to one value every 30 minutes."
 #| - "Example subset from September 2018."
-#| - "Example subset from Febuary and March 2019."
+#| - "Example subset from February and March 2019."
 #| fig-pos: "H"
 
 # p_321_temp
@@ -1908,53 +1818,6 @@ p_321_depth_summer
 p_321_depth_winter
 ```
 
-
-```{r rawdepthlog308old}
-#| include: false
-#| label: fig-dst308old
-#| out-width: 120%
-#| fig-height: 1.5
-#| layout-nrow: 2
-#| fig-cap: "Data from the recovered tag 308. The shark was female and tagged on August 2, 2018."
-#| fig-subcap: 
-#| - "Water depth"
-#| - "Water temperature"
-#| fig-pos: "H"
-
-p_308_depth
-
-p_308_temp
-
-```
-
-```{r rawdepthlog321old}
-#| include: false
-#| label: fig-dst321old
-#| out-width: 120%
-#| fig-height: 1.5
-#| layout-nrow: 2
-#| fig-cap: "Data from the recovered tag 321. The shark was male and tagged on July 19, 2018."
-#| fig-subcap: 
-#| - "Water depth"
-#| - "Water temperature"
-#| fig-pos: "H"
-
-p_321_depth
-
-p_321_temp
-
-```
-
-### Autocorrelation {#sec-resacf}
-
-The autocorrelograms of the two long term DST logs (computed using the Savitztky-Golay filtered daily median depth) are shown in
-@fig-acf. Autocorrelation is above
-0.5 at lags below 35 days for tag 308 (f), reaching 0 at lags of 81 and
-264 days. The minimum is at 170 days and the local maximum at 300 days,
-see @fig-acf-1. Autocorrelation above 0.5 is attained below lags
-of 24 days for tag 321 (m). Autocorrelation is 0 at 75, 256 and 383 days
-and is minimal at a lag of 138 days. A local maximum occurs at 345 days,
-see @fig-acf-2.
 
 ```{r acf}
 #| include: true
@@ -2014,7 +1877,7 @@ of June and from end July onward, and around 8 m depth between June 11
 and July 13, 2019.
 
 The minimum depth during the night is significantly shallower than during the day (one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* =
-`r daynight_depth_308_ttest$p.value`). From December, 2018 to May, 2019, the minimum and median depth per day [@fig-dstsum308-2] show peaks following a rough biweekly pattern, getting the shallowest when the illuminated moon fraction is maximal and minimal. During the night [@fig-dstsum321-3], a rather monthly pattern can be observed for that time period. Here, the median and minimum depth are shallowest when the illuminated fraction of the moon is maximal.
+`r daynight_depth_308_ttest$p.value`). From December, 2018 to May, 2019, the minimum and median depth per day (@fig-dstsum308-2) show peaks following a rough biweekly pattern, getting the shallowest when the illuminated moon fraction is maximal and minimal. During the night (@fig-dstsum321-3), a rather monthly pattern can be observed for that time period. Here, the median and minimum depth are shallowest when the illuminated fraction of the moon is maximal.
 
 ```{r dstsum321}
 #| include: true
@@ -2058,7 +1921,7 @@ p_321_sum_stats
 The male shark (tag 321, @fig-dstsum321-1) uses waters shallower than 20 m between August and October, 2018. From October 21 until November 03, 2018, the daily median depth gets consistently deeper, reaching depths of around 45 m throughout November, 2018. Between December 09, 2019 and January 21, 2019, the daily median depth ranges from 22 to 33 m and the maximum and minimum depth between 53 and 16 m, respectively. After dropping to 39 m on January 28, 2019, the daily median depth gets shallower until April 30, reaching depths of 22 m. Then, the daily median depth increases substantially between April 27 and May 05, ranging between 22 m and 6 m until October 05. From October 08 to 19, 2019, the daily median depth changes from 17 to 45 m. Until the log stops on November 16, the daily median depth ranges between 45 and 32 m.
 
 The minimum depth during the night is significantly shallower than during the day (one-sided Welch Two Sample t-test, $\alpha$ = 0.95, *p* =
-`r daynight_depth_321_ttest$p.value`). The median depth per day [@fig-dstsum321-2] shows slight peaks in a biweekly pattern between January and July, 2019. The peaks of the median depth at night [@fig-dstsum321-3] show no visually noticeable pattern.
+`r daynight_depth_321_ttest$p.value`). The median depth per day (@fig-dstsum321-2) shows slight peaks in a biweekly pattern between January and July, 2019. The peaks of the median depth at night (@fig-dstsum321-3) show no visually noticeable pattern.
 
 ```{r dstsum321old}
 #| include: false
@@ -2136,7 +1999,7 @@ p_321_wavelet_depth_median_sgolay
 # p_308_wavelet_depth_max_sgolay
 ```
 
-For tag 321 on the hourly scale [@fig-waveletresults321-1] punctually high periodicities across the range from 4 to 64 hours are present at the beginning and end of October, 2018, throughout May, 2019, and at the beginning of October, 2019. Significant periodicities are sporadically present during these periods, between roughly 4 and 12 hours. A period band of 24 hours is present August to October, 2018, January and February, 2019 and between July and October, 2019. A period band of 12 hours is present to a lesser extent during the same periods.
+For tag 321 on the hourly scale (@fig-waveletresults321-1) punctually high periodicities across the range from 4 to 64 hours are present at the beginning and end of October, 2018, throughout May, 2019, and at the beginning of October, 2019. Significant periodicities are sporadically present during these periods, between roughly 4 and 12 hours. A period band of 24 hours is present August to October, 2018, January and February, 2019 and between July and October, 2019. A period band of 12 hours is present to a lesser extent during the same periods.
 
 The daily wavelet scalogram in @fig-waveletresults321-2 shows significantly present periodicities of 16 to 24 days between October, 2018 and August, 2019. From September to November, 2019, periods between about 8 and 50 days are present. From December, 2018 to February, 2019 and from mid-April to June, 2019, periods between about 7 and 14 days are present.
 
@@ -2197,44 +2060,61 @@ p_308_DST_acoustic
 
 # Discussion
 
+The two lines of research encompass the assessment of seasonality and sex-specificity regarding the presence of *M. asterias* in the BPNS and the Western Scheldt, and its vertical movement behaviour. The following section will interpret and discuss the chosen analyses and their results with respect to the research questions stated in @sec-intro-aims.
+
+ <!-- - write a few introductory sentences about what happened in the study and during the analyses. -->
+
 <!-- ## Acoustic Detections -->
 
-## Seasonal Presence of acoustically detected females in the Western Scheldt {#sec-disc-seasonalpresencefemales}
+## Presence of *M. asterias* in the Western Scheldt and BPNS {#sec-disc-seasonalpresencefemales}
+
+This section discusses the results of the acoustic detections (see @sec-res-acoustic) in the context of the three research questions research line 1. Those which involve seasonal patterns (RQ 1), differences between sexes (RQ 2), and spatial preferences (RQ 3) within the BPNS and the Western Scheldt.
 
 <!-- A hotspot of seasonal presence of mature *M. asterias* females seems to -->
 <!-- be the receiver OG10 -->
 <!-- (`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)` -->
 <!-- % of detections, and 10 out of 14 detected females). According to -->
-<!-- fishermen, the area offshore from Zoetelande (north of Dishoek) is a *M. -->
+<!-- fishers, the area offshore from Zoetelande (north of Dishoek) is a *M. -->
 <!-- asterias* fishing hotspot, so the coastal waters between Diskoek and -->
 <!-- Zoetelande are suggested to be important for the species. Whether or not -->
 <!-- the potential aggregations of mature females is related to parturition -->
 <!-- cannot be said at this point. There are several indications, however, -->
-<!-- that point towards the Westerschelde and/or its surrounding waters to be -->
+<!-- that point towards the Western Scheldt and/or its surrounding waters to be -->
 <!-- a pupping area for *M. asterias*. The Eastern Scheldt is a confirmed -->
 <!-- pupping ground [@breve_2016], and during the tagging for this study in -->
 <!-- August, 2018, two neonates [around 30 cm TL, @farrell_2010] were caught[^2]. -->
 
 <!-- [^2]: Verhelst, Pieterjan (*personal communication*), April 25, 2023. -->
 
+There are no acoustic detections at all between November and April in all years with acoustic detections (2018-2020, @fig-abacus). This suggests a seasonal presence of *M. asterias* in the Western Scheldt between April and November.
+Most females (n = 7) were detected in the months of July, August and September, in the WS1 array.  This suggests that these months are especially relevant for *M. asterias* females in the Scheldt estuary.
+<!-- The maximum number of detected males per mo One male was detected in t -->
 
-There are no acoustic detections at all between November and April in all years with acoustic detections (2018-2020, @fig-abacus). This suggests a seasonal presence of *M. asterias* in the Western Scheldt between April and November. The months of May and October had the most acoustic detections while most individuals were detected in August. Therefore, it is difficult at this point to narrow down the time window of April until November to especially relevant periods for the species in the area and it is recommended to study the seasonal presence of *M. asterias* in the Western Scheldt with greater detail in the future.
+<!-- The months of May and October had the most acoustic detections while most individuals were detected in August.  -->
+
+<!-- Therefore, it is difficult at this point to narrow down the time window of April until November to especially relevant periods for the species in the area and it is recommended to study the seasonal presence of *M. asterias* in the Western Scheldt with greater detail in the future. -->
 According to the acoustic detections, a hotspot of seasonal presence of mature *M. asterias* females is around the receiver OG10 (`r round((detections_tempdepth_daynight %>% dplyr::filter(station_name == "ws-OG10") %>% nrow()) / (detections_tempdepth_daynight %>% nrow()) * 100, digits = 2)`
-% of detections, and 10 out of 14 detected females, see @fig-heatmapOG10). According to fishermen, the area offshore from Zoetelande (north of Dishoek) is a *M. asterias* fishing hotspot, so the coastal waters between Diskoek and Zoetelande are suggested to be important for the species. Whether or not the potential aggregations of mature females is related to parturition should be subject of further studies. There are several indications, however,
-that point towards the Westerschelde and/or its surrounding waters to be
+% of detections, and 10 out of 14 detected females, see @fig-heatmapOG10). According to fishers, the area offshore from Zoetelande (north of Dishoek) is a *M. asterias* fishing hotspot, so the coastal waters between Diskoek and Zoetelande are suggested to be important for the species. Whether or not the potential aggregations of mature females is related to parturition should be subject of further studies. There are several indications, however, that point towards the Western Scheldt and/or its surrounding waters to be
 a pupping area for *M. asterias*. The Eastern Scheldt is a confirmed
 pupping ground [@breve_2016], and during the tagging for this study in
 August, 2018, two neonates [around 30 cm TL, @farrell_2010] were caught[^3].
 
 [^3]: Verhelst, Pieterjan (*personal communication*), April 25, 2023.
 
+Not more than one male was ever detected in a month. Three males were detected in the BPNS (one each on August, 2018, and in April and May, 2019), and one male was detected in the WS1 array in April, 2020. Three of those four individuals were detected in the year following their release, indicating philopatric behaviour for males. @griffiths_2020 reported direct philopatry for a female *M. asterias*, and @breve_2016 suggested philopatry for the species based on tag and recapture data. The return of the three males (tags 311, 315 and 316) into the BPNS and the WS1 area could be the first direct reporting of philopatry for male *M. asterias*.
+
+
 Another important fact to consider is the biannual reproductive cycle of *M. asterias* and whether that implies differing seasonal habitat use between years of pregnancy and years without a pregnancy. 
 Females were either detected at a lot of days (20 - 40) or few (5 - 10) days during summer 2019 (see @fig-heatmapOG10). This could indicate different behaviourial states between the females with many and few acoustically detected days, further supported by the wide dispersion in Residency Indices which are shown in the figure.
 
-The high dispersion of days of acoustic detections of female sharks at station OG10 in 2019 show 
-In the future, it could be helpful to assess if adult females are pregnant at the time of release, through ultrasonography or the use of sex steroid hormones, both of which have already been employed to determine pregnancy in sharks [@awruch_2014; @smukall_2019; @anderson_2018; @fujinami_2020; @fujinami_2021]. This would allow for further clarification if the Western Scheldt is used as a pupping ground, and if it might be a relevant area for non-pregnant females, too.
+The periods of 10 to 20 days of subsequent detections of females (especially tags 299, 308 and 313) at station OG10 suggest partial residency of these individuals. Uncovering potential reasons for this behaviour and 
+A relevant aspect to study in the future would be to explore reasons of this behaviour and whether the females could be giving birth during their residential clusters at station OG10.
+<!-- The high dispersion of days of acoustic detections of female sharks at station OG10 in 2019 show -->
+As such, it could be helpful to assess if adult females are pregnant at the time of release, through ultrasonography or the use of sex steroid hormones, both of which have already been employed to determine pregnancy in sharks [@awruch_2014; @smukall_2019; @anderson_2018; @fujinami_2020; @fujinami_2021]. This would allow for further clarification if the Western Scheldt is used as a pupping ground, and if it might be a relevant area for non-pregnant females, too.
+
 An area with little presence of the tagged *M. asterias* individuals is the Western Scheldt upstream past Flushing. Shallow and sheltered coastal habitats are thought to be suitable pupping grounds for sharks in general [@speed_2010] and for *M. asterias* in particular [@ellis_2004; @ellis_2005]. The low number of acoustically detected sharks (38 detections in the WS2 array throughout the whole study period from 2018 to 2020) indicates that the waters past Flushing are not as frequently used as the waters around Dishoek. 
-The Scheldt Estuary is influenced by two water bodies from the North Sea, the Channel water and the Continental coastal water [@wolff_1973, see @sec-mmscheldtBPNS]. The boundary between those bodies is approximately 30 km offshore from the Estuary, and in the Continental coastal waters nutrients are abundant (unlike in the Channel water). This, together with monthly water temperatures above 15 °C between June and September make the (Western) Scheldt Estuary a potentially suitable pupping habitat. The fact that few sharks were detected upstream past Flushing could be due to low salinities, or to anthropogenic influences like dredging. This, however, should be further investigated in follow-up studies.
+<!-- The BPNS is influenced by two water bodies from the North Sea, the Channel water and the Continental coastal water [@wolff_1973, see @sec-mmscheldtBPNS]. The boundary between those bodies is approximately 30 km offshore from the Scheldt estuary, and in the Continental coastal waters nutrients are abundant (unlike in the Channel water).  -->
+The Scheldt estuary can be considered a suitable pupping habitat for *M. asterias* due to high nutrient levels and food availability of the Continental coastal water [which enters the estuary through tidal currents, @wolff_1973], and monthly water temperatures above 15 °C between June and September [@speed_2010]. The fact that few sharks were detected upstream past Flushing could be due to low salinities, or to anthropogenic influences like dredging. This, however, should be further investigated in follow-up studies.
 *M. asterias* might leave the area of the Western Scheldt during winter because of decreasing water temperature [@breve_2016], a main predictor of elasmobranch occurrence [@martin_2010]. The warmer waters in the Channel area might be favourable especially for gestating females since higher water temperatures increase metabolic rate and thereby improve embryo development [@hurst_1999].
 
 <!--which was also. Substantially decreased presence of *M. asterias* in the Dutch delta was linked to water temperature < 13 °C [@breve_2016]. Since water temperatures are a main predictor of elasmobranch occurrence [@martin_2010].  It was therefore unexpected to have only 38 acoustic detections in the WS2 array which can be considered more sheltered than the WS1 array, and no detection in the WS3 array. This, together with the high numbers of detections in the WS1 array indicates that the waters around the WS1 array are more utilized and thus more relevant for the species as compared to the Western Scheldt estuary upstream past Flushing. Possible reasons for the low presence of *M. asterias* can be salinity (the salinity tolerance of the species), limited availability of prey, or water quality.  -->
@@ -2249,26 +2129,29 @@ The Scheldt Estuary is influenced by two water bodies from the North Sea, the Ch
 <!-- temperature often controls seasonal species occurrence -->
 <!-- waters in e.g. the English channel are warmer in winter, so especially for gestating females it might be faviourable to move into warmer waters in winter to have good conditions for developing pups --> 
 
-## Data Storage Tags
+<!-- ## Data Storage Tags -->
 
-### Seasonal and sex-specific vertical movement patterns {#sec-disc-dst-movementpatterns}
+## Depth utilisation of *M. asterias* {#sec-disc-dst-movementpatterns}
+
+The following section discusses the analysis results of the two long term DST logs (of tag 308, female, and tag 321, male) in the light of the second research line, which entails the depth utilisation of *M. asterias*. The two research questions asked involve seasonal patterns (RQ 4) and differences in depth use between sexes (RQ 5).
+
 
 <!-- From Figure 7 (daily depth summary) -->
 <!-- Briefly state that due to the demersal lifestyle of the species, shallower depths means a shorewards, horizontal movement of the individual and no vertical movement into the water column -->
-<!-- Generally: 12h periodicity refers to resting on the seafloor (pure tidal signal), 24h periods refer to diel vertical migration potentially related to feeding -->
+<!-- Generally: 12h periodicity refers to resting on the bottom (pure tidal signal), 24h periods refer to diel vertical migration potentially related to feeding -->
 
-Overall, cyclidity can be observed for both the female and the male shark logging data for more than a year.  The autocorrelograms (@fig-acf) show similar seasonal patterns with an autocorrelation of zero at lags of 81 and 264 days for the female, and 75 and 256 days for the male. The lags correspond to roughly 3 and 9 months, suggesting a change of vertical movement behavior at these time scales. Global minima lie at lags of 170 and 138 days for female and male, respectively. These lags roughly correspond to 5 months and indicate that vertical behaviour is anti-correlated within this time scale, further underlining the observation of higher vertical activity and the use of deeper waters during winter and a contrary behaviour with low vertical activity use of shallow waters during summer. Local autocorrelation maxima lie at 300 and 345 days for female and male, respectively. This corresponds to 10-12 months and points towards a yearly cyclicity for both the male and the female shark.
-In general, owing to the demersal lifestyle of *M. asterias*, shallower depths in the depthlog indicate a shoreward movement along the seafloor, as opposed to a vertical movement into the water column. If, for example, the depthlog shows shallower depths during the night (as can be seen in  @fig-dst321-2) this suggests a movement into shallower, coastal waters to feed.
+Overall, cyclicity can be observed for both the female (tag 308) and the male (tag 321) shark logging data for more than a year. The autocorrelograms (@fig-acf) show similar seasonal patterns with an autocorrelation of zero at lags of 81 and 264 days for the female, and 75 and 256 days for the male. The lags correspond to roughly 3 and 9 months, suggesting a change of vertical movement behavior at these time scales. Global minima lie at lags of 170 and 138 days for female and male, respectively. These lags roughly correspond to 5 months and indicate that vertical behaviour is anti-correlated within this time scale, further underlining the observation of higher vertical activity and the use of deeper waters during winter and a contrary behaviour with low vertical activity use of shallow waters during summer. Local autocorrelation maxima lie at 300 and 345 days for female and male, respectively. This corresponds to 10-12 months and points towards a yearly cyclicity for both the male and the female shark.
+In general, owing to the demersal lifestyle of *M. asterias*, shallower depths in the depthlog indicate a shoreward movement along the bottom, as opposed to a vertical movement into the water column. If, for example, the depthlog shows shallower depths during the night (as can be seen in  @fig-dst321-2) this suggests a movement into shallower, coastal waters to feed.
 
-#### Summer
+### Summer
 
 From both recovered DSTs that logged data for over a year, the daily vertical range and median depth are shallower in summer (June – September, around 17 m median depth for the female and around 10 m median depth for the male, both with ranges between 0 and 20 m) than in winter (December – March). 
 <!-- This implies that the sharks move into shallow waters at least for a short time per day (the female shark’s daily minimum depth averages 3.7 m between its release on August 2, 2018 and September 25, 2018). -->
-The wavelet scalograms of the raw depthlogs (@fig-waveletresults308-1 and @fig-waveletresults321-1) show a difference in periodicity on the hourly scale between males and females. Both in the summer of 2018 and 2019, the female shows mainly a periodicity of 12 h (indicated by band of high power in red colour), which is a pure tidal signal (since from one high tide to the next one it takes approximately 12 h, the same holds true for low tide).  In 2018, there are some periodicities of 24 h (represented by yellow colours) as opposed to 2019, where the power of the 24 h period is below zero. This could be an indicator of the biannual reproductive cycle [with females feeding when they are not pregnant, and they stop feeding during the migration to parturition grounds and parturition itself, @michael_2006, p. 23] but this requires further investigation in the future. The 12 h periodicity, however, is the most prevalent one in both summer for the female and thus implies that the female itself expresses no to little vertical activity and is only resting on the seafloor (observable in the exemplary subset of the raw depthlog in @fig-dst308-2).
+The wavelet scalograms of the raw depthlogs (@fig-waveletresults308-1 and @fig-waveletresults321-1) show a difference in periodicity on the hourly scale between males and females. Both in the summer of 2018 and 2019, the female shows mainly a periodicity of 12 h (indicated by band of high power in red colour), which is a pure tidal signal [since from one high tide to the next one it takes approximately 12 h, the same holds true for low tide, @shepard_2006].  In 2018, there are some periodicities of 24 h (represented by yellow colours) as opposed to 2019, where the power of the 24 h period is below zero. This could be an indicator of the biannual reproductive cycle [with females feeding when they are not pregnant, and they stop feeding during the migration to parturition grounds and parturition itself, @michael_2006, p. 23] but this requires further investigation in the future. The 12 h periodicity, however, is the most prevalent one in both summer for the female and thus implies that the female itself expresses no to little vertical activity and is only resting on the bottom (observable in the example subset of the raw depthlog in @fig-dst308-2).
 The male, on the other hand, shows a periodicity of 24 h. This can be seen as a high-power band in red colours at the 24 h period in the wavelet scalogram on the hourly scale (@fig-waveletresults321-1) and in @fig-dst321-2.
-This suggests vertical migration, which has been observed in several shark species, for example the spiny dogfish *Squalus acanthias* [@carlson_2014]. Diel vertical migration is believed to be related to foraging and feeding, following the nightly vertical migration of zooplankton to feed [@griffiths_2020].
+This suggests vertical migration, which has been observed in several shark species, for example the spiny dogfish *Squalus acanthias* [@carlson_2014] and the basking shark *Cetorhinus maximus* [@shepard_2006]. Diel vertical migration is believed to be related to foraging and feeding, following the nightly vertical migration of zooplankton to feed [@griffiths_2020].
 
-#### Migration into winter habitat {#sec-disc-wintermig}
+### Migration into winter habitat {#sec-disc-wintermig}
 
 From September 25 on for the female and October 21 for the male, the daily median depth gets progressively deeper over a period of around 15 to 20 days, which potentially is the migration period of these individuals.
 Interestingly, both individuals go to the maximum depth logged by the tag within the logging period directly the potential migration into the winter habitat. During this time, the female shark goes to depths below the tag’s measuring limit of 68 m, as indicated by a straight line in the raw depthlog (see @fig-dst308-1). This provides further evidence of the species utilizing deeper waters than previously thought, as argued by @griffiths_2020 that found a maximum recorded depth of 118 m in a female shark in December [@griffiths_2020, S4].
@@ -2276,14 +2159,15 @@ The male shark goes to depths between 40 and 45 m, both in 2018 and 2019. Since 
 Both individuals stay at their respective maximum depths for approximately one month (the female between the end of October until the end of November, 2018 and the male between the start of November until the start of December, 2018). This behaviour could be related to resting after the migration or escaping potential predators. The behaviour after the completion of the migration was not further assessed at this point and could be subject of future studies. 
 <!-- Furthermore, the male shark (tag 321) logged longer than the female, and there the hourly wavelet scalogram shows high prevalence of periods from 4 h to 64 h in the first week of October 2019. A stark depth increase can also be seen in the daily median depth [@fig-dstsum-2], indicating the individual’s migration to its winter habitat.  -->
 
-#### Winter
+### Winter
 
-During the winter months between December and March, both individuals show roughly biweekly periodicities (see @fig-waveletresults308-2 and @fig-waveletresults321-2). This vertical movement behaviour could be linked to moon phases.
-The female shark shows a rather biweekly vertical movement pattern during night and and a monthly pattern for depth use during the day (@fig-dstsum308-2 and @fig-dstsum308-3), In the raw depthlog, periods of resting and subsequent periods of high vertical activity are visually discernable, see @@fig-dst308-3. Both of these periodicities can be seen in the wavelet scalogram at daily scale [@fig-waveletresults308-2]
-During the night, this individual goes to depth shallower than 10 m between December, 2018 and May, 2019. The peaks in minimum depth align well with a full moon, potentially reflecting visual predation behaviour coupled with diel vertical migration, i.e., the shark moves to shallower depths during full moon (when the moonlight is most intense), feeding on crustaceans that follow the nocturnal zooplankton migration. Visual foraging and preying of *M. asterias* was already assumed by @griffiths_2020. During the day, median and minimum depth are deepest at full moon and new moon. These moon phases generally result in the most intense tidal currents throughout a moon cycle [@arnold_1994]. The exact strength of tidal currents, however, depends on the bathymetry of the area, and since the location of the shark is not exactly known, interpretations regarding tidal currents should be taken cautiously. Since the female, however, is thought to have migrated into the English Channel [an area with exceptionally high tidal currents, @salomon_1993], it is a plausible explanation that this individual was resting on the seafloor during periods of intense tidal currents (as can be seen in @fig-dst308-3), and moving to shallower waters to visually feed at full moon.
+During the winter months between December and March, both individuals show roughly biweekly periodicities (see @fig-waveletresults308-2 and @fig-waveletresults321-2). This vertical movement behaviour could be linked to moon phases, which result in a 14-day cycle of neap and spring tides [@shepard_2006].
+The female shark shows a rather biweekly vertical movement pattern during night and and a monthly pattern for depth use during the day (@fig-dstsum308-2 and @fig-dstsum308-3), In the raw depthlog, periods of resting and subsequent periods of high vertical activity are visually discernable (@fig-dst308-3). Both of these periodicities can be seen in the wavelet scalogram at daily scale (@fig-waveletresults308-2).
+During the night, this individual goes to depth shallower than 10 m between December, 2018 and May, 2019. The peaks in minimum depth align well with a full moon, potentially reflecting visual predation behaviour coupled with diel vertical migration, i.e., the shark moves to shallower depths during full moon (when the moonlight is most intense), feeding on crustaceans that follow the nocturnal zooplankton migration. Visual foraging and preying of *M. asterias* was already assumed by @griffiths_2020. During the day, median and minimum depth are deepest at full moon and new moon. These moon phases generally result in the most intense tidal currents throughout a moon cycle [@arnold_1994]. @shepard_2006 found the same pattern of high vertical activity at full and new moon in one tagged Basking shark (*Cetorhinus maximus*), and @graham_2006 reported lunar periodicity in vertical behaviour of one whale shark (*Rhincodon typus*).
+The exact strength of tidal currents, however, depends on the bathymetry of the area, and since the location of the shark is not exactly known, interpretations regarding tidal currents should be taken cautiously. Since the female, however, is thought to have migrated into the English Channel [an area with exceptionally high tidal currents, @salomon_1993], it is a plausible explanation that this individual was resting on the bottom during periods of intense tidal currents (as can be seen in @fig-dst308-3), and moving to shallower waters to visually feed at full moon.
 
 For the male shark, the biweekly periodicity is less present, in general, and no apparent periodicity can be visually detected during the night (@fig-dstsum321-2 and @fig-dstsum321-3). This could be an indication of a different feeding behaviour of the male, involving less visual predation. The hourly wavelet scalogram (@fig-waveletresults321-1) shows the presence of 24 h periodicities in January and February, 2019, but the daily wavelet scalogram (@fig-waveletresults321-2) does not contain significantly present monthly periodicities. This suggests that the male shark relies less on the moonlight to predate than the female shark. The significant presence of 14 day periods between December, 2018 and May, 2019, however, could potentially relate to tidal currents. This is less visually observable from the median and minimum depth during the day (@fig-dstsum321-2). 
-The male shark is thought to move northwards from the Scheldt Estuary during its winter migration where tidal currents are generally less intense than in the English Channel (**ref**). This could be a potential explanation for the weaker biweekly periodicity in the male shark's median and minimum depth. The male does not show clearly detectable periods with pure resting behaviour during winter (as shown in @fig-dst321-3). Whether this difference in vertical behaviour patterns is sex-specific and related to a potential gestation of the female shark, or to different feeding modes, could be a point of further investigation in the future.
+The male shark is thought to move northwards from the Scheldt Estuary during its winter migration where tidal currents are generally less intense than in the English Channel [@salomon_1993; @arnold_1994]. This could be a potential explanation for the weaker biweekly periodicity in the male shark's median and minimum depth. The male does not show clearly detectable periods with pure resting behaviour during winter (as shown in @fig-dst321-3). Whether this difference in vertical behaviour patterns is sex-specific and related to a potential gestation of the female shark, or to different feeding modes, could be a point of further investigation in the future.
 
 In general, the effect of the moon illumination and tidal currents would be interesting to study further since this can give relevant insights about (potentially sex-specific) winter behaviour of *M. asterias*, for example through comparing wavelet scalograms from median depth during the day and during the night.
 
@@ -2298,11 +2182,11 @@ In general, the effect of the moon illumination and tidal currents would be inte
 <!-- - 	Instead, it is hypothesized that vertical activity, especially by the female in winter, might be related to the intensity of tidal currents. This relationship is more complex to address and therefore beyond the scope of this work, since tidal currents differ strongly with location.  -->
 
 
-#### Migration into summer habitat {#sec-disc-summermig}
+### Migration into summer habitat {#sec-disc-summermig}
 
 In spring, roughly between April and May, the daily median depth gets shallower in a stepwise manner for both individuals which potentially reflects the migration into the summer habitat. The female (tag 308) was detected in the receiver areas of the BPNS and WS1 in the year following its release, proving the individual’s return, and providing further evidence of philopatric behaviour for the species, as suggested by @breve_2016 and first directly reported by @griffiths_2020.
 The start and duration of the summer migration cannot be identified as clearly from the daily median depth as the winter migration since the depth does not decrease drastically over a period of few weeks. From the wavelet scalograms of the raw depthlog (@fig-waveletresults308-1 and @fig-waveletresults321-1) the time of potential migration into the summer habitat shows a band of high power throughout periods from 4 to 64 hours (i.e., high prevalence of these periods), albeit this is does not significantly differ from white noise (and is thus slightly transparent). Since the winter period also involves vertical activity, there is no clearly visible change in periodicity patterns between winter months up until March and the months of April and May, during which the daily median depth decreases stepwise for the female shark.
-During April 2019, the male shark does not show any prevailing periodicity patterns in the wavelet scalogram at hourly scale [@fig-waveletresults321-1]. The month of May 2019, however, shows prevalent periodicities between 12 and 64 h, potentially indicating migration behaviour. There is decreased vertical activity compared to the winter months from mid-May onwards for the female and from June on for the male, indicating that the individuals might have arrived at their summer habitat by then.
+During April 2019, the male shark does not show any prevailing periodicity patterns in the wavelet scalogram at hourly scale (@fig-waveletresults321-). The month of May 2019, however, shows prevalent periodicities between 12 and 64 h, potentially indicating migration behaviour. There is decreased vertical activity compared to the winter months from mid-May onwards for the female and from June on for the male, indicating that the individuals might have arrived at their summer habitat by then.
 At this point, knowledge about the exact spectral signature of *M. asterias* migration behaviour is lacking and it is suggested to be further studied. Moreover, a more detailed investigation of the difference in vertical movement between the migration into the winter and the summer habitat could be an interesting focus for future investigations. 
 
 <!-- •	Vertical range and median depth in summer much shallower than in winter -->
@@ -2315,7 +2199,7 @@ At this point, knowledge about the exact spectral signature of *M. asterias* mig
 
 ## Gained ecological knowledge on *M. asterias* in the context of *M. asterias* and related species
 
-*Mustelus asterias* is a common species in the North Sea and the English Channel, both of which areas experience high anthropogenic impact (**ref**). Since knowledge about the species and its relatives is still limited, the following section aims to give a brief overview of how the knowledge gathered in this study fits into already existing ecological knowledge about *M. asterias* and related species.
+*Mustelus asterias* is a common species in the North Sea and the English Channel, both of which areas experience high anthropogenic impact [@hernandezfarinas_2014]. Since knowledge about the species and its relatives is still limited, the following section aims to give a brief overview of how the knowledge gathered in this study fits into already existing ecological knowledge about *M. asterias* and related species.
 
 Comparisons about reproductive behaviour must be made cautiously since not all members of the genus *Mustelus* exhibit aplacental viviparity like *M. asterias*. *M. asterias*, for instance, was often mistaken for the common smooth-hound *M. mustelus* before the development of a simple genetic method to distinguish the two species [@farrell_2009], yet this relative is placentally viviparous [@dasilva_2018].  The gummy shark *M. antarcticus* inhabits Australian waters and exhibits matrotrophic aplacental viviparity like *M. asterias*, making it well comparable [@walker_2007]. Moreover the same study uncovered asynchronous breeding cycles (of one and two years) related to different locations for *M. antarcticus*. This behaviour is also known to occur in Squalid sharks [@braccini_2006], but there is no evidence of *M. asterias* exhibiting different breeding cycle lengths. 
 The reproductive biology of *M. asterias*, however, involves complex characteristics like embryo asynchronism, for instance. This refers to pups with different developmental stages, potentially resulting from sperm storage and selective fertilization by the females [@farrell_2010a]. While an in-depth stock assessment has already been carried out for *M. antarcticus* by @pribac_2005, this is still lacking for *M. asterias* and should be done [@mccullyphillips_2015]. 
@@ -2324,7 +2208,7 @@ Annual migration behaviour has not been investigated in depth for many *Mustelus
 
 <!-- Compare findings of this study to Griffiths 2020, breve 2016 -->
 
-Overall, the results of the present study go in line with already gathered knowledge on *M. asterias*.  The geolocation model results suggest that the male shark spends the winters in waters north of the Scheldt Estuary and the female goes into the English Channel, as assumed by @breve_2020 and @griffiths_2020. Different overwintering spots for the female and the male shark are further supported by the presumable stronger effect of moon phases and tidal currents on the vertical activity of the female *M. asterias*, potentially sheltering from the intense tidal currents in the English Channel. The present study, however, only involved year-long DST logs from two individuals, so any inferences from this data have to be taken cautiously.
+Overall, the results of the present study go in line with already gathered knowledge on *M. asterias*. The geolocation model results suggest that the male shark spends the winters in waters north of the Scheldt Estuary and the female goes into the English Channel, as assumed by @breve_2020 and @griffiths_2020. Different overwintering spots for the female and the male shark are further supported by the presumable stronger effect of moon phases and tidal currents on the vertical activity of the female *M. asterias*, potentially sheltering from the intense tidal currents in the English Channel. The present study, however, only involved year-long DST logs from two individuals, so any inferences from this data have to be taken cautiously.
 The high return rate (`r round((sharks_returned / sharks_detected) * 100)` %) of individuals into the Western Scheldt as shown by the acoustic detections in the acoustic receiver array further underlines philopatric behaviour in regard to the species’ summer habitat, the Southern North Sea [@griffiths_2020].
 
 ## The potential of ADST for M. asterias
@@ -2360,7 +2244,7 @@ Death due to predation by an endothermic mammal predator such as the grey seal c
 <!-- -	Tagging consequences -->
 <!-- -	High sensitivity (verhelst, pers. Comm.) -->
 <!-- -	Not likely: death bc of seals (no temp increase) -->
-<!-- -	Laying dead on seafloor (tidal signal) -->
+<!-- -	Laying dead on bottom (tidal signal) -->
 
 ### Limits of the datasets
 
@@ -2417,13 +2301,25 @@ In the wavelet scalograms on the hourly scale, only periods in winter were signi
 
 <!-- The data gathered for this study support previous hypothesis about M. asterias seasonal distribution and migration behaviour, and can add more detailed knowledge in some aspects -->
 
-This study presents the first in-depth investigation of both the seasonality of vertical behaviour throughout the annual movement cycle and the presence of *M. asterias* in the Western Scheldt. Adding to already existing knowledge, the seasonal presence of mostly adult female starry smooth-hounds around the Western Scheldt could be confirmed, proving the importance of the area as a summer habitat.
-<!-- and further indicating a potential pupping ground (presumably around the receiver station OG10. -->
-Moreover, the high return rates provide of individuals into the Western Scheldt further evidence for philopatric behaviour of the species. Although males and females most likely overwinter in different areas [@breve_2016; @griffiths_2020], their seasonal vertical movement behaviour appears to be similar (involving generally less vertical activity during summer and higher vertical activity during winter), according to the two DST tags that were subject of this study. During summers, the female primarily showed resting behaviour while the male exhibited both resting and feeding behaviour, indicating sex-specificity in behavioural states on a within-season scale. During winter, the female’s  (and to a lesser extent, the male’s) vertical activity is potentially influenced by the moon phase which might be linked to the intensity of tidal currents. 
+<!-- To conclude, the findings of this study with respect to the research questions formulated in @sec-intro-aims will be described. -->
+To conclude, the findings related to the research questions stated in the introduction (see @sec-intro-aims) will be presented.
+
+This study presents the first in-depth investigation of both the seasonality of vertical behaviour throughout the annual movement cycle and the presence of *M. asterias* in the Western Scheldt. Adding to already existing knowledge, the seasonal presence of mostly adult female starry smooth-hounds around the Western Scheldt could be confirmed, proving the importance of the area as a summer habitat. Males potentially are less present in the Western Scheldt, but more present in the BPNS than females. <!-- and further indicating a potential pupping ground (presumably around the receiver station OG10. -->
+Moreover, the high return rates of individuals (both males and females) into the Western Scheldt and the BPNS provide further evidence for philopatric behaviour of the species (Research Question 1, 2 and 3). 
+
+Although males and females most likely overwinter in different areas [@breve_2016; @griffiths_2020], their seasonal vertical movement behaviour appears to be similar (involving generally less vertical activity during summer and higher vertical activity during winter), according to the two DST tags that were subject of this study. During summers, the female primarily showed resting behaviour while the male exhibited both resting and feeding behaviour, indicating sex-specificity in behavioural states on a within-season scale. During winter, the female’s (and to a lesser extent, the male’s) vertical activity is potentially influenced by the moon phase which might be linked to the intensity of tidal currents (Research Question 4 and 5). 
+
+ <!-- -    Research Question 1: What seasonal patterns of presence does *M. asterias* display in the Western Scheldt and the BPNS? -->
+ <!-- -    Research Question 2: Are there differences in seasonal presence between males and females? -->
+ <!-- -    Research Question 3: How do the spatial preferences of *M. asterias* vary within the Western Scheldt and the BPNS? -->
+ <!-- -    Research Question 4: What seasonal patterns of vertical behaviour does *M. asterias* show? -->
+ <!-- -    Research Question 5: Are there differences in depth utilisation between males and females? -->
+
+
 Thus, this study could gain new insights into the seasonal distribution and potential sex-specificity of horizontal and vertical movement behaviour of *Mustelus asterias*. There still is, however, a substantial knowledge gap about the effects of sex and life stage on the species’ distribution [@griffiths_2020] and to be able to establish a successful species management plan in the future, further studies are needed [@mccullyphillips_2015; @breve_2016; @breve_2020; @griffiths_2020].
 
 <!-- •	Previous Knowledge: Females tend to be in the Schelde estuary in summer, potentially related to parturition -->
-<!-- o	Knowledge gathered from this study: Females are particularly present around the receiver OG10, and their aggregation might extend to Zoetelande (according to fishermen) -->
+<!-- o	Knowledge gathered from this study: Females are particularly present around the receiver OG10, and their aggregation might extend to Zoetelande (according to fishers) -->
 <!-- •	Previous knowledge: Migration behaviour is sex specific, with females primarily going southwards during winter and males primarily going northwards -->
 <!-- o	Knowledge gathered from this study: the 2 geolocation model outputs show this trend as well -->
 <!-- o	Knowledge gathered from this study: New insights on sex- and season-specific vertical behaviour could be gained: females rest during summer, while males also feed, females show a strong biweekly vertical activity periodicity during winter (males less so), the female potentially does not feed during the summer migration -->
@@ -2434,7 +2330,7 @@ Thus, this study could gain new insights into the seasonal distribution and pote
 ## Tagging studies involving *M. asterias*
 
 As discussed in @sec-disc-seasonalpresencefemales, an insightful addition to future tagging studies involving adult *M. asterias* would be to assess the females' reproductive stage upon sampling. This could be done either through ultrasonography or the use of sex steroid hormones [@awruch_2014; @smukall_2019; @anderson_2018; @fujinami_2020; @fujinami_2021]. A new tagging technology was launched recently: The Birth Alert Tag [BAT, @sulikowski_2023], which is, however, only advised to be used on “large sharks”. If smaller BATs are developed in the future, this might be a suitable tag to use on *M. asterias*.
-In addition, the placement of an acoustic receiver off the coast of Zoetelande might give further insights into possible seasonal aggregation of *M. asterias* in summer, as described by fishermen[^3].
+In addition, the placement of an acoustic receiver off the coast of Zoetelande might give further insights into possible seasonal aggregation of *M. asterias* in summer, as described by fishers[^3].
 If possible, DST with a wider depth range should be utilized for future studies, since evidence of *M. asterias* swimming in deeper waters (> 100 m depth) than previously thought is increasing [@ices_2019; @griffiths_2020]. 
 Generally, the effect of the implantation of tags on the sharks should be investigated. Since female *M. asterias* have been previously reported to abort and expel embryos when caught [@farrell_2010a], special attention should be drawn to the tagging effect on pregnant females, especially when intending to study their pupping behaviour.
 [^3]: Verhelst, Pieterjan (*personal communication*), April 25, 2023.
@@ -2450,7 +2346,7 @@ Generally, the effect of the implantation of tags on the sharks should be invest
 The adequate analysis of DST logs and the development of well-performing geolocation models remains a challenge. 
 While the input of behavioural states (i.e., high or low vertical activity, or residential versus migrating behaviour) would provide improved input for a geolocation model, segmenting the depthlog in different behavioural states is not trivial. 
 
-As a first step to improve the geolocation model without adding behavioural states could be the addition of a simple boundary condition that reflects the demersal lifestyle of *M. asterias*. This boundary condition entails that the maximum depth logged by the tag each day (given that the resolution of the geolocation model is in the unit of days) is equal to the maximum depth of the seafloor at the location of the shark. This would prevent model outputs that estimate the individual’s position on a day at locations with substantially deeper seafloor depth than the shark’s depthlog has recorded that day.
+As a first step to improve the geolocation model without adding behavioural states could be the addition of a simple boundary condition that reflects the demersal lifestyle of *M. asterias*. This boundary condition entails that the maximum depth logged by the tag each day (given that the resolution of the geolocation model is in the unit of days) is equal to the maximum depth of the bottom at the location of the shark. This would prevent model outputs that estimate the individual’s position on a day at locations with substantially deeper bottom depth than the shark’s depthlog has recorded that day.
 
 Furthermore, wavelet analysis proved to be a helpful tool for assessing the seasonal changes in spectral composition of the depth signal for both individuals. This technique is suggested to be further taken into account in the future, for instance regarding the segmentation of the depthlog into different behavioural states [as already shown by @soleymani_2017]. Since the implementation of simple CWT in this study is still an exploratory technique it should be investigated how it could be quantified in the future. If different behavioural states, for example resting, feeding and migrating can be linked to specific spectral signatures (i.e., a 12 h period for resting, a 24 h period for feeding and high prevalence of periods from 4h to 64 h for migrating), then wavelet coherence could be a next analysis step. This analysis assesses the similarity of two wavelet scalograms [@grinsted_2004]. Conducting wavelet coherence between the raw depthlogs of the sharks and characteristic spectral signatures of different behaviours could quantify the presence of different behavioural states in the future. Several methods to quantify behavioural states exist already [@pedersen_2008; @heerah_2017] but there is not one generic method that works for all species equally. Thus, it would be valuable to test the method suggested here and compare it to outputs from already existing methods. This would be a next step towards improving the geolocation modelling for *M. asterias* and consequently, our knowledge and understanding of the species.
 
@@ -2477,7 +2373,7 @@ This work was supported by the Research Foundation Flanders (FWO) as part of the
 
 I wish to express my heartfelt thanks to my promotors Jan Reubens and Niels Brevé, and my supervisor Carlota Muñiz. Thank you Jan, for providing me with constructive and valuable feedback, thank you Niels for your invaluable input on the starry smooth-hound, and thank you Carlota for guiding me and looking after me when I was a bit stuck.
 Furthermore, I am grateful for having been able to go out into the Belgian Part of the North Sea for receiver maintenance work, this experience gave me valuable insights into the practicalities behind the receiver network.
-My sincere appreciation goes to Pieterjan Verhelst, for taking me along the Twaite Shad tagging campaign and the car conversations about fish migrations and fishermen’s knowledge. Thank you to Jolien Goossens for carrying out the geolocation modelling of the returned tags which provided an important base for me to follow up on.
+My sincere appreciation goes to Pieterjan Verhelst, for taking me along the Twaite Shad tagging campaign and the car conversations about fish migrations and fishers’s knowledge. Thank you to Jolien Goossens for carrying out the geolocation modelling of the returned tags which provided an important base for me to follow up on.
 
 I furthermore wish to thank my IMBRSea study mates for productive co-working sessions and emotional support throughout the thesis. My thesis would not have been the same without all the warmhearted colleagues at VLIZ, thank you all for this extraordinary time in Gent and Ostend. 
 My eternal gratitude goes to the people that I deeply care for, especially Silvi and Tobi, for emotional support and understanding during this intense period.
@@ -2492,7 +2388,7 @@ And lastly, endless thanks to my parents for being there and supporting me no ma
 
 ### **A.1** Raw depth and temperature logs {-}
 
-@fig-dsttempannex shows the raw depth and temperature logs of tags 308 and 321. Tag 308 experienced the maximum temperature of 22.9°C on August 06, 2018 and its minimum temperature of 8.65°C on March 23, 2019.
+@fig-dsttempannex shows the raw temperature logs of tags 308 and 321. Tag 308 experienced the maximum temperature of 22.9°C on August 06, 2018 and its minimum temperature of 8.65°C on March 23, 2019.
 Tag 321 experienced its maximum temperature of 22.1°C on August 07, 2018 and its minimum temperature of 5.98°C on February 04, 2019.
 
 ```{r templogsannex}
@@ -2511,6 +2407,7 @@ p_308_temp
 p_321_temp
 ```
 
+@fig-dstannex displays the raw depth and temperature logs from the short term DST.
 
 ```{r rawdepthlogsannex}
 #| include: true

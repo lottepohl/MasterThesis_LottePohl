@@ -44,6 +44,7 @@ Hurd_deep <- mregions2::gaz_search(3321) %>% mregions2::gaz_geometry()
 Norwich <- mregions2::gaz_search(32698) %>% mregions2::gaz_geometry()
 Vlissingen <- mregions2::gaz_search(9105) %>% mregions2::gaz_geometry()
 Bergen_op_Zoom <- mregions2::gaz_search(23137) %>% mregions2::gaz_geometry()
+east_anglia <-  mregions2::gaz_search(4398) %>% mregions2::gaz_geometry()
 
 save_data(data = Norwich, folder = path_boundaries)
 save_data(data = UK, folder = path_boundaries)
@@ -69,6 +70,7 @@ save_data(data = Hurd_deep, folder = path_boundaries)
 save_data(data = North_sea, folder = path_boundaries)
 save_data(data = Zoetelande, folder = path_boundaries)
 save_data(data = Dishoek, folder = path_boundaries)
+save_data(data = east_anglia, folder = path_boundaries)
 
 # include:
 # relevant_mrgids <- c(2389, 3141, 2351, 2357, 22253, 17977, 2359, 24178)
