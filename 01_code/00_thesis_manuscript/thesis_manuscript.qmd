@@ -201,7 +201,7 @@ thesis_theme <- ggplot2::theme(
   legend.text = element_text(family = "serif", size = 7),
   legend.key = element_rect(fill = "transparent", colour = "transparent"),
   # legend.key.width = unit(2, "cm"),
-  legend.margin = margin(t = -15, b = -10, r = -10, l = -10),
+  legend.margin = margin(t = -10, b = -10, r = -10, l = -10),
   plot.tag = element_text(face = "bold", family = "serif", size = 12),
   # plot.tag.position =  c(0.065, 0.96), #"topleft", 
   plot.tag.position =  c(0.01, 0.98), #"topleft", 
@@ -1159,7 +1159,7 @@ will be referred to as *short-term DST*.
 
 The care and use of the animals complied with the Belgian Animal Welfare
 Act, guidelines and policies as approved by the *Ethische Commissie
-Dierproeven* (project reference EC2017-080). All animal treatments were
+Dierproeven* (reference 2016.D-0041.004 and 2016.D-0041.008). All animal treatments were
 undertaken in 2018 and 2019, and all tagging procedures were carried out
 by competent and trained personal license holders.
 
@@ -1382,7 +1382,7 @@ detection were omitted from all further analyses. Acoustic detections were visua
 ### Data Storage Tags {#sec-mm_dsts}
 
 Depth and temperature logs from the recovered tags were accessed via the
-Marine Data Archive (MDA, dataset DOI: (https://doi.org/10.14284/605)). The temperature log
+Marine Data Archive (MDA, dataset DOI: (https://doi.org/10.14284/605)), and are the same dataset as the *M. asterias* data from @goossens_2023. The temperature log
 was not included in any analysis. The first week of depth values was
 excluded from all analyses to remove potential bias resulting from the
 tagging procedure [following @flavio_2021].

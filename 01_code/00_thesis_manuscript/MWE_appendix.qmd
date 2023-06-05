@@ -317,9 +317,37 @@ knitr::kable(x = tagged_animal_info %>%
                              hours_detected, date_last_detected, 
                              days_at_liberty, residency_index, release_loc) %>%
                arrange(release_date_time) %>%
-               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
+               # cs_dt$mpg = cell_spec(cs_dt$mpg, color = ifelse(cs_dt$mpg > 20, "red", "blue"))
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2),
+                      tag_serial_number = cell_spec(tag_serial_number, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      sex = cell_spec(sex, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      length1 = cell_spec(length1, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      weight = cell_spec(weight, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      release_date_time = cell_spec(release_date_time, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      n_detect = cell_spec(n_detect, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      days_detected = cell_spec(days_detected, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      hours_detected = cell_spec(hours_detected, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      date_last_detected = cell_spec(date_last_detected, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      days_at_liberty = cell_spec(days_at_liberty, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      residency_index = cell_spec(residency_index, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)),
+                      
+                      release_loc = cell_spec(release_loc, bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F))
+                      ),
              booktabs = T, escape = F,
-             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>% 
+  kableExtra::row_spec(0, bold = T) %>% #make colnames bold
+  # kableExtra::row_spec(bold = ifelse(tag_serial_number %in% dst_summary$tag_serial_number, T, F)) %>%
+  # column_spec(1, bold = T) %>% #make 1st cold bold
   kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") %>%  kableExtra::kable_styling(font_size = 8)
   
 ```
