@@ -191,7 +191,7 @@ map_dst_321 <- ggplot() +
   geom_sf(data = France, colour = "gray60") +
   geom_sf(data = Netherlands, colour = "gray60") +
   geom_path(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), mapping = aes(x = detection_longitude, y = detection_latitude, colour = date_time), linewidth = 0.65) +
-  labs(x = "Longitude", y = "Latitude", tag ="a)") +
+  labs(x = "Longitude", y = "Latitude", tag ="b)") +
   geom_point(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), 
              x = 3.631849, y = 51.61220, shape = 23, colour = "black", size = 3, fill = "yellow", alpha = 1) + #mapping = aes(shape = "tag 321 (m)" )
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
@@ -222,7 +222,7 @@ map_dst_308 <- ggplot() +
   geom_sf(data = Schelde_boundaries, fill = "white", colour = "transparent", alpha = 1,linewidth = 0.75) +
   # now the map layers
   # geom_sf(data = Europe) + #, colour = "gray85", fill = "gray85", linewidth = 0.75
-  labs(x = "Longitude", y = "Latitude", tag ="b)") +
+  labs(x = "Longitude", y = "Latitude", tag ="a)") +
   # scale_colour_manual(name = "Marine Boundaries", values = c("EEZ" = "gray60", 
   #                                                            # "marine_boundaries" = "gray60", 
   #                                                            "Scheldt Estuary" = "darkgreen", 
@@ -553,6 +553,7 @@ map_WS_ggplot <- ggplot() +
                                     style = north_arrow_fancy_orienteering) +
   # geom_label(data = English_channel, aes(label = preferredGazetteerName, geometry = the_geom),
   #            stat = "sf_coordinates", size = 2, nudge_y = 0.25, nudge_x = 0, family = "serif", fontface = "bold", fill = "white") +
+  geom_point(data = release_locations, mapping = aes(x = lng, y = lat), shape = 23, size = 3, colour = "gray0", fill = "yellow", alpha = 1) +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
              stat = "sf_coordinates", size = 2, nudge_y = -0.15, nudge_x = -6, family = "serif", fontface = "bold", fill = "white") +
   geom_text_repel(data = Neeltje_Jans, aes(label = preferredGazetteerName, geometry = geometry),
@@ -565,7 +566,6 @@ map_WS_ggplot <- ggplot() +
                   size = 2, nudge_y = 0.03, nudge_x = -0.2, family = "serif") +
   # geom_text(aes(label = "C"), vjust = "inward", hjust = "inward", fontface = "bold") +
   # scale_shape_manual(name = "PBARN", values = c("Receiver Station" = 19)) +
-  geom_point(data = release_locations, mapping = aes(x = lng, y = lat), shape = 23, size = 3, colour = "gray0", fill = "yellow", alpha = 0.85) +
   guides(colour = guide_legend(override.aes = list(shape = 19, size = 4)),
          fill = guide_legend(override.aes = list(shape = 0, size = 6, alpha = 0.5))) +#size = 6
   theme(legend.position = "bottom",

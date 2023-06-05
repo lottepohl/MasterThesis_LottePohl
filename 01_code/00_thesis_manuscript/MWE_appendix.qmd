@@ -52,7 +52,7 @@ keywords:
   - geolocation modelling
   - Mustelus asterias
 date: last-modified
-bibliography: bibliography.bib
+bibliography: bibliography2.bib
 execute:
   echo: false
   include: false
@@ -125,7 +125,7 @@ library(gridExtra)
 ```{r workspace}
 # load functions
 paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
-# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% base::source()
 
 # load plots, data and maps
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_dst_overview_plots.R") %>% base::source()
@@ -134,11 +134,11 @@ paste0(getwd(), "/01_code/06_functions/functions.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_models.R") %>% base::source()
 
-paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
+# paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_maps.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/02_load_data/load_autocorrelation_results.R") %>% base::source()
 
-# paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
+paste0(getwd(), "/01_code/02_load_data/load_acoustic_detections.R") %>% base::source()
 
 # paste0(getwd(), "/01_code/05_plots_maps/plots_dst_summary.R") %>% base::source()
 
@@ -257,7 +257,157 @@ Due to its ability to collect information both within the area of acoustic recei
 
 # Materials and Methods
 
-@griffiths_2020.
+@griffiths_2020. @dodge_2013 and @segel_2010 don't have urls in their .bib file. what happens in the reference list?
+
+
+```{r sum-tagging}
+tagging_info <- masterias_info %>% mutate(date = release_date_time %>% lubridate::date(),                        release_loc = ifelse(release_latitude > 51.53, "Neeltje Jans", "outside WS")) %>% group_by(date) %>% reframe(n = n(), release_loc = release_loc %>% unique()) %>% mutate(date2 = date %>% format(format = "%B %d"))
+
+# tagging_info %>% View()
+```
+
+Tagging of 30 *M. asterias* individuals occurred in July and August, 2018
+(`r tagging_info$date2[1]`, n = `r tagging_info$n[1]`,
+`r tagging_info$date2[2]` and 03, n = `r tagging_info$n[2]` and n =
+`r tagging_info$n[3]`) and in July, 2019 (`r tagging_info$date2[4]` and
+12, n = `r tagging_info$n[4]` for both dates). Details on the tagged
+individuals are listed in @tbl-animalinfo.
+
+<!-- ## Acoustic Tags -->
+<!-- Acoustic Data Storage Tags (ADST) were used for this study, -->
+*Innovasea* ADST-V13TP tags (Innovasea Ltd., Boston, MA, USA) were used for this study, measuring 46 mm in length and weighing 13 g. Each tag had an estimated battery lifetime of 518 days,
+and contained a pressure and a temperature sensor with logging intervals
+of 120 s and 240 s, respectively. For each acoustic detection, a
+pressure or temperature value was transmitted with a ratio of 1:3
+(pressure:temperature). Further details about the tags can be found in
+the Supporting Information of @goossens_2023.
+<!-- reference to innovasea product manual --> The pressure sensors
+recorded with a resolution of 0.3 m and an accuracy of $\pm$ 3.4 m until
+the depth of 68 m, according to the manufacturer [@Innovasea_ADST]. The maximum depth value recorded in this study is 75.2 m. Since this is deeper than the maximum depth measurable according to the manufacturers, measurements around the limit of 68 m have to be interpreted with caution.
+
+
+
+<!-- ```{r prepare-releaseloc} -->
+<!-- release_locations  <- release_locations  %>%  -->
+<!--   rename(`release location` = release_loc, -->
+<!--          `Latitude` = lat, -->
+<!--          `Longitude` = lng) -->
+<!-- ``` -->
+
+Tagged animals were both caught and released in two locations, just west
+of *Neeltje Jans* (an artificial island in the Dutch province of Zeeland, individuals tagged in July, both 2018 and 2019, Latitude: `r release_locations %>% dplyr::filter(release_loc == "Neeltje Jans") %>% dplyr::select(lat) %>% dplyr::pull()`, Longitude: `r release_locations %>% dplyr::filter(release_loc == "Neeltje Jans") %>% dplyr::select(lng) %>% dplyr::pull()`),
+and outside the mouth of the Western Scheldt (individuals tagged in
+August 2018, Latitude: `r release_locations %>% dplyr::filter(release_loc == "Western Scheldt") %>% dplyr::select(lat) %>% dplyr::pull()`, Longitude: `r release_locations %>% dplyr::filter(release_loc == "Western Scheldt") %>% dplyr::select(lng) %>% dplyr::pull()`). The tagging locations are marked in @fig-mapstudyarea-3.
+<!-- The tagging locations are listed in @tbl-releaseloc. -->
+<!-- The two locations are shown in @fig-map_detail. -->
+
+
+
+```{r table-animalinfo}
+#| include: true
+#| label: tbl-animalinfo
+#| out-width: 120%
+#| tbl-cap-location: top
+#| tbl-cap: "Information on the tagged individuals. Release location 1 refers to Neeltje Jans, release location 2 refers to just outside of the Western Scheldt. det. = detected, loc. = location, RI = residency index (days detected / 518 days). The 518 days correspond to the estimated battery life by the tag manufacturer."
+
+knitr::kable(x = tagged_animal_info %>% 
+               #set column order & order rows
+               dplyr::select(tag_serial_number, sex, length1, weight,
+                             release_date_time, n_detect, days_detected,
+                             hours_detected, date_last_detected, 
+                             days_at_liberty, residency_index, release_loc) %>%
+               arrange(release_date_time) %>%
+               mutate(release_loc = ifelse(release_loc == "Neeltje Jans", 1, 2)),
+             booktabs = T, escape = F,
+             col.names = linebreak(c("tag serial\nno.", "sex", "TL\n in m", "bodymass\n in kg", "release\ndate", "times\ndet.", "d\ndet.","h\ndet.", "date last\ndet.", "days at\nliberty", "RI", "release\nloc."), align = "c")) %>%
+  kableExtra::kable_styling(position = "center", latex_options = "HOLD_position") %>%  kableExtra::kable_styling(font_size = 8)
+  
+```
+
+
+
+Animals were caught using line fishing or handline. After capture, each
+animal was placed in a holding tank filled with sea water. Before the
+surgery the animals were turned with the ventral side facing upwards to
+induce tonic immobility [@kessel_2015] and the midventral line was
+incised 2-3 cm with a scalpel. Next, the Acoustic Data Storage Tag was
+inserted into the abdominal cavity with forceps, and the incision was
+closed with 2-3 stitches of mono-filament [@goossens_2023]. Photos of the capture and tagging of *M. asterias* are shown in @fig-taggingpics.
+
+
+### Data Storage Tags {#sec-mm_dsts}
+
+Depth and temperature logs from the recovered tags were accessed via the
+Marine Data Archive (MDA, dataset DOI: (https://doi.org/10.14284/605)). The temperature log
+was not included in any analysis. The first week of depth values was
+excluded from all analyses to remove potential bias resulting from the
+tagging procedure [following @flavio_2021].
+The date of death, used to calculate the time at liberty for the recovered tags, was visually extracted from plots of the
+raw depth series, and marks the date after which only a tidal signal
+remains in the depthlog [characterised by cyclically rising and
+falling depths within a rough 2 m depth range, @kvale_2006]. 
+
+The analyses described in the following were only performed for tags that logged for $\geq$ 365 days, i.e., tag 308 (female) and tag 321 (male). 
+Those will be referred to as *long term DST* in the following, returned tags logging for less than a year will be
+referred to as *short term DST*.
+<!-- maybe rephrase: "excluded from all analyses" --> Summary statistics, i.e., median (since depth did not follow a normal distribution), maximum and 
+minimum depth were calculated per date, day and night.
+<!-- For all of these calculated summary statistics, the daily change was computed (i.e. * variable~change~ = variable~t~ - variable~t-1~).  -->
+For the day/night summaries, sunrise and sunset times were extracted
+using the `getSunlightTimes()`-function from the `suncalc`-package [@suncalc].
+The illuminated fraction of the moon was extracted using the
+`moonAngle()`-function from the `oce` package [@oce]. 
+<!-- To test the hypothesis about difference in depth use between seasons, start dates of summer and winter as defined by solstices were extracted from the Astronomical Applications Department -->
+<!-- of the U.S. Naval Observatory [@USNO_2023] for the years of 2018 and 2019. -->
+<!-- Next, the daily median depths for each tag and season (summer/winter) were compared. -->
+
+<!-- On the daily summaries, a rolling mean with a window size of 3 days was applied to smooth the data. -->
+
+#### Summary Statistics {#sec-mm-summarystats}
+
+A Savitzky-Golay smoothing filter [@press_1990,
+filter order *p = 1*, filter length *n = 5*] was applied on all summaries using the
+`sgolayfilt()`-function from the `signal`-package [@signal]. This particular
+filter smoothes the data but retains spikes in the data better than
+other smoothing filters like butterworth or averaging filters [like
+rolling mean, @schafer_2011].
+<!-- Prior to spectral analyses, the data was centred and normalised, -->
+<!-- resulting in a mean of 0 and a sd of 1.  -->
+<!-- still do!!!! --> 
+The autocorrelation was calculated using the `stats::acf()`-function.
+Autocorrelation refers to the serial correlation of a data series with
+itself [@bartlett_1946], resulting in an autocorrelation coefficient
+between -1 and 1 (-1 referring to perfect anti-correlation and 1
+referring to perfect correlation, 0 referring to no correlation at all)
+over the lag, which refers to the overlap between the data series with
+itself.
+
+<!-- check: sollte ich das noch machen?? -->
+
+<!-- The animal's vertical speed (in *m/min*) was calculated following @griffiths_2020, dividing the depth difference between two consecutive measurements by the time interval (in min). -->
+
+#### Fast Fourier Transformation {#sec-mm-fft}
+
+A Fast Fourier Transform (FFT) was performed on all DST logs, using the
+`base::fft()`-function. This method decomposes a signal in the time
+domain (which is a combination of multiple sine waves with different
+frequencies) into its components in the frequency domain, resulting in a frequency spectrum of the decomposed signal in the time domain.
+Dominant frequencies (or rather periods, which is the inverse of the frequency)
+give insights about the scale of periodicity of a signal (in the present
+case the signal is the depth-time series of the sharks). These dominant periods appear as spikes in the so-called periodogram, which is the visual representation of the period spectrum of the signal [@cochran_1967]. However, this analysis lacks information about when these periodic components occur.
+
+#### Continuous Wavelet Transform {#sec-mm-cwt}
+
+To overcome this limit and resolve of dominant periodicities in the time domain of a signal, Continuous Wavelet Transform (CWT, a specific type of Wavelet Analysis) can be conducted [@grinsted_2004]. This is a mathematical technique used in spectral analysis to analyse signals in both the time and frequency domains simultaneously. CWT uses wavelet functions, wave-shaped building blocks localised in both time and frequency, which can be adjusted in size and position to capture different features of a signal. These wavelet functions can be understood as a spectral microscope that focus on different time intervals of a signal, revealing details that might be missed by other methods such as Fourier Transformation. The simultaneous resolution of time and frequency, however, minimises the accuracy of results. To obtain robust and valid results despite the resolution loss, frequencies are compared against white noise using a $\chi^2$ test [@grinsted_2004].
+
+When applying the CWT to a signal, a two-dimensional, visual representation called a wavelet scalogram is obtained. The wavelet scalogram depicts the distribution of wavelet power as a function of time and frequency. The power in the scalogram represents the strength or magnitude of each periodicity at different time points. Areas with higher power indicate stronger presence of the corresponding period. Moreover, the scalogram also shows if the power of a specific period significantly differs from white noise. Fully opaque areas in the scalogram differ from white noise, and slightly transparent areas do not significantly differ from white noise.
+
+Wavelet scalograms help to assess the periodicities of a signal and how they vary in time, allowing for the identification of both transient and long-lasting frequency components. Transient periodicities appear as localised coloured spikes of power in the scalogram and underlying, long-lasting periodicities appear as sustained high power at specific periods. 
+Thus, CWT provides a more detailed and comprehensive insight into a signal's characteristics compared to traditional Fourier analysis, making it the primary analysis method of the Data Storage Tag depth logs .
+
+
+In the present study, CWT was conducted using the `wt()`-function from the `biwavelet`-package [@biwavelet]. CWT was performed on two depth-time series per shark, resulting in two wavelet scalograms per individuals. Firstly, CWT was performed on the raw depthlog (which was subsampled to one depth measurement every 10 minutes to reduce computation time), resulting in the power (the proxy for prevalence) of periodicities in the scale of minutes and hours, hereafter referred to as the *hourly scale*. For this study, periodicities in the range of tidal and diurnal cycles (between 6 and 24 hours) per date were of interest. To include a margin of periodicities, the scalograms of the CWT in hourly scale show the prevalence (i.e., power) of periods between 2 and 64 hours. The maximum power of a period for each date is displayed since the highly prevalent periods are of interest.
+Secondly, CWT was performed on the Savitzky-Golay filtered median depth per date (including one depth value per date), which enables to resolve prevalent periodicities in a signal on a scale of days (2 days to about 50 days), hereafter referred to the CWT result on a *daily scale*. This filtered summary statistic was chosen to obtain a smoother wavelet scalogram and ease the interpretation of the results. The scalogram on the daily scale displays the power (i.e., prevalence) of periods between 2 and 50 days, enabling the investigation of periodical presence of weekly, biweekly or monthly patterns in the depth-time series of the DST logs.
 
 
 
