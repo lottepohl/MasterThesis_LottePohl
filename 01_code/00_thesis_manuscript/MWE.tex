@@ -156,7 +156,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Vertical movement behaviour of the starry smooth-hound shark Mustelus asterias in the North Sea},
+  pdftitle={Vertical movement behaviour of the Starry smooth-hound shark Mustelus asterias in the North Sea},
   pdfauthor={Lotte Pohl; Niels Brevé; Carlota Muñiz; Jan Reubens},
   pdfkeywords={acoustic telemetry, geolocation modelling, Mustelus
 asterias},
@@ -171,7 +171,7 @@ asterias},
 \begin{document}
 
 \begin{frontmatter}
-\title{Vertical movement behaviour of the starry smooth-hound shark
+\title{Vertical movement behaviour of the Starry smooth-hound shark
 \emph{Mustelus asterias} in the North Sea \\\large{Master Thesis} }
 \author[1,2]{Lotte Pohl%
 \corref{cor1}%
@@ -339,7 +339,7 @@ aliqua.
     Mustelus asterias
 \end{keyword}
 \end{frontmatter}
-    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, breakable, frame hidden, sharp corners, enhanced]}{\end{tcolorbox}}\fi
+    \ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, sharp corners, breakable, enhanced, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, frame hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -347,18 +347,255 @@ aliqua.
 \setcounter{tocdepth}{3}
 \tableofcontents
 }
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\newpage{}
+
+\hypertarget{list-of-abbreviations}{%
+\section*{List of Abbreviations}\label{list-of-abbreviations}}
+\addcontentsline{toc}{section}{List of Abbreviations}
+
+\newpage{}
+
+\hypertarget{executive-summary}{%
+\section*{Executive Summary}\label{executive-summary}}
+\addcontentsline{toc}{section}{Executive Summary}
+
+The Starry smooth-hound \emph{Mustelus asterias} (Cloquet, 1819) is a
+widely distributed demersal shark in the Northeast Atlantic, yet under
+increasing fishing pressure. To lay the grounds for future species
+management plans, information on its complex annual migration and
+residency behaviour is needed.
+
+The movement of fish is commonly studied with electronic tags. A novel
+technology is the Acoustic Data Storage Tag (ADST), which can be
+detected by acoustic receivers and additionally logs temperature and
+water depth in predefined intervals (access requires the tag's
+retrieval). This study employed ADST to characterise the migration and
+residency of \emph{M. asterias} in the North Sea regarding seasonality
+and sex. In 2018 and 2019, 30 adult \emph{M. asterias} (19 females, 11
+males) were equipped with ADST-V13TP (Innovasea, 518 days estimated
+battery life) in the Scheldt estuary. The Permanent Belgian Receiver
+Network (PBARN) encompasses 160 active receivers distributed across the
+Belgian Part of the North Sea (BPNS) and the Scheldt estuary.
+Exploratory and spectral analyses were conducted on a July 2018 to July
+2020 ADST dataset.
+
+14 females and 4 males were detected 10940 times by 27 acoustic
+receivers. All detections were between April and November, indicating
+seasonal presence of \emph{M. asterias} in the receiver area. 96 \% of
+detections were in the outer Western Scheldt, and 97 \% of detections
+were from females. This suggests the outer Western Scheldt to be a
+relevant habitat for females between April and November. 8 ADST were
+recovered, one female and one male logging data for over a year. Both
+tags logged depths between 0 and 20 m from June to October, and between
+10 and 75 m from October to June. The changing depth range reflects the
+migration of the sharks into deeper waters during winter. Continuous
+Wavelet Transform (CWT) resolves periodic patterns in the time domain
+and displays differences in periodicities between seasons and
+individuals. The CWT results suggest that the female is resting during
+summer and feeding in a biweekly pattern in winter, and that the male
+feeds continuously.
+
+This study provides first details about seasonality in spatiotemporal
+movement behaviour of \emph{M. asterias} and confirms its seasonal
+presence in the Western Scheldt. Data on the vertical movement of more
+individuals is needed to determine if the patterns observed here are
+related to sex. The findings on the spatiotemporal presence of \emph{M.
+asterias} in the BPNS and the Scheldt estuary establish the primary
+groundwork for future species management plans.
+
+\newpage{}
+
+\hypertarget{abstract}{%
+\section*{Abstract}\label{abstract}}
+\addcontentsline{toc}{section}{Abstract}
+
+The Starry smooth-hound \emph{Mustelus asterias} is widely distributed
+in the Northeast Atlantic, yet under increasing fishing pressure. To lay
+the grounds for future species management plans, information on its
+complex annual migration and residency behaviour is needed. Fish
+movement is commonly studied with electronic tags, one novel technology
+being the Acoustic Data Storage Tag (ADST). It can be detected by
+acoustic receivers and additionally logs temperature and water depth in
+predefined intervals. This study characterises the migration and
+residency of \emph{M. asterias} in the North Sea regarding season and
+sex. 30 \emph{M. asterias} were equipped with ADST in the Scheldt
+estuary in 2018 and 2019. Acoustic detections of 18 individuals in the
+Western Scheldt estuary between July 2018 and July 2020 suggest seasonal
+presence of females just outside of the Western Scheldt between April
+and November. Spectral analysis of the depth logs of two individuals
+logging for over a year indicates feeding behaviour of the male
+throughout most of the year. The female shark presumably rests on the
+seafloor during summer and feeds in a biweekly rhythm during winter.
+This study presents the first detailed insights into vertical movement
+behaviour differences between seasons and individuals of \emph{M.
+asterias}.
+
+\textbf{Keywords}: acoustic telemetry, \emph{Mustelus asterias}, data
+storage tag, electronic tagging, North Sea, movement ecology
+
+\newpage{}
+
+\hypertarget{sec-intro}{%
+\section{Introduction}\label{sec-intro}}
+
+Gathering knowledge on non-commercial, migratory fish species with
+complex life cycles is challenging, yet necessary to improve management
+of such species in the future \citep{brownscombe_2022}. Fish with late
+reproduction and low offspring numbers such as elasmobranchs are
+especially vulnerable to overfishing and require special attention in
+fisheries management \citep{stevens_2000}.
+
+An elasmobranch with a complex life cycle involving biannual
+reproduction and a sex-specific annual migration is the starry
+smooth-hound \emph{Mustelus asterias} (Cloquet, 1819), a demersal
+triakid shark widely distributed in the Northeast Atlantic and
+Mediterranean Sea \citep{breve_2016, griffiths_2020}. In the past
+decades, both commercial landings
+\citep{ices_2022, bitonporsmoguer_2022} and abundance in the North Sea
+\citep{mccullyphillips_2015} have increased. The International Council
+for the Exploration of the Sea (ICES) classified the species to be
+\emph{Near Threatened} \citep{ices_2022}. Meanwhile, knowledge on the
+seasonal presence of \emph{M. asterias} in the North Sea, especially in
+Belgian Part of the North Sea (BPNS) and the estuary of the Western
+Scheldt is missing. Tracking the movement and presence of migratory
+aquatic species in space and time, requires advanced technologies which
+have improved substantially in recent years \citep{whoriskey_2019}.
+
+\hypertarget{aquatic-telemetry}{%
+\subsection{Aquatic telemetry}\label{aquatic-telemetry}}
+
+Telemetry refers to the remote monitoring of animals using electronic
+tags and receivers \citep{whoriskey_2019}, allowing for the tracking of
+marine animal movement. A multitude of telemetry methods exists today,
+and popular technologies to study aquatic animals include acoustic
+telemetry and archival telemetry \citep{thorstad_2013}. Telemetry
+furthermore enables the quantification of animal migrations and both
+vertical and horizontal habitat use \citep{hussey_2015}, which informs
+species management and conservation spanning marine, freshwater and
+terrestrial ecosystems \citep{beger_2010}.
+
+In acoustic telemetry, animals are internally or externally equipped
+with electronic tags that emit acoustic signals unique to each tag.
+Acoustic receivers are able to detect these acoustic signals within a
+certain range of the device and identify the individual tag. Such
+networks exist primarily in shallow, coastal areas \citep{hussey_2015}
+such as the Acoustic Tracking Array Platform (ATAP) in South Africa
+\citep{cowley_2017} and the Permanent Belgian Acoustic Receiver Network
+\citep[PBARN,][]{reubens_2019}. Archival telemetry uses Data Storage
+Tags (DST) that record and locally store environmental variables such as
+water pressure and temperature. DST require the retrieval of the tag for
+downloading data \citep{thorstad_2013}.
+
+Acoustic data storage tags (ADST) are a combination tag, merging
+acoustic and data storage tags \citep{goossens_2023}. As such, the tag
+emits unique acoustic signals that can be detected by an acoustic
+receiver within a certain range, and additionally records water pressure
+and temperature in predefined intervals. Per acoustic detection, one
+value of either temperature or water depth gets transmitted. ADST gather
+data on horizontal fish movement inside acoustic receiver networks while
+simultaneously collecting fine-scale vertical movement data that can be
+used to estimate the fish's movement beyond acoustic receiver arrays.
+
+Different telemetry methods result in different datasets. In acoustic
+telemetry, recorded data contains the time that a tag was detected by a
+specific receiver. These datasets come in a horizontal dimension, i.e.,
+as the latitude and longitude position of the acoustic receiver.
+Archival telemetrys generates regular time series in pre-defined
+intervals, logging water depth and other environmental variables. These
+data come in a vertical dimension, spanning the range of the animal's
+depth use. Datasets resulting from ADST contain time stamps of the tag's
+detection at a specific acoustic receiver, and, in case the tag was
+recovered, logs of water depth and other environmental variables.
+
+To determine the approximate location (i.e., latitude and longitude), of
+a DST log (which represents the vertical dimension), stochastic
+geolocation models are commonly used \citep{gatti_2021}. These models
+involve bathymetry and environmental factors such as water temperature
+to estimate the trajectory followed by the fish \citep{nielsen_2004}.
+Common geolocation modelling approaches use Hidden Markov Models
+\citep[HMM,][]{pedersen_2008, woillez_2016}. For certain species with
+high economic value (such as Atlantic cod, \emph{Gadus morhua}, and
+European seabass, \emph{Dicentrarchus labrax}), those models have been
+improved by including different behavioural states of the species
+\citep{pedersen_2008, heerah_2017}. Behavioural states (such as low or
+high activity) are driven by the animal's environment and internal
+ecophysiological processes \citep{gurarie_2016}. Geolocation modelling
+has been employed for \emph{M. asterias} with the implementation of
+behavioural states \citep[following the approach of][]{pedersen_2008}
+and without \citep[following the approach of
+\citet{woillez_2016}]{goossens_2023}. Geolocation model outputs for one
+female and one male \emph{M. asterias} are shown in
+\textbf{?@fig-mapgeolocation}.
+
+\hypertarget{the-starry-smooth-hound-shark-mustelus-asterias}{%
+\subsection{\texorpdfstring{The Starry smooth-hound shark \emph{Mustelus
+asterias}}{The Starry smooth-hound shark Mustelus asterias}}\label{the-starry-smooth-hound-shark-mustelus-asterias}}
+
+The Starry smooth-hound shark (\emph{Mustelus asterias}, family:
+Triakidae) inhabits waters of the Northeast Atlantic and the
+Mediterranean Sea, spanning from the Irish Sea and Northern North Sea in
+the North to an unknown limit in the south \citep{ices_2022}. This
+species typically measures around 30 cm in Total Length (TL) at birth
+and can grow up to 140 cm TL \citep{mccullyphillips_2015}. Sexual
+maturity is attained at 100 cm TL for males and 120 cm TL for females
+\citep{farrell_2010}, which usually occurs at 4-5 years for males and 6
+years for females. The average lifespan of Starry smooth-hound sharks is
+around 13 years for males and 18 years for females \citep{farrell_2010}.
+
+\newpage{}
+
+The species is matrotrophic aplacentally viviparous \citep[i.e., embryos
+absorb nutrients from a yolk sack that is used up during
+gestation,][]{farrell_2010a, mccullyphillips_2015}. \citet{farrell_2014}
+found \emph{M. asterias} to display polyandry (i.e., one female mating
+with several males within one breeding season) and multiple paternity
+(i.e., pups within one litter originate from several males). Moreover,
+it has a biannual reproduction cycle with a gestation period of about 12
+months, followed by a 12-month resting period. \citet{farrell_2010a}
+found that M. asterias females can store sperm for up to 12 months and
+exhibit embryo asynchronism (i.e., carrying embryos at different
+developmental stages). \citet{breve_2016} and \citet{griffiths_2020}
+reported philopatric behaviour (i.e., females returning to the same area
+for parturition). Identified parturition grounds for \emph{M. asterias}
+include the estuary of the Eastern Scheldt and, more generally, the
+Bristol Channel, the Southern North Sea and the English Channel
+\citep{dureuil_2013, mccullyphillips_2015, breve_2016}. Pupping
+presumably takes place between April and September
+\citep{farrell_2010a, mccullyphillips_2015}.
+
+\emph{M. asterias} is morphologically adapted to a demersal life style,
+exhibiting a ventrally located snout that enables it to feed on prey on
+the seafloor. It is a specialist feeder on benthic and suprabenthic
+crustaceans \citep{mccullyphillips_2020, bitonporsmoguer_2022}. Common
+prey include the hermit crab (\emph{Pagurus bernhardus}), the flying
+crab (\emph{Liocarcinus holsatus}), the common shore crab
+(\emph{Carcinus maenas}) and the edible crab (\emph{Cancer pagurus})
+\citep{mccullyphillips_2015, mccullyphillips_2020}. Potential predators
+of \emph{M. asterias} are the grey seal (\emph{Halichoerus grypus})
+which occurs in the North Sea, the blue shark (\emph{Prionace glauca})
+and the common dolphin (\emph{Delphinus delphis}), both of which occur
+in the Western English Channel \citep{griffiths_2020}.
+
+\emph{M. asterias} shows higher vertical activity during night than
+during the day \citep{griffiths_2020}. This indicates foraging and
+preying behaviour at night, a commonly observed behaviour in
+elasmobranchs \citep{sims_2006}. During the day, \emph{M. asterias}
+potentially avoids predation by resting on the seafloor
+\citep{griffiths_2020}. The species displays annual, and potentially
+sex-specific migration. Females are thought to move into the English
+Channel and the Bay of Biscay in winter, and males supposedly move into
+the Northern North Sea and the English Channel
+\citep{breve_2016, breve_2020, griffiths_2020}. seasonal grounds.
 
 \hypertarget{sec-intro-aims}{%
 \subsection{Aims of this work}\label{sec-intro-aims}}
 
 The seasonal presence of \emph{M. asterias} in the Western Scheldt
 estuary, a presumed summer habitat of the species, has not been studied
-yet. The confirmation of seasonal presence of \emph{M. asterias} would
-be relevant to species management. This could involve stock assessments
-or seasonal restrictions for commercial fishing in the future
-\citep{benot_2003}. Moreover, detailed information on potential
+yet. The confirmation of seasonal presence of \emph{M. asterias},
+however, would be relevant to species management, possibly leading to
+stock assessments or seasonal restrictions for commercial fishing in the
+future \citep{benot_2003}. Moreover, detailed information on potential
 differences in vertical movement regarding seasonality and sex,
 including the timing and duration of migrations, are currently missing.
 Such information can improve geolocation models through the
@@ -366,18 +603,18 @@ implementation of behavioural states \citep{pedersen_2008}. With the aim
 of addressing these knowledge gaps, this study pursues two lines of
 research.
 
-\hypertarget{research-line-1-presence-of-m.-asterias-in-the-western-scheldt-estuary-and-the-bpns}{%
-\subsubsection*{\texorpdfstring{Research Line 1: Presence of \emph{M.
-asterias} in the Western Scheldt Estuary and the
-BPNS}{Research Line 1: Presence of M. asterias in the Western Scheldt Estuary and the BPNS}}\label{research-line-1-presence-of-m.-asterias-in-the-western-scheldt-estuary-and-the-bpns}}
-\addcontentsline{toc}{subsubsection}{Research Line 1: Presence of
-\emph{M. asterias} in the Western Scheldt Estuary and the BPNS}
+\hypertarget{presence-of-m.-asterias-in-the-western-scheldt-and-the-bpns-research-line-1}{%
+\subsubsection*{\texorpdfstring{Presence of \emph{M. asterias} in the
+Western Scheldt and the BPNS (Research Line
+1)}{Presence of M. asterias in the Western Scheldt and the BPNS (Research Line 1)}}\label{presence-of-m.-asterias-in-the-western-scheldt-and-the-bpns-research-line-1}}
+\addcontentsline{toc}{subsubsection}{Presence of \emph{M. asterias} in
+the Western Scheldt and the BPNS (Research Line 1)}
 
 \emph{M. asterias} was rarely caught at the Dutch and Belgian North Sea
 coast before 2009 \citep{breve_2016}. These waters are influenced by the
 outflows of the rivers Rhine, Meuse and Scheldt. \emph{M. asterias} is
-not known to move into brackish or freshwater but instead potentially
-remains in the saline parts of the Scheldt Estuary
+not known to move into brackish or freshwater but instead presumably
+remains in the saline parts of the Scheldt estuary
 \citep{dewysiecki_2017}. However, no study has yet been conducted on the
 presence of this species in the Western Scheldt. The Eastern Scheldt,
 located adjacent to the Western Scheldt, is a confirmed pupping ground
@@ -399,18 +636,18 @@ and the BPNS, and thus aims to answer the following questions:
   asterias} vary within the Western Scheldt and the BPNS?
 \end{itemize}
 
-\hypertarget{research-line-2-depth-utilisation-of-m.-asterias-on-a-seasonal-scale}{%
-\subsubsection*{\texorpdfstring{Research Line 2: Depth utilisation of
-\emph{M. asterias} on a seasonal
-scale}{Research Line 2: Depth utilisation of M. asterias on a seasonal scale}}\label{research-line-2-depth-utilisation-of-m.-asterias-on-a-seasonal-scale}}
-\addcontentsline{toc}{subsubsection}{Research Line 2: Depth utilisation
-of \emph{M. asterias} on a seasonal scale}
+\hypertarget{depth-utilisation-of-m.-asterias-research-line-2}{%
+\subsubsection*{\texorpdfstring{Depth utilisation of \emph{M. asterias}
+(Research Line
+2)}{Depth utilisation of M. asterias (Research Line 2)}}\label{depth-utilisation-of-m.-asterias-research-line-2}}
+\addcontentsline{toc}{subsubsection}{Depth utilisation of \emph{M.
+asterias} (Research Line 2)}
 
 Information on depth use of \emph{M. asterias} is scarce, yet vital for
 the investigation of behavioural patterns such as feeding, resting, and
 migrating. \citet{griffiths_2020} reported a maximum depth of 118 m from
 one data storage tag implanted in a female \emph{M. asterias}. This
-further suggests \emph{M. asterias} using waters deeper than previously
+suggests that \emph{M. asterias} uses waters deeper than previously
 thought \citep[depths \textless100 m,][]{ices_2019}. A study focusing on
 seasonal depth utilisation patterns of \emph{M. asterias} has not been
 conducted yet, and this work aims to contribute to filling this
@@ -420,7 +657,7 @@ assessed:
 \begin{itemize}
 \tightlist
 \item
-  Research Question 4: What seasonal patterns of vertical behaviour does
+  Research Question 4: What seasonal patterns of vertical movement does
   \emph{M. asterias} show?
 \item
   Research Question 5: Are there differences in depth utilisation
@@ -432,24 +669,1481 @@ acoustic receiver networks and beyond those by locally storing data,
 Acoustic Data Storage Tags (ADST) are a suitable technology to assess
 these questions.
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\hypertarget{sec-mm}{%
+\section{Materials and methods}\label{sec-mm}}
 
-Here is an inline note.\footnote{Inlines notes are easier to write,
-  since you don't have to pick an identifier and move down to type the
-  note.}
+\hypertarget{acoustic-tags-and-tagging-procedure}{%
+\subsection{Acoustic tags and tagging
+procedure}\label{acoustic-tags-and-tagging-procedure}}
 
-Here is an inline note.\footnote{another inline foootnote}
+Tagging of 30 \emph{M. asterias} individuals occurred in July and
+August, 2018 (July 19, n = 13, August 02 and 03, n = 8 and n = 1) and in
+July, 2019 (July 11 and 12, n = 4 for both dates). Tagged female
+\emph{M. asterias} (n = 19, mean TL = 0.86 cm) were significantly larger
+than male \emph{M. asterias} (n = 11, mean TL = 0.78 cm, one-sided Welch
+Two Sample t-test, \(\alpha\) = 0.95, \emph{p} = 0.0021448). Details on
+the tagged individuals are listed in \textbf{?@tbl-animalinfo}.
 
-Due to its ability to collect information both within the area of
-acoustic receiver networks and beyond those by locally storing data,
-Acoustic Data Storage Tags (ADST) are a suitable technology to assess
-these questions. \footnote{nlabla}
+Innovasea ADST-V13TP tags (Innovasea Ltd., Boston, MA, USA) were used
+for this study, measuring 46 mm in length and weighing 13 g. Each tag
+had an estimated battery lifetime of 518 days, and contained a pressure
+and a temperature sensor with logging intervals of 120 s and 240 s,
+respectively. For each acoustic detection, a pressure or temperature
+value was transmitted with a ratio of 1:3 (pressure:temperature).
+Further details about the tags can be found in the Supporting
+Information of \citet{goossens_2023}. The pressure sensors recorded with
+a resolution of 0.3 m and an accuracy of \(\pm\) 3.4 m until the depth
+of 68 m, according to the manufacturer \citep{Innovasea_ADST}. The
+maximum depth value recorded in this study is 75.2 m. Since this is
+deeper than the maximum depth measurable according to the manufacturers,
+depth records around the limit of 68 m have to be interpreted with
+caution.
 
-Here is an inline note.\footnote{blabla}
+Tagged animals were both caught and released in two locations, just west
+of \emph{Neeltje Jans} (an artificial island in the Dutch province of
+Zeeland, individuals tagged in July, both 2018 and 2019, Latitude:
+51.6135652, Longitude: 3.6561763), and outside the mouth of the Western
+Scheldt (individuals tagged in August 2018, Latitude: 51.4285383,
+Longitude: 3.4074816). All animals were released within a 2 km radius
+around the two tagging locations.
+
+Animals were caught using line fishing or handline. After capture, each
+animal was placed in a holding tank filled with sea water. Prior to tag
+insertion, the animals were turned with the ventral side facing upwards
+to induce tonic immobility \citep{kessel_2015}. Next, the midventral
+line was incised 2-3 cm with a scalpel and the Acoustic Data Storage Tag
+was inserted into the abdominal cavity with forceps. Finally, the
+incision was closed with 2-3 stitches of mono-filamentous surgical
+thread \citep{goossens_2023}. Photos of the capture and tagging of
+\emph{M. asterias} are shown in \textbf{?@fig-taggingpics}.
+
+\hypertarget{ethics-statement}{%
+\subsubsection{Ethics statement}\label{ethics-statement}}
+
+The care and use of the animals complied with the Belgian Animal Welfare
+Act, guidelines and policies as approved by the \emph{Ethische Commissie
+Dierproeven} (references 2016.D-0041.004 and 2016.D-0041.008). All
+animal treatments were undertaken in 2018 and 2019, and all tagging
+procedures were carried out by competent and trained personal license
+holders.
+
+\hypertarget{tag-recoveries}{%
+\subsubsection{Tag recoveries}\label{tag-recoveries}}
+
+Upon writing (June, 2023), eight tags were recovered. Information about
+the tags with available raw data is listed in \textbf{?@tbl-dstsum}.
+
+Six out of eight recovered tags logged for approximately one month or
+less (median days at liberty = 22, max = 32, min = 9), only the tags
+with the serial numbers 1293308 (f) and 1293321 (m) logged for a year or
+more, allowing for the analysis of seasonal vertical behaviour. These
+two tags will be referred to as \emph{long-term DST} in the following.
+The rest of the tags will be referred to as \emph{short-term DST}. All
+tag serial numbers will be abbreviated to their last three digits (i.e.,
+\emph{1293308} will be referred to as \emph{308}).
+
+The Acoustic Data Storage Tags (ADST) used in this study combine
+acoustic detections with data storage logs. For maximum data overlap,
+the tag should both be acoustically detected and retrieved (required to
+access the depth and temperature logs). This was the case for three out
+of the 30 tags deployed in this study (see \textbf{?@tbl-animalinfo} and
+\textbf{?@tbl-dstsum}). Tag 319 was detected seven times, and the
+individual (f) died 19 days post-release, tag 295 was detected 21 times
+and the shark (m) died 30 days post-release, and tag 308 was detected
+2067 times and this female was acoustically detected last 366 days
+post-release. Thus, only one tag (tag 308) shows sufficient overlap
+between acoustic detections and the depth and temperature logs.
+
+\hypertarget{sec-mm_studyarea}{%
+\subsection{Study areas}\label{sec-mm_studyarea}}
+
+The study areas encompass two scales, reflecting the two lines of
+research of this study (Section~\ref{sec-intro-aims}). The first
+research line focuses on the Belgian Part of the North Sea (BPNS) and
+the estuary of the Western Scheldt. It also encompasses the tagging
+location \emph{Neeltje Jans}, which is not part of the Western Scheldt
+or the BPNS but lies within the Eastern Scheldt. The second research
+line includes year-round behaviour and thus, the study area is broader
+and less defined. Since the species is thought to move both into the
+English Channel and into the North Sea north of the BPNS
+\citep{breve_2016, griffiths_2020}, both regions constitute the study
+area for the second line of research. An overview on the two study areas
+is displayed in \textbf{?@fig-mapstudyarea}.
+
+\hypertarget{sec-mmscheldtBPNS}{%
+\subsubsection{The BPNS and Scheldt estuary (Research Line
+1)}\label{sec-mmscheldtBPNS}}
+
+The Belgian Part of the North Sea (BPNS) is generally characterised by
+shallow water depths below 40 m \citep{thierry_2019}, sandy or muddy
+sediment \citep{wolff_1973, vasquez_2021} and multiple sandbanks and
+troughs. The river Scheldt meets the North Sea north of the border
+between the Netherlands and Belgium, forming an estuary with a complex
+regime of sandflats and channels \citep{claessens_1988}. Both the BPNS
+and the Scheldt estuary are a highly dynamic environment due to strong
+currents and tides \citep{otto_1990}, introducing saline waters well
+into the Scheldt estuary \citep{ouboter_1998}. The Scheldt estuary is
+characterised by medium to coarse sand and salinity between ranges 2 and
+33.5 ppt \citep{baeyens_1998}, peaking in summer \citep{maes_1998}. The
+seafloor depth averages around 11 m with occasional troughs of up to 20
+or 30 m \citep{thierry_2019}. The BPNS and the Scheldt estuary are
+influenced by two water bodies: The Channel water and the Continental
+coastal water, meeting about 30 km off the Belgian coast
+\citep{wolff_1973}. The former is characterised by high salinity
+(\textgreater{} 18 ppt), low nutrient levels and water temperatures
+ranging from 6 °C in winter to 16 °C in summer. The latter has a lower
+salinity, high nutrient levels and a larger temperature range than the
+Channel water from 3 °C in winter and 17 °C in summer. An overview map
+of the BPNS and the Scheldt estuary is provided in
+\textbf{?@fig-mapstudyarea-1}. Fish and crustacean species composition
+and abundance underlies strong seasonal patterns, peaking in summer
+\citep{maes_1998, maes_2005}. Seasonally occuring species are marine
+fish like Atlantic herring (\emph{Clupea harengus}), Sprat
+(\emph{Sprattus sprattus}) or Whiting (\emph{Merlangius merlangus}), and
+abundant crustacean species include the Common shrimp (\emph{Crangon
+crangon}) and the Palaemonid shrimp \citep[\emph{Palaemon
+varians},][]{maes_1998}. The lower part of the Scheldt estuary from
+Flushing (Dutch: Vlissingen) to 55-60 km upstream is referred to as
+Western Scheldt estuary \citep{baeyens_1998, ouboter_1998}. Between
+Bergen op Zoom and the island Neeltje Jans (both Netherlands), the
+estuary is referred to as the Eastern Scheldt estuary.
+
+\hypertarget{sec-mmstudyareaec}{%
+\subsubsection{The East Anglian coast and the English Channel (Research
+Line 2)}\label{sec-mmstudyareaec}}
+
+The East Anglian coast lies within the Southern North Sea and is
+characterised by shallow coastal waters between 20 and 25 m water depth,
+fast tidal streams and sandy and muddy seafloor sediments
+\citep{harrison_1990}. Tidal currents are strongest at 1.3
+\(\frac{m}{s}\) during new and full moon \citep{arnold_1994}. Abundant
+crustacea include \emph{Hyas coarctatus} \citep{dyer_1985},
+\emph{Pandalus montagui}, \emph{Carcinus spp.} and \emph{Eupagurus spp.}
+\citep{sergeant_1951}.
+
+The English Channel extends from the Dover Strait to England's
+southwestern tip, spanning 77 000 km\textsuperscript{2}
+\citep{dauvin_2012}. The mean seafloor depth increases from around 25 m
+in the east to 75 m in the west \citep{dauvin_2012}, except for the 174
+m deep Hurd Deep, a trench located close to the channel island Guernsey.
+An overview of the English Channel and the North Sea is provided in
+\textbf{?@fig-mapstudyarea-1}. Strong tidal currents from west to east
+are present, which are higher on the French than on the English coast
+due to Coriolis force, reaching maximum values of 4 \(\frac{m}{s}\) at
+the Cap de la Hague \citep{salomon_1993}. Bottom temperatures vary less
+in the Western English Channel (range from 9 °C to 14 °C) than in the
+Eastern English Channel (range from 8 °C to 16 °C). Species living on
+the seafloor include Crustacea like the edible crab (\emph{Cancer
+pagurus}), the common spider crab (\emph{Maja squinado}), the European
+lobster (\emph{Homarus gammarus}) and \emph{Upogebia spp.}
+\citep{holme_1966, vaz_2007}.
+
+\hypertarget{the-permanent-belgian-receiver-network}{%
+\subsection{The Permanent Belgian Receiver
+Network}\label{the-permanent-belgian-receiver-network}}
+
+The acoustic receivers of the Permanent Belgian Receiver Network (PBARN)
+were used in this study \citep{reubens_2018}. The PBARN is part of the
+European Tracking Network (ETN), which was established in 2017 as a
+pan-european aquatic telemetry network. As of 2019, the PBARN consisted
+of 160 permanently installed and monitored acoustic receivers within the
+BPNS, the Scheldt estuary, and adjacent rivers or canals.
+\textbf{?@fig-mapWS} displays an overview of the acoustic receivers in
+the estuary of the Western Scheldt. A detection probability of
+\textgreater50 \% was estimated for a radius from 500 to 700 m around
+the receiver \citep{goossens_2022}, and \textgreater70 \% for 200 m
+radius \citep{reubens_2018}.
+
+\hypertarget{data-analysis-and-visualisation}{%
+\subsection{Data analysis and
+visualisation}\label{data-analysis-and-visualisation}}
+
+All data analyses were carried out using R \citep{R_2022}, primarily
+using the packages \texttt{dplyr} \citep{dplyr} and \texttt{lubridate}
+\citep{lubridate}. Geospatial data was queried from the marineregions
+database \citep{claus_2014} in the case of (marine) boundaries
+\citep[with the \texttt{mregions2}-package,][]{mregions2}, and EMODnet
+Human Activities \citep{solaun_2021} data \citep[with the
+\texttt{EMODnetWFS}-package,][]{EMODnetWFS}. All plots were generated
+using the \texttt{ggplot2}-package \citep{ggplot2}. Packages used for
+specific data analyses are indicated in the respective section.
+
+For all tags, days at liberty were calculated. Days at liberty were
+considered the maximum number of days between the animal's release and
+its last detection by a receiver, or the death date determined from the
+retrieved depth log.
+
+\hypertarget{acoustic-detections-research-line-1}{%
+\subsubsection{Acoustic detections (Research Line
+1)}\label{acoustic-detections-research-line-1}}
+
+Detections were accessed from the ETN database
+(https://www.lifewatch.be/etn/) using the \texttt{etn}-package
+\citep{etn}. Tags with only a single detection were omitted from all
+further analyses. Acoustic detections were visualised on an individual
+and acoustic receiver station level. Residency Indices were calculated
+following the two definitions provided by \citet{kraft_2023}. Firstly,
+the overall RI was calculated for all individuals, dividing the number
+of days with a detection by the estimated battery life of 518 days.
+Secondly, a subset RI was calculated for station OG10 in 2019, which had
+the highest number of individuals detected and detections. This
+calculation involved dividing the number of days detected at this
+receiver by the time period between the first and last detection of any
+individual at that receiver.
+
+\hypertarget{sec-mm_dsts}{%
+\subsubsection{Data Storage Tags (Research Line 2)}\label{sec-mm_dsts}}
+
+Depth and temperature logs from the recovered tags were accessed via the
+Marine Data Archive (MDA, dataset DOI: https://doi.org/10.14284/605).
+These logs are the same dataset as the \emph{M. asterias} data from
+\citet{goossens_2023}. The temperature log was not included in any
+analysis. The first week of depth values was excluded from all analyses
+to remove potential bias resulting from the tagging procedure
+\citep[following][]{flavio_2021}. The date of death, used to calculate
+the time at liberty for the recovered tags, was visually extracted from
+plots of the raw depth series, and marks the date after which only a
+tidal signal remains in the depth log \citep[characterised by cyclically
+rising and falling depths within a rough 2 m depth
+range,][]{kvale_2006}.
+
+The analyses described in the following were only performed for tags
+that logged for \(\geq\) 365 days, i.e., tag 308 (female) and tag 321
+(male). Those will be referred to as \emph{long-term DST} in the
+following, returned tags logging for less than a year will be referred
+to as \emph{short-term DST}.
+
+\hypertarget{summary-statistics}{%
+\paragraph*{Summary Statistics}\label{summary-statistics}}
+\addcontentsline{toc}{paragraph}{Summary Statistics}
+
+Summary statistics, i.e., median (since depth did not follow a normal
+distribution), maximum and minimum depth were calculated per day,
+daytime and nighttime. For the daytime/nighttime summaries, sunrise and
+sunset times were extracted using the
+\texttt{getSunlightTimes()}-function from the \texttt{suncalc}-package
+\citep{suncalc}. The illuminated fraction of the moon was extracted
+using the \texttt{moonAngle()}-function from the \texttt{oce}-package
+\citep{oce}.
+
+A Savitzky-Golay smoothing filter \citep[ filter order \emph{p = 1},
+filter length \emph{n = 5}]{press_1990} was applied on all summaries
+(per day, daytime and nighttime) using the
+\texttt{sgolayfilt()}-function from the \texttt{signal}-package
+\citep{signal}. This particular filter smoothes the data but retains
+spikes in the data better than other smoothing filters like butterworth
+or averaging filters \citep[such as a rolling mean,][]{schafer_2011}.
+
+\hypertarget{autocorrelation}{%
+\paragraph*{Autocorrelation}\label{autocorrelation}}
+\addcontentsline{toc}{paragraph}{Autocorrelation}
+
+The autocorrelation was calculated using the
+\texttt{stats::acf()}-function. Autocorrelation refers to the serial
+correlation of a data series with itself \citep{bartlett_1946},
+resulting in an autocorrelation coefficient between -1 and 1 (-1
+referring to perfect anti-correlation and 1 referring to perfect
+correlation, 0 referring to no correlation at all) over the lag, which
+refers to the overlap between the data series with itself.
+
+\hypertarget{fast-fourier-transformation-fft}{%
+\paragraph*{Fast Fourier Transformation
+(FFT)}\label{fast-fourier-transformation-fft}}
+\addcontentsline{toc}{paragraph}{Fast Fourier Transformation (FFT)}
+
+A Fast Fourier Transform (FFT) was performed on all DST logs, using the
+\texttt{base::fft()}-function. This method decomposes a signal in the
+time domain (which is a combination of multiple sine and cosine waves
+with different frequencies) into its components in the frequency domain,
+resulting in a frequency spectrum of the decomposed signal. Dominant
+frequencies (or rather periods, which is the inverse of the frequency)
+give insights about the scale of periodicity of a signal (in the present
+case the signal is the depth-time series of the sharks). These dominant
+periods appear as spikes in the so-called periodogram, which is the
+visual representation of the period spectrum of the signal
+\citep{cochran_1967}. This analysis gives insights into periodicities
+within the whole signals but does not resolv when these periodic
+components occur.
+
+\hypertarget{continuous-wavelet-transform-cwt}{%
+\paragraph*{Continuous Wavelet Transform
+(CWT)}\label{continuous-wavelet-transform-cwt}}
+\addcontentsline{toc}{paragraph}{Continuous Wavelet Transform (CWT)}
+
+To resolve prevalent periodicities in the time domain of a signal,
+Continuous Wavelet Transform (CWT, a specific type of Wavelet Analysis)
+was conducted \citep{grinsted_2004}. This technique analyses signals in
+both the time and frequency domains simultaneously. CWT uses wavelet
+functions, wave-shaped building blocks localised in both time and
+frequency, which can be adjusted in size and position to capture
+different features of a signal. These wavelet functions can be
+understood as a spectral microscope that focuses on different time
+intervals of a signal. The simultaneous resolution of time and
+frequency, however, reduces the accuracy of results. To obtain robust
+and valid results despite the resolution loss, frequencies are compared
+against white noise using a \(\chi^2\) test \citep{grinsted_2004}.
+
+When applying the CWT to a signal, a two-dimensional, visual
+representation called a wavelet scalogram is obtained. The wavelet
+scalogram depicts the distribution of wavelet power as a function of
+time and frequency. The power in the scalogram represents the strength
+or magnitude of each periodicity at different time points. Areas with
+higher power indicate stronger presence of the corresponding period.
+Moreover, the scalogram also shows if the power of a specific period
+significantly differs from white noise. Fully opaque areas in the
+scalogram differ from white noise, and slightly transparent areas do not
+significantly differ from white noise.
+
+In the present study, CWT was conducted using the \texttt{wt()}-function
+from the \texttt{biwavelet}-package \citep{biwavelet}. CWT was performed
+on two depth-time series per shark, resulting in two wavelet scalograms
+per individuals. Firstly, CWT was performed on the raw depth log (which
+was subsampled to one depth measurement every 10 minutes to reduce
+computation time), resulting in the power (the proxy for prevalence) of
+periodicities in the scale of minutes and hours, hereafter referred to
+as the \emph{hourly scale}. For this study, periodicities in the range
+of tidal and diurnal cycles (between 6 and 24 hours) per date were of
+interest. To include a margin of periodicities, the scalograms of the
+CWT in the hourly scale show the prevalence (i.e., power) of periods
+between 2 and 64 hours. The maximum power of a period for each date is
+displayed since the highly prevalent periods are of interest. Secondly,
+CWT was performed on the Savitzky-Golay filtered median depth per date
+(including one depth value per date), which enables to resolve prevalent
+periodicities in a signal on a scale of days (2 days to about 50 days),
+hereafter referred to the CWT result on a \emph{daily scale}. This
+filtered median daily depth (as opposed to the non-filtered one) was
+chosen to obtain a smoother wavelet scalogram and ease the
+interpretation of the results. The scalogram on the daily scale displays
+the power (i.e., prevalence) of periods between 2 and 50 days, enabling
+the investigation of periodical presence of weekly, biweekly or monthly
+patterns in the depth-time series of the DST logs.
+
+\newpage{}
+
+\hypertarget{sec-results}{%
+\section{Results}\label{sec-results}}
+
+\hypertarget{sec-res-acoustic}{%
+\subsection{Acoustic detections (Research Line
+1)}\label{sec-res-acoustic}}
+
+Two tags only had a single detection (serial numbers 296 and 301) and
+were thus omitted from all further analyses. An overview of the acoustic
+detections of the remaining tags is displayed in \textbf{?@fig-abacus}.
+Within the study period from July, 2018 to August, 2020, there are no
+acoustic detections between November and April in either year. 96.71\%
+of detections are in the WS1 area, and of those, 68.26\% are at station
+OG10 (see \textbf{?@fig-mapWS}). Of the 11 males that were tagged, 4
+were detected more than once, 3 of which were detected in the year
+following their tagging. Of the 19 tagged females, 14 were detected more
+than once and 11 individuals were detected in the year following their
+tagging (\textbf{?@fig-abacus}). Of the 4 detected males, 3 were
+detected inside the BPNS and one in the WS1 array. Across all years,
+most detections (n = 2484) were in the month of May, while most
+individuals (n = 10) were detected in August. 12 out of 18 individuals
+(67 \%) were detected in the year following their release.
+
+The acoustic detections at each receiver station of female \emph{M.
+asterias} within the Western Scheldt are shown in
+\textbf{?@fig-heatmapdetections}. The receiver stations are ordered by
+latitude (from north to south), and by receiver array (station OG10 to
+W7 are in the WS1 array, and station borssele to 4 are in the WS2
+array). Most detections (n = 2103) were at station OG10 in October,
+2019. This is almost twice as much as the second most detections (n =
+1097 at the same station in May, 2020). Most individuals (n = 6) were
+detected at station WN2 in August and September, 2018.
+
+Acoustic detections of female \emph{M. asterias} at receiver station
+OG10 in 2019 are shown in \textbf{?@fig-heatmapOG10}. The acoustic
+detections of an individual at a day (median = 35 detections per day)
+spread from 1 detection to 232 detections for tag 299 on October 13,
+2019.
+
+Tags 313, 308, 299 and 297 show a cluster of about 14 to 21 days with
+consecutive detections. Tag 308 has two clusters of subsequent
+detections, between May 13 and June 09, and between July 16 and August
+12, 2019.
+
+\hypertarget{sec-results-dst}{%
+\subsection{Data Storage Tags (Research Line 2)}\label{sec-results-dst}}
+
+\hypertarget{raw-depth-and-temperature-logs}{%
+\subsubsection{Raw depth and temperature
+logs}\label{raw-depth-and-temperature-logs}}
+
+The depth and temperature logs of tags 308 and 321 (the two long-term
+DST) are shown in \textbf{?@fig-dst308-1} and \textbf{?@fig-dst321-1},
+respectively. Example subsets from summer (\textbf{?@fig-dst308-2} and
+\textbf{?@fig-dst321-2}) and winter (\textbf{?@fig-dst308-3} and
+\textbf{?@fig-dst321-3}) are also displayed.
+
+The full depth log of tag 308 (female, \textbf{?@fig-dst308-1}),
+comprising 366 days, shows depths between 0 and 20 m from the time of
+tagging in August, 2018, to the beginning of October. Then the depth
+gets deeper over a period of about two weeks, and between mid-November
+and mid-December the sensor recorded depths between 50 and 75 m. From
+December, 2018 until March, 2019, the depth ranges between 75 m and
+close to the water surface. From mid-March on, the depth remains
+shallower than 60 m. From May to June, 2019, depth is relatively
+constant around 17 m, from mid-June to mid-July it is relatively
+constant around 10 m and until the sensor stops recording the depth goes
+back to just under 20 m. \textbf{?@fig-dst308-2} shows an example subset
+of the depth log of tag 308 in September, 2018. Roughly, the depth
+alternates between 12 - 14 and 16 - 20 m in a sinusoidal pattern with a
+wavelength of about 12 hours. \textbf{?@fig-dst308-3} shows the recorded
+depth between February and March, 2019. Here, periods of smaller depth
+ranges from 40 to 60 m (from February 11 to 18 and from February 25 to
+March 3) can be observed with alternating periods of larger depth ranges
+from 5 to 75 m (from February 18 to 24).
+
+The full depth log of tag 321 (male, \textbf{?@fig-dst321-1}) is 485
+days long and shows depth ranges between 0 and 30 m from tagging until
+the end of October, 2018. Then, depth gets deeper over a period of
+roughly 10 days, stays at 35 to 50 m until December, 2018 and then
+ranges from 5 m to 50 m until March, 2019. Until May, 2019 depth ranges
+between 10 and 35 m, then the sensor recorded depth values of 60 m on
+May 03, 2019. After that, depth gets shallower with ranges from 0 to
+mostly 20 m until mid-September. Until the end of the depth log on
+November 15, 2019, depth gets deeper to around 35 m and then to around
+40 m. The example depth log of September, 2018 in
+\textbf{?@fig-dst321-2} shows a depth range between 10 and 15 m during
+daytime (a sinusoidal pattern similar to the one in
+\textbf{?@fig-dst308-2}), and minimum depths of around 2 m during
+nighttime. The subset from February to March, 2019
+(\textbf{?@fig-dst321-3}) shows depth ranges from 5 to 55 m with no
+observable pattern of larger or smaller depth ranges on a weekly scale.
+
+The raw depth and temperature logs of the short-term DST are included in
+\textbf{Annex A}. The short-term DST logged depth and temperature data
+for 22 \(\pm\) 9 days, reaching maximum water depths of 53.51 m \(\pm\)
+10.24 m.
+
+\hypertarget{sec-results-dst-summary}{%
+\subsubsection{Summary statistics}\label{sec-results-dst-summary}}
+
+The daily summary statistics of the depth logs of tags 308 and 321 are
+displayed in \textbf{?@fig-dstsum308} and \textbf{?@fig-dstsum321},
+respectively. Summaries per day, daytime and nighttime are included. The
+solid lines show the Savitzky-Golay filtered median. The ribbons span
+between the Savitzky-Golay filtered maximum and minimum depth. The
+dotted line displays the fraction of the moon that is illuminated,
+representing the moon phase.
+
+\textbf{?@fig-dstsum308-1} displays a daily maximum of about 20 m until
+the end of September and then, until the start of October the daily
+median depth gets deeper, reaching 75 m. Until the beginning of December
+the shark uses waters with minimum daily depths not shallower than 50 m.
+After that until mid March the daily maximum depth is between 40 and 68
+m and the daily minimum depth is between 5 and 50 m. After March 19,
+2019, the daily median depth is always shallower than 60 m. Between
+March until the end of the time series, some plateaus in median depth
+occur: Around 35 m median depth from the end of March to the end of
+April, around 17 m depth from mid May to the start of June and from the
+end of July onward, and around 8 m depth between June 11 and July 13,
+2019. The minimum depth during the night is significantly shallower than
+during the day (one-sided Welch Two Sample t-test, \(\alpha\) = 0.95,
+\emph{p} = \ensuremath{8.0829717\times 10^{-9}}). From December, 2018 to
+May, 2019, the minimum and median depth per day
+(\textbf{?@fig-dstsum308-2}) show peaks following a rough biweekly
+pattern, getting the shallowest when the illuminated moon fraction
+reaches its maximum and minimum. During the night
+(\textbf{?@fig-dstsum308-3}), a rather monthly pattern can be observed
+for that time period. Here, the median and minimum depth are shallowest
+when the moon is fully illuminated.
+
+The male shark (tag 321, \textbf{?@fig-dstsum321-1}) uses waters
+shallower than 20 m between August and October, 2018. From October 21
+until November 03, 2018, the daily median depth gets consistently
+deeper, reaching depths of around 45 m throughout November, 2018.
+Between December 09, 2019 and January 21, 2019, the daily median depth
+ranges from 22 to 33 m and the maximum and minimum depth between 53 and
+16 m, respectively. After dropping to 39 m on January 28, 2019, the
+daily median depth gets shallower until April 30, reaching depths of 22
+m. Then, the daily median depth increases substantially between April 27
+and May 05, ranging between 22 m and 6 m until October 05. From October
+08 to 19, 2019, the daily median depth changes from 17 to 45 m. Until
+the log stops on November 16, the daily median depth ranges between 45
+and 32 m. The minimum depth during the night is significantly shallower
+than during the day (one-sided Welch Two Sample t-test, \(\alpha\) =
+0.95, \emph{p} = \ensuremath{1.6887159\times 10^{-19}}). The median
+depth per day (\textbf{?@fig-dstsum321-2}) shows slight peaks in a
+biweekly pattern between January and July, 2019. The peaks of the median
+depth at night (\textbf{?@fig-dstsum321-3}) show no visually noticeable
+pattern.
+
+\hypertarget{sec-resacf}{%
+\subsubsection{Autocorrelation}\label{sec-resacf}}
+
+The autocorrelograms of the two long-term DST logs (computed using the
+Savitztky-Golay filtered daily median depth) are shown in
+\textbf{?@fig-acf}. An autocorrelation value of -1 refers to perfect
+anti-correlation, 1 referring to perfect correlation, and 0 refers to no
+correlation at all. Results from the autocorrelation analyses display
+similar patterns for both the male and female. For the female (tag 308,
+\textbf{?@fig-acf-1}), depth data shows no autocorrelation at 81 and 264
+days. Values are inversely correlated after a period of 170 days, while
+highest correlation occurs around 300 days, displaying a pattern that
+closely resembles annual periodicity. The autocorrelation of daily
+median depth for the male shark (tag 321, \textbf{?@fig-acf-2}) is 0 at
+lags of 75, 256 and 383 days. Inverse autocorrelation occurs at a lag of
+138 days (around 4.5 months) and maximum autocorrelation occurs at 345
+days, resembling an annual periodicity (similar to the female).
+
+\hypertarget{wavelet-analysis}{%
+\subsubsection{Wavelet analysis}\label{wavelet-analysis}}
+
+CWT was performed on both the raw depth log, subsampled to one value
+every 10 minutes, and the Savitzky-Golay filtered daily median depth, as
+described in Section~\ref{sec-mm_dsts}. The resulting wavelet scalograms
+for the two long-term DST depth logs are shown below, in
+\textbf{?@fig-waveletresults308} for tag 308 (f) and in
+\textbf{?@fig-waveletresults321} for tag 321 (m).
+
+\textbf{?@fig-waveletresults308-1} shows high prevalence across all
+periods (between 2 and about 50 hours) for the female (tag 308) in
+October 2018, and between December, 2018 and May, 2019. In that time
+period, significant periodicities spanning from 4 to 14 hours exist in a
+rough interval of 2 weeks. To a lesser extent, period bands of 12 hours
+are observable from August to September, 2018 and May to August, 2019.
+The depth log of tag 308 (f) shows periodic cycles of approximately 14
+and 30 days in October, 2018 and between December and June, 2019
+(\textbf{?@fig-waveletresults308-2}).
+
+The wavelet scalogram of the depth log of tag 321 (male,
+\textbf{?@fig-waveletresults321-1}) shows punctually high periodicities
+between 4 to 64 hours at the beginning and end of October, 2018,
+throughout May, 2019, and at the beginning of October, 2019. Significant
+periodicities are sporadically present during these periods, between
+roughly 4 and 12 hours. A period band of 24 hours is present August to
+October, 2018, January and February, 2019 and between July and October,
+2019. A period band of 12 hours is present to a lesser extent during the
+same periods.
+
+The daily wavelet scalogram in \textbf{?@fig-waveletresults321-2} shows
+a significant presence of periodicities of 16 to 24 days between
+October, 2018 and August, 2019. From September to November, 2019,
+periods between about 8 and 50 days are present. From December, 2018 to
+February, 2019 and from mid-April to June, 2019, periods between about 7
+and 14 days are present.
+
+\newpage{}
+
+\hypertarget{combination-of-acoustic-detections-and-dst-logs}{%
+\subsection{Combination of acoustic detections and DST
+logs}\label{combination-of-acoustic-detections-and-dst-logs}}
+
+Three out of the 30 tags deployed were both retrieved and detected by an
+acoustic receiver. However, only one of those tags (tag 308, female)
+provides sufficient data. \textbf{?@fig-adst308} shows the raw depth log
+of this tag, superposed with the acoustic detections of that femake.
+After the DST had stopped recording on August 03, 2019, the shark was
+recorded at station OG10. On October 05, 2019 it was recorded at the
+Birkenfels station in the BPNS.
+
+\hypertarget{sec-disc}{%
+\section{Discussion}\label{sec-disc}}
+
+The following chapter will critically reflect on the datasets and
+analyses used, and interpret the findings in the context of already
+existing ecological knowledge on \emph{M. asterias}. Firstly, the limits
+of the telemetry methods utilised for this study and their resulting
+datasets will be discussed (Section~\ref{sec-disc-limits}), followed by
+a reflection on the chosen methods of analysis
+(Section~\ref{sec-disc-reflection}). Thirdly, the results of this work
+will be interpreted regarding present knowledge on movement ecology of
+\emph{M. asterias}. The two research lines of this study encompass
+assessing seasonality and sex-specificity regarding the presence of
+\emph{M. asterias} in the BPNS and the Western Scheldt, as well as its
+depth utilisation and five research questions were stated in
+Section~\ref{sec-intro-aims}.
+Section~\ref{sec-disc-seasonalpresencefemales} will cover the first line
+of research (presence of \emph{M. asterias} in the BPNS and Western
+Scheldt), and Section~\ref{sec-disc-dst-movementpatterns} will cover the
+second line of research (depth utilisation). Section~\ref{sec-disc} will
+finally discuss the potential of ADST as a novel tag technology for
+research on \emph{M. asterias} (Section~\ref{sec-disc-adst}) and the
+gained ecological knowledge on the species in the context of related
+\emph{Mustelus} species (Section~\ref{sec-disc-otherspecies}).
+
+\hypertarget{sec-disc-limits}{%
+\subsection{Limits and biases of the methods
+used}\label{sec-disc-limits}}
+
+\hypertarget{sec-disc-tagging-effects}{%
+\subsubsection{Tag recoveries and possible tagging
+effects}\label{sec-disc-tagging-effects}}
+
+Of 30 deployed ADST, eighth were recovered at the time of writing in
+June, 2023. Out of those, 6 \emph{M. asterias} died within the first
+month post-release. There are numerous factors that potentially
+contribute to a negative effect of the tagging procedure. For instance,
+the choice of tag to implant must be made considering the animal's body
+mass. Generally, it is advised that the tag should not exceed 10 \% of
+the individuals's body mass \citep{wagner_2011}. In the present study,
+weight was recorded for 17 out of 30 tagged individuals. The lightest
+individual of those sharks weighed 900 g, resulting in a tag to body
+mass ratio of 1.4 \% and thereby being well under the proposed threshold
+of 10 \%. In addition, \citet{smukall_2019} report the non-lethal
+recovery of an acoustic tag 13 years post-release, implanted into a
+female Lemon shark (\emph{Negaprion brevirostris}) at 119 cm TL. Thus,
+it does not seem likely that the tag's weight had a severe negative
+influence on the survival of the tagged individuals. Other possible
+factors include insufficient asepsis of surgery tools and the tag
+itself, or negative physiological responses due to handling
+\citep{rub_2014}. The latter might include too much time outside of the
+water, injuries from the fishing method (hook and line, in this case),
+or the tag implantation taking too long. The cause of death for the the
+6 \emph{M. asterias} individuals cannot be identified at this point.
+Death due to predation by an endothermic mammal predator such as the
+grey seal can be excluded, because the temperature did not substantially
+rise \citep[to around 38 °C,][]{austin_2006} prior to the animals'
+deaths (all raw depth an temperature logs are shown in \textbf{Annex A}.
+Generally, the temperature logs of the short-term DST appear erroneous,
+note for example that the temperature remains 21.2 °C for tag 319 at all
+times between August 4 and 12, 2018. The possibility of predation by an
+ectothermic predator cannot be ruled out at this point, since
+temperature cannot provide any relevant insights but instead the depth
+log would show extraordinary vertical movement \citep[see][ for examples
+of predation by endothermic versus ectothermic predators]{seitz_2019}.
+The possibility of predation by an ectothermic animal such as the blue
+shark \emph{Prionace glauca} could be a next investigative step.
+
+\hypertarget{sec-disc-datasetlimits}{%
+\subsubsection{Limits of the datasets}\label{sec-disc-datasetlimits}}
+
+Essentially, two types of dataset were used for study: Firstly, the
+acoustic detections of the tagged sharks, and secondly, the depth logs
+from recovered Data Storage Tags.
+
+The 10 940 acoustic detections of 18 \emph{M. asterias} individuals over
+a period of roughly two years are already a relevant dataset to start
+with, but more tagging effort and thus more acoustic detections are
+needed to gain further insights into the presence of the species in the
+Scheldt estuary. For comparison, \citet{hereu_2023} tagged 33 European
+seabass (\emph{Dicentrarchus labrax}), a seasonally migratory fish
+\citep{pawson_2007}, and had 493 817 acoustic detections over roughly 2
+years in an acoustic receiver network comprised of around 100 receivers
+\citep{aspillaga_2017}. The substantial difference in acoustic
+detections (approximately factor 50) indicates a difference in
+explanatory power between the dataset of \emph{M. asterias} and the
+dataset used in \citet{hereu_2023}.
+
+Moreover, the gate-like receiver setup in the Western Scheldt is not
+ideal to study horizontal distribution but rather serves to detect
+animals that enter or leave the river Scheldt \citep{reubens_2019}. If
+possible, additional receivers could be placed along the coast between
+Dishoek and Zoetelande (see \textbf{?@fig-mapWS}) to further resolve the
+seasonal presence of adult females in the area and potentially gain
+information on pupping grounds.
+
+The availability of only long-term DST logs (that is, a log with more
+than a year of data) poses the greatest limit of the second dataset.
+More logs showing the annual migration should be analysed in the future
+to assess whether the sex-specific patterns described in this study are
+due to variation between individuals or due to the animal's sex. The
+short-term DST logs were not further investigated in the present study
+since altered behaviour resulting from the tagging procedure could not
+be excluded. However, investigating the short-term DST logs could be
+valuable to assess in the future.
+
+An additional restriction of the archival data is the limit of the depth
+sensor of 68 m. Since the female shark swam deeper than that limit
+between October and December, 2018, limited inferences can be made from
+the female's depth log during that period and the current results from
+the geolocation modelling are therefore imprecise during that time
+period. Potentially, this individual swam into the Hurd Deep in the
+English Channel, or even into deeper waters in the Bay of Biscay
+\citep[as hypothesised by][]{breve_2016}.
+
+\hypertarget{sec-disc-reflection}{%
+\subsection{Reflection of the chosen
+analyses}\label{sec-disc-reflection}}
+
+This work focused on the analysis of the acoustic detection and data
+storage tag datasets. As such, the chosen analyses will be reflected
+upon in the following.
+
+\hypertarget{sec-disc-reflection-acoustic}{%
+\subsubsection{Acoustic detections}\label{sec-disc-reflection-acoustic}}
+
+For this work, the acoustic detection data were analysed in an
+exploratory way. Heatmaps with the number of detections per receiver
+station, individual and month proved to be a suitable method of
+investigation. Furthermore, Residency Indices (RI) were calculated on
+different scales (see \textbf{?@tbl-animalinfo} and
+\textbf{?@fig-heatmapOG10}). While providing a first simplistic insight
+into the residency of an individual the reduction of complexity has to
+be taken with caution. Since temporal patterns of residency (i.e., a
+cluster of presence over several days can result in the same RI as a
+sporadic presence over a long time with detections every few days) are
+not resolved. Thus, it is argued that RI can be an auxiliary variable to
+compare between individuals but should not be the only analysis method
+\citep{kraft_2023}.
+
+In the future, the detections of single females during summer could be
+looked at in detail to assess if there are differences in presence
+around certain receivers that could indicate pupping. A useful piece of
+information for such investigations would be to assess the reproductive
+status of tagged females (i.e., if the individual is pregnant or not)
+upon release.
+
+\hypertarget{sec-disc-reflection-acf}{%
+\subsubsection{Autocorrelation}\label{sec-disc-reflection-acf}}
+
+Autocorrelation analysis allows for a simplistic description of scales
+of patterns found in time series. It is a helpful exploratory tool to
+get an overview of the dataset \citep{dray_2010} and it moreover can
+provide the base for the detection of behavioural switches
+\citep{gurarie_2016}. While autocorrelation might not be the most
+conclusive exploratory analysis, it proved to be a useful auxiliary tool
+to explore the depth time series data and potentially confirm identified
+periods with occurring behavioural switches.
+
+\hypertarget{sec-disc-reflection-wavelet}{%
+\subsubsection{Wavelet analysis}\label{sec-disc-reflection-wavelet}}
+
+Conducting a continuous wavelet transform (CWT) and thereby resolving
+prevalent periodicities in the time domain was the main analysis tool in
+this study. Furthermore, performing CWT both on the raw depth log and
+the daily summary statistics allowed for different scales of
+periodicities and was able to provide further proof of patterns that
+could already be seen in the daily summary statistics in
+\textbf{?@fig-dstsum308-1} and \textbf{?@fig-dstsum321-1}. Wavelet
+analysis is no ubiquitous analysis tool in movement ecology but has been
+employed in the past \citep{wittemyer_2008, zhang_2020}. CWT was
+preferred over Fourier Transformation (FT) as a focal method, due to its
+ability to resolve periodicities in the time domain. While FT can also
+be performed on subsets of the depth log, this manual separation
+introduces a bias and within that subset, the periodicities are not
+resolved in the time domain. The resolution in the time domain of CWT
+comes at the cost of a lower resolution both in the time and frequency
+domain. Thus, FT provides a first step of spectral analysis and can give
+insights into generally existing patterns of periodicity (as shown in
+\textbf{Annex A}), but CWT allows for unbiased assessment of change of
+prevalent periodicities in time of time series data. In the wavelet
+scalograms on the hourly scale, only periods in winter were
+significantly present and are shown as fully opaque in the plots
+(\textbf{?@fig-waveletresults308-1} and
+\textbf{?@fig-waveletresults321-1}). In summer, periodicities of 12 h
+for the female shark and 24 h of the male shark have a high prevalence
+(indicated by a high power value and an orange/red colour in the
+scalogram), albeit these are not significant. This is thought to be due
+to the difference in magnitude of the periodicity during summer compared
+to the winter period, for example, where overall vertical activity is
+much higher.
+
+\hypertarget{sec-disc-seasonalpresencefemales}{%
+\subsection{\texorpdfstring{Presence of \emph{M. asterias} in the
+Western Scheldt and BPNS (Research Line
+1)}{Presence of M. asterias in the Western Scheldt and BPNS (Research Line 1)}}\label{sec-disc-seasonalpresencefemales}}
+
+This section discusses the results of the acoustic detections (see
+Section~\ref{sec-res-acoustic}) in the context of the three research
+questions of the first line of research. Those involve seasonal patterns
+(RQ 1), differences between sexes (RQ 2), and spatial preferences (RQ 3)
+within the BPNS and the Western Scheldt (see
+Section~\ref{sec-intro-aims}).
+
+\hypertarget{sec-disc-acoustic-seasonality}{%
+\subsubsection{Seasonality}\label{sec-disc-acoustic-seasonality}}
+
+There are no acoustic detections at all between November and April in
+all years with acoustic detections (2018 to 2020,
+\textbf{?@fig-abacus}). A tagged animal is detected with an estimated
+probability of \textgreater70 \% within a 200 m radius around the
+acoustic receiver \citep{reubens_2018}. Thus, no detections do not imply
+that no tagged animal was present, but the consistency of no detections
+between November and April throughout the whole study period suggests a
+seasonal presence of \emph{M. asterias} in the Western Scheldt between
+April and November, which goes in line with existing hypotheses on the
+residency and migration behaviour of the species
+\citep{breve_2016, breve_2020, griffiths_2020}. Most females (n = 7)
+were detected in the months of July, August and September, in the WS1
+array. This suggests that these months are especially relevant for
+\emph{M. asterias} females in the Western Scheldt. \emph{M. asterias}
+might leave the area of the Western Scheldt during winter because of
+decreasing water temperature \citep{breve_2016}, a main predictor of
+elasmobranch occurrence \citep{martin_2010}. The warmer waters in the
+Channel area might be favourable especially for gestating females since
+higher water temperatures increase metabolic rate and thereby improve
+embryo development \citep{hurst_1999}.
+
+\hypertarget{sex-specificity}{%
+\subsubsection{Sex-specificity}\label{sex-specificity}}
+
+97 \% of detections result from tags implanted into female \emph{M.
+asterias}. Despite the higher number of females tagged (19 tagged
+females in contrast to 11 tagged males), this still suggests higher
+presence and habitat use of females in the receiver area compared to
+males. Furthermore, not more than one male was ever detected in a month.
+Three males were detected in the BPNS (one each on August, 2018, and in
+April and May, 2019), and one male was detected in the WS1 array in
+April, 2020. Three of those four individuals were detected in the year
+following their release, indicating philopatric behaviour for males.
+\citet{griffiths_2020} reported philopatry for a female \emph{M.
+asterias} based on DST data. The return of the three males (tags 311,
+315 and 316) into the BPNS and the WS1 area could be the first direct
+reporting of philopatry for male \emph{M. asterias}.
+
+\hypertarget{spatial-preferences}{%
+\subsubsection{Spatial preferences}\label{spatial-preferences}}
+
+According to the acoustic detections, a hotspot of seasonal presence of
+mature \emph{M. asterias} females might be the area around the receiver
+OG10 (66 \% of detections, and 10 out of 14 detected females, see
+\textbf{?@fig-heatmapOG10}). According to fishers, the area offshore
+from Zoetelande is a \emph{M. asterias} fishing hotspot during summer,
+so the coastal waters between Diskoek and Zoetelande are suggested to be
+important for the species. Whether or not the potential aggregations of
+mature females is related to parturition should be subject of further
+studies. There are several indications, however, that point towards the
+Western Scheldt and/or its surrounding waters to be a pupping area for
+\emph{M. asterias}. Firstly, the Eastern Scheldt is a confirmed pupping
+ground \citep{breve_2016}, and secondly, during the tagging for this
+study in August, 2018, two neonates \citep[around 30 cm
+TL,][]{farrell_2010} were caught \footnote{Verhelst, Pieterjan
+  (\emph{personal communication}), April 25, 2023.}.
+
+Shallow and sheltered coastal habitats are thought to be suitable
+pupping grounds for sharks in general \citep{speed_2010} and for
+\emph{M. asterias} in particular \citep{ellis_2004, ellis_2005}. This
+description fits the Western Scheldt upstream past Flushing. However,
+this area has very few detections of tagged \emph{M. asterias}
+individuals. The low number of acoustically detected sharks (38
+detections in the WS2 array throughout the whole study period from 2018
+to 2020 from two individuals) indicates that the waters past Flushing
+are not as frequently used as the waters around Dishoek. This could be
+due to low salinities, or to anthropogenic influences like dredging.
+
+\hypertarget{further-consideration-biannual-reproduction}{%
+\subsubsection{Further consideration: biannual
+reproduction}\label{further-consideration-biannual-reproduction}}
+
+Another relevant fact to consider is the biannual reproductive cycle of
+\emph{M. asterias} and whether that implies differing seasonal habitat
+use between years of pregnancy and years without a pregnancy. Females
+were either detected during many days (20 - 40) or few (5 - 10) days
+during the summer of 2019 (see \textbf{?@fig-heatmapOG10}). This could
+indicate different behaviourial states between the females with many and
+few acoustically detected days, further supported by the large range of
+Residency Indices which are shown in the figure (the minimum RI of 0.005
+differs from the maximum RI of 0.241 by a factor close to 50).
+
+A relevant aspect to study in the future would be to explore reasons of
+these seemingly different behaviours and whether the females could be
+giving birth during their residential clusters at station OG10. As such,
+it could be helpful to assess if adult females are pregnant at the time
+of release, through ultrasonography or the use of sex steroid hormones,
+both of which have already been employed to determine pregnancy in
+sharks
+\citep{awruch_2014, smukall_2019, anderson_2018, fujinami_2020, fujinami_2021}.
+Generally, the Scheldt estuary can be considered a suitable pupping
+habitat for \emph{M. asterias} due to high nutrient levels and food
+availability of the Continental coastal water \citep[which enters the
+estuary through tidal currents,][]{wolff_1973}, and monthly water
+temperatures above 15 °C between June and September \citep{speed_2010}.
+Assessing the reproductive stage of females upont tagging would thus
+allow for further clarification if the Western Scheldt is used as a
+pupping ground, and if it might be a relevant area for non-pregnant
+females, too.
+
+\hypertarget{sec-disc-dst-movementpatterns}{%
+\subsection{\texorpdfstring{Depth utilisation of \emph{M. asterias}
+(Research Line
+2)}{Depth utilisation of M. asterias (Research Line 2)}}\label{sec-disc-dst-movementpatterns}}
+
+The following section discusses the analysis results of the two
+long-term DST logs (of tag 308, female, and tag 321, male, see
+Section~\ref{sec-results-dst}) in the light of the second research line,
+which addresses the depth utilisation of \emph{M. asterias}
+(Section~\ref{sec-intro-aims}). The two research questions asked involve
+seasonal patterns (RQ 4) and differences in depth use between sexes (RQ
+5).
+
+Overall, cyclicity can be observed for both the female (tag 308) and the
+male (tag 321) shark logging data for more than a year. The
+autocorrelograms (\textbf{?@fig-acf}) show similar seasonal patterns
+with an autocorrelation of zero at lags of 81 and 264 days for the
+female, and 75 and 256 days for the male. The lags correspond to roughly
+three and nine months, suggesting a change of vertical movement behavior
+at these time scales. Global minima lie at lags of 170 and 138 days for
+female and male, respectively. These lags approximately correspond to
+five months and indicate that vertical behaviour is anti-correlated
+within this time scale, further underlining the observation of higher
+vertical activity and the use of deeper waters during winter and a
+contrary behaviour with low vertical activity use of shallow waters
+during summer. Local autocorrelation maxima lie at 300 and 345 days for
+female and male, respectively. This corresponds to 10 to 12 months and
+points towards a yearly cyclicity for both the male and the female
+shark. In general, owing to the demersal lifestyle of \emph{M.
+asterias}, shallower depths in the depth log indicate a shoreward
+movement along the seafloor, as opposed to a vertical movement into the
+water column. If, for example, the depth log shows shallower depths
+during the night (as can be seen in \textbf{?@fig-dst321-2}) this
+suggests a movement into shallower, coastal waters to feed.
+
+\hypertarget{sec-disc-summer}{%
+\subsubsection{Summer}\label{sec-disc-summer}}
+
+From both recovered DSTs that logged data for over a year, the daily
+vertical range and median depth are shallower in summer (June --
+September, around 17 m median depth for the female and around 10 m
+median depth for the male, both with ranges between 0 and 20 m) than in
+winter (December -- March). The wavelet scalograms of the raw depth logs
+(\textbf{?@fig-waveletresults308-1} and
+\textbf{?@fig-waveletresults321-1}) show a difference in periodicity on
+the hourly scale between males and females. Both in the summer of 2018
+and 2019, the female shows mainly a periodicity of 12 h (indicated by
+band of high power in red colour), which is a pure tidal signal
+\citep[since from one high tide to the next one it takes approximately
+12 h, the same holds true for low tide,][]{shepard_2006}. In 2018, there
+are some periodicities of 24 h (represented by yellow colours) as
+opposed to 2019, where the power of the 24 h period is below zero. This
+could be an indicator of the biannual reproductive cycle \citep[with
+females feeding when they are not pregnant, and they stop feeding during
+the migration to parturition grounds and parturition
+itself,][p.~23]{michael_2006}. The 12 h periodicity, however, is the
+most prevalent one in both summers for the female and thus implies that
+the female itself expresses no to little vertical activity and is only
+resting on the seafloor (observable in the example subset of the raw
+depth log in \textbf{?@fig-dst308-2}). The male, on the other hand,
+shows a periodicity of 24 h. This can be seen as a high-power band in
+red colours at the 24 h period in the wavelet scalogram on the hourly
+scale (\textbf{?@fig-waveletresults321-1}) and in
+\textbf{?@fig-dst321-2}. This suggests vertical migration, which has
+been observed in several shark species, for example the spiny dogfish
+\emph{Squalus acanthias} \citep{carlson_2014} and the basking shark
+\emph{Cetorhinus maximus} \citep{shepard_2006}. Diel vertical migration
+is believed to be related to foraging and feeding, following the nightly
+vertical migration of zooplankton to feed \citep{griffiths_2020}.
+
+\hypertarget{sec-disc-wintermig}{%
+\subsubsection{Migration into winter habitat}\label{sec-disc-wintermig}}
+
+From September 25 on for the female and October 21 for the male, the
+daily median depth gets progressively deeper over a period of around 15
+to 20 days, which potentially is the migration period of these
+individuals. Interestingly, both individuals go to the maximum depth
+logged by the tag within the logging period directly the potential
+migration into the winter habitat. During this time, the female shark
+goes to depths below the tag's measuring limit of 68 m, as indicated by
+a straight line in the raw depth log (see \textbf{?@fig-dst308-1}). This
+provides further evidence of the species utilizing deeper waters than
+previously thought, as argued by \citet{griffiths_2020} that found a
+maximum recorded depth of 118 m in a female shark in December
+\citep[S4]{griffiths_2020}. The male shark goes to depths between 40 and
+45 m, both in 2018 and 2019. Since this tag logged for 485 days, the
+migration into the winter habitat was recorded for two years. The start
+date of the potential winter migration in 2019 differs to the one in
+2018 by 10 days, temperatures range from around 13.5 °C to 15 °C in both
+periods. The autocorrelation of the depth log of tag 321 has a local
+maximum of 345 days \textbf{?@fig-acf-2} which further reflects the
+almost perfect yearly cyclicity of tag 321. Both individuals stay at
+their respective maximum depths for approximately one month (the female
+between the end of October until the end of November, 2018 and the male
+between the start of November until the start of December, 2018). This
+behaviour could be related to resting after the migration or escaping
+potential predators. The behaviour after the completion of the migration
+was not further assessed at this point.
+
+\hypertarget{sec-disc-winter}{%
+\subsubsection{Winter}\label{sec-disc-winter}}
+
+During the winter months between December and March, both individuals
+show roughly biweekly periodicities (see
+\textbf{?@fig-waveletresults308-2} and
+\textbf{?@fig-waveletresults321-2}). This vertical movement behaviour
+could be linked to moon phases, which result in a 14-day cycle of neap
+and spring tides \citep{shepard_2006}. The female shark shows a rather
+biweekly vertical movement pattern during night and and a monthly
+pattern for depth use during the day (\textbf{?@fig-dstsum308-2} and
+\textbf{?@fig-dstsum308-3}). In the raw depth log, periods of resting
+and subsequent periods of high vertical activity are visually
+discernable (\textbf{?@fig-dst308-1}). Both of these periodicities can
+be seen in the wavelet scalogram at daily scale
+(\textbf{?@fig-waveletresults308-2}). During the night, this individual
+goes to depths shallower than 10 m between December, 2018 and May, 2019.
+The peaks in minimum depth align well with a full moon, potentially
+reflecting visual predation behaviour coupled with diel vertical
+migration, i.e., the shark moves to shallower depths during full moon
+(when the moonlight is most intense), feeding on crustaceans that follow
+the nocturnal zooplankton migration. Visual foraging and preying of
+\emph{M. asterias} was already assumed by \citet{griffiths_2020}. During
+the day, median and minimum depth are deepest at full moon and new moon.
+These moon phases generally result in the most intense tidal currents
+throughout a moon cycle \citep{arnold_1994}. \citet{shepard_2006} found
+the same pattern of high vertical activity at full and new moon in one
+tagged Basking shark (\emph{Cetorhinus maximus}), and
+\citet{graham_2006} reported lunar periodicity in vertical behaviour of
+one whale shark (\emph{Rhincodon typus}). The exact strength of tidal
+currents, however, depends on the bathymetry of the area, and since the
+location of the shark is not exactly known, interpretations regarding
+tidal currents should be taken cautiously. Since the female, however, is
+thought to have migrated into the English Channel \citep[an area with
+exceptionally high tidal currents,][]{salomon_1993}, it is a plausible
+explanation that this individual was resting on the seafloor during
+periods of intense tidal currents (as can be seen in
+\textbf{?@fig-dst308-3}), and moving to shallower waters to visually
+feed at full moon.
+
+For the male shark, the biweekly periodicity is less present, in
+general, and no apparent periodicity can be visually detected during the
+night (\textbf{?@fig-dstsum321-2} and \textbf{?@fig-dstsum321-3}). This
+could be an indication of a different feeding behaviour of the male,
+involving less visual predation. The hourly wavelet scalogram
+(\textbf{?@fig-waveletresults321-1}) shows the presence of 24 h
+periodicities in January and February, 2019, but the daily wavelet
+scalogram (\textbf{?@fig-waveletresults321-2}) does not contain
+significantly present monthly periodicities. This suggests that the male
+shark relies less on the moonlight to predate than the female shark. The
+significant presence of 14 day periods between December, 2018 and May,
+2019, however, could potentially relate to tidal currents. This is less
+visually observable from the median and minimum depth during the day
+(\textbf{?@fig-dstsum321-2}). The male shark is thought to move
+northwards from the Scheldt estuary during its winter migration
+(\textbf{?@fig-mapgeolocation-2}) where tidal currents are generally
+less intense than in the English Channel
+\citep{salomon_1993, arnold_1994}. This could be a potential explanation
+for the weaker biweekly periodicity in the male shark's median and
+minimum depth. The male does not show clearly detectable periods with
+pure resting behaviour during winter (as shown in
+\textbf{?@fig-dst321-3}). Whether this difference in vertical behaviour
+patterns is sex-specific and related to a potential gestation of the
+female shark, or to different feeding modes, could be a point of further
+investigation in the future.
+
+In general, the effect of the moon illumination and tidal currents would
+be interesting to study further since this can give relevant insights
+about (potentially sex-specific) winter behaviour of \emph{M. asterias},
+for example through comparing wavelet scalograms from median depth
+during the day and during the night.
+
+\hypertarget{sec-disc-summermig}{%
+\subsubsection{Migration into summer habitat}\label{sec-disc-summermig}}
+
+In spring, roughly between April and May, the daily median depth gets
+shallower in a stepwise manner for both individuals which potentially
+reflects the migration into the summer habitat. The female (tag 308) was
+detected in the receiver areas of the BPNS and WS1 in the year following
+its release, proving the individual's return, and providing further
+evidence of philopatric behaviour for the species, as suggested by
+\citet{breve_2016} and first directly reported by
+\citet{griffiths_2020}. The start and duration of the summer migration
+cannot be identified as clearly from the daily median depth as the
+winter migration since the depth does substantially changes over a
+period of few weeks. From the wavelet scalograms of the raw depth log
+(\textbf{?@fig-waveletresults308-1} and
+\textbf{?@fig-waveletresults321-1}), the time of potential migration
+into the summer habitat shows a band of high power throughout periods
+from 4 to 64 hours (i.e., high prevalence of these periods), albeit this
+does not differ significantly from white noise (and is thus slightly
+transparent). Since the winter period also involves vertical activity,
+there is no clearly visible change in periodicity patterns between
+winter months up until March and the months of April and May, during
+which the daily median depth decreases stepwise for the female shark.
+During April, 2019, the male shark does not show any prevailing
+periodicity patterns in the wavelet scalogram at hourly scale
+(\textbf{?@fig-waveletresults321-1}). The month of May 2019, however,
+shows prevalent periodicities between 12 and 64 h. The absence of
+clearly discernable patterns in perodicities suggest a widely varying,
+seemingly stochastic depth utilisation which potentially indicates
+migration behaviour. Decreased vertical activity compared to the winter
+months from mid-May onwards is observable for the female and from June
+on for the male, indicating that the individuals might have arrived at
+their summer habitat by then. At this point, knowledge about the exact
+spectral signature of \emph{M. asterias} migration behaviour is lacking
+and it is suggested to be further studied. Moreover, a more detailed
+investigation of the difference in vertical movement between the
+migration into the winter and the summer habitat could be an interesting
+focus for future investigations.
+
+\hypertarget{sec-disc-adst}{%
+\subsection{\texorpdfstring{The potential of ADST for \emph{M.
+asterias}}{The potential of ADST for M. asterias}}\label{sec-disc-adst}}
+
+For the present study, a novel type of electronic combination tag was
+utilized, the Acoustic Data Storage Tag, combining acoustic detections
+with data storage logs. Here, only one tag (tag 308, female) showed data
+overlap that allowed for relevant ecological interpretations.
+\textbf{?@fig-adst308} shows that tag 308 was detected at the Birkenfels
+receiver station (which is in the BPNS) 63 days after the DST depth log
+stopped. This suggests the departure of the individual from the BPNS and
+the Scheldt estuary and aligns almost perfectly with the depth log of
+that time one year before, where the female went to waters deeper than
+25 m from October 06, 2018, onwards. While the annual cyclicity for the
+male could already be shown from its depth log since it logged well over
+a year (see Section~\ref{sec-disc-wintermig}), the detection of tag 308
+at the Birkenfels station points towards an almost perfect annual
+cyclicity for this individual, too. This example shows the complementary
+potential of the nature behind combination tags. It is unfortunate that
+from the tags deployed for this study only one reaches this potential
+but that does not minimise the potential of the technology in general.
+therefore, ADST can be considered a well-suited tracking technology for
+\emph{M. asterias}, owing to the species' seasonally differing resident
+and migratory behaviour. ADST allow for gaining high-resolution
+presence/absence data within the areas of receiver networks and insights
+about the vertical movement of an animal independent of the acoustic
+detections, given that the tag is retrieved. Moreover, the acoustic
+detections provide punctual ground truth for geolocation modelling. This
+is especially helpful in highly mixed areas with homogeneous bathymetry
+like the Scheldt estuary, as such areas generally result in limited
+reliability of geolocation models since the models cannot make out a
+definite position by depth and temperature if these variables are
+roughly constant throughout the area.
+
+\hypertarget{sec-disc-otherspecies}{%
+\subsection{\texorpdfstring{Gained ecological knowledge on \emph{M.
+asterias}}{Gained ecological knowledge on M. asterias}}\label{sec-disc-otherspecies}}
+
+\emph{Mustelus asterias} is a common species in the North Sea and the
+English Channel, both of which areas experience high anthropogenic
+impact \citep{hernandezfarinas_2014}. Since knowledge about the species
+and its relatives is still limited, the following section aims to give a
+brief overview of how the knowledge gathered in this study fits into
+already existing ecological knowledge about \emph{M. asterias} and
+related species.
+
+Comparisons about reproductive behaviour must be made cautiously since
+not all members of the genus \emph{Mustelus} exhibit aplacental
+viviparity like \emph{M. asterias}. \emph{M. asterias}, for instance,
+was often mistaken for the common smooth-hound \emph{M. mustelus} before
+the development of a simple genetic method to distinguish the two
+species \citep{farrell_2009}, yet this relative is placentally
+viviparous \citep{dasilva_2018}. The gummy shark \emph{M. antarcticus}
+inhabits Australian waters and exhibits matrotrophic aplacental
+viviparity like \emph{M. asterias}, making it well comparable
+\citep{walker_2007}. \citet{walker_2007} uncovered asynchronous breeding
+cycles (of one and two years) related to different locations for
+\emph{M. antarcticus}. This behaviour is also known to occur in Squalid
+sharks \citep{braccini_2006}, but there is no evidence of \emph{M.
+asterias} exhibiting different breeding cycle lengths. The reproductive
+biology of \emph{M. asterias}, however, involves complex characteristics
+like embryo asynchronism, for instance. This refers to pups with
+different developmental stages, potentially resulting from sperm storage
+and selective fertilization by the females \citep{farrell_2010a}. While
+an in-depth stock assessment has already been carried out for \emph{M.
+antarcticus} by \citet{pribac_2005}, this is still lacking for \emph{M.
+asterias} and should be carried out in the future
+\citep{mccullyphillips_2015}.
+
+Annual migration behaviour has not been investigated in depth for many
+\emph{Mustelus} species. In fact, the gummy shark \emph{M. antarcticus}
+is reported to be less mobile than other elasmobranchs in the area of
+Western Australia \citep[according to a three-year acoustic monitoring
+study involving 100 tagged \emph{M. antarcticus},][]{braccini_2017}, but
+still able to cover distances of \textgreater{} 60 km per day, and
+overall distances of almost 1000 km. The narrownose smooth-hound shark
+\emph{Mustelus schmitti}, an aplacentally viviparious relative of
+\emph{M. asterias} that inhabits waters in the southwest Atlantic, is
+thought to exhibit similar seasonal migration patterns as \emph{M.
+asterias}. \citet{elisio_2019} argue that although migration patterns of
+\emph{M. schmitti} are still unknown, large-sized individuals are
+increasingly abundant in deeper waters during autumn and winter
+\citep{cortes_2011}, suggesting a seasonal migration to shallower
+waters. The same study reported parturition events of \emph{M. schmitti}
+in coastal waters during spring and summer, following warming
+temperatures above 16 °C. These findings align well with conclusions
+from \citet{breve_2016} that reported decreased presence of \emph{M.
+asterias} in the Dutch Delta for temperatures \textless{} 13 °C. The
+water temperature of the two long-term DST logs from the present study
+is slightly above 16 °C for the female and 15 °C for the male in October
+2018, when the two individuals are thought to start migrating into the
+winter habitat, further supporting the findings of \citet{breve_2016}
+and \citet{elisio_2019}.
+
+Overall, the results of the present study go in line with already
+gathered knowledge on \emph{M. asterias}. The geolocation model results
+suggest that the male shark spends the winters in waters north of the
+Scheldt estuary and the female goes into the English Channel
+(\textbf{?@fig-mapgeolocation}), as assumed by \citet{breve_2020} and
+\citet{griffiths_2020}. Different overwintering spots for the female and
+the male shark are further supported by the presumably stronger effect
+of moon phases and tidal currents on the vertical activity of the female
+\emph{M. asterias}, potentially sheltering from the intense tidal
+currents in the English Channel. The present study, however, only
+involved year-long DST logs from two individuals, so any inferences from
+this data have to be taken cautiously. The high return rate (67 \%) of
+individuals into the Western Scheldt as shown by the acoustic detections
+in the acoustic receiver array further underlines philopatric behaviour
+in regard to the species' summer habitat, the Southern North Sea
+\citep{breve_2016, breve_2020, griffiths_2020}.
+
+\hypertarget{conclusion}{%
+\section{Conclusion}\label{conclusion}}
+
+To conclude, the findings of this study in relation to the five research
+questions stated in the introduction (see Section~\ref{sec-intro-aims})
+will be presented. The research questions aim to investigate the
+presence of \emph{M. asterias} in the Western Scheldt and the BPNS
+(research line 1) regarding seasonality (RQ 1), sex-specificity (RQ 2)
+and spatial preferences (RQ 3), as well as depth utilisation of the
+species (research line 2) regarding seasonality (RQ 4) and
+sex-specificity (RQ 5).
+
+This work presents the first in-depth investigation of both the
+seasonality of vertical behaviour throughout the annual movement cycle
+and the presence of \emph{M. asterias} in the Western Scheldt. Adding to
+already existing knowledge, the seasonal presence of mostly adult female
+Starry smooth-hounds around the Western Scheldt could be confirmed,
+proving the importance of the area as a summer habitat. Males
+potentially are less present in the Western Scheldt, but more present in
+the BPNS than females. Moreover, the high return rates of individuals
+(both males and females) into the Western Scheldt and the BPNS provide
+further evidence for philopatric behaviour of the species (Research
+Question 1, 2 and 3).
+
+Although males and females most likely overwinter in different areas
+\citep{breve_2016, griffiths_2020}, their seasonal vertical movement
+behaviour appears to be similar (involving generally less vertical
+activity during summer and higher vertical activity during winter),
+according to the two DST tags that were subject of this study. During
+summers, the female primarily showed resting behaviour while the male
+exhibited both resting and feeding behaviour, indicating sex-specificity
+in behavioural states on a within-season scale. During winter, the
+female's (and to a lesser extent, the male's) vertical activity is
+potentially influenced by the moon phase which might be linked to the
+intensity of tidal currents (Research Question 4 and 5).
+
+Thus, this study could gain new insights into the seasonal distribution
+and potential sex-specificity of horizontal and vertical movement
+behaviour of \emph{Mustelus asterias}. There still is, however, a
+substantial knowledge gap about the effects of sex and life stage on the
+species' distribution \citep{griffiths_2020} and to be able to establish
+a successful species management plan in the future, further studies are
+needed
+\citep{mccullyphillips_2015, breve_2016, breve_2020, griffiths_2020}.
+
+\hypertarget{outlook}{%
+\section{Outlook}\label{outlook}}
+
+\hypertarget{tagging-studies-involving-m.-asterias}{%
+\subsection{\texorpdfstring{Tagging studies involving \emph{M.
+asterias}}{Tagging studies involving M. asterias}}\label{tagging-studies-involving-m.-asterias}}
+
+As discussed in Section~\ref{sec-disc-seasonalpresencefemales}, an
+insightful addition to future tagging studies involving adult \emph{M.
+asterias} would be to assess the females' reproductive stage upon
+sampling. This could be done either through ultrasonography or the use
+of sex steroid hormones
+\citep{awruch_2014, smukall_2019, anderson_2018, fujinami_2020, fujinami_2021}.
+A new tagging technology was launched recently: The Birth Alert Tag
+\citep[BAT,][]{sulikowski_2023}, which is, however, only advised to be
+used on ``large sharks''. If smaller BATs are developed in the future,
+this might be a suitable tag to use on \emph{M. asterias}. In addition,
+the placement of an acoustic receiver off the coast of Zoetelande might
+give further insights into possible seasonal aggregation of \emph{M.
+asterias} in summer, as described by fishers \footnote{Verhelst,
+  Pieterjan (\emph{personal communication}), April 25, 2023.}. If
+possible, DST with a wider depth range should be utilized for future
+studies, since evidence of \emph{M. asterias} swimming in deeper waters
+(\textgreater{} 100 m depth) than previously thought is increasing
+\citep{ices_2019, griffiths_2020}. Generally, the effect of the
+implantation of tags on the sharks should be investigated. Since female
+\emph{M. asterias} have been previously reported to abort and expel
+embryos when caught \citep{farrell_2010a}, special attention should be
+drawn to the tagging effect on pregnant females, especially when
+intending to study their pupping behaviour.
+
+\hypertarget{analysis-of-data-storage-tag-logs}{%
+\subsection{Analysis of Data Storage Tag
+logs}\label{analysis-of-data-storage-tag-logs}}
+
+The adequate analysis of DST logs and the development of well-performing
+geolocation models remains a challenge. While the input of behavioural
+states (i.e., high or low vertical activity, or residential versus
+migrating behaviour) would provide improved input for a geolocation
+model, segmenting the depth log in different behavioural states is not
+trivial.
+
+A first step to improve the geolocation model without adding behavioural
+states could be the addition of a simple boundary condition that
+reflects the demersal lifestyle of \emph{M. asterias}. This boundary
+condition entails that the maximum depth logged by the tag each day
+(given that the resolution of the geolocation model is in the unit of
+days) is equal to the maximum depth of the seafloor at the location of
+the shark. This would prevent model outputs that estimate the
+individual's position on a day at locations with substantially deeper
+seafloor depth than the shark's depth log has recorded that day.
+
+Furthermore, wavelet analysis proved to be a helpful tool for assessing
+the seasonal changes in spectral composition of the depth signal for
+both individuals. This technique is suggested to be further taken into
+account in the future, for instance regarding the segmentation of the
+depth log into different behavioural states \citep[as already shown
+by][]{soleymani_2017}. Since the implementation of simple CWT in this
+study is still an exploratory technique it should be investigated how it
+could be quantified in the future. If different behavioural states, for
+example resting, feeding and migrating can be linked to specific
+spectral signatures (i.e., a 12 h period for resting, a 24 h period for
+feeding and high prevalence of periods from 4h to 64 h for migrating),
+then wavelet coherence could be a next analysis step. This analysis
+assesses the similarity of two wavelet scalograms \citep{grinsted_2004}.
+Conducting wavelet coherence between the raw depth logs of the sharks
+and characteristic spectral signatures of different behaviours could
+quantify the presence of different behavioural states in the future.
+Several methods to quantify behavioural states exist already
+\citep{pedersen_2008, heerah_2017} but there is not one generic method
+that works for all species equally. Thus, it would be valuable to test
+the method suggested here and compare it to outputs from already
+existing methods. This would be a next step towards improving the
+geolocation modelling for \emph{M. asterias} and consequently, our
+knowledge and understanding of the species.
+
+\hypertarget{availability-of-data-and-materials}{%
+\section*{Availability of data and
+materials}\label{availability-of-data-and-materials}}
+\addcontentsline{toc}{section}{Availability of data and materials}
+
+The dataset supporting the conclusions of this article is available in
+the Integrated Marine Information System (IMIS) with the Digital Object
+Identifier (https://doi.org/10.14284/605). The code developed to conduct
+the analyses, make all visualisations (both figures and maps), and to
+write the manuscript are available on
+(https://github.com/lottepohl/MasterThesis\_LottePohl).
+
+The dataset supporting the conclusions of this article is furthermore
+included within the additional files of this manuscript.
+
+The metadata that support the raw data for this study can be found in
+\textbf{Annex C}.
+
+\hypertarget{acknowledgements}{%
+\section*{Acknowledgements}\label{acknowledgements}}
+\addcontentsline{toc}{section}{Acknowledgements}
+
+This work was supported by the Research Foundation Flanders (FWO) as
+part of the Belgian contribution to LifeWatch. I am indebted to everyone
+involved in the tagging of the 30 Starry smooth-hounds in 2018 and 2019
+without whom this study would not have been possible. My gratitude
+extends to everyone involved in the maintenance of the acoustic receiver
+network involved in this study. This includes the funding bodies and the
+crew of the RV Simon Stevin. Furthermore, I appreciate the effort by
+everyone involved in the return of the tags, enabling me to study the
+annual vertical movement of the Starry smooth-hounds in the first place.
+I am thankful to the Flemish Marine Institute (VLIZ) for having granted
+me the opportunity to conduct my master thesis with them, and the
+IMBRSea coordinators for their continuous effort to make this study
+programme happen.
+
+I wish to express my heartfelt thanks to my promotors Jan Reubens and
+Niels Brevé, and my supervisor Carlota Muñiz. Thank you Jan, for
+providing me with constructive and valuable feedback, thank you Niels
+for your invaluable input on the Starry smooth-hound, and thank you
+Carlota for guiding me and looking after me when I was a bit stuck.
+Furthermore, I am grateful for having been able to go out into the
+Belgian Part of the North Sea for receiver maintenance work, this
+experience gave me valuable insights into the practicalities behind the
+receiver network. My sincere appreciation goes to Pieterjan Verhelst,
+for taking me along the Twaite Shad tagging campaign and the car
+conversations about fish migrations and fishers's knowledge. Thank you
+to Jolien Goossens for carrying out the geolocation modelling of the
+returned tags which provided an important base for me to follow up on.
+
+I furthermore wish to thank my IMBRSea study mates for productive
+co-working sessions and emotional support throughout the thesis. My
+thesis would not have been the same without all the warmhearted
+colleagues at VLIZ, thank you all for this extraordinary time in Gent
+and Ostend. My eternal gratitude goes to the people that I deeply care
+for, especially Silvi and Tobi, for emotional support and understanding
+during this intense period. And lastly, endless thanks to my parents for
+being there and supporting me no matter what.
+
+\newpage{}
+
+\hypertarget{references}{%
+\section*{References}\label{references}}
+\addcontentsline{toc}{section}{References}
+
+\renewcommand{\bibsection}{}
+\bibliography{My_Collection.bib}
+
+\hypertarget{annex}{%
+\section*{Annex}\label{annex}}
+\addcontentsline{toc}{section}{Annex}
+
+\hypertarget{annex-a-raw-depth-and-temperature-logs}{%
+\subsection*{\texorpdfstring{\textbf{Annex A}: Raw depth and temperature
+logs}{Annex A: Raw depth and temperature logs}}\label{annex-a-raw-depth-and-temperature-logs}}
+\addcontentsline{toc}{subsection}{\textbf{Annex A}: Raw depth and
+temperature logs}
+
+\textbf{?@fig-dsttempannex} shows the raw temperature logs of tags 308
+(f) and 321 (m). Tag 308 experienced the maximum temperature of 22.9 °C
+on August 06, 2018 and its minimum temperature of 8.65 °C on March 23,
+2019. Tag 321 experienced its maximum temperature of 22.1 °C on August
+07, 2018 and its minimum temperature of 5.98 °C on February 04, 2019.
+
+\textbf{?@fig-dstannex} displays the raw depth and temperature logs from
+the short-term DST.
+
+\hypertarget{annex-b-fft-periodograms}{%
+\subsection*{\texorpdfstring{\textbf{Annex B}: FFT
+periodograms}{Annex B: FFT periodograms}}\label{annex-b-fft-periodograms}}
+\addcontentsline{toc}{subsection}{\textbf{Annex B}: FFT periodograms}
+
+The resulting periodograms from the Fast Fourier Transform for tags 308
+(\emph{f}) and 321 (\emph{m}) are depicted in \textbf{?@fig-fft}.
+
+\textbf{?@fig-fft-1} shows spectral density peaks at about 12 hours
+(highest), 24 hours, and smaller peaks at 23, 26, 6 and 8 hours. Tag 321
+has the highest spectral density at 24 hours, then 12 hours, and small
+peaks at 6, 23, 25 and 25 hours, see \textbf{?@fig-fft-2}.
+
+\hypertarget{annex-c-metadata}{%
+\subsection*{\texorpdfstring{\textbf{Annex C}:
+Metadata}{Annex C: Metadata}}\label{annex-c-metadata}}
+\addcontentsline{toc}{subsection}{\textbf{Annex C}: Metadata}
+
+Four sets of tabular data form the basis of this study. These can be
+found in the additional files of this study. A brief description of the
+dataset and its variables is given below. Where available, the variable
+descriptions were obtained from the ETN database
+(https://www.lifewatch.be/etn/).
+
+\hypertarget{information-on-tagged-individuals}{%
+\subsubsection*{Information on tagged
+individuals}\label{information-on-tagged-individuals}}
+\addcontentsline{toc}{subsubsection}{Information on tagged individuals}
+
+The dataset includes information on the 30 \emph{M. asterias}
+individuals that were subject of this study (filename:
+\texttt{tagged\_individuals\_raw\_data.csv}). The metadata linked to
+this dataset is displayed in \textbf{?@tbl-taggedindividualsmetadata}.
+
+\hypertarget{acoustic-detections}{%
+\subsubsection*{Acoustic detections}\label{acoustic-detections}}
+\addcontentsline{toc}{subsubsection}{Acoustic detections}
+
+The dataset includes the acoustic detections of the 30 \emph{M.
+asterias} individuals by the acoustic receivers that are part of the
+Permanent Belgian Acoustic Receiver Network (filename:
+\texttt{acoustic\_detections\_raw\_data.csv}). The metadata linked to
+this dataset is displayed in \textbf{?@tbl-detectionsmetadata}.
+
+\hypertarget{data-storage-tag-logs}{%
+\subsubsection*{Data Storage Tag logs}\label{data-storage-tag-logs}}
+\addcontentsline{toc}{subsubsection}{Data Storage Tag logs}
+
+The dataset includes the depth and temperature logs of all recovered
+data storage tags (filename: \texttt{DST\_logs\_raw\_data.csv}). The
+metadata linked to this dataset is displayed in
+\textbf{?@tbl-dstlogmetadata}.
+
+\hypertarget{geolocation-modelling-output}{%
+\subsubsection*{Geolocation modelling
+output}\label{geolocation-modelling-output}}
+\addcontentsline{toc}{subsubsection}{Geolocation modelling output}
+
+The dataset includes the most probable tracks calculated by the
+geolocation model \citep[the reader is referred to][ for further
+explanation of the model, filename:
+\texttt{geolocation\_output\_raw\_data.csv}]{goossens_2023}. The
+metadata linked to this dataset is displayed in
+\textbf{?@tbl-geolocationmetadata}. The geolocation modelling was
+carried out by Jolien Goossens (ORCID:
+\href{https://orcid.org/0000-0002-0853-9153}{0000-0002-0853-9153}).
 
 
-  \bibliography{bibliography.bib}
 
 
 \end{document}

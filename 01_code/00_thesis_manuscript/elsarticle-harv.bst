@@ -918,7 +918,7 @@ FUNCTION {webpage}
     new.block
 }
   if$
-  print.url output
+  
   fin.entry
 }
 
@@ -945,7 +945,7 @@ FUNCTION {article}
   if$
   format.journal.pages
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -984,7 +984,7 @@ FUNCTION {book}
     }
   if$
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1004,7 +1004,7 @@ FUNCTION {booklet}
   howpublished "howpublished" bibinfo.check output
   address "address" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1047,7 +1047,7 @@ FUNCTION {inbook}
   if$
   format.pages "pages" output.check
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1079,7 +1079,7 @@ FUNCTION {incollection}
   if$
   format.pages "pages" output.check
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1115,7 +1115,7 @@ FUNCTION {inproceedings}
   if$
   format.pages "pages" output.check
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1138,7 +1138,7 @@ FUNCTION {manual}
   organization "organization" bibinfo.check output
   address "address" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1160,7 +1160,7 @@ FUNCTION {mastersthesis}
   school "school" bibinfo.warn output
   address "address" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1179,7 +1179,7 @@ FUNCTION {misc}
   new.block
   howpublished "howpublished" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1201,7 +1201,7 @@ FUNCTION {phdthesis}
   school "school" bibinfo.warn output
   address "address" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1227,7 +1227,7 @@ FUNCTION {proceedings}
     }
   if$
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1249,7 +1249,7 @@ FUNCTION {techreport}
   institution "institution" bibinfo.warn output
   address "address" bibinfo.check output
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
@@ -1266,7 +1266,7 @@ FUNCTION {unpublished}
   date.block
   format.title "title" output.check
   new.block
-  print.url output
+  
   print.doi output
   print.eprint output
   print.pubmed output
