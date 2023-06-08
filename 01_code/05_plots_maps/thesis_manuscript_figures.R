@@ -440,7 +440,7 @@ plot_summary_daynight <- function(data_depth, tag_serial_num, moon = TRUE, dayti
     scale_colour_manual(name = "", values = c("median depth (D)" = "orange", "median depth (N)" = "darkblue", "median depth" = ifelse(daytime == 1, "red", "darkblue"), "depth range" = ifelse(daytime == 1, "yellow", "darkblue"), "illuminated moon fraction" = "black")) +
     scale_fill_manual(name = "", values = c("depth range" = ifelse(daytime == 1, "orange", "lightblue"), "depth range (D)" = "yellow", "depth range (N)" = "lightblue")) +
     theme(legend.position = "none", legend.box = "horizontal",   legend.margin = margin(t = -15)) + #"bottom"
-    scale_x_datetime(date_breaks = "1 month", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
+    scale_x_datetime(date_breaks = "2 months", date_labels = "%b '%y", expand = c(0, 0), limits = c(min_date, max_date)) +
     theme(axis.text.x = element_text(angle = 15, hjust = 0.5))
   
   # if (isTRUE(moon)) {
@@ -1190,7 +1190,7 @@ p_detections_heatmap_OG10 <- ggplot() + #, colour = n_detect
                    limits = c(detections_OG102019$date %>% min() - lubridate::days(24), detections_OG102019$date %>% max() + lubridate::days(7))) +
   scale_y_discrete(expand = c(0,0)) + #labels = c("40-50 m", "30-40 m", "20-30 m", "10-20 m", "0-10 m"), 
   theme(axis.text.x = element_text(angle = 15, hjust = 0.25)) +
-  labs(x = "", y = "tag serial nr.", fill = "number of acoustic detections", colour = "number of acoustic detections")  +
+  labs(x = "", y = "Tag Serial No.", fill = "No. of Acoustic Detections", colour = "No. of Acoustic Detections")  +
   theme(legend.position = "bottom", # "bottom",
         legend.box = "horizontal",   legend.margin = margin(t = -15)) 
 
@@ -1319,7 +1319,7 @@ p_308_DST_acoustic <- ggplot() +
                dplyr::filter(tag_serial_number == "1293308",
                              lubridate::year(date_time) == "2019",
                              sensor_type == "pressure"),
-             aes(x = date_time, y = -parameter, colour = station_name), size = 1) +
+             aes(x = date_time, y = -parameter, colour = station_name), size = 0.75) +
   geom_point(data = detections_tempdepth_daynight %>%
                dplyr::mutate(station_name = gsub("ws-", "", station_name),
                              station_name = gsub("bpns-", "", station_name)) %>%
@@ -1375,17 +1375,17 @@ save_data(data = p_308_depth_summer, folder = plot_path)
 
 p_308_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293308", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07") +
   theme(panel.border = element_rect(color = "#198125", fill = NA, linewidth = 3))
-p_308_depth_winter
+# p_308_depth_winter
 save_data(data = p_308_depth_winter, folder = plot_path)
 
 p_321_depth_summer <- plot_depth_subset_summer(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2018-09-15 14:00:00 UTC", end_date_chr = "2018-09-18 14:00:00 UTC") +
   theme(panel.border = element_rect(color = "#84BBF0", fill = NA, linewidth = 3))
-p_321_depth_summer
+# p_321_depth_summer
 save_data(data = p_321_depth_summer, folder = plot_path)
 
 p_321_depth_winter <- plot_depth_subset_winter(depthlog = masterias_depth_temp, tag_serial_num = "1293321", start_date_chr = "2019-02-08", end_date_chr = "2019-03-07") +
   theme(panel.border = element_rect(color = "#0F50BC", fill = NA, linewidth = 3))
-p_321_depth_winter #%>% ggplotly()
+# p_321_depth_winter #%>% ggplotly()
 save_data(data = p_321_depth_winter, folder = plot_path)
 
 ### short term dsts

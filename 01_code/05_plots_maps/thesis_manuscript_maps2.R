@@ -1,5 +1,7 @@
 # Script testing ggplot maps for the thesis manuscript
 
+# rm(list = ls())
+
 # WORKSPACE ####
 library(dplyr)
 library(ggplot2)
@@ -28,12 +30,6 @@ paste0(getwd(), "/01_code/02_load_data/manuscript_figures/load_tables.R") %>% ba
 # Study Area focus point 2 ####
 
 ## map inset ####
-
-# Create the main map of Belgium
-belgium_map <- ggplot() +
-  geom_sf(data = Belgium) +
-  coord_sf(crs = st_crs(4326)) #+
-# theme_void()  # Use a blank background for the main map
 
 # Create the main map of Belgium
 europe_map <- ggplot() +
@@ -98,7 +94,7 @@ map_overview_ggplot <- ggplot() +
   geom_sf(data = BPNS, mapping = aes(colour = "BPNS"),linewidth = 0.75, fill = "transparent") +
   geom_sf(data = Schelde_boundaries, fill = "transparent", mapping = aes(colour = "Scheldt Estuary"),linewidth = 0.75) +
   # theme(panel.background = element_rect(fill = "lightblue")) +
-  labs(x = "Longitude", y = "Latitude", tag ="a)") +
+  labs(x = "Longitude", y = "Latitude", tag ="b)") +
   scale_colour_manual(name = "Marine Boundaries:", values = c("EEZ" = "gray60", 
                                                              # "marine_boundaries" = "gray60", 
                                                              "Scheldt Estuary" = "#5B9231", 
@@ -124,11 +120,11 @@ map_overview_ggplot <- ggplot() +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
             stat = "sf_coordinates", size = 1.8, nudge_y = -0.15, nudge_x = -0.85, family = "serif", fontface = "bold", fill = "white") +
   geom_text_repel(data = Hurd_deep, aes(label = preferredGazetteerName, geometry = geometry),
-            stat = "sf_coordinates", size = 2, nudge_y = -0.35, nudge_x = -2, family = "serif") +
+            stat = "sf_coordinates", size = 2, nudge_y = -0.35, nudge_x = -2, family = "serif", fontface = "bold") +
   geom_text_repel(data = Cap_de_la_Hague, aes(label = preferredGazetteerName, geometry = geometry),
-            stat = "sf_coordinates", size = 2, nudge_y = -0.85, nudge_x = 2, family = "serif") +
+            stat = "sf_coordinates", size = 2, nudge_y = -0.85, nudge_x = 2, family = "serif", fontface = "bold") +
   geom_text_repel(data = Norwich, aes(label = preferredGazetteerName, geometry = geometry),
-            stat = "sf_coordinates", size = 2, nudge_y = 0.35, nudge_x = 1.5, family = "serif") +
+            stat = "sf_coordinates", size = 2, nudge_y = 0.35, nudge_x = 1.5, family = "serif", fontface = "bold") +
   guides(
     # colour = guide_legend(override.aes = list(shape = 19, size = 4)),
          fill = guide_legend(override.aes = list(shape = 0, size = 6, alpha = 0.5))) +
@@ -140,6 +136,22 @@ map_overview_ggplot <- ggplot() +
 map_overview_ggplot 
   
 # geolocation model output ####
+
+## map inset ####
+
+europe_map_308 <- ggplot() +
+  geom_sf(data = Europe) +
+  # coord_sf(crs = st_crs(4326)) +
+  # coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(46, 60), xlim = c(-12, 10)) #+
+  coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(35, 60), xlim = c(-15, 15)) +
+  geom_rect(mapping = aes(ymin = 49, ymax = 52.5, xmin = -3.5, xmax = 4.5), linewidth = 0.75, colour = "black", fill = "transparent") +
+  theme_void() +  # Use a blank background for the main map
+  theme(panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+        panel.background = element_rect(color = NA, fill = "white"))
+
+europe_map_308
+
+europe_map_308_grob <- ggplot2::ggplotGrob(europe_map_308)
 
 
 map_dst_308 <- ggplot() +
@@ -168,7 +180,7 @@ map_dst_308 <- ggplot() +
   geom_contour(data = bathy_northsea, 
                aes(x=longitude, y=latitude, z=depth_m),
                breaks=c(-50),
-               linewidth=c(0.7),
+               linewidth=c(0.35),
                colour="darkblue",
                # linetype = "22",
                alpha = 0.35)+
@@ -189,7 +201,7 @@ map_dst_308 <- ggplot() +
   geom_sf(data = Belgium, colour = "gray60") +
   geom_sf(data = France, colour = "gray60") +
   geom_sf(data = Netherlands, colour = "gray60") +
-  geom_path(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293308"), mapping = aes(x = detection_longitude, y = detection_latitude, colour = date_time), linewidth = 0.65) +
+  geom_path(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293308"), mapping = aes(x = detection_longitude, y = detection_latitude, colour = date_time), linewidth = 0.75) +
   geom_point(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293308"), 
              x = 3.40112411, y = 51.42878, shape = 23, colour = "black", size = 3, fill = "yellow", alpha = 1) + #, mapping = aes(shape = "tag 308 (f)" )
   geom_text_repel(data = Hurd_deep, aes(label = preferredGazetteerName, geometry = geometry),
@@ -202,16 +214,36 @@ map_dst_308 <- ggplot() +
              stat = "sf_coordinates", size = 2, nudge_y = -1.5, nudge_x = -0.75, family = "serif", fontface = "bold", fill = "white") +
   coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(49, 52.5), xlim = c(-3.5, 4.5)) +
   annotate(geom = "text", label = "female", x = -2.85, y = 52.25, fontface = "bold", family = "serif", size = 2.75) +
-  ggspatial::annotation_scale(location = "br", width_hint = 0.15, bar_cols = c("gray0", "white"), text_family = "serif") +
+  annotation_custom(grob=europe_map_308_grob, xmin = 3, xmax = 4.7, ymin = 49, ymax=50) +
+  ggspatial::annotation_scale(location = "br", width_hint = 0.1,
+                              pad_x = unit(1.7, "cm"), pad_y = unit(0.25, "cm"),
+                              bar_cols = c("gray0", "white"), text_family = "serif") +
   ggspatial::annotation_north_arrow(location = "br", which_north = "true", 
                                     height =  unit(0.75, "cm"), width = unit(0.75, "cm"),
-                                    pad_x = unit(0.3, "in"), pad_y = unit(0.25, "in"),
+                                    pad_x = unit(1.9, "cm"), pad_y = unit(0.25, "in"),
                                     style = north_arrow_fancy_orienteering) +
   # scale_shape_manual(name = "Tagging Location", values = c("tag 308 (f)" = 4))
   theme(legend.position = "bottom",
-        legend.box = "horizontal", legend.margin = margin(t = -5))
+        legend.box = "horizontal", legend.margin = margin(t = -5),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 2))
 
 map_dst_308
+
+## map inset ####
+
+europe_map_321 <- ggplot() +
+  geom_sf(data = Europe) +
+  # coord_sf(crs = st_crs(4326)) +
+  # coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(46, 60), xlim = c(-12, 10)) #+
+  coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(35, 60), xlim = c(-15, 15)) +
+  geom_rect(mapping = aes(ymin = 50.5, ymax = 53, xmin = -1, xmax = 4.5), linewidth = 0.75, colour = "black", fill = "transparent") +
+  theme_void() +  # Use a blank background for the main map
+  theme(panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+        panel.background = element_rect(color = NA, fill = "white"))
+
+europe_map_321
+
+europe_map_321_grob <- ggplot2::ggplotGrob(europe_map_321)
 
 map_dst_321 <- ggplot() +
   geom_sf(data = Schelde_boundaries, mapping = aes(fill = "20 m"), colour = "transparent", alpha = 1,linewidth = 0.75) +
@@ -262,7 +294,7 @@ map_dst_321 <- ggplot() +
   geom_sf(data = Belgium, colour = "gray60") +
   geom_sf(data = France, colour = "gray60") +
   geom_sf(data = Netherlands, colour = "gray60") +
-  geom_path(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), mapping = aes(x = detection_longitude, y = detection_latitude, colour = date_time), linewidth = 0.65) +
+  geom_path(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), mapping = aes(x = detection_longitude, y = detection_latitude, colour = date_time), linewidth = 0.75) +
   labs(x = "Longitude", y = "Latitude", tag ="b)") +
   geom_point(data = masterias_dst_geolocation_output %>% dplyr::filter(tag_serial_number == "1293321"), 
              x = 3.631849, y = 51.61220, shape = 23, colour = "black", size = 3, fill = "yellow", alpha = 1) + #mapping = aes(shape = "tag 321 (m)" )
@@ -274,6 +306,7 @@ map_dst_321 <- ggplot() +
   # geom_label(label = "male (tag 321)", x = -0.5, y = 52.75,
   #                 size = 2, nudge_y = 0.07, nudge_x = -0.35, family = "serif", label.r = unit(0, "lines")) +
   annotate(geom = "text", label = "male", x = -0.65, y = 52.85, fontface = "bold", family = "serif", size = 2.75) +
+  annotation_custom(grob=europe_map_321_grob, xmin = -1, xmax = 0, ymin = 50.5, ymax = 51.25) +
   ggspatial::annotation_scale(location = "br", width_hint = 0.15, bar_cols = c("gray0", "white"), text_family = "serif",
                               pad_x = unit(0.25, "cm"),
                               pad_y = unit(0.25, "cm"),) +
@@ -283,7 +316,8 @@ map_dst_321 <- ggplot() +
                                     style = north_arrow_fancy_orienteering) +
   # scale_shape_manual(name = "Tagging Location", values = c("tag 321 (m)" = 3)) #+
   theme(legend.position = "bottom",
-        legend.box = "horizontal", legend.margin = margin(t = -5))
+        legend.box = "horizontal", legend.margin = margin(t = -5),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 2))
 
 map_dst_321
 
@@ -373,6 +407,21 @@ map_dst_321
 
 # detail Scheldt ####
 
+## map inset ####
+
+europe_map_Scheldt <- ggplot() +
+  geom_sf(data = Europe) +
+  # coord_sf(crs = st_crs(4326)) +
+  # coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(46, 60), xlim = c(-12, 10)) #+
+  coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(45, 60), xlim = c(-12.5, 10)) +
+  geom_rect(mapping = aes(ymin = 51, ymax = 52, xmin = 2, xmax = 5), linewidth = 0.75, colour = "black", fill = "transparent") +
+  theme_void() +  # Use a blank background for the main map
+  theme(panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+        panel.background = element_rect(color = NA, fill = "white"))
+
+europe_map_Scheldt
+
+europe_map_Scheldt_grob <- ggplot2::ggplotGrob(europe_map_Scheldt)
 
 map_detail_ggplot <- ggplot() +
   # Stuff for bathy legend
@@ -398,7 +447,7 @@ map_detail_ggplot <- ggplot() +
   # marine boundaries
   # geom_sf(data = Schelde_boundaries, fill = "transparent", mapping = aes(colour = "Scheldt Estuary"),linewidth = 0.75) +
   # theme(panel.background = element_rect(fill = "lightblue")) +
-  labs(x = "Longitude", y = "Latitude", tag  = "b)") +
+  labs(x = "Longitude", y = "Latitude", tag  = "a)") +
   scale_colour_manual(name = "Marine Boundaries:", values = c("EEZ" = "gray60", 
                                                              # "marine_boundaries" = "gray60", 
                                                              "Scheldt Estuary" = "darkgreen", 
@@ -450,16 +499,18 @@ map_detail_ggplot <- ggplot() +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
              stat = "sf_coordinates", size = 2, nudge_y = -0.15, nudge_x = -6, family = "serif", fontface = "bold", fill = "white") +
   geom_text_repel(data = Neeltje_Jans, aes(label = preferredGazetteerName, geometry = geometry),
-                  stat = "sf_coordinates", size = 2, nudge_y = 0.09, nudge_x = 0.25, family = "serif") +
+                  stat = "sf_coordinates", size = 2, nudge_y = 0.09, nudge_x = 0.25, family = "serif", fontface = "bold") +
   geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "Birkenfels"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
-                  size = 2, nudge_y = 0.07, nudge_x = -0.35, family = "serif") +
+                  size = 2, nudge_y = 0.07, nudge_x = -0.35, family = "serif", fontface = "italic") +
   geom_text_repel(data = Bergen_op_Zoom, aes(label = preferredGazetteerName, geometry = geometry),
-                  stat = "sf_coordinates", size = 2, nudge_y = 0.1, nudge_x = 0.23, family = "serif") +
+                  stat = "sf_coordinates", size = 2, nudge_y = 0.1, nudge_x = 0.23, family = "serif", fontface = "bold") +
   geom_text_repel(data = Vlissingen, aes(label = preferredGazetteerName, geometry = geometry),
-                  stat = "sf_coordinates", size = 2, nudge_y = 0.05, nudge_x = 0.25, family = "serif") +
+                  stat = "sf_coordinates", size = 2, nudge_y = 0.05, nudge_x = 0.25, family = "serif", fontface = "bold") +
   # scale_shape_manual(name = "PBARN", values = c("Receiver Station" = 19))
+  annotation_custom(grob=europe_map_Scheldt_grob, xmin = 4.5, xmax = 5.05, ymin = 50.999, ymax = 51.3) +
   theme(legend.position = "bottom",
-        legend.box = "horizontal", legend.margin = margin(t = -5))
+        legend.box = "horizontal", legend.margin = margin(t = -5),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 2))
 
 map_detail_ggplot
 
@@ -472,6 +523,22 @@ ws_stations <- receiver_stations %>%
                        ifelse(deploy_longitude < 3.9, "WS2", "WS3")) %>%
            as.factor())
 
+## map inset ####
+
+europe_map_WS <- ggplot() +
+  geom_sf(data = Europe) +
+  # coord_sf(crs = st_crs(4326)) +
+  # coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(46, 60), xlim = c(-12, 10)) #+
+  coord_sf(crs = st_crs(4326), expand = FALSE, ylim = c(48, 54.5), xlim = c(-4.5, 8)) +
+  geom_rect(mapping = aes(ymin = 51.3, ymax =  51.7, xmin = 3.2, xmax = 4.5), linewidth = 0.75, colour = "black", fill = "transparent") +
+  theme_void() +  # Use a blank background for the main map
+  theme(panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5),
+        panel.background = element_rect(color = NA, fill = "white"))
+
+europe_map_WS
+
+europe_map_WS_grob <- ggplot2::ggplotGrob(europe_map_WS)
+
 map_WS_ggplot <- ggplot() +
   # Stuff for bathy legend
   geom_sf(data = UK_EEZ, mapping = aes(fill = "10 m"), colour = "transparent", alpha = 1,linewidth = 0.75, show.legend = NA) +
@@ -481,32 +548,10 @@ map_WS_ggplot <- ggplot() +
   geom_sf(data = UK_EEZ, mapping = aes(colour = "WS2"), fill = "transparent", alpha = 1,linewidth = 0.75, show.legend = "point") +
   geom_sf(data = UK_EEZ, mapping = aes(colour = "WS3"), fill = "transparent", alpha = 1,linewidth = 0.75, show.legend = "point") +
   geom_sf(data = UK_EEZ, fill = "white", colour = "white", alpha = 1,linewidth = 1) +
-  # now the map layers
-  # geom_sf(data = Europe) + #, colour = "gray85", fill = "gray85", linewidth = 0.75
-  # geom_sf(data = Western_Scheldt_boundaries, fill = "darkgreen", alpha = 0.35,linewidth = 0.75) +
-  # geom_sf(data = Eastern_Scheldt_boundaries, fill = "lightgreen", alpha = 0.35,linewidth = 0.75) +
-  # geom_sf(data = Western_Scheldt_boundaries, fill = "transparent", mapping = aes(colour = "Western Scheldt"),linewidth = 0.75) +
-  # geom_sf(data = Eastern_Scheldt_boundaries, fill = "transparent", mapping = aes(colour = "Eastern Scheldt"),linewidth = 0.75) +
   geom_sf(data = Belgium, colour = "gray60") +
   geom_sf(data = France, colour = "gray60") +
   geom_sf(data = Netherlands, colour = "gray60") +
-  # geom_sf(data = Southern_North_Sea, fill = "transparent", colour = "gray0",linewidth = 0.75) +
-  # geom_sf(data = English_channel, fill = "transparent", mapping = aes(colour = "marine_boundaries"),linewidth = 0.75) +
-  # geom_sf(data = Dutch_EEZ, mapping = aes(colour = "EEZ"),linewidth = 0.25, fill = "transparent") +
-  # geom_sf(data = French_EEZ, mapping = aes(colour = "EEZ"),linewidth = 0.25, fill = "transparent") +
-  # geom_sf(data = UK_EEZ, mapping = aes(colour = "EEZ"),linewidth = 0.25, fill = "transparent") +
-  
-  # marine boundaries
-  # geom_sf(data = BPNS, mapping = aes(colour = "BPNS"),linewidth = 0.75, fill = "transparent") +
-  # geom_sf(data = Schelde_boundaries, fill = "transparent", mapping = aes(colour = "Scheldt Estuary"),linewidth = 0.75) +
-  # theme(panel.background = element_rect(fill = "lightblue")) +
-  labs(x = "Longitude", y = "Latitude", tag ="c)") +
-  # scale_colour_manual(name = "Marine Boundaries", values = c("EEZ" = "gray60", 
-  #                                                            # "marine_boundaries" = "gray60", 
-  #                                                            "Scheldt Estuary" = "darkgreen", 
-  #                                                            "BPNS" = "darkorange",
-  #                                                            "Eastern Scheldt" = "lightgreen",
-  #                                                            "Western Scheldt" = "darkgreen")) +
+  labs(x = "Longitude", y = "Latitude") +
   scale_color_manual(name = "Receiver Array:", values = c("WS1" = "#ed7d31", "WS2" = "#49E8E3", "WS3" = "#FF00BA")) + #, "#34b3bb" "black", 
   scale_fill_manual(name = "Bathymetry:", values = c("EEZ" = "transparent", 
                                                      "marine_boundaries" = "transparent", 
@@ -558,19 +603,29 @@ map_WS_ggplot <- ggplot() +
   geom_label(data = Southern_North_Sea, aes(label = preferredGazetteerName, geometry = the_geom),
              stat = "sf_coordinates", size = 2, nudge_y = -0.15, nudge_x = -6, family = "serif", fontface = "bold", fill = "white") +
   geom_text_repel(data = Neeltje_Jans, aes(label = preferredGazetteerName, geometry = geometry),
-                  stat = "sf_coordinates", size = 2, nudge_y = 0.05, nudge_x = 0.2, family = "serif") +
-  geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "borssele"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
-                  size = 2, nudge_y = 0.04, nudge_x = 0.1, family = "serif", fontface = "italic") +
+                  stat = "sf_coordinates", size = 2, nudge_y = 0.05, nudge_x = 0.2, family = "serif", fontface = "bold") +
+  geom_text_repel(data = Zoetelande, aes(label = preferredGazetteerName, geometry = geometry),
+                  stat = "sf_coordinates", size = 2, nudge_y = 0.05, nudge_x = 0.045, family = "serif", fontface = "bold") +
+  geom_text_repel(mapping = aes(x = 3.52352, y = 51.4731, label = "Dishoek"),
+                  size = 2, nudge_y = 0.02, nudge_x = 0.16, family = "serif", fontface = "bold") +
+  geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "DL7"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
+                  size = 2, nudge_y = 0.04, nudge_x = -0.1, family = "serif", fontface = "italic") +
+  geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "DL9"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
+                  size = 2, nudge_y = 0, nudge_x = -0.1, family = "serif", fontface = "italic") +
+  geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "OGDL"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
+                  size = 2, nudge_y = 0, nudge_x = 0.1, family = "serif", fontface = "italic") +
   geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "OG10"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
-                  size = 2, nudge_y = 0.03, nudge_x = 0.03, family = "serif", fontface = "italic") +
+                  size = 2, nudge_y = 0.03, nudge_x = 0.05, family = "serif", fontface = "italic") +
   geom_text_repel(data = receiver_stations %>% dplyr::filter(station_name == "WN2"), aes(label = station_name, x = deploy_longitude, y = deploy_latitude),
-                  size = 2, nudge_y = 0.03, nudge_x = -0.2, family = "serif", fontface = "italic") +
+                  size = 2, nudge_y = 0.04, nudge_x = -0.2, family = "serif", fontface = "italic") +
   # geom_text(aes(label = "C"), vjust = "inward", hjust = "inward", fontface = "bold") +
   # scale_shape_manual(name = "PBARN", values = c("Receiver Station" = 19)) +
+  annotation_custom(grob=europe_map_WS_grob, xmin = 4.3, xmax = 4.502, ymin = 51.25, ymax = 51.45) +
   guides(colour = guide_legend(override.aes = list(shape = 19, size = 4)),
          fill = guide_legend(override.aes = list(shape = 0, size = 6, alpha = 0.5))) +#size = 6
   theme(legend.position = "bottom",
-        legend.box = "horizontal", legend.margin = margin(t = -5))
+        legend.box = "horizontal", legend.margin = margin(t = -5),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 2))
   
 map_WS_ggplot
 

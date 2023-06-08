@@ -21,7 +21,7 @@ paste0(dir_path, "/01_code/02_load_data/manuscript_figures/load_models.R") %>% b
 
 # table 1: list of abbreviations ####
 
-abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT", "UTC", "RQ"),
+abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "f", "m", "CWT", "ETN", "PBARN", "HMM", "TL", "FT", "FFT", "UTC", "RQ", "ICES"),
                          Explanation= c("Acoustic Data Storage Tag",
                                         "Data Storage Tag",
                                         "Belgian Part of the North Sea",
@@ -35,7 +35,8 @@ abbreviations_list <- base::data.frame(Abbreviation = c("ADST", "DST", "BPNS", "
                                         "Fourier Transformation",
                                         "Fast Fourier Transform",
                                         "Coordinated Universal Time",
-                                        "Research Question")) %>%
+                                        "Research Question",
+                                        "International Council for the Exploration of the Sea")) %>%
   dplyr::arrange(Abbreviation)
 
 # table 2: release locations ####
